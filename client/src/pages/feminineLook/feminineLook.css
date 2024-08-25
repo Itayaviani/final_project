@@ -1,0 +1,184 @@
+/* הגדרות כלליות */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* התאמה כדי להתחיל מהחלק העליון */
+    min-height: 100vh; /* להבטיח גובה מינימלי של כל הדף */
+    position: relative;
+    padding-top: 60px; /* מתן מקום ל-Navbar */
+    box-sizing: border-box;
+    overflow-y: auto; /* מאפשר גלילה של העמוד כולו */
+  }
+  
+  .feminine-look-container {
+      font-family: 'Roboto', sans-serif;
+      max-width: 1200px;
+      margin: 20px auto; /* מרווח אוטומטי כדי למרכז את המיכל */
+      padding: 20px;
+      background-color: #f7f7f7;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-sizing: border-box; /* להבטיח חישוב גובה נכון עם padding */
+      text-align: center; /* מרכז את כל הטקסט בתוך המיכל הראשי */
+      overflow: visible; /* לאפשר תוכן לגלוש במקרה הצורך */
+  }
+  
+  section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box; /* להבטיח חישוב גובה נכון עם padding */
+      text-align: center; /* מרכז את כל הטקסט בתוך כל section */
+  }
+  
+  /* הגדרת כותרות ממורכזות */
+  .header-section h1,
+  .inspiration-section h2, 
+  .workshop-details-section h2, 
+  .about-section h2, 
+  .about-me-section h2,
+  .invite-section h2,
+  .step h3,
+  .social-media-section h3 {
+      text-align: center; /* מרכז את כל הכותרות */
+  }
+  
+  .header-section h1 {
+      font-size: 2.5em;
+      color: #6a1b9a;
+      margin-bottom: 10px;
+  }
+  
+  .header-section p {
+      font-size: 1.2em;
+      color: #333;
+      text-align: center; /* מרכז גם את הפסקה */
+  }
+  
+  .inspiration-section h2, .workshop-details-section h2, .about-section h2, .about-me-section h2 {
+      font-size: 1.8em;
+      color: #8e24aa;
+      margin-bottom: 20px;
+  }
+  
+  .invite-section h2 {
+      font-size: 1.6em;
+      color: #6a1b9a;
+  }
+  
+  .step h3 {
+      font-size: 1.5em;
+      color: #6a1b9a;
+      margin-bottom: 10px;
+  }
+  
+  .step p {
+      font-size: 1.1em;
+      color: #444;
+      margin-bottom: 20px;
+  }
+  
+  .contact-section form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+  }
+  
+  .contact-section input[type="text"],
+  .contact-section input[type="email"],
+  .contact-section input[type="tel"] {
+      margin: 10px 0;
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      box-sizing: border-box; /* להבטיח חישוב גובה נכון עם padding */
+  }
+  
+  .contact-section .consent {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+  }
+  
+  .contact-section .consent input[type="checkbox"] {
+      margin-right: 10px;
+  }
+  
+  .contact-section button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #8e24aa;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  .contact-section button:hover {
+      background-color: #6a1b9a;
+  }
+  
+  .quote-section blockquote {
+      font-style: italic;
+      font-size: 1.3em;
+      color: #444;
+      text-align: center;
+      margin-bottom: 10px;
+  }
+  
+  .quote-section blockquote span {
+      display: block;
+      font-size: 1em;
+      color: #888;
+      margin-top: 10px;
+  }
+  
+  .social-media-section {
+      text-align: center;
+  }
+  
+  .social-media-section h3 {
+      font-size: 1.5em;
+      color: #6a1b9a;
+      margin-bottom: 20px;
+  }
+  
+  .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+  }
+  
+  .social-icons a {
+      font-size: 1.2em;
+      color: #6a1b9a;
+      text-decoration: none;
+      transition: color 0.3s;
+  }
+  
+  .social-icons a:hover {
+      color: #9c27b0;
+  }
+  
+  .social-icons svg {
+      margin-right: 5px;
+      vertical-align: middle;
+  }
+  
+  /* הגדרת box-sizing לכל האלמנטים כדי להימנע מבעיות בגובה */
+  * {
+      box-sizing: border-box;
+  }
+  

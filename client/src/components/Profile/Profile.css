@@ -1,0 +1,39 @@
+/* Profile.css */
+
+.profile-container {
+  padding: 30px; /* הגדלת הריפוד */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 700px; /* הגדלת הרוחב המקסימלי */
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px; /* הקטנת המרחק מלמעלה */
+}
+
+.profile-container h1 {
+  font-size: 2.5em; /* הגדלת גודל הכותרת */
+  border-bottom: 2px solid #4CAF50;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  color: #4CAF50;
+}
+
+.profile-details {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.profile-details p {
+  margin: 15px 0; /* הגדלת המרווח בין הפסקאות */
+  font-size: 20px; /* הגדלת גודל הפונט */
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}

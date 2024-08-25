@@ -1,0 +1,58 @@
+
+
+.personal-process-container {
+    font-family: 'Roboto', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center; /* מיישר את כל הטקסט במרכז */
+}
+
+.content-section {
+    padding: 30px;
+    background-color: #ffffff;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* מיישר את התוכן של כל סעיף למרכז */
+}
+
+.content-section h2 {
+    color: #2c3e50;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    border-bottom: 3px solid #3498db;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.content-section p {
+    line-height: 1.8;
+    color: #444;
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+.content-section a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s, color 0.3s;
+}
+
+.content-section a:hover {
+    text-decoration: none;
+    color: #2c3e50;
+    border-bottom: 2px solid #2c3e50;
+}
+
+.content-section p svg {
+    margin-right: 8px;
+    vertical-align: middle;
+    color: #3498db;
+    font-size: 1.2em;
+}
