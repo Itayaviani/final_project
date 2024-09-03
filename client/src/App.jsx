@@ -6,6 +6,7 @@ import HomePage from './pages/homePage/HomePage';
 import NavBar from './components/navBar/NavBar';
 import Workshops from './pages/workshops/Workshops';
 import Courses from './pages/courses/Courses';
+import AddCourse from './pages/courses/add course/AddCourse';
 import FeminineLook from './pages/feminineLook/FeminineLook';
 import NiceToMeet from './pages/niceToMeet/NiceToMeet';
 import PersonalProcess from './pages/personalProcess/PersonalProcess';
@@ -43,6 +44,11 @@ function App() {
     setIsAdmin(false);
   };
 
+  const [courses, setCourses] = useState([]);
+
+  const addCourse = (course) => {
+    setCourses([...courses, course]);
+  };
   return (
     <div>
       <BrowserRouter>
@@ -53,7 +59,8 @@ function App() {
           <Route path='/register' element={<Signup />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setIsAdmin={setIsAdmin} />} />
           <Route path='/feminineLook' element={<FeminineLook />} />
-          <Route path='/courses' element={<Courses />} />
+          <Route path='/courses' element={<Courses courses={courses}/>} />
+          <Route path="/add-course" element={<AddCourse addCourse={addCourse} />} />
           <Route path='/niceToMeet' element={<NiceToMeet />} />
           <Route path='/personalProcess' element={<PersonalProcess />} />
           <Route path='/communitiesAndOrganizations' element={<CommunitiesAndOrganizations />} />
