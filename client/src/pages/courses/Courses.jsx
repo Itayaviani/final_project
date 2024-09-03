@@ -1,16 +1,25 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-export default function Courses({ courses }) {  // קבלת רשימת הקורסים כפרופס
-  const isAdmin = true;  // בדיקת האם המשתמש הוא אדמין
-  const navigate = useNavigate();
+export default function Courses() {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/v1/courses');
+        setCourses(response.data);
+      } catch (error) {
+        console.error('Failed to fetch courses:', error);
+      }
+    };
+
+    fetchCourses();
+  }, []); // השימוש במערך ריק מבטיח שה-UseEffect ירוץ פעם אחת בעת טעינת הקומפוננטה
 
   return (
     <div>
       <h1>קורסים</h1>
-      {isAdmin && (
-        <button onClick={() => navigate('/add-course')}>הוספת קורס</button>
-      )}
       <div>
         {courses.length > 0 ? (
           courses.map((course, index) => (
@@ -19,7 +28,7 @@ export default function Courses({ courses }) {  // קבלת רשימת הקור�
               <p>{course.description}</p>
               <p>מחיר: {course.price} ש"ח</p>
               {course.image && (
-                <img src={URL.createObjectURL(course.image)} alt={course.name} style={{ maxWidth: '200px' }} />
+                <img src={course.image} alt={course.name} style={{ maxWidth: '200px' }} />
               )}
             </div>
           ))

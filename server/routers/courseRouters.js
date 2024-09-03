@@ -4,6 +4,7 @@ const Course = require('../models/CourseModel');
 
 // מסלול להוספת קורס חדש
 router.post('/', async (req, res) => {
+  console.log(req.body)
   try {
     const newCourse = new Course(req.body);
     await newCourse.save();

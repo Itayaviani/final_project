@@ -11,26 +11,14 @@ export default function AddCourse({ addCourse }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('name', courseName);
-    formData.append('description', courseDescription);
-    formData.append('price', coursePrice);
-    if (courseImage) {
-      formData.append('image', courseImage);
-    }
-
+    console.log(courseName,courseDescription,coursePrice,courseImage)
     try {
-      const response = await axios.post('http://localhost:3001/api/courses', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post('http://localhost:3000/api/v1/courses', {name:courseName,description:courseDescription,price:coursePrice,image:courseImage}
+       
+      );
 
-      // הוספת הקורס לתוך ה-state לאחר שהתקבלה תגובה חיובית מהשרת
       addCourse(response.data);
 
-      // ניווט חזרה לעמוד הקורסים
       navigate('/courses');
     } catch (error) {
       console.error('Failed to add course:', error);
@@ -40,6 +28,7 @@ export default function AddCourse({ addCourse }) {
   const handleImageChange = (e) => {
     setCourseImage(e.target.files[0]);
   };
+
 
   return (
     <div>
