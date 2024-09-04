@@ -50,10 +50,10 @@ body {
 
 .profile-container h1 {
   font-size: 2.4em; /* Large font size for the header */
-  border-bottom: 3px solid #4CAF50; /* Thicker border for emphasis */
+  border-bottom: 3px solid #077af4; /* Thicker border for emphasis */
   padding-bottom: 15px; /* Padding for spacing */
   margin-bottom: 30px; /* Increased margin for separation */
-  color: #4CAF50; /* Green color for the header */
+  color: #0265e6; /* Green color for the header */
   text-transform: uppercase; /* Uppercase text for impact */
   letter-spacing: 2px; /* Increased letter spacing for a stylish look */
 }
@@ -78,7 +78,7 @@ body {
 
 .profile-details p::before {
   content: '• '; /* Bullet point for each detail */
-  color: #4CAF50; /* Matching green color */
+  color: #055bef; /* Matching green color */
 }
 
 .profile-details:hover {
