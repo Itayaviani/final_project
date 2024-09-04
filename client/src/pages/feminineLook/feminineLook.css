@@ -1,4 +1,4 @@
-/* הגדרות כלליות */
+/* General body styling */
 body {
     margin: 0;
     padding: 0;
@@ -6,179 +6,291 @@ body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* התאמה כדי להתחיל מהחלק העליון */
-    min-height: 100vh; /* להבטיח גובה מינימלי של כל הדף */
-    position: relative;
-    padding-top: 60px; /* מתן מקום ל-Navbar */
+    align-items: flex-start; /* Ensure content starts at the top */
+    min-height: 100vh;
+    padding-top: 60px; /* Space for the navbar */
     box-sizing: border-box;
-    overflow-y: auto; /* מאפשר גלילה של העמוד כולו */
-  }
-  
-  .feminine-look-container {
-      font-family: 'Roboto', sans-serif;
-      max-width: 1200px;
-      margin: 20px auto; /* מרווח אוטומטי כדי למרכז את המיכל */
-      padding: 20px;
-      background-color: #f7f7f7;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      box-sizing: border-box; /* להבטיח חישוב גובה נכון עם padding */
-      text-align: center; /* מרכז את כל הטקסט בתוך המיכל הראשי */
-      overflow: visible; /* לאפשר תוכן לגלוש במקרה הצורך */
-  }
-  
-  section {
-      margin-bottom: 30px;
-      padding: 20px;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      box-sizing: border-box; /* להבטיח חישוב גובה נכון עם padding */
-      text-align: center; /* מרכז את כל הטקסט בתוך כל section */
-  }
-  
-  /* הגדרת כותרות ממורכזות */
-  .header-section h1,
-  .inspiration-section h2, 
-  .workshop-details-section h2, 
-  .about-section h2, 
-  .about-me-section h2,
-  .invite-section h2,
-  .step h3,
-  .social-media-section h3 {
-      text-align: center; /* מרכז את כל הכותרות */
-  }
-  
-  .header-section h1 {
-      font-size: 2.5em;
-      color: #6a1b9a;
-      margin-bottom: 10px;
-  }
-  
-  .header-section p {
-      font-size: 1.2em;
-      color: #333;
-      text-align: center; /* מרכז גם את הפסקה */
-  }
-  
-  .inspiration-section h2, .workshop-details-section h2, .about-section h2, .about-me-section h2 {
-      font-size: 1.8em;
-      color: #8e24aa;
-      margin-bottom: 20px;
-  }
-  
-  .invite-section h2 {
-      font-size: 1.6em;
-      color: #6a1b9a;
-  }
-  
-  .step h3 {
-      font-size: 1.5em;
-      color: #6a1b9a;
-      margin-bottom: 10px;
-  }
-  
-  .step p {
-      font-size: 1.1em;
-      color: #444;
-      margin-bottom: 20px;
-  }
-  
-  .contact-section form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-  }
-  
-  .contact-section input[type="text"],
-  .contact-section input[type="email"],
-  .contact-section input[type="tel"] {
-      margin: 10px 0;
-      padding: 10px;
-      width: 80%;
-      max-width: 400px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-      box-sizing: border-box; /* להבטיח חישוב גובה נכון עם padding */
-  }
-  
-  .contact-section .consent {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-  }
-  
-  .contact-section .consent input[type="checkbox"] {
-      margin-right: 10px;
-  }
-  
-  .contact-section button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #8e24aa;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 1.2em;
-      cursor: pointer;
-      transition: background-color 0.3s;
-  }
-  
-  .contact-section button:hover {
-      background-color: #6a1b9a;
-  }
-  
-  .quote-section blockquote {
-      font-style: italic;
-      font-size: 1.3em;
-      color: #444;
-      text-align: center;
-      margin-bottom: 10px;
-  }
-  
-  .quote-section blockquote span {
-      display: block;
-      font-size: 1em;
-      color: #888;
-      margin-top: 10px;
-  }
-  
-  .social-media-section {
-      text-align: center;
-  }
-  
-  .social-media-section h3 {
-      font-size: 1.5em;
-      color: #6a1b9a;
-      margin-bottom: 20px;
-  }
-  
-  .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-  }
-  
-  .social-icons a {
-      font-size: 1.2em;
-      color: #6a1b9a;
-      text-decoration: none;
-      transition: color 0.3s;
-  }
-  
-  .social-icons a:hover {
-      color: #9c27b0;
-  }
-  
-  .social-icons svg {
-      margin-right: 5px;
-      vertical-align: middle;
-  }
-  
-  /* הגדרת box-sizing לכל האלמנטים כדי להימנע מבעיות בגובה */
-  * {
-      box-sizing: border-box;
-  }
-  
+    overflow-y: auto; /* Enable scrolling */
+}
+
+/* Main container styling */
+.feminine-look-container {
+    font-family: 'Roboto', sans-serif;
+    max-width: 1200px;
+    margin: 40px auto; /* Center container and add top margin */
+    padding: 40px;
+    background-color: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Grid layout for sections */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 30px; /* Space between grid items */
+    margin-top: 20px;
+}
+
+/* Section styling */
+section {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for sections */
+section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Header section styling */
+.header-section {
+    grid-column: 1 / -1; /* Full width in the grid */
+    background: linear-gradient(135deg, #ffb6c1, #ff69b4); /* Gradient background */
+    color: #fff; /* White text for contrast */
+}
+
+.header-section h1 {
+    font-size: 2.8em;
+    margin-bottom: 15px;
+}
+
+.header-section p {
+    font-size: 1.2em;
+    color: #f8f8f8; /* Slightly lighter color for paragraphs */
+}
+
+/* Inspiration section styling */
+.inspiration-section h2 {
+    font-size: 2em;
+    color: #8e24aa;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #8e24aa;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.inspiration-section p {
+    font-size: 1.1em;
+    color: #444;
+    text-align: left;
+    margin: 10px 0;
+}
+
+/* Invite section styling */
+.invite-section h2 {
+    font-size: 2em;
+    color: #6a1b9a;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #6a1b9a;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.invite-section p {
+    font-size: 1.1em;
+    color: #444;
+    text-align: left;
+    margin: 10px 0;
+}
+
+/* Contact section styling */
+.contact-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.contact-section input[type="text"],
+.contact-section input[type="email"],
+.contact-section input[type="tel"] {
+    margin: 10px 0;
+    padding: 12px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+.contact-section .consent {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.contact-section .consent input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.contact-section button {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background-color: #8e24aa;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contact-section button:hover {
+    background-color: #6a1b9a;
+    transform: translateY(-3px);
+}
+
+/* Quote section styling */
+.quote-section {
+    grid-column: 1 / -1; /* Make the quote section span full width */
+    background-color: #ffe4e1;
+    border-left: 5px solid #ff69b4; /* Left border for quote */
+    padding: 40px 60px; /* Increased padding for a spacious look */
+    text-align: left; /* Left-align text for a different look */
+    font-size: 1.4em;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quote-section blockquote {
+    font-style: italic;
+    line-height: 1.5;
+    max-width: 800px; /* Limit the width for readability */
+    margin: 0 auto; /* Center the blockquote */
+}
+
+.quote-section blockquote span {
+    display: block;
+    font-size: 0.8em;
+    color: #555;
+    margin-top: 15px;
+    text-align: right; /* Align author's name to the right */
+}
+
+/* Workshop details section styling */
+.workshop-details-section h2,
+.about-section h2,
+.about-me-section h2 {
+    font-size: 2em;
+    color: #8e24aa;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #8e24aa;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.step {
+    background-color: #f3e5f5;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.step h3 {
+    font-size: 1.6em;
+    color: #6a1b9a;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 1.1em;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+/* About me section styling */
+.about-me-section p {
+    font-size: 1.1em;
+    color: #444;
+    text-align: left;
+    margin: 10px 0;
+}
+
+/* Social media section styling */
+.social-media-section {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.social-media-section h3 {
+    font-size: 1.8em;
+    color: #6a1b9a;
+    margin-bottom: 20px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.social-icons a {
+    font-size: 1.5em;
+    color: #6a1b9a;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #9c27b0;
+}
+
+.social-icons svg {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+    .feminine-look-container {
+        padding: 20px;
+    }
+
+    .grid-layout {
+        grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    .header-section h1 {
+        font-size: 2.2em;
+    }
+
+    .inspiration-section h2,
+    .workshop-details-section h2,
+    .about-section h2,
+    .about-me-section h2,
+    .invite-section h2 {
+        font-size: 1.8em;
+    }
+
+    .step h3 {
+        font-size: 1.4em;
+    }
+
+    .step p,
+    .header-section p {
+        font-size: 1em;
+    }
+
+    .social-media-section h3 {
+        font-size: 1.5em;
+    }
+
+    .social-icons a {
+        font-size: 1.2em;
+    }
+}
