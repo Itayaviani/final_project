@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-export default function Courses() {
+export default function Courses({ isAdmin }) {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
@@ -15,11 +16,21 @@ export default function Courses() {
     };
 
     fetchCourses();
-  }, []); // השימוש במערך ריק מבטיח שה-UseEffect ירוץ פעם אחת בעת טעינת הקומפוננטה
+  }, []);
 
   return (
     <div>
       <h1>קורסים</h1>
+
+      {/* הצגת כפתור הוספת הקורס רק אם המשתמש הוא אדמין */}
+      {isAdmin && (
+        <div>
+          <Link to="/add-course">
+            <button>הוסף קורס חדש</button>
+          </Link>
+        </div>
+      )}
+
       <div>
         {courses.length > 0 ? (
           courses.map((course, index) => (
