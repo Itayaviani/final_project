@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './AddCourse.css'; // ייבוא קובץ ה-CSS
 
 export default function AddCourse({ addCourse }) {
   const [courseName, setCourseName] = useState('');
@@ -11,10 +12,11 @@ export default function AddCourse({ addCourse }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(courseName,courseDescription,coursePrice,courseImage)
+    console.log(courseName, courseDescription, coursePrice, courseImage);
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/courses', {name:courseName,description:courseDescription,price:coursePrice,image:courseImage}
-       
+      const response = await axios.post(
+        'http://localhost:3000/api/v1/courses',
+        { name: courseName, description: courseDescription, price: coursePrice, image: courseImage }
       );
 
       addCourse(response.data);
@@ -29,9 +31,8 @@ export default function AddCourse({ addCourse }) {
     setCourseImage(e.target.files[0]);
   };
 
-
   return (
-    <div>
+    <div className="add-course-container">
       <h1>הוספת קורס חדש</h1>
       <form onSubmit={handleSubmit}>
         <div>

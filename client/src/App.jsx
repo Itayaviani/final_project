@@ -7,6 +7,8 @@ import NavBar from './components/navBar/NavBar';
 import Workshops from './pages/workshops/Workshops';
 import Courses from './pages/courses/Courses';
 import AddCourse from './pages/courses/add course/AddCourse';
+import EditCourse from './pages/courses/Edit Course/EditCourse'; // ייבוא הקומפוננטה החדשה
+import CourseDetails from './pages/courses/Course Details/CourseDetails'; // ייבוא הקומפוננטה החדשה
 import FeminineLook from './pages/feminineLook/FeminineLook';
 import NiceToMeet from './pages/niceToMeet/NiceToMeet';
 import PersonalProcess from './pages/personalProcess/PersonalProcess';
@@ -49,6 +51,7 @@ function App() {
   const addCourse = (course) => {
     setCourses([...courses, course]);
   };
+
   return (
     <div>
       <BrowserRouter>
@@ -61,6 +64,8 @@ function App() {
           <Route path='/feminineLook' element={<FeminineLook />} />
           <Route path='/courses' element={<Courses courses={courses} isAdmin={isAdmin}/>} />
           <Route path="/add-course" element={<AddCourse addCourse={addCourse} />} />
+          <Route path="/edit-course/:courseId" element={<EditCourse />} /> {/* נתיב לעריכת קורס */}
+          <Route path="/course-details/:courseId" element={<CourseDetails />} /> {/* נתיב לפרטי קורס */}
           <Route path='/niceToMeet' element={<NiceToMeet />} />
           <Route path='/personalProcess' element={<PersonalProcess />} />
           <Route path='/communitiesAndOrganizations' element={<CommunitiesAndOrganizations />} />

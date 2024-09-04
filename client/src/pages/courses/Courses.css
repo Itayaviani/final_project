@@ -1,0 +1,133 @@
+/* Courses.css */
+
+/* עיצוב עבור הקונטיינר הכללי של הקורסים */
+.courses-container {
+    display: flex; /* סידור אופקי של הקורסים */
+    flex-wrap: wrap; /* מעבר לשורה הבאה במקרה של חוסר מקום */
+    gap: 20px; /* רווח בין הקורסים */
+    padding: 20px; /* רווח פנימי של הקונטיינר */
+    justify-content: center; /* מרכוז התוכן */
+  }
+  
+  /* עיצוב עבור כל קורס */
+  .course-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 300px; /* רוחב קבוע לכל קופסה */
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .course-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .course-card p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .course-card .price {
+    font-weight: bold;
+    color: #000;
+  }
+  
+  .course-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  /* עיצוב עבור כפתור "פרטים נוספים" */
+  .details-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff; /* צבע הכפתור */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .details-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  /* עיצוב עבור כפתור "הוסף קורס חדש" */
+  .add-course-button-container {
+    display: flex;
+    justify-content: center; /* ממרכז את הכפתור אופקית */
+    margin: 20px 0; /* מרווח עליון ותחתון */
+  }
+  
+  .add-course-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .add-course-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  /* עיצוב עבור כפתורי עריכה ומחיקה */
+  .course-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* רווח בין הכפתורים */
+    margin-top: 10px;
+  }
+  
+  .edit-button,
+  .delete-button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .edit-button {
+    background-color: #3dfd03; /* צבע עריכה */
+    color: #ffffff;
+  }
+  
+  .edit-button:hover {
+    background-color: #1cff07;
+    transform: translateY(-2px);
+  }
+  
+  .delete-button {
+    background-color: #dc3545; /* צבע מחיקה */
+    color: #ffffff;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+  }
+  
