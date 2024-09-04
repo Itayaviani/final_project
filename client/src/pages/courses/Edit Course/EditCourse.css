@@ -1,0 +1,95 @@
+/* General styling for the edit course container */
+.edit-course-container {
+    max-width: 800px; /* Increased width for horizontal layout */
+    margin: 50px auto; /* Center the container and add space from the top */
+    padding: 40px;
+    background-color: #ffffff; /* White background for a clean look */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    font-family: 'Arial', sans-serif; /* Consistent font */
+    color: #333; /* Dark text color for contrast */
+  }
+  
+  /* Styling for the header */
+  .edit-course-container h1 {
+    text-align: center; /* Center the title */
+    margin-bottom: 30px; /* Space below the title */
+    font-size: 28px; /* Larger font size for prominence */
+    color: #090909; /* A green color to match a theme or indicate editing */
+    border-bottom: 2px solid #000000; /* Bottom border for emphasis */
+    padding-bottom: 10px; /* Padding below text for spacing */
+  }
+  
+  /* Form styling */
+  .edit-course-form {
+    display: flex;
+    flex-direction: column; /* Stack form groups vertically */
+    gap: 20px; /* Space between form groups */
+  }
+  
+  /* Form group styling for horizontal layout */
+  .form-group {
+    display: flex; /* Flexbox for horizontal alignment */
+    align-items: center; /* Center items vertically within each form group */
+    gap: 20px; /* Space between label and input */
+  }
+  
+  /* Label styling */
+  .form-group label {
+    flex: 1; /* Allow label to take up necessary space */
+    font-weight: bold; /* Bold text for labels */
+    margin-right: 10px; /* Space between label and input */
+    text-align: right; /* Right align labels for better UX */
+  }
+  
+  /* Input and textarea styling */
+  .edit-course-form input[type="text"],
+  .edit-course-form input[type="number"],
+  .edit-course-form textarea {
+    flex: 2; /* Allow inputs to take more space */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ddd; /* Light border for inputs */
+    border-radius: 5px; /* Rounded corners for inputs */
+    font-size: 16px; /* Font size for inputs */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus */
+  }
+  
+  .edit-course-form input[type="text"]:focus,
+  .edit-course-form input[type="number"]:focus,
+  .edit-course-form textarea:focus {
+    border-color: #0558cb; /* Green border on focus */
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3); /* Green glow effect on focus */
+    outline: none; /* Remove default outline */
+  }
+  
+  /* Textarea specific styling */
+  .edit-course-form textarea {
+    resize: vertical; /* Allow vertical resize only */
+    height: 100px; /* Set a minimum height */
+  }
+  
+  /* Button styling */
+  .submit-button {
+    padding: 12px 20px; /* Padding for the button */
+    background-color: #0069e0; /* Green background */
+    color: white; /* White text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 18px; /* Font size for the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+    margin-top: 20px; /* Margin to separate from form fields */
+    width: 200px; /* Fixed width for button */
+    align-self: center; /* Center the button horizontally */
+  }
+  
+  /* Button hover and active effects */
+  .submit-button:hover {
+    background-color: #0068f1; /* Darker green on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+  }
+  
+  .submit-button:active {
+    transform: translateY(2px); /* Slight movement on click */
+  }
+  
