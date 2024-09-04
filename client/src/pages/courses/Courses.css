@@ -134,12 +134,12 @@
 }
 
 .edit-button {
-  background-color: #3dfd03; /* צבע עריכה */
+  background-color: #6a6b6a; /* צבע עריכה */
   color: #ffffff;
 }
 
 .edit-button:hover {
-  background-color: #1cff07;
+  background-color: #757575;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* צל נוסף בכפתור */
 }
