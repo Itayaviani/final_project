@@ -1,39 +1,102 @@
-/* Profile.css */
+/* General body styling */
+body {
+  background-color: #222; /* Dark background to enhance contrast */
+  margin: 0; /* Remove default margin */
+}
 
+/* Wrapper to center the Profile component */
+.profile-wrapper {
+  display: flex; /* Flexbox to center content */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh; /* Full viewport height to center vertically */
+  width: 100%; /* Full width to ensure centering */
+  position: relative; /* Ensure it stays positioned correctly in flex */
+}
+
+/* Profile container styling */
 .profile-container {
-  padding: 30px; /* הגדלת הריפוד */
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 700px; /* הגדלת הרוחב המקסימלי */
-  margin: 0 auto;
+  position: relative; /* Position relative for pseudo-elements */
+  padding: 40px; /* Increased padding for a spacious feel */
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  border-radius: 16px; /* Rounded corners for a modern look */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
+  max-width: 600px; /* Maximum width for readability */
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px; /* הקטנת המרחק מלמעלה */
+  z-index: 1; /* Ensure it's above the background fade */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+}
+
+/* Black fade background using pseudo-element */
+.profile-container::before {
+  content: ''; /* Empty content */
+  position: absolute; /* Absolute positioning */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Strong black fade */
+  border-radius: 16px; /* Match border radius of container */
+  z-index: -1; /* Behind the profile container */
+}
+
+.profile-container:hover {
+  transform: translateY(-8px); /* Lift effect on hover */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
 }
 
 .profile-container h1 {
-  font-size: 2.5em; /* הגדלת גודל הכותרת */
-  border-bottom: 2px solid #4CAF50;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  color: #4CAF50;
+  font-size: 2.4em; /* Large font size for the header */
+  border-bottom: 3px solid #4CAF50; /* Thicker border for emphasis */
+  padding-bottom: 15px; /* Padding for spacing */
+  margin-bottom: 30px; /* Increased margin for separation */
+  color: #4CAF50; /* Green color for the header */
+  text-transform: uppercase; /* Uppercase text for impact */
+  letter-spacing: 2px; /* Increased letter spacing for a stylish look */
 }
 
 .profile-details {
   margin-top: 20px;
   width: 100%;
+  background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white for contrast */
+  border-radius: 12px; /* Rounded corners for details section */
+  padding: 25px; /* Padding inside the details box */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
 }
 
 .profile-details p {
-  margin: 15px 0; /* הגדלת המרווח בין הפסקאות */
-  font-size: 20px; /* הגדלת גודל הפונט */
+  margin: 20px 0; /* Larger spacing between paragraphs */
+  font-size: 1.2em; /* Increased font size for better readability */
+  color: #333; /* Darker color for contrast */
+  line-height: 1.8; /* Improved line height for readability */
+  text-align: left; /* Left align text for a cleaner look */
+}
+
+.profile-details p::before {
+  content: '• '; /* Bullet point for each detail */
+  color: #4CAF50; /* Matching green color */
+}
+
+.profile-details:hover {
+  background-color: rgba(240, 240, 240, 0.9); /* Slight change on hover */
+  transform: translateY(-5px); /* Slight lift effect on hover */
 }
 
 .error-message {
-  color: red;
+  color: #d9534f; /* Red color for errors */
+  font-weight: bold; /* Bold text for emphasis */
+  font-size: 18px; /* Larger font size for visibility */
   text-align: center;
-  margin-top: 20px;
+  margin-top: 20px; /* Spacing above the error message */
+  padding: 15px; /* Padding for better appearance */
+  background-color: #f8d7da; /* Light red background for emphasis */
+  border: 1px solid #f5c6cb; /* Border matching the error theme */
+  border-radius: 8px; /* Rounded corners for the error box */
+  width: 80%; /* Width for the error message */
+  margin: 20px auto; /* Center the error box */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
