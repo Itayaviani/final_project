@@ -18,6 +18,7 @@ export default function Courses({ isAdmin }) {
     fetchCourses();
   }, []);
 
+  console.log("is admin : " , isAdmin)
   return (
     <div>
       <h1>קורסים</h1>

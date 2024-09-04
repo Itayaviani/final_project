@@ -59,7 +59,7 @@ function App() {
           <Route path='/register' element={<Signup />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setIsAdmin={setIsAdmin} />} />
           <Route path='/feminineLook' element={<FeminineLook />} />
-          <Route path='/courses' element={<Courses courses={courses}/>} />
+          <Route path='/courses' element={<Courses courses={courses} isAdmin={isAdmin}/>} />
           <Route path="/add-course" element={<AddCourse addCourse={addCourse} />} />
           <Route path='/niceToMeet' element={<NiceToMeet />} />
           <Route path='/personalProcess' element={<PersonalProcess />} />
