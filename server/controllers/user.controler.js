@@ -20,11 +20,46 @@ const createAndSendToken = (user, statusCode, res) => {
   });
 };
 
+
 // רישום משתמש חדש
 exports.register = catchAsync(async (req, res, next) => {
-  const newUser = await User.create(req.body);
+  const { email, phone, name, password } = req.body;
+
+  // בדיקה אם יש משתמש עם אותו מייל
+  const existingUserByEmail = await User.findOne({ email: email });
+
+  // בדיקה אם יש משתמש עם אותו מספר טלפון
+  const existingUserByPhone = await User.findOne({ phone: phone });
+
+  // אם נמצא משתמש עם אותו מייל וגם אותו מספר טלפון
+  if (existingUserByEmail && existingUserByPhone) {
+    return res.status(400).json({
+      message: 'מייל ומספר טלפון אלה כבר קיימים במערכת',
+    });
+  }
+
+  // אם נמצא משתמש עם אותו מייל בלבד
+  if (existingUserByEmail) {
+    return res.status(400).json({
+      message: 'המייל הזה כבר קיים במערכת',
+    });
+  }
+
+  // אם נמצא משתמש עם אותו מספר טלפון בלבד
+  if (existingUserByPhone) {
+    return res.status(400).json({
+      message: 'מספר הטלפון הזה כבר קיים במערכת',
+    });
+  }
+
+  // אם לא נמצא משתמש עם אותו מייל או מספר טלפון, צור משתמש חדש
+  const newUser = await User.create({ name, email, phone, password });
+  
+  // יצירת טוקן ושליחתו בתגובה
   createAndSendToken(newUser, 201, res);
 });
+
+
 
 // התחברות משתמש
 exports.login = catchAsync(async (req, res, next) => {

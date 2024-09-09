@@ -1,12 +1,14 @@
-// src/pages/CourseDetails.jsx
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './courseDetails.css'; // ייבוא קובץ ה-CSS לעיצוב
 
 
 export default function CourseDetails() {
   const { courseId } = useParams(); // שימוש ב-useParams לקבלת ה-courseId מהנתיב
   const [course, setCourse] = useState(null);
+  const [purchaseMessage, setPurchaseMessage] = useState(''); // הודעה לרכישה
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -21,16 +23,27 @@ export default function CourseDetails() {
     fetchCourse();
   }, [courseId]);
 
+   // פונקציה לניתוב לעמוד התשלום
+   const handlePurchase = () => {
+    navigate(`/payment/${courseId}`); // ניתוב לעמוד CoursePayment עם מזהה הקורס
+  };
+
   if (!course) {
     return <p>טוען פרטים...</p>;
   }
 
   return (
     <div className="course-details-container">
-      <h1>{course.name}</h1>
+      <h1>שם: {course.name}</h1>
       {course.image && <img src={course.image} alt={course.name} />}
       <p>{course.description}</p>
       <p>מחיר: {course.price} ש"ח</p>
+      
+      {/* הוספת כפתור לרכישה */}
+      <button onClick={handlePurchase} className="purchase-button">רכוש קורס</button>
+
+      {/* הצגת הודעת רכישה */}
+      {purchaseMessage && <p>{purchaseMessage}</p>}
     </div>
   );
 }

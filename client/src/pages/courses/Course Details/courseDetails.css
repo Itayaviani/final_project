@@ -1,0 +1,45 @@
+.course-details-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.course-details-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.course-details-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.course-details-container p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.purchase-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #28a745; /* צבע הכפתור */
+  color: #ffffff;
+  border: none;
+  border-radius: 50px; /* פינות עגולות יותר */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 15px;
+}
+
+.purchase-button:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* צל נוסף בכפתור */
+}

@@ -1,32 +1,56 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./register.css";
 
 export default function Register() {
-  const [inputData, setInputData] = useState({});
+  const [inputData, setInputData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    password: ""
+  });
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate(); // נווט לדף התחברות
 
   const handleChange = (e) => {
+    // בכל שינוי, העדכון של השדות
     setInputData({ ...inputData, [e.target.name]: e.target.value });
+    setErrorMessage(""); // איפוס הודעת השגיאה בזמן שמשתמש משנה נתון
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputData);
 
     try {
+      // שליחת הנתונים לשרת
       const response = await axios.post(
         "http://localhost:3000/api/v1/users/register",
         inputData
       );
       console.log('Registration successful:', response.data);
 
-      // Navigate to login page after successful registration
-      // navigate('/login'); // Replace '/login' with the desired route
+      // הצגת הודעת הצלחה והמעבר לעמוד התחברות
+      alert('ההרשמה בוצעה בהצלחה, ברוך/ה הבא/ה!');
+      
+      // ריקון השדות לאחר הצלחה
+      setInputData({
+        name: "",
+        phone: "",
+        email: "",
+        password: ""
+      });
+
+      // נווט לדף התחברות
+      navigate('/login');
+
     } catch (error) {
-      console.error('Error during registration:', error.response?.data?.message || error.message);
-      setErrorMessage('Error occurred during registration. Please try again.');
+      // טיפול בהצגת הודעת השגיאה מהשרת אם יש
+      const serverMessage = error.response?.data?.message || 'ההרשמה נכשלה, אנא נסה/י מחדש.';
+      setErrorMessage(serverMessage); // שמירת הודעת השגיאה ב-state
+
+      // הצגת הודעת השגיאה למשתמש ב-alert
+      alert(serverMessage);
     }
   };
 
@@ -40,6 +64,7 @@ export default function Register() {
             <input
               type="text"
               name="name"
+              value={inputData.name} // חיבור ל-state של inputData
               onChange={handleChange}
               placeholder="שם מלא"
               required
@@ -50,6 +75,7 @@ export default function Register() {
             <input
               type="text"
               name="phone"
+              value={inputData.phone} // חיבור ל-state של inputData
               onChange={handleChange}
               placeholder="טלפון"
               required
@@ -60,6 +86,7 @@ export default function Register() {
             <input
               type="email"
               name="email"
+              value={inputData.email} // חיבור ל-state של inputData
               onChange={handleChange}
               placeholder="אימייל"
               required
@@ -70,6 +97,7 @@ export default function Register() {
             <input
               type="password"
               name="password"
+              value={inputData.password} // חיבור ל-state של inputData
               onChange={handleChange}
               placeholder="סיסמא"
               required
@@ -77,7 +105,10 @@ export default function Register() {
           </div>
           <button type="submit" className="btn-register">להרשמה</button>
         </form>
+
+        {/* הצגת הודעת שגיאה בממשק אם ישנה */}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
+        
         <div className="navToLogin">
           <p className="register-link">
             כבר רשום/ה? <Link to="/login">להתחברות</Link>
