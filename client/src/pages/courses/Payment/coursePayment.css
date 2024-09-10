@@ -1,7 +1,8 @@
+/* עיצוב עבור כפתורי ויזה ומאסטרקארד */
 .card-type-selection {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .card-type-button {
@@ -20,4 +21,12 @@
 .card-type-button.selected {
   border: 2px solid #28a745;
   border-radius: 8px;
+}
+
+/* הודעת שגיאה עבור כפתורי התשלום */
+.card-error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-align: center;
 }

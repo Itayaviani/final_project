@@ -19,8 +19,10 @@ export default function CoursePayment() {
     creditCard: '',
     expirationDate: '',
     cvv: '',
+    cardType: '',
   });
 
+  const [submitted, setSubmitted] = useState(false); // משתנה לבדיקת אם המשתמש ניסה לשלוח את הטופס
   const [isFormValid, setIsFormValid] = useState(false); // סטטוס תקינות הטופס
 
   // פונקציה לוודא תקינות כל השדות
@@ -34,6 +36,7 @@ export default function CoursePayment() {
       creditCard: creditCard.length !== 16 && creditCard.length > 0 ? 'מספר כרטיס האשראי חייב להכיל 16 ספרות.' : '',
       expirationDate: (expirationDate.length !== 5 || !expirationDate.includes('/')) && expirationDate.length > 0 ? 'תוקף הכרטיס חייב להיות בפורמט MM/YY.' : '',
       cvv: cvv.length !== 3 && cvv.length > 0 ? 'CVV חייב להכיל 3 ספרות.' : '',
+      cardType: !selectedCardType ? 'יש לבחור אמצעי תשלום (ויזה או מאסטרקארד).' : '',
     };
 
     setErrors(newErrors);
@@ -44,7 +47,7 @@ export default function CoursePayment() {
   // עדכון סטטוס הטופס בכל שינוי של שדה
   useEffect(() => {
     setIsFormValid(validateForm());
-  }, [fullName, email, creditCard, expirationDate, cvv]);
+  }, [fullName, email, creditCard, expirationDate, cvv, selectedCardType]);
 
   const handleCreditCardChange = (e) => {
     const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
@@ -76,8 +79,17 @@ export default function CoursePayment() {
 
   const handlePayment = (e) => {
     e.preventDefault();
+    setSubmitted(true); // סימון שנשלח הטופס
 
-    if (isFormValid) {
+    // בדיקה אם כל שדות הקלט תקינים, אך אם אמצעי תשלום לא נבחר, יש להציג הודעת שגיאה
+    if (!selectedCardType) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        cardType: 'יש לבחור אמצעי תשלום (ויזה או מאסטרקארד).',
+      }));
+    }
+
+    if (isFormValid && selectedCardType) {
       console.log(`המשתמש ${fullName} רוכש את הקורס עם מזהה ${courseId}`);
 
       navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
@@ -137,6 +149,9 @@ export default function CoursePayment() {
             <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard" />
           </button>
         </div>
+
+        {/* הצגת שגיאה אם לא נבחר כרטיס רק לאחר ניסיון תשלום */}
+        {submitted && !selectedCardType && <span className="card-error">{errors.cardType}</span>}
 
         {/* שדות נוספים של כרטיס אשראי */}
         <div className="form-group">
