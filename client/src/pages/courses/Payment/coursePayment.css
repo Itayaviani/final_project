@@ -1,150 +1,23 @@
-/* עיצוב מתקדם ומרשים לדף התשלום */
-.payment-page-container {
-    max-width: 600px;
-    margin: 60px auto;
-    padding: 50px;
-    background: linear-gradient(135deg, #ffffff, #f8f9fa);
-    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.2);
-    border-radius: 18px;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .payment-page-container:hover {
-    transform: scale(1.01);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-  }
-  
-  h1 {
-    font-size: 3em;
-    color: #333;
-    margin-bottom: 35px;
-    font-weight: 800;
-    letter-spacing: 1.7px;
-    text-transform: uppercase;
-    position: relative;
-  }
-  
-  h1::after {
-    content: '';
-    width: 80px;
-    height: 6px;
-    display: block;
-    margin: 15px auto;
-    border-radius: 3px;
-    opacity: 0.85;
-  }
-  
-  .payment-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .form-group {
-    margin-bottom: 28px;
-    width: 100%;
-    position: relative;
-  }
-  
-  .form-group label {
-    font-size: 1.4em;
-    color: #444;
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 16px;
-    font-size: 1.2em;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    background-color: #f9f9f9;
-    transition: all 0.3s ease;
-    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.05);
-  }
-  
-  .form-group input:focus {
-    border-color: #007bff;
-    background-color: #eef6ff;
-    outline: none;
-    box-shadow: 0 0 12px rgba(0, 123, 255, 0.3);
-  }
-  
-  .success {
-    color: #28a745;
-    font-size: 1.5em;
-    margin-left: 10px;
-    display: inline-block;
-    transition: all 0.3s ease-in-out;
-    transform: scale(1);
-  }
-  
-  .success:hover {
-    transform: scale(1.2);
-  }
-  
-  .error {
-    color: #e74c3c;
-    font-size: 0.9em;
-    margin-top: 5px;
-    display: block;
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-  }
-  
-  .submit-button {
-    background: linear-gradient(135deg, #28a745, #218838);
-    color: white;
-    padding: 18px 35px;
-    font-size: 1.4em;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(40, 167, 69, 0.4);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-  
-  .submit-button:disabled {
-    background-color: #bbb;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-  
-  .submit-button:hover:enabled {
-    background: linear-gradient(135deg, #218838, #1e7e34);
-    box-shadow: 0 12px 25px rgba(40, 167, 69, 0.6);
-    transform: translateY(-4px);
-  }
-  
-  .submit-button:focus {
-    outline: none;
-  }
-  
-  @media screen and (max-width: 600px) {
-    .payment-page-container {
-      padding: 35px;
-    }
-  
-    h1 {
-      font-size: 2.5em;
-    }
-  
-    .form-group input {
-      padding: 14px;
-      font-size: 1.1em;
-    }
-  
-    .submit-button {
-      font-size: 1.2em;
-      padding: 14px 28px;
-    }
-  }
-  
+.card-type-selection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.card-type-button {
+  border: 2px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0 10px;
+  padding: 10px;
+}
+
+.card-type-button img {
+  width: 50px;
+  height: auto;
+}
+
+.card-type-button.selected {
+  border: 2px solid #28a745;
+  border-radius: 8px;
+}

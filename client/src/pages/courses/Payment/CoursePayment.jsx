@@ -11,6 +11,7 @@ export default function CoursePayment() {
   const [creditCard, setCreditCard] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
+  const [selectedCardType, setSelectedCardType] = useState(''); // מצב הכפתור הנבחר (ויזה או מאסטרקארד)
 
   const [errors, setErrors] = useState({
     fullName: '',
@@ -24,8 +25,8 @@ export default function CoursePayment() {
 
   // פונקציה לוודא תקינות כל השדות
   const validateForm = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/; // אימות אימייל בפורמט example@example.com או example@example.co.il
-    const fullNameRegex = /^[A-Za-z\u0590-\u05FF\s]+$/; // אימות שהשם המלא מכיל רק אותיות בעברית/אנגלית ורווחים
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const fullNameRegex = /^[A-Za-z\u0590-\u05FF\s]+$/;
 
     const newErrors = {
       fullName: !fullNameRegex.test(fullName) && fullName.length > 0 ? 'שם מלא יכול להכיל רק אותיות בעברית או באנגלית ורווחים.' : '',
@@ -37,7 +38,6 @@ export default function CoursePayment() {
 
     setErrors(newErrors);
 
-    // הטופס תקין אם אין הודעות שגיאה
     return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv;
   };
 
@@ -70,16 +70,17 @@ export default function CoursePayment() {
     }
   };
 
+  const handleCardTypeSelect = (type) => {
+    setSelectedCardType(type); // עדכון אמצעי התשלום הנבחר
+  };
+
   const handlePayment = (e) => {
     e.preventDefault();
 
-    // בדיקת תקינות הטופס לפני שליחת התשלום
     if (isFormValid) {
-      // תוכל להוסיף כאן את הלוגיקה שלך לשליחת נתוני התשלום לשרת
       console.log(`המשתמש ${fullName} רוכש את הקורס עם מזהה ${courseId}`);
 
-      // לאחר הצלחת התשלום, ניתוב לדף תודה
-      navigate('/thank-you'); // ניתוב לדף תודה
+      navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
     }
   };
 
@@ -87,6 +88,8 @@ export default function CoursePayment() {
     <div className="payment-page-container">
       <h1>הכנס פרטי תשלום</h1>
       <form onSubmit={handlePayment} className="payment-form">
+
+        {/* שדות שם מלא ואימייל */}
         <div className="form-group">
           <label>שם מלא:</label>
           <input
@@ -101,6 +104,7 @@ export default function CoursePayment() {
             <span className="success">✔</span>
           )}
         </div>
+
         <div className="form-group">
           <label>אימייל:</label>
           <input
@@ -115,6 +119,26 @@ export default function CoursePayment() {
             <span className="success">✔</span>
           )}
         </div>
+
+        {/* כפתורי ויזה ומאסטרקארד */}
+        <div className="card-type-selection">
+          <button
+            type="button"
+            className={`card-type-button ${selectedCardType === 'visa' ? 'selected' : ''}`}
+            onClick={() => handleCardTypeSelect('visa')}
+          >
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" />
+          </button>
+          <button
+            type="button"
+            className={`card-type-button ${selectedCardType === 'mastercard' ? 'selected' : ''}`}
+            onClick={() => handleCardTypeSelect('mastercard')}
+          >
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard" />
+          </button>
+        </div>
+
+        {/* שדות נוספים של כרטיס אשראי */}
         <div className="form-group">
           <label>מספר כרטיס אשראי:</label>
           <input
@@ -129,6 +153,7 @@ export default function CoursePayment() {
             <span className="success">✔</span>
           )}
         </div>
+
         <div className="form-group">
           <label>תוקף כרטיס:</label>
           <input
@@ -158,6 +183,7 @@ export default function CoursePayment() {
             <span className="success">✔</span>
           )}
         </div>
+
         <button
           type="submit"
           className="submit-button"
