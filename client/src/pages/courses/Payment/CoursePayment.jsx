@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios'; // ייבוא axios לביצוע בקשות HTTP
 import './coursePayment.css'; // ייבוא עיצוב מתאים
 
 export default function CoursePayment() {
@@ -77,6 +78,17 @@ export default function CoursePayment() {
     setSelectedCardType(type); // עדכון אמצעי התשלום הנבחר
   };
 
+  // פונקציה לשליחת הנתונים לשרת
+  const handlePurchase = async (purchaseData) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/v1/courses/purchase', purchaseData);
+      console.log('Purchase successful:', response.data);
+      navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
+    } catch (error) {
+      console.error('Error making purchase:', error);
+    }
+  };
+
   const handlePayment = (e) => {
     e.preventDefault();
     setSubmitted(true); // סימון שנשלח הטופס
@@ -90,9 +102,13 @@ export default function CoursePayment() {
     }
 
     if (isFormValid && selectedCardType) {
-      console.log(`המשתמש ${fullName} רוכש את הקורס עם מזהה ${courseId}`);
+      const purchaseData = {
+        fullName,
+        email,
+        courseId,
+      };
 
-      navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
+      handlePurchase(purchaseData); // קריאה לפונקציה ששולחת את הנתונים לשרת
     }
   };
 

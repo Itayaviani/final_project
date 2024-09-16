@@ -14,6 +14,7 @@ import AddCourse from './pages/courses/add course/AddCourse';
 import EditCourse from './pages/courses/Edit Course/EditCourse';
 import CourseDetails from './pages/courses/Course Details/CourseDetails';
 import CoursePayment from './pages/courses/Payment/CoursePayment';
+import ThankYou from './pages/courses/thankYou/ThankYou';
 import FeminineLook from './pages/feminineLook/FeminineLook';
 import NiceToMeet from './pages/niceToMeet/NiceToMeet';
 import PersonalProcess from './pages/personalProcess/PersonalProcess';
@@ -79,6 +80,7 @@ function App() {
           <Route path="/edit-course/:courseId" element={<EditCourse />} /> {/* נתיב לעריכת קורס */}
           <Route path="/course-details/:courseId" element={<CourseDetails />} /> {/* נתיב לפרטי קורס */}
           <Route path="/payment/:courseId" element={<CoursePayment />} /> 
+          <Route path="/thank-you" element={<ThankYou />} />
           <Route path='/niceToMeet' element={<NiceToMeet />} />
           <Route path='/personalProcess' element={<PersonalProcess />} />
           <Route path='/communitiesAndOrganizations' element={<CommunitiesAndOrganizations />} />

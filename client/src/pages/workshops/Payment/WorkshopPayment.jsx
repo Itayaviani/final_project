@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios'; // נוסיף את axios לשליחת בקשת רכישה
 import './workshopPayment.css'; // ייבוא עיצוב מתאים
 
 export default function WorkshopPayment() {
   const { workshopId } = useParams(); // קבלת מזהה הסדנה שנרכשה מהנתיב
   const navigate = useNavigate();
-
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [creditCard, setCreditCard] = useState('');
@@ -70,16 +70,39 @@ export default function WorkshopPayment() {
     }
   };
 
-  const handlePayment = (e) => {
+const handlePurchase = async () => {
+  const purchaseData = {
+    fullName,
+    email,
+    workshopId, // ודא שזה workshopId ולא courseId
+  };
+
+  try {
+    const response = await axios.post('http://localhost:3000/api/v1/workshops/purchase', purchaseData);
+    console.log('Purchase successful:', response.data);
+  } catch (error) {
+    console.error('Error making purchase:', error);
+  }
+};
+
+  
+
+  const handlePayment = async (e) => {
     e.preventDefault();
 
     // בדיקת תקינות הטופס לפני שליחת התשלום
     if (isFormValid) {
-      // תוכל להוסיף כאן את הלוגיקה שלך לשליחת נתוני התשלום לשרת
-      console.log(`המשתמש ${fullName} רוכש את הסדנה עם מזהה ${workshopId}`);
+      const purchaseData = {
+        fullName,
+        email,
+        workshopId, // מזהה הסדנה שנרכשה
+      };
 
-      // לאחר הצלחת התשלום, ניתוב לדף תודה
-      navigate('/thank-you'); // ניתוב לדף תודה
+      // שליחת הנתונים לשרת
+      await handlePurchase(purchaseData);
+
+      // ניתוב לדף תודה לאחר הצלחת התשלום
+      navigate('/thank-you');
     }
   };
 

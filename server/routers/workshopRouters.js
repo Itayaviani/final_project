@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Workshop = require('../models/WorkshopModel');
+const { sendOrderConfirmationEmail } = require('../utils/emailService');
 
 // Route to add a new workshop
 router.post('/', async (req, res) => {
@@ -75,5 +76,27 @@ router.put('/:id', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+router.post('/purchase', async (req, res) => {
+  console.log('התחלת עיבוד בקשת רכישת סדנה');
+  const { fullName, email, workshopId } = req.body; // וודא שזה workshopId ולא courseId
+
+  try {
+    const workshop = await Workshop.findById(workshopId); // משתמש במזהה של סדנה
+    if (!workshop) {
+      console.log('סדנה לא נמצאה');
+      return res.status(404).json({ error: 'סדנה לא נמצאה' });
+    }
+
+    await sendOrderConfirmationEmail(email, fullName, workshop.name, workshopId);
+    console.log('רכישת הסדנה הצליחה והמייל נשלח');
+
+    res.status(200).send('הרכישה שלך התקבלה בהצלחה!');
+  } catch (err) {
+    console.error('שגיאה במהלך עיבוד רכישת הסדנה:', err);
+    res.status(500).json({ error: 'כשל בעיבוד הרכישה' });
+  }
+});
+
 
 module.exports = router;
