@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './WorkshopDetail.css';
 
-
 export default function WorkshopDetail() {
   const { workshopId } = useParams(); // שימוש ב-useParams לקבלת ה-workshopId מהנתיב
   const [workshop, setWorkshop] = useState(null);
@@ -25,7 +24,6 @@ export default function WorkshopDetail() {
   // פונקציה לניתוב לעמוד התשלום
   const handlePurchase = () => {
     navigate(`/payment/workshops/${workshopId}`);
-
   };
 
   if (!workshop) {
@@ -35,7 +33,9 @@ export default function WorkshopDetail() {
   return (
     <div className="workshop-details-container">
       <h1>שם הסדנא: {workshop.name}</h1>
-      {workshop.image && <img src={workshop.image} alt={workshop.name} />}
+      {workshop.image && (
+        <img src={`http://localhost:3000/${workshop.image}`} alt={workshop.name} className="workshop-image" />
+      )}
       <p>{workshop.description}</p>
       <p>מחיר: {workshop.price} ש"ח</p>
       

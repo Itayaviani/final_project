@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// הגדרת סכימת הסדנא עם סוגי השדות והדרישות שלהם
+// הגדרת סכימת הסדנה עם סוגי השדות והדרישות שלהם
 const workshopSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -25,9 +25,19 @@ const workshopSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // ברירת מחדל היא התאריך הנוכחי בעת יצירת המסמך
   },
+  participants: {
+    type: Number,
+    default: 0, // ברירת מחדל היא 0 משתתפים בתחילת הסדנה
+    min: [0, 'Participants count cannot be negative'], // הבטחה שהמספר לא שלילי
+  },
+  capacity: {
+    type: Number,
+    required: [true, 'Workshop capacity is required'], // יש להגדיר קיבולת עבור כל סדנה
+    min: [1, 'Workshop capacity must be at least 1'], // קיבולת מינימלית של 1 משתתף
+  },
 });
 
-// יצירת מודל סדנא על בסיס הסכימה
+// יצירת מודל סדנה על בסיס הסכימה
 const Workshop = mongoose.model("Workshop", workshopSchema);
 
 // ייצוא המודל לשימוש במקומות אחרים באפליקציה

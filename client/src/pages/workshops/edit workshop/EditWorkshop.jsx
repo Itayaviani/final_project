@@ -9,17 +9,19 @@ export default function EditWorkshop() {
   const [workshopDescription, setWorkshopDescription] = useState('');
   const [workshopPrice, setWorkshopPrice] = useState('');
   const [workshopImage, setWorkshopImage] = useState('');
+  const [workshopCapacity, setWorkshopCapacity] = useState(''); // הוספת קיבולת
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWorkshop = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/workshops/${workshopId}`);
-        const { name, description, price, image } = response.data;
+        const { name, description, price, image, capacity } = response.data;
         setWorkshopName(name);
         setWorkshopDescription(description);
         setWorkshopPrice(price);
         setWorkshopImage(image);
+        setWorkshopCapacity(capacity); // קביעת ערך הקיבולת
       } catch (error) {
         console.error('Failed to fetch workshop:', error);
       }
@@ -30,14 +32,23 @@ export default function EditWorkshop() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', workshopName);
+    formData.append('description', workshopDescription);
+    formData.append('price', workshopPrice);
+    formData.append('capacity', workshopCapacity);
+    if (workshopImage) {
+      formData.append('image', workshopImage);
+    }
+
     try {
-      await axios.put(`http://localhost:3000/api/v1/workshops/${workshopId}`, {
-        name: workshopName,
-        description: workshopDescription,
-        price: workshopPrice,
-        image: workshopImage,
+      await axios.put(`http://localhost:3000/api/v1/workshops/${workshopId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      
+
       navigate('/workshops');
     } catch (error) {
       console.error('Failed to edit workshop:', error);
@@ -45,7 +56,7 @@ export default function EditWorkshop() {
   };
 
   const handleImageChange = (e) => {
-    setWorkshopImage(e.target.value);
+    setWorkshopImage(e.target.files[0]);
   };
 
   return (
@@ -80,14 +91,31 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>תמונה לסדנא:</label>
+            <label>קיבולת משתתפים:</label>
             <input
-              type="text"
-              value={workshopImage}
-              onChange={handleImageChange}
+              type="number"
+              value={workshopCapacity}
+              onChange={(e) => setWorkshopCapacity(e.target.value)}
+              required
             />
           </div>
-          <button type="submit" className="submit-button">שמור שינויים</button>
+          
+          {/* הצגת התמונה הנוכחית מעל שדה העלאת התמונה החדשה */}
+          {workshopImage && typeof workshopImage === 'string' && (
+            <div className="current-image">
+              <p>תמונה נוכחית:</p>
+              <img src={`http://localhost:3000/${workshopImage}`} alt="Current Workshop" className="workshop-image" />
+            </div>
+          )}
+          
+          <div className="form-group">
+            <label>עדכן תמונה חדשה:</label>
+            <input type="file" accept="image/*" onChange={handleImageChange} />
+          </div>
+
+          <button type="submit" className="submit-button">
+            שמור שינויים
+          </button>
         </form>
       </div>
     </div>

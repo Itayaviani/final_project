@@ -2,11 +2,43 @@ const express = require('express');
 const router = express.Router();
 const Workshop = require('../models/WorkshopModel');
 const { sendOrderConfirmationEmail } = require('../utils/emailService');
+const multer = require('multer');
+const path = require('path');
 
-// Route to add a new workshop
-router.post('/', async (req, res) => {
+// הגדרת אחסון התמונות
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// חשיפת תיקיית 'uploads' כמשאב סטטי
+router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// נתיב להוספת סדנה חדשה
+router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const newWorkshop = new Workshop(req.body);
+    const { name, description, price, capacity } = req.body;
+
+    // קבלת נתיב התמונה שהועלתה
+    let workshopImagePath = req.file ? req.file.path : '';
+
+    // החלפת כל התווים ההפוכים בתווים רגילים כדי לוודא שהתמונה ניתנת לשליפה כראוי
+    workshopImagePath = workshopImagePath.replace(/\\/g, '/');
+
+    const newWorkshop = new Workshop({
+      name,
+      description,
+      price,
+      capacity,
+      image: workshopImagePath, // שמירת הנתיב המעודכן
+    });
+
     await newWorkshop.save();
     res.status(201).json(newWorkshop);
   } catch (err) {
@@ -17,7 +49,7 @@ router.post('/', async (req, res) => {
 // Route to get all workshops
 router.get('/', async (req, res) => {
   try {
-    const workshops = await Workshop.find({}, 'name price description'); // Fetch only required fields
+    const workshops = await Workshop.find(); // שלוף את כל השדות ללא הגבלה
     res.json(workshops);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -51,11 +83,11 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Route to update a workshop by ID
-router.put('/:id', async (req, res) => {
+// נתיב לעדכון סדנה
+router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, image } = req.body;
+    const { name, description, price, capacity } = req.body;
 
     // Find the workshop by ID
     const workshop = await Workshop.findById(id);
@@ -67,36 +99,58 @@ router.put('/:id', async (req, res) => {
     workshop.name = name || workshop.name;
     workshop.description = description || workshop.description;
     workshop.price = price || workshop.price;
-    workshop.image = image || workshop.image; // Retain existing image if not updated
+    workshop.capacity = capacity || workshop.capacity;
+
+    // Update the image only if a new one is uploaded
+    if (req.file) {
+      workshop.image = req.file.path.replace(/\\/g, '/');
+    }
 
     const updatedWorkshop = await workshop.save();
 
     res.json(updatedWorkshop);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error('Failed to update workshop:', err);
+    res.status(500).json({ error: 'Failed to update workshop' });
   }
 });
 
+// נתיב לרכישת סדנה
 router.post('/purchase', async (req, res) => {
-  console.log('התחלת עיבוד בקשת רכישת סדנה');
-  const { fullName, email, workshopId } = req.body; // וודא שזה workshopId ולא courseId
+  console.log('Start processing workshop purchase request');  // לוג למעקב
+  const { fullName, email, workshopId } = req.body;
 
+  console.log('Received purchase data:', { fullName, email, workshopId });  // לוג למעקב
+
+  // חפש את שם הסדנה על פי ה-workshopId
   try {
-    const workshop = await Workshop.findById(workshopId); // משתמש במזהה של סדנה
+    const workshop = await Workshop.findById(workshopId);
     if (!workshop) {
-      console.log('סדנה לא נמצאה');
-      return res.status(404).json({ error: 'סדנה לא נמצאה' });
+      console.log('Workshop not found');  // לוג אם הסדנה לא נמצאה
+      return res.status(404).json({ error: 'Workshop not found' });
     }
 
-    await sendOrderConfirmationEmail(email, fullName, workshop.name, workshopId);
-    console.log('רכישת הסדנה הצליחה והמייל נשלח');
+    console.log('Workshop found:', workshop.name);  // לוג אם הסדנה נמצאה
 
-    res.status(200).send('הרכישה שלך התקבלה בהצלחה!');
+    // בדיקה אם הסדנה הגיעה לתפוסה המקסימלית
+    if (workshop.participants >= workshop.capacity) {
+      console.log('Workshop is full');  // לוג אם הסדנה מלאה
+      return res.status(400).json({ error: 'The workshop is full. Registration is not possible.' });
+    }
+
+    // עדכון מספר המשתתפים בסדנה
+    workshop.participants += 1;
+    await workshop.save();
+
+    // שלח את המייל עם שם הסדנה הנכון
+    await sendOrderConfirmationEmail(email, fullName, workshop.name, workshopId);
+    console.log('Email sent successfully');  // לוג להצלחה בשליחת המייל
+
+    res.status(200).send('הזמנתך לסדנה התקבלה בהצלחה!');
   } catch (err) {
-    console.error('שגיאה במהלך עיבוד רכישת הסדנה:', err);
-    res.status(500).json({ error: 'כשל בעיבוד הרכישה' });
+    console.error('Error occurred during workshop purchase process:', err);  // לוג במקרה של שגיאה
+    res.status(500).json({ error: 'Failed to process workshop purchase' });
   }
 });
-
 
 module.exports = router;

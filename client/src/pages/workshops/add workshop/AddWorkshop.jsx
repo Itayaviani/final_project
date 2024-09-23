@@ -7,16 +7,31 @@ export default function AddWorkshop({ addWorkshop }) {
   const [workshopName, setWorkshopName] = useState('');
   const [workshopDescription, setWorkshopDescription] = useState('');
   const [workshopPrice, setWorkshopPrice] = useState('');
+  const [workshopCapacity, setWorkshopCapacity] = useState(''); // הוספת שדה לקיבולת הסדנה
   const [workshopImage, setWorkshopImage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(workshopName, workshopDescription, workshopPrice, workshopImage);
+    console.log(workshopName, workshopDescription, workshopPrice, workshopCapacity, workshopImage);
+    
     try {
+      // יצירת אובייקט FormData כדי לשלוח את הנתונים כולל התמונה
+      const formData = new FormData();
+      formData.append('name', workshopName);
+      formData.append('description', workshopDescription);
+      formData.append('price', workshopPrice);
+      formData.append('capacity', workshopCapacity);
+      formData.append('image', workshopImage);
+
       const response = await axios.post(
         'http://localhost:3000/api/v1/workshops',
-        { name: workshopName, description: workshopDescription, price: workshopPrice, image: workshopImage }
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
 
       addWorkshop(response.data);
@@ -58,6 +73,15 @@ export default function AddWorkshop({ addWorkshop }) {
             type="number"
             value={workshopPrice}
             onChange={(e) => setWorkshopPrice(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>קיבולת משתתפים בסדנא:</label>
+          <input
+            type="number"
+            value={workshopCapacity}
+            onChange={(e) => setWorkshopCapacity(e.target.value)}
             required
           />
         </div>

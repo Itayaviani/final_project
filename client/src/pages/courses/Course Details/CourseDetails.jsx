@@ -35,7 +35,7 @@ export default function CourseDetails() {
   return (
     <div className="course-details-container">
       <h1>שם: {course.name}</h1>
-      {course.image && <img src={course.image} alt={course.name} />}
+      {course.image && <img src={`http://localhost:3000/${course.image}`} alt={course.name} className="course-image" />}
       <p>{course.description}</p>
       <p>מחיר: {course.price} ש"ח</p>
       

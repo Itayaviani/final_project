@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './workshops.css' // ייבוא קובץ ה-CSS
+import './workshops.css'; // ייבוא קובץ ה-CSS
 
 export default function Workshops({ isAdmin }) {
   const [workshops, setWorkshops] = useState([]);
@@ -10,14 +10,18 @@ export default function Workshops({ isAdmin }) {
     const fetchWorkshops = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/v1/workshops');
-        setWorkshops(response.data);
+
+        // סינון הסדנאות כך שרק סדנאות שאינן מלאות יוצגו למשתמשים רגילים
+        const filteredWorkshops = isAdmin ? response.data : response.data.filter(workshop => workshop.participants < workshop.capacity);
+        
+        setWorkshops(filteredWorkshops);
       } catch (error) {
         console.error('Failed to fetch workshops:', error);
       }
     };
 
     fetchWorkshops();
-  }, []);
+  }, [isAdmin]);
 
   const handleDelete = async (workshopId) => {
     try {
@@ -55,11 +59,21 @@ export default function Workshops({ isAdmin }) {
             <div key={workshop._id} className="workshop-card">
               <h3>{workshop.name}</h3>
               {workshop.image && (
-                <img src={workshop.image} alt={workshop.name} />
+                <img src={`http://localhost:3000/${workshop.image}`} alt={workshop.name} />
               )}
               <p>{workshop.description}</p>
               <p className="price">מחיר: {workshop.price} ש"ח</p>
+
+              {/* הצגת מספר המשתתפים ותאריך היצירה רק אם המשתמש הוא אדמין */}
+              {isAdmin && (
+                <div>
+                  <p className="participants">משתתפים בסדנה: {workshop.participants} מתוך {workshop.capacity}</p>
+                  <p className="creation-date">נפתחה בתאריך: {new Date(workshop.createdAt).toLocaleDateString()}</p>
+                </div>
+              )}
+
               <button onClick={() => handleDetails(workshop._id)} className="details-button">פרטים נוספים</button>
+              
               {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
               {isAdmin && (
                 <div className="workshop-actions">
