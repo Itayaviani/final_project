@@ -10,14 +10,18 @@ export default function Courses({ isAdmin }) {
     const fetchCourses = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/v1/courses');
-        setCourses(response.data);
+        
+        // סינון הקורסים כך שרק קורסים שאינם מלאים יוצגו למשתמשים רגילים
+        const filteredCourses = isAdmin ? response.data : response.data.filter(course => course.participants < course.capacity);
+        
+        setCourses(filteredCourses);
       } catch (error) {
         console.error('Failed to fetch courses:', error);
       }
     };
 
     fetchCourses();
-  }, []);
+  }, [isAdmin]);
 
   const handleDelete = async (courseId) => {
     try {
@@ -55,17 +59,21 @@ export default function Courses({ isAdmin }) {
             <div key={course._id} className="course-card">
               <h3>{course.name}</h3>
               {course.image && (
-                <img src={`http://localhost:3000/${course.image}`} alt={course.name} /> // הכנסתי את הקוד המעודכן כאן
+                <img src={`http://localhost:3000/${course.image}`} alt={course.name} />
               )}
               <p>{course.description}</p>
               <p className="price">מחיר: {course.price} ש"ח</p>
 
               {/* הצגת מספר המשתתפים רק אם המשתמש הוא אדמין */}
               {isAdmin && (
-                <p className="participants">משתתפים בקורס: {course.participants} מתוך {course.capacity}</p>
+                <div>
+                  <p className="participants">משתתפים בקורס: {course.participants} מתוך {course.capacity}</p>
+                  <p className="creation-date">נפתח בתאריך: {new Date(course.createdAt).toLocaleDateString()}</p>
+                </div>
               )}
 
               <button onClick={() => handleDetails(course._id)} className="details-button">פרטים נוספים</button>
+              
               {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
               {isAdmin && (
                 <div className="course-actions">
