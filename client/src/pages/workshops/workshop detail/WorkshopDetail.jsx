@@ -24,7 +24,8 @@ export default function WorkshopDetail() {
 
   // פונקציה לניתוב לעמוד התשלום
   const handlePurchase = () => {
-    navigate(`/payment/${workshopId}`); // ניתוב לעמוד CoursePayment עם מזהה הסדנא
+    navigate(`/payment/workshops/${workshopId}`);
+
   };
 
   if (!workshop) {

@@ -7,16 +7,23 @@ export default function AddCourse({ addCourse }) {
   const [courseName, setCourseName] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
   const [coursePrice, setCoursePrice] = useState('');
+  const [courseCapacity, setCourseCapacity] = useState(''); // שדה חדש עבור הקיבולת
   const [courseImage, setCourseImage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(courseName, courseDescription, coursePrice, courseImage);
+    console.log(courseName, courseDescription, coursePrice, courseCapacity, courseImage);
     try {
       const response = await axios.post(
         'http://localhost:3000/api/v1/courses',
-        { name: courseName, description: courseDescription, price: coursePrice, image: courseImage }
+        { 
+          name: courseName, 
+          description: courseDescription, 
+          price: coursePrice, 
+          capacity: courseCapacity, // העברת הקיבולת בבקשה
+          image: courseImage 
+        }
       );
 
       addCourse(response.data);
@@ -58,6 +65,15 @@ export default function AddCourse({ addCourse }) {
             type="number"
             value={coursePrice}
             onChange={(e) => setCoursePrice(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>קיבולת משתתפים:</label>
+          <input
+            type="number"
+            value={courseCapacity}
+            onChange={(e) => setCourseCapacity(e.target.value)}
             required
           />
         </div>

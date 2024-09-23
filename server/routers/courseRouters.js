@@ -17,12 +17,13 @@ router.post('/', async (req, res) => {
 // Route to get all courses
 router.get('/', async (req, res) => {
   try {
-    const courses = await Course.find({}, 'name price description'); // Fetch only required fields
+    const courses = await Course.find(); // שלוף את כל השדות ללא הגבלה
     res.json(courses);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // Route to get a course by ID
 router.get('/:id', async (req, res) => {
@@ -94,6 +95,16 @@ router.post('/purchase', async (req, res) => {
     }
 
     console.log('Course found:', course.name);  // לוג אם הקורס נמצא
+
+        // בדיקה אם הקורס הגיע לתפוסה המקסימלית
+        if (course.participants >= course.capacity) {
+          console.log('Course is full');  // לוג אם הקורס מלא
+          return res.status(400).json({ error: 'The course is full. Registration is not possible.' });
+        }
+
+            // עדכון מספר המשתתפים בקורס
+        course.participants += 1;
+        await course.save();
 
     // שלח את המייל עם שם הקורס הנכון
     await sendOrderConfirmationEmail(email, fullName, course.name, courseId);

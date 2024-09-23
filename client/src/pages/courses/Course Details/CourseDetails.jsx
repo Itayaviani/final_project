@@ -25,7 +25,7 @@ export default function CourseDetails() {
 
    // פונקציה לניתוב לעמוד התשלום
    const handlePurchase = () => {
-    navigate(`/payment/${courseId}`); // ניתוב לעמוד CoursePayment עם מזהה הקורס
+    navigate(`/payment/courses/${courseId}`);
   };
 
   if (!course) {

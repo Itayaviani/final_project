@@ -79,7 +79,7 @@ function App() {
           <Route path="/add-course" element={<AddCourse addCourse={addCourse} />} />
           <Route path="/edit-course/:courseId" element={<EditCourse />} /> {/* נתיב לעריכת קורס */}
           <Route path="/course-details/:courseId" element={<CourseDetails />} /> {/* נתיב לפרטי קורס */}
-          <Route path="/payment/:courseId" element={<CoursePayment />} /> 
+          <Route path="/payment/courses/:courseId" element={<CoursePayment />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path='/niceToMeet' element={<NiceToMeet />} />
           <Route path='/personalProcess' element={<PersonalProcess />} />
@@ -88,7 +88,7 @@ function App() {
           <Route path="/add-workshop" element={<AddWorkshop addWorkshop={addWorkshop}/>} /> {}
           <Route path="/edit-workshop/:workshopId" element={<EditWorkshop />} /> {/* נתיב לעריכת סדנא */}
           <Route path="/workshop-details/:workshopId" element={<WorkshopDetail />} /> {/* נתיב לפרטי סדנא */}
-          <Route path="/payment/workshop/:workshopId" element={<WorkshopPayment />} />
+          <Route path="/payment/workshops/:workshopId" element={<WorkshopPayment />} />
           <Route path='/projects' element={<Projects />} />
           <Route path='/contactUs' element={<ContactsUs />} />
           {isAdmin && <Route path='/admin' element={<AdminPanel />} />}

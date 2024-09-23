@@ -25,6 +25,16 @@ const courseSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // ברירת מחדל היא התאריך הנוכחי בעת יצירת המסמך
   },
+  participants: {
+    type: Number,
+    default: 0, // ברירת מחדל היא 0 משתתפים בתחילת הקורס
+    min: [0, 'Participants count cannot be negative'], // הבטחה שהמספר לא שלילי
+  },
+  capacity: {
+    type: Number,
+    required: [true, 'Course capacity is required'], // יש להגדיר קיבולת עבור כל קורס
+    min: [1, 'Course capacity must be at least 1'], // קיבולת מינימלית של 1 משתתף
+  },
 });
 
 // יצירת מודל קורס על בסיס הסכימה

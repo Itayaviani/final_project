@@ -13,6 +13,9 @@ export default function CoursePayment() {
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
   const [selectedCardType, setSelectedCardType] = useState(''); // מצב הכפתור הנבחר (ויזה או מאסטרקארד)
+  const [isCourseFull, setIsCourseFull] = useState(false); // סטטוס האם הקורס מלא
+  const [participants, setParticipants] = useState(0); // מספר המשתתפים הנוכחי
+  const [capacity, setCapacity] = useState(0); // תפוסה מקסימלית של הקורס
 
   const [errors, setErrors] = useState({
     fullName: '',
@@ -45,10 +48,28 @@ export default function CoursePayment() {
     return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv;
   };
 
-  // עדכון סטטוס הטופס בכל שינוי של שדה
+  // בדיקת תקינות טופס
   useEffect(() => {
     setIsFormValid(validateForm());
   }, [fullName, email, creditCard, expirationDate, cvv, selectedCardType]);
+
+  // קבלת פרטי הקורס
+  useEffect(() => {
+    const fetchCourseDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/v1/courses/${courseId}`);
+        const course = response.data;
+
+        setParticipants(course.participants);
+        setCapacity(course.capacity);
+        setIsCourseFull(course.participants >= course.capacity); // בדיקה אם הקורס מלא
+      } catch (error) {
+        console.error('Error fetching course details:', error);
+      }
+    };
+
+    fetchCourseDetails();
+  }, [courseId]);
 
   const handleCreditCardChange = (e) => {
     const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
@@ -101,7 +122,7 @@ export default function CoursePayment() {
       }));
     }
 
-    if (isFormValid && selectedCardType) {
+    if (isFormValid && selectedCardType && !isCourseFull) {
       const purchaseData = {
         fullName,
         email,
@@ -115,6 +136,8 @@ export default function CoursePayment() {
   return (
     <div className="payment-page-container">
       <h1>הכנס פרטי תשלום</h1>
+      <p>מספר המשתתפים הנוכחי: {participants}/{capacity}</p>
+      {isCourseFull && <p className="error">הקורס מלא. לא ניתן לבצע רכישה נוספת.</p>}
       <form onSubmit={handlePayment} className="payment-form">
 
         {/* שדות שם מלא ואימייל */}
@@ -218,7 +241,7 @@ export default function CoursePayment() {
         <button
           type="submit"
           className="submit-button"
-          disabled={!isFormValid}
+          disabled={!isFormValid || isCourseFull} // מניעת לחיצה אם הקורס מלא
         >
           בצע תשלום
         </button>

@@ -59,6 +59,14 @@ export default function Courses({ isAdmin }) {
               )}
               <p>{course.description}</p>
               <p className="price">מחיר: {course.price} ש"ח</p>
+
+              {/* הצגת מספר המשתתפים רק אם המשתמש הוא אדמין */}
+              {console.log(course)}
+
+              {isAdmin && (
+                <p className="participants">משתתפים בקורס: {course.participants} מתוך {course.capacity}</p>
+              )}
+
               <button onClick={() => handleDetails(course._id)} className="details-button">פרטים נוספים</button>
               {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
               {isAdmin && (

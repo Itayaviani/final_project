@@ -11,6 +11,7 @@ export default function WorkshopPayment() {
   const [creditCard, setCreditCard] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
+  const [selectedCardType, setSelectedCardType] = useState(''); // הוספת מצב של הכפתור הנבחר (ויזה או מאסטרקארד)
 
   const [errors, setErrors] = useState({
     fullName: '',
@@ -18,8 +19,10 @@ export default function WorkshopPayment() {
     creditCard: '',
     expirationDate: '',
     cvv: '',
+    cardType: '', // הוספת שדה שגיאה עבור סוג הכרטיס
   });
 
+  const [submitted, setSubmitted] = useState(false); // משתנה לבדיקת אם המשתמש ניסה לשלוח את הטופס
   const [isFormValid, setIsFormValid] = useState(false); // סטטוס תקינות הטופס
 
   // פונקציה לוודא תקינות כל השדות
@@ -33,18 +36,19 @@ export default function WorkshopPayment() {
       creditCard: creditCard.length !== 16 && creditCard.length > 0 ? 'מספר כרטיס האשראי חייב להכיל 16 ספרות.' : '',
       expirationDate: (expirationDate.length !== 5 || !expirationDate.includes('/')) && expirationDate.length > 0 ? 'תוקף הכרטיס חייב להיות בפורמט MM/YY.' : '',
       cvv: cvv.length !== 3 && cvv.length > 0 ? 'CVV חייב להכיל 3 ספרות.' : '',
+      cardType: !selectedCardType ? 'יש לבחור אמצעי תשלום (ויזה או מאסטרקארד).' : '', // בדיקת שגיאה עבור סוג הכרטיס
     };
 
     setErrors(newErrors);
 
     // הטופס תקין אם אין הודעות שגיאה
-    return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv;
+    return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv && !newErrors.cardType;
   };
 
   // עדכון סטטוס הטופס בכל שינוי של שדה
   useEffect(() => {
     setIsFormValid(validateForm());
-  }, [fullName, email, creditCard, expirationDate, cvv]);
+  }, [fullName, email, creditCard, expirationDate, cvv, selectedCardType]);
 
   const handleCreditCardChange = (e) => {
     const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
@@ -70,39 +74,32 @@ export default function WorkshopPayment() {
     }
   };
 
-const handlePurchase = async () => {
-  const purchaseData = {
-    fullName,
-    email,
-    workshopId, // ודא שזה workshopId ולא courseId
+  const handleCardTypeSelect = (type) => {
+    setSelectedCardType(type); // עדכון אמצעי התשלום הנבחר
   };
 
-  try {
-    const response = await axios.post('http://localhost:3000/api/v1/workshops/purchase', purchaseData);
-    console.log('Purchase successful:', response.data);
-  } catch (error) {
-    console.error('Error making purchase:', error);
-  }
-};
+  const handlePurchase = async () => {
+    const purchaseData = {
+      fullName,
+      email,
+      workshopId, // ודא שזה workshopId ולא courseId
+    };
 
-  
+    try {
+      const response = await axios.post('http://localhost:3000/api/v1/workshops/purchase', purchaseData);
+      console.log('Purchase successful:', response.data);
+    } catch (error) {
+      console.error('Error making purchase:', error);
+    }
+  };
 
   const handlePayment = async (e) => {
     e.preventDefault();
+    setSubmitted(true); // סימון שנשלח הטופס
 
-    // בדיקת תקינות הטופס לפני שליחת התשלום
     if (isFormValid) {
-      const purchaseData = {
-        fullName,
-        email,
-        workshopId, // מזהה הסדנה שנרכשה
-      };
-
-      // שליחת הנתונים לשרת
-      await handlePurchase(purchaseData);
-
-      // ניתוב לדף תודה לאחר הצלחת התשלום
-      navigate('/thank-you');
+      await handlePurchase();
+      navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
     }
   };
 
@@ -118,12 +115,9 @@ const handlePurchase = async () => {
             onChange={(e) => setFullName(e.target.value)}
             required
           />
-          {errors.fullName ? (
-            <span className="error">{errors.fullName}</span>
-          ) : fullName.length > 0 && (
-            <span className="success">✔</span>
-          )}
+          {errors.fullName && <span className="error">{errors.fullName}</span>}
         </div>
+
         <div className="form-group">
           <label>אימייל:</label>
           <input
@@ -132,12 +126,30 @@ const handlePurchase = async () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          {errors.email ? (
-            <span className="error">{errors.email}</span>
-          ) : email.length > 0 && (
-            <span className="success">✔</span>
-          )}
+          {errors.email && <span className="error">{errors.email}</span>}
         </div>
+
+        {/* הוספת כפתורי ויזה ומאסטרקארד */}
+        <div className="card-type-selection">
+          <button
+            type="button"
+            className={`card-type-button ${selectedCardType === 'visa' ? 'selected' : ''}`}
+            onClick={() => handleCardTypeSelect('visa')}
+          >
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" />
+          </button>
+          <button
+            type="button"
+            className={`card-type-button ${selectedCardType === 'mastercard' ? 'selected' : ''}`}
+            onClick={() => handleCardTypeSelect('mastercard')}
+          >
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="MasterCard" />
+          </button>
+        </div>
+
+        {/* הצגת שגיאה אם לא נבחר כרטיס רק לאחר ניסיון תשלום */}
+        {submitted && !selectedCardType && <span className="card-error">{errors.cardType}</span>}
+
         <div className="form-group">
           <label>מספר כרטיס אשראי:</label>
           <input
@@ -146,12 +158,9 @@ const handlePurchase = async () => {
             onChange={handleCreditCardChange}
             required
           />
-          {errors.creditCard ? (
-            <span className="error">{errors.creditCard}</span>
-          ) : creditCard.length === 16 && (
-            <span className="success">✔</span>
-          )}
+          {errors.creditCard && <span className="error">{errors.creditCard}</span>}
         </div>
+
         <div className="form-group">
           <label>תוקף כרטיס:</label>
           <input
@@ -161,12 +170,9 @@ const handlePurchase = async () => {
             onChange={handleExpirationDateChange}
             required
           />
-          {errors.expirationDate ? (
-            <span className="error">{errors.expirationDate}</span>
-          ) : expirationDate.length === 5 && expirationDate.includes('/') && (
-            <span className="success">✔</span>
-          )}
+          {errors.expirationDate && <span className="error">{errors.expirationDate}</span>}
         </div>
+
         <div className="form-group">
           <label>CVV:</label>
           <input
@@ -175,12 +181,9 @@ const handlePurchase = async () => {
             onChange={handleCvvChange}
             required
           />
-          {errors.cvv ? (
-            <span className="error">{errors.cvv}</span>
-          ) : cvv.length === 3 && (
-            <span className="success">✔</span>
-          )}
+          {errors.cvv && <span className="error">{errors.cvv}</span>}
         </div>
+
         <button
           type="submit"
           className="submit-button"
