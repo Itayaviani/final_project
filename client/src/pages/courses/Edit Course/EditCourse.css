@@ -8,8 +8,21 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     font-family: 'Arial', sans-serif; /* Consistent font */
     color: #333; /* Dark text color for contrast */
+    direction: rtl;
+    text-align: right;
   }
   
+  /* הגדרת סגנון לתמונה */
+.edit-course-container img {
+  max-width: 100%; /* הגדר את התמונה כך שתהיה ברוחב מקסימלי של 100% מהאלמנט המכיל */
+  height: auto; /* שמירת יחס הגובה-רוחב של התמונה */
+  display: block; /* מבטיח שהתמונה לא תהיה אלמנט inline */
+  margin: 0 auto; /* ממרכז את התמונה */
+  border: 1px solid #ccc; /* אופציונלי: מסגרת מסביב לתמונה */
+  padding: 5px; /* אופציונלי: ריווח מסביב לתמונה */
+  max-height: 300px; /* הגבלת גובה מקסימלי של התמונה */
+}
+
   /* Styling for the header */
   .edit-course-container h1 {
     text-align: center; /* Center the title */

@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import './EditCourse.css'; // Import the CSS file
+import './EditCourse.css'; // ייבוא קובץ ה-CSS
 
 export default function EditCourse() {
   const { courseId } = useParams();
   const [courseName, setCourseName] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
   const [coursePrice, setCoursePrice] = useState('');
-  const [courseImage, setCourseImage] = useState('');
+  const [courseCapacity, setCourseCapacity] = useState(''); // שדה חדש לקיבולת
+  const [courseImage, setCourseImage] = useState(null); // שדה עבור העלאת קובץ תמונה
+  const [currentImage, setCurrentImage] = useState(''); // שמירה של התמונה הנוכחית
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/courses/${courseId}`);
-        const { name, description, price, image } = response.data;
+        const { name, description, price, capacity, image } = response.data; // קבלת ערך הקיבולת והתמונה מהשרת
         setCourseName(name);
         setCourseDescription(description);
         setCoursePrice(price);
-        setCourseImage(image);
+        setCourseCapacity(capacity); // הגדרת הקיבולת
+        setCurrentImage(image); // הגדרת התמונה הנוכחית
       } catch (error) {
         console.error('Failed to fetch course:', error);
       }
@@ -30,12 +33,24 @@ export default function EditCourse() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // הכנת הנתונים לשליחה
+    const formData = new FormData();
+    formData.append('name', courseName);
+    formData.append('description', courseDescription);
+    formData.append('price', coursePrice);
+    formData.append('capacity', courseCapacity);
+    
+    // הוספת התמונה במידה ונבחרה
+    if (courseImage) {
+      formData.append('image', courseImage);
+    }
+
     try {
-      await axios.put(`http://localhost:3000/api/v1/courses/${courseId}`, {
-        name: courseName,
-        description: courseDescription,
-        price: coursePrice,
-        image: courseImage,
+      await axios.put(`http://localhost:3000/api/v1/courses/${courseId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // הגדרת סוג הנתונים כ-FormData
+        },
       });
       
       navigate('/courses');
@@ -45,7 +60,7 @@ export default function EditCourse() {
   };
 
   const handleImageChange = (e) => {
-    setCourseImage(e.target.value);
+    setCourseImage(e.target.files[0]);
   };
 
   return (
@@ -80,10 +95,27 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>תמונה לקורס:</label>
+            <label>קיבולת משתתפים:</label>
             <input
-              type="text"
-              value={courseImage}
+              type="number"
+              value={courseCapacity}
+              onChange={(e) => setCourseCapacity(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>תמונה נוכחית:</label>
+            {currentImage && (
+              <div className="current-image">
+                <img src={`http://localhost:3000/${currentImage}`} alt="Current Course" />
+              </div>
+            )}
+          </div>
+          <div className="form-group">
+            <label>עדכן תמונה חדשה:</label>
+            <input
+              type="file"
+              accept="image/*"
               onChange={handleImageChange}
             />
           </div>

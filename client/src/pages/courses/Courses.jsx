@@ -55,14 +55,12 @@ export default function Courses({ isAdmin }) {
             <div key={course._id} className="course-card">
               <h3>{course.name}</h3>
               {course.image && (
-                <img src={course.image} alt={course.name} />
+                <img src={`http://localhost:3000/${course.image}`} alt={course.name} /> // הכנסתי את הקוד המעודכן כאן
               )}
               <p>{course.description}</p>
               <p className="price">מחיר: {course.price} ש"ח</p>
 
               {/* הצגת מספר המשתתפים רק אם המשתמש הוא אדמין */}
-              {console.log(course)}
-
               {isAdmin && (
                 <p className="participants">משתתפים בקורס: {course.participants} מתוך {course.capacity}</p>
               )}

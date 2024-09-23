@@ -136,7 +136,6 @@ export default function CoursePayment() {
   return (
     <div className="payment-page-container">
       <h1>הכנס פרטי תשלום</h1>
-      <p>מספר המשתתפים הנוכחי: {participants}/{capacity}</p>
       {isCourseFull && <p className="error">הקורס מלא. לא ניתן לבצע רכישה נוספת.</p>}
       <form onSubmit={handlePayment} className="payment-form">
 

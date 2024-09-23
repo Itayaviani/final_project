@@ -2,11 +2,43 @@ const express = require('express');
 const router = express.Router();
 const Course = require('../models/CourseModel');
 const { sendOrderConfirmationEmail } = require('../utils/emailService');
+const multer = require('multer');
+const path = require('path');
 
-// Route to add a new course
-router.post('/', async (req, res) => {
+// הגדרת אחסון התמונות
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// חשיפת תיקיית 'uploads' כמשאב סטטי
+router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// נתיב להוספת קורס חדש
+router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const newCourse = new Course(req.body);
+    const { name, description, price, capacity } = req.body;
+
+    // קבלת נתיב התמונה שהועלתה
+    let courseImagePath = req.file ? req.file.path : '';
+
+    // החלפת כל התווים ההפוכים בתווים רגילים כדי לוודא שהתמונה ניתנת לשליפה כראוי
+    courseImagePath = courseImagePath.replace(/\\/g, '/');
+
+    const newCourse = new Course({
+      name,
+      description,
+      price,
+      capacity,
+      image: courseImagePath, // שמירת הנתיב המעודכן
+    });
+
     await newCourse.save();
     res.status(201).json(newCourse);
   } catch (err) {
@@ -23,7 +55,6 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 // Route to get a course by ID
 router.get('/:id', async (req, res) => {
@@ -52,11 +83,11 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Route to update a course by ID
-router.put('/:id', async (req, res) => {
+// נתיב לעדכון קורס
+router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, image } = req.body;
+    const { name, description, price, capacity } = req.body;
 
     // Find the course by ID
     const course = await Course.findById(id);
@@ -68,13 +99,19 @@ router.put('/:id', async (req, res) => {
     course.name = name || course.name;
     course.description = description || course.description;
     course.price = price || course.price;
-    course.image = image || course.image; // Retain existing image if not updated
+    course.capacity = capacity || course.capacity;
+
+    // Update the image only if a new one is uploaded
+    if (req.file) {
+      course.image = req.file.path;
+    }
 
     const updatedCourse = await course.save();
 
     res.json(updatedCourse);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error('Failed to update course:', err);
+    res.status(500).json({ error: 'Failed to update course' });
   }
 });
 
@@ -96,15 +133,15 @@ router.post('/purchase', async (req, res) => {
 
     console.log('Course found:', course.name);  // לוג אם הקורס נמצא
 
-        // בדיקה אם הקורס הגיע לתפוסה המקסימלית
-        if (course.participants >= course.capacity) {
-          console.log('Course is full');  // לוג אם הקורס מלא
-          return res.status(400).json({ error: 'The course is full. Registration is not possible.' });
-        }
+    // בדיקה אם הקורס הגיע לתפוסה המקסימלית
+    if (course.participants >= course.capacity) {
+      console.log('Course is full');  // לוג אם הקורס מלא
+      return res.status(400).json({ error: 'The course is full. Registration is not possible.' });
+    }
 
-            // עדכון מספר המשתתפים בקורס
-        course.participants += 1;
-        await course.save();
+    // עדכון מספר המשתתפים בקורס
+    course.participants += 1;
+    await course.save();
 
     // שלח את המייל עם שם הקורס הנכון
     await sendOrderConfirmationEmail(email, fullName, course.name, courseId);
@@ -116,7 +153,5 @@ router.post('/purchase', async (req, res) => {
     res.status(500).json({ error: 'Failed to process purchase' });
   }
 });
-
-
 
 module.exports = router;
