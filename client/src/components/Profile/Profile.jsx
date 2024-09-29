@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // להוסיף קישור לעריכת הפרופיל
 import axios from 'axios';
 import './Profile.css';
 
@@ -6,6 +7,7 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [error, setError] = useState('');
 
+  // משיכת פרטי המשתמש
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -36,6 +38,11 @@ const Profile = () => {
           <p>אימייל: {user.email}</p>
           <p>טלפון: {user.phone}</p>
         </div>
+
+        {/* כפתור עריכת פרופיל */}
+        <Link to={`/edit-user/${user._id}`} className="edit-profile-button">
+          ערוך פרופיל
+        </Link>
       </div>
     </div>
   );

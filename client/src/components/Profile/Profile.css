@@ -100,3 +100,25 @@ body {
   margin: 20px auto; /* Center the error box */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
+
+/* Styling the 'Edit Profile' button */
+.edit-profile-button {
+  display: inline-block;
+  padding: 12px 25px;
+  margin-top: 30px;
+  background-color: #0265e6; /* Button background color */
+  color: #fff; /* Button text color */
+  font-size: 1.2em;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
+
+.edit-profile-button:hover {
+  background-color: #055bef; /* Darker blue on hover */
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+}

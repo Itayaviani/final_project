@@ -5,9 +5,9 @@ import Login from './components/Login/Login';
 import HomePage from './pages/homePage/HomePage';
 import NavBar from './components/navBar/NavBar';
 import Workshops from './pages/workshops/Workshops';
-import AddWorkshop from './pages/workshops/add workshop/AddWorkshop'
-import EditWorkshop from './pages/workshops/edit workshop/EditWorkshop'
-import WorkshopDetail from './pages/workshops/workshop detail/WorkshopDetail'
+import AddWorkshop from './pages/workshops/add workshop/AddWorkshop';
+import EditWorkshop from './pages/workshops/edit workshop/EditWorkshop';
+import WorkshopDetail from './pages/workshops/workshop detail/WorkshopDetail';
 import WorkshopPayment from './pages/workshops/Payment/WorkshopPayment'; 
 import Courses from './pages/courses/Courses';
 import AddCourse from './pages/courses/add course/AddCourse';
@@ -33,6 +33,7 @@ function App() {
   const [username, setUsername] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
 
+  // בדיקה אם המשתמש מחובר
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
     const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
@@ -45,6 +46,7 @@ function App() {
     }
   }, []);
 
+  // ניתוק המשתמש
   const handleLogout = () => {
     localStorage.removeItem('username');
     localStorage.removeItem('isAdmin');
@@ -55,17 +57,15 @@ function App() {
   };
 
   const [courses, setCourses] = useState([]);
+  const [workshops, setWorkshops] = useState([]);
 
   const addCourse = (course) => {
     setCourses([...courses, course]);
   };
 
-  const [workshops, setWorkshops] = useState([]);
-
   const addWorkshop = (workshop) => {
     setWorkshops([...workshops, workshop]);
   };
-
 
   return (
     <div>
@@ -77,27 +77,37 @@ function App() {
           <Route path='/register' element={<Signup />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setIsAdmin={setIsAdmin} />} />
           <Route path='/feminineLook' element={<FeminineLook />} />
+          
+          {/* ניהול קורסים */}
           <Route path='/courses' element={<Courses courses={courses} isAdmin={isAdmin}/>} />
           <Route path="/add-course" element={<AddCourse addCourse={addCourse} />} />
-          <Route path="/edit-course/:courseId" element={<EditCourse />} /> {/* נתיב לעריכת קורס */}
-          <Route path="/course-details/:courseId" element={<CourseDetails />} /> {/* נתיב לפרטי קורס */}
+          <Route path="/edit-course/:courseId" element={<EditCourse />} />
+          <Route path="/course-details/:courseId" element={<CourseDetails />} />
           <Route path="/payment/courses/:courseId" element={<CoursePayment />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          
+          {/* ניהול סדנאות */}
+          <Route path='/workshops' element={<Workshops workshops={workshops} isAdmin={isAdmin} />} />
+          <Route path="/add-workshop" element={<AddWorkshop addWorkshop={addWorkshop}/>} />
+          <Route path="/edit-workshop/:workshopId" element={<EditWorkshop />} />
+          <Route path="/workshop-details/:workshopId" element={<WorkshopDetail />} />
+          <Route path="/payment/workshops/:workshopId" element={<WorkshopPayment />} />
+
+          {/* דפים נוספים */}
           <Route path='/niceToMeet' element={<NiceToMeet />} />
           <Route path='/personalProcess' element={<PersonalProcess />} />
           <Route path='/communitiesAndOrganizations' element={<CommunitiesAndOrganizations />} />
-          <Route path='/workshops' element={<Workshops workshops={workshops} isAdmin={isAdmin} />} />
-          <Route path="/add-workshop" element={<AddWorkshop addWorkshop={addWorkshop}/>} /> {}
-          <Route path="/edit-workshop/:workshopId" element={<EditWorkshop />} /> {/* נתיב לעריכת סדנא */}
-          <Route path="/workshop-details/:workshopId" element={<WorkshopDetail />} /> {/* נתיב לפרטי סדנא */}
-          <Route path="/payment/workshops/:workshopId" element={<WorkshopPayment />} />
           <Route path='/projects' element={<Projects />} />
           <Route path='/contactUs' element={<ContactsUs />} />
+
+          {/* ניהול מערכת */}
           {isAdmin && <Route path='/admin' element={<AdminPanel />} />}
-          <Route path="/users" element={<UserList />} /> {/* ניתוב לעמוד רשימת המשתמשים */}
-          <Route path="/admin/coursesList" element={<CoursesList />} /> {/* עדכון הנתיב הייחודי */}
-          {isAdmin && <Route path='/edit-user/:id' element={<EditUser />} />}
+          {isAdmin && <Route path='/users' element={<UserList />} />}
+          {isAdmin && <Route path='/admin/coursesList' element={<CoursesList />} />}
+
+          {/* פרופיל משתמש */}
           {isLoggedIn && <Route path='/profile' element={<Profile />} />}
+          {isLoggedIn && <Route path='/edit-user/:id' element={<EditUser setUsername={setUsername} />} />}
         </Routes>
       </BrowserRouter>
     </div>

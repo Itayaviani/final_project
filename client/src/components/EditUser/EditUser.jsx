@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './EditUser.css';
 
-const EditUser = () => {
-  const { id } = useParams();
+const EditUser = ({ setUsername }) => {
+  const { id } = useParams(); 
   const navigate = useNavigate();
   const [user, setUser] = useState({ name: '', phone: '', email: '' });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(''); // הודעת הצלחה
 
+  // משיכת פרטי המשתמש כאשר הקומפוננטה נטענת
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -19,11 +21,7 @@ const EditUser = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        if (response.data && response.data.data) {
-          setUser(response.data.data); // עדכון נכון של המשתמש
-        } else {
-          setError('User data not found');
-        }
+        setUser(response.data.data.user); 
         setLoading(false);
       } catch (err) {
         setError('Error fetching user details');
@@ -46,19 +44,31 @@ const EditUser = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      navigate('/admin');
+
+      // עדכון השם בגלובלי וב־localStorage
+      localStorage.setItem('username', user.name);
+      setUsername(user.name);
+
+      setSuccess('User details updated successfully!');
+      setError('');
+      setTimeout(() => {
+        navigate('/profile'); // חזרה לפרופיל לאחר 2 שניות
+      }, 2000);
+
     } catch (err) {
       setError('Error updating user details');
+      setSuccess('');
     }
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="edit-user-container">
       <div className="edit-user-form-container">
-        <h2>עריכת משתמש</h2>
+        <h2>עריכת פרטי משתמש</h2>
         {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">{success}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>שם משתמש:</label>
