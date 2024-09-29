@@ -25,6 +25,8 @@ import AdminPanel from './components/admin/AdminPanel';
 import EditUser from './components/EditUser/EditUser';
 import Profile from './components/Profile/Profile';
 import ContactsUs from './pages/contactsUs/ContactsUs';
+import UserList from './components/admin/users/UserList';
+import CoursesList from './components/admin/courses/CoursesList';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -92,6 +94,8 @@ function App() {
           <Route path='/projects' element={<Projects />} />
           <Route path='/contactUs' element={<ContactsUs />} />
           {isAdmin && <Route path='/admin' element={<AdminPanel />} />}
+          <Route path="/users" element={<UserList />} /> {/* ניתוב לעמוד רשימת המשתמשים */}
+          <Route path="/admin/coursesList" element={<CoursesList />} /> {/* עדכון הנתיב הייחודי */}
           {isAdmin && <Route path='/edit-user/:id' element={<EditUser />} />}
           {isLoggedIn && <Route path='/profile' element={<Profile />} />}
         </Routes>

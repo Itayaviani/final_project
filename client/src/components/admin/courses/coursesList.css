@@ -1,0 +1,62 @@
+/* CoursesList.css */
+.courses-list {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .courses-list h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .courses-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .courses-list th, .courses-list td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .courses-list th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  .courses-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .courses-list .error-message {
+    color: red;
+    text-align: center;
+  }
+  
+  .courses-list button {
+    margin: 2px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .courses-list button:hover {
+    background-color: #45a049;
+  }
+  
+  .courses-list button.delete {
+    background-color: #f44336;
+  }
+  
+  .courses-list button.delete:hover {
+    background-color: #e53935;
+  }
+  

@@ -1,0 +1,62 @@
+/* UserList.css */
+.user-list {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .user-list h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .user-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .user-list th, .user-list td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .user-list th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  .user-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .user-list .error-message {
+    color: red;
+    text-align: center;
+  }
+  
+  .user-list button {
+    margin: 2px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .user-list button:hover {
+    background-color: #45a049;
+  }
+  
+  .user-list button.delete {
+    background-color: #f44336;
+  }
+  
+  .user-list button.delete:hover {
+    background-color: #e53935;
+  }
+  

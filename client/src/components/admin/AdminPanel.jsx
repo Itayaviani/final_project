@@ -5,7 +5,7 @@ import './AdminPanel.css';
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
-  const [courses, setCourses] = useState([]); // State for courses
+  const [courses, setCourses] = useState([]); // סטייט לקורסים
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ const AdminPanel = () => {
         });
         setUsers(response.data.data.users);
       } catch (err) {
-        setError('Error fetching users');
+        setError('שגיאה בטעינת משתמשים');
       }
     };
 
@@ -29,7 +29,7 @@ const AdminPanel = () => {
         const response = await axios.get('http://localhost:3000/api/v1/courses');
         setCourses(response.data);
       } catch (err) {
-        setError('Error fetching courses');
+        setError('שגיאה בטעינת קורסים');
       }
     };
 
@@ -47,12 +47,12 @@ const AdminPanel = () => {
       });
       setUsers(users.filter(user => user._id !== id));
     } catch (err) {
-      setError('Error deleting user');
+      setError('שגיאה במחיקת המשתמש');
     }
   };
 
   const handleEditUser = (id) => {
-    navigate(`/edit-user/${id}`); // Navigate to edit user page
+    navigate(`/edit-user/${id}`); // ניווט לדף עריכת המשתמש
   };
 
   const handleDeleteCourse = async (id) => {
@@ -60,79 +60,25 @@ const AdminPanel = () => {
       await axios.delete(`http://localhost:3000/api/v1/courses/${id}`);
       setCourses(courses.filter(course => course._id !== id));
     } catch (err) {
-      setError('Error deleting course');
+      setError('שגיאה במחיקת הקורס');
     }
   };
 
   const handleEditCourse = (id) => {
-    navigate(`/edit-course/${id}`); // Navigate to edit course page
+    navigate(`/edit-course/${id}`); // ניווט לדף עריכת הקורס
   };
 
   return (
     <div className="admin-panel">
-      <h1>Admin Panel</h1>
+      <h1>לוח ניהול</h1>
       <div className="category-container">
-
-        {/* Users Section */}
-        <div className="category">
-          <h2>משתמשים</h2>
-          {error && <p className="error-message">{error}</p>}
-          <table>
-            <thead>
-              <tr>
-                <th>שם משתמש</th>
-                <th>מספר פלאפון</th>
-                <th>אימייל</th>
-                <th>פעולות</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user._id}>
-                  <td>{user.name}</td>
-                  <td>{user.phone}</td>
-                  <td>{user.email}</td>
-                  <td>
-                    <button onClick={() => handleEditUser(user._id)}>ערוך</button>
-                    <button onClick={() => handleDeleteUser(user._id)}>מחק</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Courses Section */}
-        <div className="category">
-          <h2>קורסים</h2>
-          {error && <p className="error-message">{error}</p>}
-          <table>
-            <thead>
-              <tr>
-                <th>שם קורס</th>
-                <th>מחיר</th>
-                <th>תיאור בקצרה</th>
-                <th>פעולות</th>
-              </tr>
-            </thead>
-            <tbody>
-              {courses.map((course) => (
-                <tr key={course._id}>
-                  <td>{course.name}</td>
-                  <td>{course.price} ש"ח</td>
-                  <td>{course.description}</td>
-                  <td>
-                    <button onClick={() => handleEditCourse(course._id)}>ערוך</button>
-                    <button onClick={() => handleDeleteCourse(course._id)}>מחק</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        
+        {/* הוספת כפתור המשתמשים */}
+        <button onClick={() => navigate('/users')}>משתמשים</button> {/* ניווט לעמוד המשתמשים */}
+        <button onClick={() => navigate('/admin/coursesList')}>קורסים</button> {/* עדכון לנתיב ייחודי */}
       </div>
     </div>
   );
-};
+  }
 
 export default AdminPanel;
