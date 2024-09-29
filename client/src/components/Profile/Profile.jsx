@@ -24,16 +24,18 @@ const Profile = () => {
   }, []);
 
   if (error) {
-    return <div className="error-message">{error}</div>;
+    return <div className="profile-wrapper"><div className="error-message">{error}</div></div>;
   }
 
   return (
-    <div className="profile-container">
-      <h1>פרופיל משתמש</h1>
-      <div className="profile-details">
-        <p>שם מלא: {user.name}</p>
-        <p>אימייל: {user.email}</p>
-        <p>טלפון: {user.phone}</p>
+    <div className="profile-wrapper">
+      <div className="profile-container">
+        <h1>פרופיל משתמש</h1>
+        <div className="profile-details">
+          <p>שם מלא: {user.name}</p>
+          <p>אימייל: {user.email}</p>
+          <p>טלפון: {user.phone}</p>
+        </div>
       </div>
     </div>
   );

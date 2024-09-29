@@ -1,92 +1,147 @@
-/* AdminPanel.css */
-
-.admin-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  
+/* Global Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom right, #ffffff, #f0f4f8); /* Soft gradient background */
+  color: #333;
 }
 
+/* Admin Panel Container */
+.admin-panel {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 40px; /* Increased padding for more spaciousness */
+  background-color: #f9fbfd; /* Light background with subtle blue tint */
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* More pronounced shadow for depth */
+  transition: transform 0.2s, box-shadow 0.2s; /* Added hover effect for the panel */
+}
+
+.admin-panel:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+}
+
+/* Panel Header */
 .admin-panel h1 {
   text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-  border-bottom: 2px solid #030303; /* הוספת קו תחתון */
-  padding-bottom: 10px; /* להבטיח שהקו לא יהיה צמוד לטקסט */
+  font-size: 40px; /* Slightly larger font size */
+  margin-bottom: 30px;
+  color: #2a9df4; /* Brighter blue for more impact */
+  font-weight: 800; /* Bolder font weight */
+  text-transform: uppercase;
+  letter-spacing: 2px; /* Increased letter spacing */
 }
 
+/* Category Container */
 .category-container {
   display: flex;
   flex-wrap: wrap;
+  gap: 30px; /* Increased space between categories */
   justify-content: center;
-  gap: 20px;
-  width: 100%;
 }
 
+/* Individual Category Box */
 .category {
-  flex: 1 1 30%;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 300px;
-  max-width: 400px;
-  margin: 10px;
+  flex: 1;
+  background: linear-gradient(to top right, #ffffff, #e9eef3); /* Gradient background for depth */
+  padding: 30px; /* Increased padding */
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  min-width: 320px;
+  transition: transform 0.2s, box-shadow 0.2s; /* Hover effect for categories */
 }
 
+.category:hover {
+  transform: translateY(-8px); /* Enhanced lift effect */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Stronger shadow on hover */
+}
+
+/* Category Heading */
 .category h2 {
-  border-bottom: 2px solid #4CAF50;
-  padding-bottom: 5px;
-  margin-bottom: 15px;
-  color: #4CAF50;
-  text-align: center; /* הוספתי את זה */
+  text-align: center;
+  font-size: 28px; /* Larger font for category titles */
+  color: #007bff; /* Bright blue color for titles */
+  margin-bottom: 25px; /* More space below the title */
+  border-bottom: 3px solid #2a9df4; /* Blue border for emphasis */
+  padding-bottom: 12px; /* Increased padding below text */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
-table {
+/* Table Styles */
+.category table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
-th, td {
-  padding: 12px;
-  border: 1px solid #ddd;
+.category th, .category td {
   text-align: left;
+  padding: 15px 20px; /* Increased padding */
+  border-bottom: 1px solid #dfe3e8; /* Softer border color */
+  font-size: 17px; /* Slightly larger text for better readability */
 }
 
-th {
-  background-color: #f2f2f2;
+.category th {
+  background-color: #2a9df4; /* Brighter blue for headers */
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+.category tr:nth-child(even) {
+  background-color: #f1f5f9; /* Softer alternate row color */
 }
 
-tbody tr:hover {
-  background-color: #f1f1f1;
+.category tr:hover {
+  background-color: #e3e9f0; /* Subtle hover effect for rows */
 }
 
-button {
-  padding: 6px 12px;
-  margin: 0 5px;
+/* Button Styles */
+.category button {
+  padding: 12px 20px; /* Increased padding */
+  font-size: 15px; /* Slightly larger font */
+  color: white;
+  background: linear-gradient(to right, #36d1dc, #5b86e5); /* Gradient background for buttons */
   border: none;
-  border-radius: 4px;
+  border-radius: 25px; /* More rounded buttons */
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s; /* Added box-shadow transition */
 }
 
-button:hover {
-  opacity: 0.8;
+.category button:hover {
+  background: linear-gradient(to right, #5b86e5, #36d1dc); /* Reverse gradient on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Shadow on hover */
 }
 
-button:active {
-  transform: scale(0.95);
+.category button:active {
+  transform: translateY(3px); /* Slight press effect */
 }
 
+/* Error Message */
 .error-message {
-  color: red;
-  font-weight: bold;
+  color: #e74c3c; /* Bright red color for errors */
   text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 18px; /* Slightly larger font for visibility */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .category-container {
+    flex-direction: column;
+    gap: 25px; /* Adjusted gap for vertical stacking */
+  }
+
+  .admin-panel {
+    padding: 20px; /* Reduced padding on smaller screens */
+  }
+
+  .category {
+    margin-bottom: 25px; /* Additional margin for spacing */
+  }
 }

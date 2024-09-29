@@ -1,41 +1,60 @@
-
-
+/* General container styling */
 .personal-process-container {
     font-family: 'Roboto', sans-serif;
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f5f5f5;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    text-align: center; /* מיישר את כל הטקסט במרכז */
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #f7f7f7;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-align: center;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
+/* Hover effect for the container */
+.personal-process-container:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+/* Section styling */
 .content-section {
-    padding: 30px;
+    padding: 40px;
     background-color: #ffffff;
-    margin: 20px 0;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center; /* מיישר את התוכן של כל סעיף למרכז */
+    margin: 30px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Hover effect for sections */
+.content-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Heading styling */
 .content-section h2 {
     color: #2c3e50;
-    font-size: 1.8em;
-    margin-bottom: 15px;
-    border-bottom: 3px solid #3498db;
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    border-bottom: 4px solid #3498db;
     display: inline-block;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
 }
 
+/* Paragraph styling */
 .content-section p {
     line-height: 1.8;
-    color: #444;
-    font-size: 1.1em;
-    margin: 10px 0;
+    color: #555;
+    font-size: 1.2em;
+    margin: 15px 0;
 }
 
+/* Link styling */
 .content-section a {
     color: #3498db;
     text-decoration: none;
@@ -45,14 +64,60 @@
 }
 
 .content-section a:hover {
-    text-decoration: none;
     color: #2c3e50;
     border-bottom: 2px solid #2c3e50;
 }
 
-.content-section p svg {
-    margin-right: 8px;
-    vertical-align: middle;
+/* Contact item styling */
+.contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.contact-icon {
+    margin-right: 10px;
     color: #3498db;
+    font-size: 1.5em;
+}
+
+/* Social media icons */
+.contact-item p {
+    margin: 0;
     font-size: 1.2em;
+    color: #444;
+    text-align: left;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .personal-process-container {
+        padding: 20px;
+    }
+
+    .content-section {
+        padding: 20px;
+    }
+
+    .content-section h2 {
+        font-size: 1.8em;
+    }
+
+    .content-section p {
+        font-size: 1em;
+    }
+
+    .content-section a {
+        font-size: 1em;
+    }
+
+    .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .contact-icon {
+        margin-bottom: 5px;
+    }
 }

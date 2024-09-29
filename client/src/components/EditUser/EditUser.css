@@ -1,89 +1,114 @@
-/* EditUser.css */
-
+/* General styling for the body and HTML */
 body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
-  }
-  
-  .edit-user-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 60px); /* כדי לקחת בחשבון את סרגל הניווט העליון */
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  .edit-user-form-container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  .edit-user-form-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333333;
-    font-size: 24px;
-  }
-  
-  .edit-user-form-container .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .edit-user-form-container .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 16px;
-    color: #555555;
-  }
-  
-  .edit-user-form-container .form-group input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #cccccc;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-  }
-  
-  .edit-user-form-container .form-group input:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  .edit-user-form-container button {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    color: #ffffff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .edit-user-form-container button:hover {
-    background-color: #0056b3;
-  }
-  
-  .error-message {
-    color: red;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .loading {
-    text-align: center;
-    font-size: 18px;
-    color: #555555;
-  }
-  
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #eceff1, #f0f2f5); /* Soft gradient background */
+}
+
+/* Container for the edit user form */
+.edit-user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px); /* Considering a top navbar */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Styling for the form container */
+.edit-user-form-container {
+  background-color: #ffffff;
+  padding: 50px; /* Increased padding for more space inside */
+  border-radius: 12px; /* Slightly more rounded corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Stronger shadow for more depth */
+  max-width: 800px; /* Increased max width for better spacing */
+  width: 100%;
+}
+
+/* Styling for the form header */
+.edit-user-form-container h2 {
+  text-align: center;
+  margin-bottom: 40px; /* Increased margin for better spacing */
+  color: #333333;
+  font-size: 30px; /* Larger font for emphasis */
+  font-weight: bold; /* Bold font for prominence */
+}
+
+/* Styling for the form groups */
+.edit-user-form-container .form-group {
+  margin-bottom: 25px; /* Increased margin between form groups */
+  display: flex; /* Flexbox for better layout control */
+  align-items: center; /* Center vertically */
+  justify-content: space-between; /* Space between elements */
+}
+
+/* Styling for the form labels */
+.edit-user-form-container .form-group label {
+  flex: 1; /* Let label take up necessary space */
+  text-align: left; /* Align text to the left */
+  font-size: 18px; /* Larger font size */
+  color: #333; /* Darker color for better contrast */
+  font-weight: 500; /* Medium font weight */
+  margin-right: 20px; /* Increased margin to separate from input */
+}
+
+/* Styling for the form inputs */
+.edit-user-form-container .form-group input {
+  flex: 3; /* Increased flex for more input space */
+  padding: 14px; /* Slightly larger padding for a more substantial feel */
+  font-size: 18px; /* Larger font size */
+  border-radius: 6px; /* Slightly more rounded corners */
+  border: 1px solid #cccccc;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+  width: 100%; /* Ensures inputs take full width available */
+}
+
+/* Focus effect for the form inputs */
+.edit-user-form-container .form-group input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* Soft blue glow on focus */
+  outline: none;
+}
+
+/* Styling for the submit button */
+.edit-user-form-container button {
+  width: 100%;
+  padding: 16px; /* Increased padding for a larger button */
+  font-size: 20px; /* Larger font size */
+  color: #ffffff;
+  background-color: #007bff; /* Standard blue color */
+  border: none;
+  border-radius: 6px; /* Consistent rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s; /* Added transform transition for better interaction */
+  margin-top: 20px; /* Margin to separate from form fields */
+}
+
+/* Hover effect for the submit button */
+.edit-user-form-container button:hover {
+  background-color: #0056b3;
+}
+
+/* Active effect for the submit button */
+.edit-user-form-container button:active {
+  transform: translateY(2px); /* Button press effect */
+}
+
+/* Styling for the error message */
+.error-message {
+  color: #d9534f; /* Red color for errors */
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold; /* Bold text for emphasis */
+}
+
+/* Styling for the loading message */
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #555555;
+  margin-top: 20px; /* Margin to separate from other elements */
+}

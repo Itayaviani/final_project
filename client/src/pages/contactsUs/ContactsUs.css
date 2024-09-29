@@ -17,7 +17,7 @@
   
   .map-container {
     margin-bottom: 30px;
-    border: 3px solid #4CAF50;
+    border: 3px solid #050606;
     border-radius: 10px;
     overflow: hidden;
   }
@@ -62,7 +62,7 @@
   .submit-btn {
     width: 100%;
     padding: 15px 20px;
-    background-color: #4CAF50;
+    background-color: #048fcf;
     color: white;
     border: none;
     border-radius: 5px;

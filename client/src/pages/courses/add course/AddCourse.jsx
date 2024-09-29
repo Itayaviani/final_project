@@ -1,48 +1,56 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './AddCourse.css'; // ייבוא קובץ ה-CSS
+
 
 export default function AddCourse({ addCourse }) {
   const [courseName, setCourseName] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
   const [coursePrice, setCoursePrice] = useState('');
+  const [courseCapacity, setCourseCapacity] = useState(''); // שדה חדש עבור הקיבולת
   const [courseImage, setCourseImage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('name', courseName);
-    formData.append('description', courseDescription);
-    formData.append('price', coursePrice);
-    if (courseImage) {
-      formData.append('image', courseImage);
-    }
-
+    console.log(courseName, courseDescription, coursePrice, courseCapacity, courseImage);
+    
     try {
-      const response = await axios.post('http://localhost:3001/api/courses', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      // הוספת הקורס לתוך ה-state לאחר שהתקבלה תגובה חיובית מהשרת
+      // יצירת FormData והוספת כל השדות הרלוונטיים
+      const formData = new FormData();
+      formData.append('name', courseName);
+      formData.append('description', courseDescription);
+      formData.append('price', coursePrice);
+      formData.append('capacity', courseCapacity); // הוספת קיבולת
+      if (courseImage) {
+        formData.append('image', courseImage);
+      }
+  
+      const response = await axios.post(
+        'http://localhost:3000/api/v1/courses',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+  
       addCourse(response.data);
-
-      // ניווט חזרה לעמוד הקורסים
       navigate('/courses');
     } catch (error) {
       console.error('Failed to add course:', error);
     }
   };
+  
 
   const handleImageChange = (e) => {
     setCourseImage(e.target.files[0]);
   };
 
   return (
-    <div>
+    <div className="add-course-container">
       <h1>הוספת קורס חדש</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -68,6 +76,15 @@ export default function AddCourse({ addCourse }) {
             type="number"
             value={coursePrice}
             onChange={(e) => setCoursePrice(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>קיבולת משתתפים:</label>
+          <input
+            type="number"
+            value={courseCapacity}
+            onChange={(e) => setCourseCapacity(e.target.value)}
             required
           />
         </div>

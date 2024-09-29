@@ -1,11 +1,10 @@
 import React from 'react';
+import { FaEnvelope, FaInstagram, FaFacebook, FaWhatsapp } from 'react-icons/fa';
 import './personalProcess.css';
 
 function PersonalProcess() {
     return (
         <div className="personal-process-container">
-            
-
             <section id="about" className="content-section">
                 <h2>קצת עלי</h2>
                 <p>
@@ -27,11 +26,22 @@ function PersonalProcess() {
             <section id="contact" className="content-section">
                 <h2>צור קשר</h2>
                 <p>מחכה לפגוש אותך, טלי גל</p>
-                <p>טלפון: 052-3829170</p>
-                <p>דוא"ל: <a href="mailto:taligal12@gmail.com">taligal12@gmail.com</a></p>
-                <p>WhatsApp: <a href="https://wa.me/972523829170" target="_blank">לחץ כאן</a></p>
-                <p>Facebook: <a href="https://www.facebook.com/share/LQ1PZB68oyWhib3g/?mibextid=qi2Omg" target="_blank">עקוב אחרי</a></p>
-                <p>Instagram: <a href="https://www.instagram.com/taligal12?utm_source=qr&igsh=MWwzb2w5NHNkdnp0Yg==" target="_blank">עקוב אחרי</a></p>
+                <div className="contact-item">
+                    <FaEnvelope className="contact-icon" />
+                    <p>דוא"ל: <a href="mailto:taligal12@gmail.com">taligal12@gmail.com</a></p>
+                </div>
+                <div className="contact-item">
+                    <FaWhatsapp className="contact-icon" />
+                    <p>WhatsApp: <a href="https://wa.me/972523829170" target="_blank" rel="noopener noreferrer">לחץ כאן</a></p>
+                </div>
+                <div className="contact-item">
+                    <FaFacebook className="contact-icon" />
+                    <p>Facebook: <a href="https://www.facebook.com/share/LQ1PZB68oyWhib3g/?mibextid=qi2Omg" target="_blank" rel="noopener noreferrer">עקוב אחרי</a></p>
+                </div>
+                <div className="contact-item">
+                    <FaInstagram className="contact-icon" />
+                    <p>Instagram: <a href="https://www.instagram.com/taligal12?utm_source=qr&igsh=MWwzb2w5NHNkdnp0Yg==" target="_blank" rel="noopener noreferrer">עקוב אחרי</a></p>
+                </div>
             </section>
         </div>
     );
