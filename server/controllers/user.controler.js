@@ -155,3 +155,22 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+// פונקציה לשליפת הרכישות של המשתמש המחובר
+exports.getUserPurchases = catchAsync(async (req, res, next) => {
+  // שלוף את המשתמש המחובר לפי ה-ID שלו מתוך ה-token
+  const user = await User.findById(req.user.id).populate('purchasedCourses');
+
+  if (!user) {
+    return next(new AppError('No user found with this ID', 404));
+  }
+
+  const purchases = user.purchasedCourses; // כל הקורסים שהמשתמש רכש
+
+  res.status(200).json({
+    status: 'success',
+    purchases,
+  });
+});
+
+

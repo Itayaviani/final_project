@@ -4,6 +4,7 @@ const Course = require('../models/CourseModel');
 const { sendOrderConfirmationEmail } = require('../utils/emailService');
 const multer = require('multer');
 const path = require('path');
+const User = require('../models/UserModel'); // וודא שהנתיב נכון בהתאם למבנה התיקיות שלך
 
 // הגדרת אחסון התמונות
 const storage = multer.diskStorage({
@@ -139,6 +140,29 @@ router.post('/purchase', async (req, res) => {
       return res.status(400).json({ error: 'The course is full. Registration is not possible.' });
     }
 
+    // חפש את המשתמש על פי כתובת האימייל
+    
+    const user = await User.findOne({ email: email.trim() });
+
+    console.log("line 145 " , user)
+    if (!user) {
+      console.log('User not found');  // לוג אם המשתמש לא נמצא
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    console.log('User found:', user.name);  // לוג אם המשתמש נמצא
+
+    // בדוק אם המשתמש כבר רכש את הקורס הזה
+    if (user.purchasedCourses.includes(courseId)) {
+      console.log('User has already purchased this course');
+      return res.status(200).json({ message: 'Course already purchased', purchased: true });
+    }
+    
+
+    // הוסף את הקורס לרשימת הרכישות של המשתמש
+    user.purchasedCourses.push(courseId);
+    await user.save();
+
     // עדכון מספר המשתתפים בקורס
     course.participants += 1;
     await course.save();
@@ -153,5 +177,6 @@ router.post('/purchase', async (req, res) => {
     res.status(500).json({ error: 'Failed to process purchase' });
   }
 });
+
 
 module.exports = router;

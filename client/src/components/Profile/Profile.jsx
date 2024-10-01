@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // להוסיף קישור לעריכת הפרופיל
+import { Link, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import './Profile.css';
 
 const Profile = () => {
   const [user, setUser] = useState({});
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // הוספת useNavigate כדי לנווט לעמוד אחר
 
   // משיכת פרטי המשתמש
   useEffect(() => {
@@ -29,6 +30,11 @@ const Profile = () => {
     return <div className="profile-wrapper"><div className="error-message">{error}</div></div>;
   }
 
+  // פונקציה לנווט לעמוד הרכישות
+  const handleViewPurchases = () => {
+    navigate('/my-purchases');
+  };
+
   return (
     <div className="profile-wrapper">
       <div className="profile-container">
@@ -43,6 +49,11 @@ const Profile = () => {
         <Link to={`/edit-user/${user._id}`} className="edit-profile-button">
           ערוך פרופיל
         </Link>
+
+        {/* כפתור לצפייה ברכישות */}
+        <button onClick={handleViewPurchases} className="view-purchases-button">
+          הרכישות שלי
+        </button>
       </div>
     </div>
   );

@@ -7,20 +7,29 @@
   justify-content: center; /* מרכוז התוכן */
 }
 
-/* עיצוב עבור כל קורס */
-.course-card {
-  position: relative; /* מיקום יחסי */
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  width: 300px; /* רוחב קבוע לכל קופסה */
-  padding: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  overflow: hidden; /* הסתרת פייד חיצוני */
-  z-index: 1; /* מיקום מעל הפייד */
+.purchased-label {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #28a745;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  z-index: 1;
 }
+
+.course-card {
+  position: relative;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin: 10px;
+  width: 300px;
+  text-align: center;
+  background-color: white;
+}
+
 
 .course-card::before {
   content: ''; /* תוכן ריק לפייד */

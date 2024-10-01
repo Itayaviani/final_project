@@ -99,16 +99,46 @@ export default function CoursePayment() {
     setSelectedCardType(type); // עדכון אמצעי התשלום הנבחר
   };
 
+
+    // פונקציה לאיפוס הטופס
+    const resetForm = () => {
+      setFullName('');
+      setEmail('');
+      setCreditCard('');
+      setExpirationDate('');
+      setCvv('');
+      setSelectedCardType('');
+    };
+
   // פונקציה לשליחת הנתונים לשרת
-  const handlePurchase = async (purchaseData) => {
-    try {
-      const response = await axios.post('http://localhost:3000/api/v1/courses/purchase', purchaseData);
+
+const handlePurchase = async (purchaseData) => {
+  try {
+    const response = await axios.post('http://localhost:3000/api/v1/courses/purchase', purchaseData);
+
+    // בדוק אם הקורס כבר נרכש על פי תגובת השרת
+    if (response.data.purchased) {
+      alert('כבר רכשת את הקורס הזה.'); // הצגת הודעה למשתמש
+      resetForm()
+    } else {
       console.log('Purchase successful:', response.data);
+      alert('הרכישה בוצעה בהצלחה!');
       navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
-    } catch (error) {
-      console.error('Error making purchase:', error);
     }
-  };
+  } catch (error) {
+    console.error('Error making purchase:', error);
+
+    // בדוק את הסטטוס של השגיאה שהתקבלה מהשרת
+    if (error.response && error.response.status === 400) {
+      alert('הקורס מלא, לא ניתן לבצע רכישה נוספת.');
+    } else if (error.response && error.response.status === 404) {
+      alert('לא נמצא הקורס או המשתמש.');
+    } else {
+      alert('אירעה שגיאה בעת ביצוע הרכישה, אנא נסה שוב מאוחר יותר.');
+    }
+  }
+};
+
 
   const handlePayment = (e) => {
     e.preventDefault();

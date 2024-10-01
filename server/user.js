@@ -56,4 +56,31 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// נתיב חדש להחזרת כל הרכישות של המשתמש
+router.get("/me/purchases", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // חפש את המשתמש על פי ה-userId
+    const user = await User.findById(userId).populate('purchasedCourses');
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // שלוף את כל הקורסים שהמשתמש רכש
+    const purchasedCourses = await Course.find({ _id: { $in: user.purchasedCourses } });
+
+    // שלוף את כל הסדנאות שהמשתמש רכש
+    const purchasedWorkshops = await Workshop.find({ _id: { $in: user.purchasedWorkshops || [] } });
+
+    res.status(200).json({
+      purchasedCourses,
+      purchasedWorkshops,
+    });
+  } catch (error) {
+    console.error("Error fetching user purchases:", error);
+    res.status(500).json({ message: "Failed to fetch user purchases" });
+  }
+});
+
 module.exports = router;

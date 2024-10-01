@@ -27,22 +27,25 @@ import Profile from './components/Profile/Profile';
 import ContactsUs from './pages/contactsUs/ContactsUs';
 import UserList from './components/admin/users/UserList';
 import CoursesList from './components/admin/courses/CoursesList';
-
+import MyPurchases from './components/Profile/purchases/MyPurchases'
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [userId, setUserId] = useState(null); // הגדרת userId כמצב (state)
 
   // בדיקה אם המשתמש מחובר
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
     const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
     const token = localStorage.getItem('token');
+    const storedUserId = localStorage.getItem('userId'); // משיכת userId מה-LocalStorage
 
     if (storedUsername && token) {
       setIsLoggedIn(true);
       setUsername(storedUsername);
       setIsAdmin(storedIsAdmin);
+      setUserId(storedUserId); // הגדרת userId מה-LocalStorage
     }
   }, []);
 
@@ -51,9 +54,11 @@ function App() {
     localStorage.removeItem('username');
     localStorage.removeItem('isAdmin');
     localStorage.removeItem('token');
+    localStorage.removeItem('userId'); // מחיקת userId בעת ניתוק
     setIsLoggedIn(false);
     setUsername('');
     setIsAdmin(false);
+    setUserId(null); // איפוס userId
   };
 
   const [courses, setCourses] = useState([]);
@@ -79,7 +84,8 @@ function App() {
           <Route path='/feminineLook' element={<FeminineLook />} />
           
           {/* ניהול קורסים */}
-          <Route path='/courses' element={<Courses courses={courses} isAdmin={isAdmin}/>} />
+          <Route path='/courses' element={<Courses courses={courses} isAdmin={isAdmin} userId={userId} />} />
+
           <Route path="/add-course" element={<AddCourse addCourse={addCourse} />} />
           <Route path="/edit-course/:courseId" element={<EditCourse />} />
           <Route path="/course-details/:courseId" element={<CourseDetails />} />
@@ -107,6 +113,7 @@ function App() {
 
           {/* פרופיל משתמש */}
           {isLoggedIn && <Route path='/profile' element={<Profile />} />}
+          <Route path='/my-purchases' element={<MyPurchases />} />
           {isLoggedIn && <Route path='/edit-user/:id' element={<EditUser setUsername={setUsername} />} />}
         </Routes>
       </BrowserRouter>

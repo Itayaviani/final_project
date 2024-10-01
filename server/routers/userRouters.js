@@ -10,5 +10,7 @@ router.get("/", protect, userControler.getAllUsers); // נתיב לקבלת כל
 router.get("/:id", protect, userControler.getUserById); // נתיב לקבלת משתמש לפי ID
 router.delete("/:id", protect, userControler.deleteUser); // נתיב למחיקת משתמש
 router.put("/:id", protect, userControler.updateUser); // עדכון המשתמש
+router.get("/me/purchases", protect, userControler.getUserPurchases);
+
 
 module.exports = router;
