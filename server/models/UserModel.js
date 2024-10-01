@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   isAdmin: { type: Boolean, default: false },
   purchasedCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
   purchasedWorkshops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workshop' }] 
+  
 });
 
 UserSchema.pre('save', async function (next) {

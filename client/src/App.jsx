@@ -34,6 +34,13 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [userId, setUserId] = useState(null); // הגדרת userId כמצב (state)
 
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
+
   // בדיקה אם המשתמש מחובר
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
@@ -113,7 +120,7 @@ function App() {
 
           {/* פרופיל משתמש */}
           {isLoggedIn && <Route path='/profile' element={<Profile />} />}
-          <Route path='/my-purchases' element={<MyPurchases />} />
+          <Route path="/my-purchases" element={<MyPurchases userId={userId} />} />
           {isLoggedIn && <Route path='/edit-user/:id' element={<EditUser setUsername={setUsername} />} />}
         </Routes>
       </BrowserRouter>

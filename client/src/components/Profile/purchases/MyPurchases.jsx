@@ -1,47 +1,33 @@
 // MyPurchases.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import './MyPurchases.css'; // אל תשכח לשים כאן את קובץ ה-CSS הנכון אם הוא קיים
+// import './myPurchases.css'; // אל תשכח לשים כאן את קובץ ה-CSS הנכון אם הוא קיים
 
-const MyPurchases = () => {
+const MyPurchases = ({userId}) => {
   const [purchases, setPurchases] = useState([]); // מצב הרכישות
   const [error, setError] = useState(''); // מצב השגיאה
 
-  // משיכת הרכישות של המשתמש בעת טעינת הקומפוננטה
-  useEffect(() => {
-    const fetchPurchases = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/v1/users/me/purchases', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        
-        // אם המידע התקבל, עדכן את מצב הרכישות
-        if (response.data.data) {
-          const { purchasedCourses, purchasedWorkshops } = response.data.data;
-          const allPurchases = [...(purchasedCourses || []), ...(purchasedWorkshops || [])];
-          setPurchases(allPurchases);
-        } else {
-          setError('לא נמצאו רכישות');
-        }
-      } catch (err) {
-        console.error('Error fetching purchases:', err); // הוסף לוג למעקב אחר השגיאה
-        setError('נכשלה שליפת הרכישות');
-      }
-    };
+// בדיקת הקורסים שנרכשו על ידי המשתמש הנוכחי
+useEffect(() => {
+  const fetchPurchasedCourses = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/v1/users/me/purchases`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // לוודא שה-Token נשלח כראוי
+        },
+      });
+      console.log('Purchased courses fetched from server:', response.data.purchases); // בדיקת הנתונים מהשרת
+      setPurchases(response.data.purchases);
+    } catch (error) {
+      console.error('Failed to fetch purchased courses:', error);
+    }
+  };
 
-    fetchPurchases();
-  }, []);
-
-  if (error) {
-    return (
-      <div className="purchases-wrapper">
-        <div className="error-message">{error}</div>
-      </div>
-    );
+  if (userId) {
+    fetchPurchasedCourses();
   }
+}, [userId]);
+
 
   return (
     <div className="purchases-wrapper">
