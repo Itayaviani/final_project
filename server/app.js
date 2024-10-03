@@ -3,7 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const userRoute = require("./routers/userRouters");
 const courseRouter = require("./routers/courseRouters"); // ייבוא ה-router של הקורסים
-const workshopRouter = require("./routers/workshopRouters")
+const workshopRouter = require("./routers/workshopRouters");
+const contactRouter = require("./routers/contactRouters"); // ייבוא ה-router של הפניות
 
 const app = express();
 
@@ -13,7 +14,8 @@ app.use(express.json());
 // app routes
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/courses", courseRouter);
-app.use("/api/v1/workshops",workshopRouter)
+app.use("/api/v1/workshops", workshopRouter);
+app.use("/api/v1/contacts", contactRouter); // הוספת הראוטר של הפניות
 
 app.use('/uploads', express.static('uploads'));
 

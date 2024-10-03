@@ -37,36 +37,38 @@ const CoursesList = () => {
   };
 
   return (
-    <div className="courses-list">
-      <h1>רשימת קורסים</h1>
-      {error && <p className="error-message">{error}</p>}
-      <table>
-        <thead>
-          <tr>
-            <th>שם קורס</th>
-            <th>מחיר</th>
-            <th>תיאור בקצרה</th>
-            <th>תאריך יצירה</th>
-            <th>משתתפים</th>
-            <th>פעולות</th>
-          </tr>
-        </thead>
-        <tbody>
-          {courses.map((course) => (
-            <tr key={course._id}>
-              <td>{course.name}</td>
-              <td>{course.price} ש"ח</td>
-              <td>{course.description}</td>
-              <td>{new Date(course.createdAt).toLocaleDateString()}</td>
-              <td>{course.participants} / {course.capacity}</td>
-              <td>
-                <button onClick={() => handleEditCourse(course._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
-                <button className="delete" onClick={() => handleDeleteCourse(course._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}
-              </td>
+    <div className="courses-wrapper">
+      <div className="courses-list">
+        <h1>רשימת קורסים</h1>
+        {error && <p className="error-message">{error}</p>}
+        <table>
+          <thead>
+            <tr>
+              <th>שם קורס</th>
+              <th>מחיר</th>
+              <th>תיאור בקצרה</th>
+              <th>תאריך יצירה</th>
+              <th>משתתפים</th>
+              <th>פעולות</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {courses.map((course) => (
+              <tr key={course._id}>
+                <td>{course.name}</td>
+                <td>{course.price} ש"ח</td>
+                <td>{course.description}</td>
+                <td>{new Date(course.createdAt).toLocaleDateString()}</td>
+                <td>{course.participants} / {course.capacity}</td>
+                <td>
+                  <button onClick={() => handleEditCourse(course._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
+                  <button className="delete" onClick={() => handleDeleteCourse(course._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

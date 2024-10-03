@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // ייבוא Axios
 import './ContactsUs.css';
 
 function ContactsUs() {
@@ -9,16 +10,27 @@ function ContactsUs() {
     email: '',
     message: ''
   });
+  
+  const [error, setError] = useState(''); // סטייט לניהול שגיאות
+  const [success, setSuccess] = useState(false); // סטייט להצלחה
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // כאן תוכל להוסיף את הלוגיקה לשליחת הפנייה
-    console.log('Form submitted:', form);
+    try {
+      // שליחת הפנייה לשרת דרך Axios
+      const response = await axios.post('http://localhost:3000/api/v1/contacts', form); // כתובת API בהתאם לשרת שלך
+      console.log('Form submitted:', response.data);
+      setSuccess(true); // הגדרת הצלחה לאחר שליחה מוצלחת
+      setForm({ firstName: '', lastName: '', phone: '', email: '', message: '' }); // ניקוי הטופס לאחר שליחה מוצלחת
+    } catch (err) {
+      console.error('Error submitting the form:', err);
+      setError('שגיאה בשליחת הפנייה. נסה שנית.');
+    }
   };
 
   return (
@@ -36,6 +48,9 @@ function ContactsUs() {
       </div>
 
       <form className="contact-form" onSubmit={handleSubmit}>
+        {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">הפנייה נשלחה בהצלחה!</p>}
+
         <div className="form-group">
           <label htmlFor="firstName">שם פרטי</label>
           <input

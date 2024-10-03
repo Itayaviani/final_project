@@ -3,145 +3,98 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(to bottom right, #ffffff, #f0f4f8); /* Soft gradient background */
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
   color: #333;
+}
+
+/* Wrapper to center Admin Panel */
+.admin-panel-wrapper {
+  display: flex;
+  justify-content: center; /* מרכז אופקית */
+  align-items: center; /* מרכז אנכית */
+  min-height: 100vh; /* גובה מינימלי של הדף */
 }
 
 /* Admin Panel Container */
 .admin-panel {
   max-width: 1200px;
-  margin: 60px auto;
-  padding: 40px; /* Increased padding for more spaciousness */
-  background-color: #f9fbfd; /* Light background with subtle blue tint */
+  width: 100%;
+  margin: 0 auto;
+  padding: 50px;
+  background-color: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* More pronounced shadow for depth */
-  transition: transform 0.2s, box-shadow 0.2s; /* Added hover effect for the panel */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .admin-panel:hover {
-  transform: translateY(-5px); /* Slight lift effect */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+  transform: translateY(-10px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
 }
 
 /* Panel Header */
 .admin-panel h1 {
   text-align: center;
-  font-size: 40px; /* Slightly larger font size */
-  margin-bottom: 30px;
-  color: #2a9df4; /* Brighter blue for more impact */
-  font-weight: 800; /* Bolder font weight */
+  font-size: 2.5em;
+  margin-bottom: 40px;
+  color: #2a9df4;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 2px; /* Increased letter spacing */
+  letter-spacing: 2px;
 }
 
 /* Category Container */
 .category-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 30px; /* Increased space between categories */
   justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
-/* Individual Category Box */
-.category {
-  flex: 1;
-  background: linear-gradient(to top right, #ffffff, #e9eef3); /* Gradient background for depth */
-  padding: 30px; /* Increased padding */
-  border-radius: 12px; /* More rounded corners */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  min-width: 320px;
-  transition: transform 0.2s, box-shadow 0.2s; /* Hover effect for categories */
-}
-
-.category:hover {
-  transform: translateY(-8px); /* Enhanced lift effect */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12); /* Stronger shadow on hover */
-}
-
-/* Category Heading */
-.category h2 {
-  text-align: center;
-  font-size: 28px; /* Larger font for category titles */
-  color: #007bff; /* Bright blue color for titles */
-  margin-bottom: 25px; /* More space below the title */
-  border-bottom: 3px solid #2a9df4; /* Blue border for emphasis */
-  padding-bottom: 12px; /* Increased padding below text */
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-}
-
-/* Table Styles */
-.category table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.category th, .category td {
-  text-align: left;
-  padding: 15px 20px; /* Increased padding */
-  border-bottom: 1px solid #dfe3e8; /* Softer border color */
-  font-size: 17px; /* Slightly larger text for better readability */
-}
-
-.category th {
-  background-color: #2a9df4; /* Brighter blue for headers */
+/* Individual Buttons */
+.category-container button {
+  padding: 15px 30px;
+  font-size: 1.2em;
   color: white;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.category tr:nth-child(even) {
-  background-color: #f1f5f9; /* Softer alternate row color */
-}
-
-.category tr:hover {
-  background-color: #e3e9f0; /* Subtle hover effect for rows */
-}
-
-/* Button Styles */
-.category button {
-  padding: 12px 20px; /* Increased padding */
-  font-size: 15px; /* Slightly larger font */
-  color: white;
-  background: linear-gradient(to right, #36d1dc, #5b86e5); /* Gradient background for buttons */
+  background: linear-gradient(to right, #36d1dc, #5b86e5);
   border: none;
-  border-radius: 25px; /* More rounded buttons */
+  border-radius: 30px;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s, box-shadow 0.2s; /* Added box-shadow transition */
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
 }
 
-.category button:hover {
-  background: linear-gradient(to right, #5b86e5, #36d1dc); /* Reverse gradient on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+.category-container button:hover {
+  background: linear-gradient(to right, #5b86e5, #36d1dc);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
 }
 
-.category button:active {
-  transform: translateY(3px); /* Slight press effect */
+.category-container button:active {
+  transform: translateY(3px);
 }
 
 /* Error Message */
 .error-message {
-  color: #e74c3c; /* Bright red color for errors */
+  color: #e74c3c;
   text-align: center;
   font-weight: bold;
   margin-bottom: 20px;
-  font-size: 18px; /* Slightly larger font for visibility */
+  font-size: 1.2em;
+  background-color: #fdecea;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
   .category-container {
     flex-direction: column;
-    gap: 25px; /* Adjusted gap for vertical stacking */
+    gap: 30px;
   }
 
   .admin-panel {
-    padding: 20px; /* Reduced padding on smaller screens */
-  }
-
-  .category {
-    margin-bottom: 25px; /* Additional margin for spacing */
+    padding: 30px;
   }
 }

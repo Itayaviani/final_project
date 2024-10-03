@@ -5,7 +5,7 @@ import './AdminPanel.css';
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
-  const [courses, setCourses] = useState([]); // סטייט לקורסים
+  const [courses, setCourses] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -52,7 +52,7 @@ const AdminPanel = () => {
   };
 
   const handleEditUser = (id) => {
-    navigate(`/edit-user/${id}`); // ניווט לדף עריכת המשתמש
+    navigate(`/edit-user/${id}`);
   };
 
   const handleDeleteCourse = async (id) => {
@@ -65,20 +65,21 @@ const AdminPanel = () => {
   };
 
   const handleEditCourse = (id) => {
-    navigate(`/edit-course/${id}`); // ניווט לדף עריכת הקורס
+    navigate(`/edit-course/${id}`);
   };
 
   return (
-    <div className="admin-panel">
-      <h1>לוח ניהול</h1>
-      <div className="category-container">
-        
-        {/* הוספת כפתור המשתמשים */}
-        <button onClick={() => navigate('/users')}>משתמשים</button> {/* ניווט לעמוד המשתמשים */}
-        <button onClick={() => navigate('/admin/coursesList')}>קורסים</button> {/* עדכון לנתיב ייחודי */}
+    <div className="admin-panel-wrapper">
+      <div className="admin-panel">
+        <h1>לוח ניהול</h1>
+        <div className="category-container">
+          <button onClick={() => navigate('/users')}>משתמשים</button>
+          <button onClick={() => navigate('/admin/coursesList')}>קורסים</button>
+          <button onClick={() => navigate('/admin/inquiries')}>פניות צור קשר</button>
+        </div>
       </div>
     </div>
   );
-  }
+};
 
 export default AdminPanel;

@@ -28,6 +28,8 @@ import ContactsUs from './pages/contactsUs/ContactsUs';
 import UserList from './components/admin/users/UserList';
 import CoursesList from './components/admin/courses/CoursesList';
 import MyPurchases from './components/Profile/purchases/MyPurchases'
+import Inquiries from './components/admin/Inquiries/Inquiries'; // ייבוא רכיב הפניות
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
@@ -117,6 +119,7 @@ function App() {
           {isAdmin && <Route path='/admin' element={<AdminPanel />} />}
           {isAdmin && <Route path='/users' element={<UserList />} />}
           {isAdmin && <Route path='/admin/coursesList' element={<CoursesList />} />}
+          {isAdmin && <Route path='/admin/Inquiries' element={<Inquiries />} />}
 
           {/* פרופיל משתמש */}
           {isLoggedIn && <Route path='/profile' element={<Profile />} />}
