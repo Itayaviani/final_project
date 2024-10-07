@@ -8,7 +8,8 @@ import Workshops from './pages/workshops/Workshops';
 import AddWorkshop from './pages/workshops/add workshop/AddWorkshop';
 import EditWorkshop from './pages/workshops/edit workshop/EditWorkshop';
 import WorkshopDetail from './pages/workshops/workshop detail/WorkshopDetail';
-import WorkshopPayment from './pages/workshops/Payment/WorkshopPayment'; 
+import WorkshopPayment from './pages/workshops/Payment/WorkshopPayment';
+import WorkshopsList from './components/admin/workshops/WorkshopsList'; 
 import Courses from './pages/courses/Courses';
 import AddCourse from './pages/courses/add course/AddCourse';
 import EditCourse from './pages/courses/Edit Course/EditCourse';
@@ -27,14 +28,15 @@ import Profile from './components/Profile/Profile';
 import ContactsUs from './pages/contactsUs/ContactsUs';
 import UserList from './components/admin/users/UserList';
 import CoursesList from './components/admin/courses/CoursesList';
-import MyPurchases from './components/Profile/purchases/MyPurchases'
-import Inquiries from './components/admin/Inquiries/Inquiries'; // ייבוא רכיב הפניות
+import MyPurchases from './components/Profile/purchases/MyPurchases';
+import Inquiries from './components/admin/Inquiries/Inquiries'; 
+import Purchases from './components/admin/purchases/Purchases'; // ייבוא רכיב Purchases
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
-  const [userId, setUserId] = useState(null); // הגדרת userId כמצב (state)
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
@@ -43,31 +45,29 @@ function App() {
     }
   }, []);
 
-  // בדיקה אם המשתמש מחובר
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
     const storedIsAdmin = localStorage.getItem('isAdmin') === 'true';
     const token = localStorage.getItem('token');
-    const storedUserId = localStorage.getItem('userId'); // משיכת userId מה-LocalStorage
+    const storedUserId = localStorage.getItem('userId');
 
     if (storedUsername && token) {
       setIsLoggedIn(true);
       setUsername(storedUsername);
       setIsAdmin(storedIsAdmin);
-      setUserId(storedUserId); // הגדרת userId מה-LocalStorage
+      setUserId(storedUserId);
     }
   }, []);
 
-  // ניתוק המשתמש
   const handleLogout = () => {
     localStorage.removeItem('username');
     localStorage.removeItem('isAdmin');
     localStorage.removeItem('token');
-    localStorage.removeItem('userId'); // מחיקת userId בעת ניתוק
+    localStorage.removeItem('userId');
     setIsLoggedIn(false);
     setUsername('');
     setIsAdmin(false);
-    setUserId(null); // איפוס userId
+    setUserId(null);
   };
 
   const [courses, setCourses] = useState([]);
@@ -94,7 +94,6 @@ function App() {
           
           {/* ניהול קורסים */}
           <Route path='/courses' element={<Courses courses={courses} isAdmin={isAdmin} userId={userId} />} />
-
           <Route path="/add-course" element={<AddCourse addCourse={addCourse} />} />
           <Route path="/edit-course/:courseId" element={<EditCourse />} />
           <Route path="/course-details/:courseId" element={<CourseDetails />} />
@@ -103,10 +102,11 @@ function App() {
           
           {/* ניהול סדנאות */}
           <Route path='/workshops' element={<Workshops workshops={workshops} isAdmin={isAdmin} />} />
-          <Route path="/add-workshop" element={<AddWorkshop addWorkshop={addWorkshop}/>} />
+          <Route path="/add-workshop" element={<AddWorkshop addWorkshop={addWorkshop} />} />
           <Route path="/edit-workshop/:workshopId" element={<EditWorkshop />} />
           <Route path="/workshop-details/:workshopId" element={<WorkshopDetail />} />
           <Route path="/payment/workshops/:workshopId" element={<WorkshopPayment />} />
+          <Route path="/admin/workshopsList" element={<WorkshopsList />} /> 
 
           {/* דפים נוספים */}
           <Route path='/niceToMeet' element={<NiceToMeet />} />
@@ -120,6 +120,8 @@ function App() {
           {isAdmin && <Route path='/users' element={<UserList />} />}
           {isAdmin && <Route path='/admin/coursesList' element={<CoursesList />} />}
           {isAdmin && <Route path='/admin/Inquiries' element={<Inquiries />} />}
+          {isAdmin && <Route path='/admin/workshopsList' element={<WorkshopsList />} />}
+          {isAdmin && <Route path='/admin/purchases' element={<Purchases />} />} {/* ניתוב לרכיב Purchases */}
 
           {/* פרופיל משתמש */}
           {isLoggedIn && <Route path='/profile' element={<Profile />} />}

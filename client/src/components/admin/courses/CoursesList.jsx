@@ -36,6 +36,11 @@ const CoursesList = () => {
     navigate(`/edit-course/${id}`); // ניווט לדף עריכת הקורס
   };
 
+  // פונקציה לחישוב הכנסות
+  const calculateRevenue = (course) => {
+    return course.participants * course.price;
+  };
+
   return (
     <div className="courses-wrapper">
       <div className="courses-list">
@@ -49,6 +54,7 @@ const CoursesList = () => {
               <th>תיאור בקצרה</th>
               <th>תאריך יצירה</th>
               <th>משתתפים</th>
+              <th>הכנסות</th> {/* עמודה חדשה עבור ההכנסות */}
               <th>פעולות</th>
             </tr>
           </thead>
@@ -60,6 +66,7 @@ const CoursesList = () => {
                 <td>{course.description}</td>
                 <td>{new Date(course.createdAt).toLocaleDateString()}</td>
                 <td>{course.participants} / {course.capacity}</td>
+                <td>{calculateRevenue(course)} ש"ח</td> {/* הצגת ההכנסות */}
                 <td>
                   <button onClick={() => handleEditCourse(course._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
                   <button className="delete" onClick={() => handleDeleteCourse(course._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}

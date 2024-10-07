@@ -76,6 +76,8 @@ const AdminPanel = () => {
           <button onClick={() => navigate('/users')}>משתמשים</button>
           <button onClick={() => navigate('/admin/coursesList')}>קורסים</button>
           <button onClick={() => navigate('/admin/inquiries')}>פניות צור קשר</button>
+          <button onClick={() => navigate('/admin/workshopsList')}>סדנאות</button>
+          <button onClick={() => navigate('/admin/purchases')}>רכישות</button> {/* כפתור חדש לרכישות */}
         </div>
       </div>
     </div>

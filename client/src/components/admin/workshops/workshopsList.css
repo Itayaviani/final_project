@@ -1,0 +1,129 @@
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Poppins', sans-serif; /* גופן מודרני ונקי */
+    background: linear-gradient(to bottom right, #e0eafc, #cfdef3); /* רקע מעבר צבע מודרני */
+    color: #333;
+  }
+  
+  /* Wrapper to center the WorkshopsList */
+  .workshops-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* גובה מינימלי של 100% למסך */
+  }
+  
+  /* Workshops List Container */
+  .workshops-list {
+    max-width: 1200px;
+    width: 100%;
+    padding: 50px;
+    background-color: #ffffff; /* רקע לבן */
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); /* צללים עדינים */
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .workshops-list:hover {
+    transform: translateY(-10px); /* אפקט הרמה קל */
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15); /* צללים חזקים יותר ב-hover */
+  }
+  
+  /* Workshops Header */
+  .workshops-list h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #2a9df4;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  /* Table Styles */
+  .workshops-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    font-size: 1em;
+  }
+  
+  .workshops-list th, .workshops-list td {
+    text-align: left;
+    padding: 15px 25px;
+    border-bottom: 1px solid #dfe3e8;
+  }
+  
+  .workshops-list th {
+    background-color: #1e88e5;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .workshops-list tr:nth-child(even) {
+    background-color: #f1f5f9; /* צבע רקע שונה לשורות זוגיות */
+  }
+  
+  .workshops-list tr:hover {
+    background-color: #e3e9f0; /* אפקט hover לשורות */
+  }
+  
+  /* Button Styles */
+  .workshops-list button {
+    padding: 12px 25px;
+    font-size: 1em;
+    color: white;
+    background: linear-gradient(to right, #36d1dc, #5b86e5);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .workshops-list button:hover {
+    background: linear-gradient(to right, #5b86e5, #36d1dc); /* הפוך את הכיוון במעבר עכבר */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .workshops-list button:active {
+    transform: translateY(3px); /* אפקט לחיצה */
+  }
+  
+  /* Button Styles - Delete Button */
+  .workshops-list button.delete {
+    background-color: #e74c3c; /* צבע אדום לכפתור מחיקה */
+  }
+  
+  .workshops-list button.delete:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Error Message */
+  .error-message {
+    color: #e74c3c;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    background-color: #fdecea;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive Design for Smaller Screens */
+  @media (max-width: 768px) {
+    .workshops-list {
+      padding: 30px;
+    }
+  
+    .workshops-list table {
+      font-size: 0.9em;
+    }
+  }
+  
