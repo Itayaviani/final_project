@@ -156,21 +156,29 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   });
 });
 
-// פונקציה לשליפת הרכישות של המשתמש המחובר
-exports.getUserPurchases = catchAsync(async (req, res, next) => {
-  // שלוף את המשתמש המחובר לפי ה-ID שלו מתוך ה-token
-  const user = await User.findById(req.user.id).populate('purchasedCourses');
 
-  if (!user) {
-    return next(new AppError('No user found with this ID', 404));
-  }
+// // פונקציה לשליפת הרכישות של המשתמש המחובר
+// exports.getUserPurchases = catchAsync(async (req, res, next) => {
+//   const userId = req.user._id; // מזהה המשתמש מתוך ה-token
 
-  const purchases = user.purchasedCourses; // כל הקורסים שהמשתמש רכש
+//   // שליפת המשתמש כולל הרכישות של הקורסים והסדנאות
+//   const user = await User.findById(userId)
+//     .populate('purchasedCourses')   // שליפת פרטי הקורסים שנרכשו
+//     .populate('purchasedWorkshops'); // שליפת פרטי הסדנאות שנרכשו
 
-  res.status(200).json({
-    status: 'success',
-    purchases,
-  });
-});
+//   if (!user) {
+//     return next(new AppError('משתמש לא נמצא', 404));
+//   }
+
+//   // החזרת הרכישות (קורסים וסדנאות) בתגובה
+//   res.status(200).json({
+//     status: 'success',
+//     purchases: {
+//       courses: user.purchasedCourses,
+//       workshops: user.purchasedWorkshops,
+//     },
+//   });
+// });
+
 
 

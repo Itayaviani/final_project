@@ -28,9 +28,9 @@ import Profile from './components/Profile/Profile';
 import ContactsUs from './pages/contactsUs/ContactsUs';
 import UserList from './components/admin/users/UserList';
 import CoursesList from './components/admin/courses/CoursesList';
-import MyPurchases from './components/Profile/purchases/MyPurchases';
 import Inquiries from './components/admin/Inquiries/Inquiries'; 
-import Purchases from './components/admin/purchases/Purchases'; // ייבוא רכיב Purchases
+import PurchasesAdmin from './components/admin/purchasesAdmin/PurchasesAdmin'
+import MyPurchases from './components/Profile/purchases/MyPurchases'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,6 +38,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [userId, setUserId] = useState(null);
 
+  // שליפת הנתונים מ-localStorage בעת טעינת הדף
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
@@ -59,6 +60,7 @@ function App() {
     }
   }, []);
 
+  // פונקציה להתנתקות מהמערכת
   const handleLogout = () => {
     localStorage.removeItem('username');
     localStorage.removeItem('isAdmin');
@@ -121,11 +123,11 @@ function App() {
           {isAdmin && <Route path='/admin/coursesList' element={<CoursesList />} />}
           {isAdmin && <Route path='/admin/Inquiries' element={<Inquiries />} />}
           {isAdmin && <Route path='/admin/workshopsList' element={<WorkshopsList />} />}
-          {isAdmin && <Route path='/admin/purchases' element={<Purchases />} />} {/* ניתוב לרכיב Purchases */}
+          {isAdmin && <Route path='/admin/purchases' element={<PurchasesAdmin />} />}
 
           {/* פרופיל משתמש */}
           {isLoggedIn && <Route path='/profile' element={<Profile />} />}
-          <Route path="/my-purchases" element={<MyPurchases userId={userId} />} />
+          {isLoggedIn && <Route path='/my-purchases' element={<MyPurchases userId={userId} />} />} {/* מעביר את ה-userId ל-MyPurchases */}
           {isLoggedIn && <Route path='/edit-user/:id' element={<EditUser setUsername={setUsername} />} />}
         </Routes>
       </BrowserRouter>

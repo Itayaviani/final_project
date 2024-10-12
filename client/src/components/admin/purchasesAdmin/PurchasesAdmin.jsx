@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './purchases.css';
+import './purchasesAdmin.css';
 
-const Purchases = () => {
+const PurchasesAdmin = () => {
   const [purchases, setPurchases] = useState([]);
   const [error, setError] = useState('');
 
@@ -82,4 +82,4 @@ const Purchases = () => {
   );
 };
 
-export default Purchases;
+export default PurchasesAdmin;

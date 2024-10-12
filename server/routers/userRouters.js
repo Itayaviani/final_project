@@ -1,17 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const userControler = require("../controllers/user.controler");
+const usercontroler = require('../controllers/user.controler'); // וודא שהנתיב נכון
+
 const { protect } = require("../middleware/authMiddleware");
 
-router.post("/login", userControler.login);
-router.post("/register", userControler.register);
-router.get("/me", protect, userControler.getMe);
-router.get("/me/purchases", protect, userControler.getUserPurchases);
-router.get("/", protect, userControler.getAllUsers); // נתיב לקבלת כל המשתמשים
-router.get("/:id", protect, userControler.getUserById); // נתיב לקבלת משתמש לפי ID
-router.delete("/:id", protect, userControler.deleteUser); // נתיב למחיקת משתמש
-router.put("/:id", protect, userControler.updateUser); // עדכון המשתמש
-
-
+router.post("/login", usercontroler.login);
+router.post("/register", usercontroler.register);
+router.get("/me", protect, usercontroler.getMe);
+// router.get('/me/purchases', protect, usercontroler.getUserPurchases); // שינוי ל-usercontroler כדי להתאים
+router.get("/", protect, usercontroler.getAllUsers); // נתיב לקבלת כל המשתמשים
+router.get("/:id", protect, usercontroler.getUserById); // נתיב לקבלת משתמש לפי ID
+router.delete("/:id", protect, usercontroler.deleteUser); // נתיב למחיקת משתמש
+router.put("/:id", protect, usercontroler.updateUser); // עדכון המשתמש
 
 module.exports = router;
