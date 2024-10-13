@@ -39,25 +39,27 @@ const MyPurchases = () => {
           <table className="purchases-table">
             <thead>
               <tr>
-                <th>שם</th>
-                <th>תיאור</th>
+                <th>שם פריט</th>
+                <th>סוג פריט</th>
                 <th>מחיר</th>
                 <th>תאריך רכישה</th>
               </tr>
             </thead>
             <tbody>
+              {/* הצגת קורסים */}
               {purchases.courses.map((course) => (
                 <tr key={course._id}>
                   <td>{course.name}</td>
-                  <td>{course.description}</td>
+                  <td>קורס</td> {/* הוספת סוג הפריט */}
                   <td>{course.price} ש"ח</td>
                   <td>{new Date(course.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
+              {/* הצגת סדנאות */}
               {purchases.workshops.map((workshop) => (
                 <tr key={workshop._id}>
                   <td>{workshop.name}</td>
-                  <td>{workshop.description}</td>
+                  <td>סדנה</td> {/* הוספת סוג הפריט */}
                   <td>{workshop.price} ש"ח</td>
                   <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
                 </tr>

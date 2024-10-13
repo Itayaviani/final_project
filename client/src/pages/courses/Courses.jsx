@@ -108,10 +108,7 @@ export default function Courses({ isAdmin, userId }) {
                   </div>
                 )}
 
-                {/* הצגת תגית 'רכשת קורס זה' אם המשתמש רכש את הקורס
-                {isPurchased && (
-                  <div className="purchased-label">רכשת קורס זה</div>
-                )} */}
+
                 
               </div>
             );
