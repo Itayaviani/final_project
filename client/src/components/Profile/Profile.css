@@ -53,7 +53,7 @@ body {
   border-bottom: 3px solid #077af4; /* Thicker border for emphasis */
   padding-bottom: 15px; /* Padding for spacing */
   margin-bottom: 30px; /* Increased margin for separation */
-  color: #0265e6; /* Green color for the header */
+  color: #0265e6; /* Blue color for the header */
   text-transform: uppercase; /* Uppercase text for impact */
   letter-spacing: 2px; /* Increased letter spacing for a stylish look */
 }
@@ -78,7 +78,7 @@ body {
 
 .profile-details p::before {
   content: '• '; /* Bullet point for each detail */
-  color: #055bef; /* Matching green color */
+  color: #055bef; /* Blue bullet point */
 }
 
 .profile-details:hover {
@@ -119,6 +119,27 @@ body {
 
 .edit-profile-button:hover {
   background-color: #055bef; /* Darker blue on hover */
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+}
+
+/* Styling the 'View Purchases' button */
+.view-purchases-button {
+  display: inline-block;
+  padding: 12px 25px;
+  margin-top: 15px;
+  background-color: #28a745; /* Green background color */
+  color: #fff; /* White text color */
+  font-size: 1.2em; /* Font size */
+  border: none; /* No border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
+
+.view-purchases-button:hover {
+  background-color: #218838; /* Darker green on hover */
   transform: translateY(-5px); /* Lift effect on hover */
   box-shadow: 0 7px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
 }

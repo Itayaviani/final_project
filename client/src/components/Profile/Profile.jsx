@@ -1,39 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Profile.css';
 
 const Profile = () => {
-  const [user, setUser] = useState({});
-  const [error, setError] = useState('');
-  const navigate = useNavigate(); // הוספת useNavigate כדי לנווט לעמוד אחר
+  const [user, setUser] = useState({}); // State for user data
+  const [error, setError] = useState(''); // State for errors
+  const navigate = useNavigate(); // useNavigate hook for navigation
 
-  // משיכת פרטי המשתמש
+  // Fetch the logged-in user's profile
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/v1/users/me', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const token = localStorage.getItem('token'); // Get token from local storage
+        const response = await axios.get(
+          'http://localhost:3000/api/v1/users/me',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Send token in the headers
+            },
+          }
+        );
+
+        // Update state with user data
         setUser(response.data.data.user);
       } catch (err) {
-        setError('Error fetching profile');
+        console.error('Error fetching profile:', err);
+        setError('שגיאה בטעינת פרופיל המשתמש'); // Display an error message
       }
     };
-    fetchProfile();
+
+    fetchProfile(); // Fetch user profile on component mount
   }, []);
 
-  if (error) {
-    return <div className="profile-wrapper"><div className="error-message">{error}</div></div>;
-  }
-
-  // פונקציה לנווט לעמוד הרכישות
+  // Handle navigation to purchases page
   const handleViewPurchases = () => {
-    navigate('/my-purchases');
+    navigate('/my-purchases'); // Navigate to /my-purchases
   };
+
+  if (error) {
+    return (
+      <div className="profile-wrapper">
+        <div className="error-message">{error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="profile-wrapper">
@@ -45,12 +56,12 @@ const Profile = () => {
           <p>טלפון: {user.phone}</p>
         </div>
 
-        {/* כפתור עריכת פרופיל */}
+        {/* Edit profile button */}
         <Link to={`/edit-user/${user._id}`} className="edit-profile-button">
           ערוך פרופיל
         </Link>
 
-        {/* כפתור לצפייה ברכישות */}
+        {/* View purchases button */}
         <button onClick={handleViewPurchases} className="view-purchases-button">
           הרכישות שלי
         </button>
