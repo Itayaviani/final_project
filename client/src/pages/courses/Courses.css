@@ -163,3 +163,16 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* צל נוסף בכפתור */
 }
+
+.full-label {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 15px; /* מרווח לצד שמאל */
+}
+
+
+

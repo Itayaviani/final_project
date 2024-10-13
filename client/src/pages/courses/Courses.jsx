@@ -12,10 +12,8 @@ export default function Courses({ isAdmin, userId }) {
       try {
         const response = await axios.get('http://localhost:3000/api/v1/courses');
         
-        // סינון הקורסים כך שרק קורסים שאינם מלאים יוצגו למשתמשים רגילים
-        const filteredCourses = isAdmin ? response.data : response.data.filter(course => course.participants < course.capacity);
-        
-        setCourses(filteredCourses);
+        // לא מסננים קורסים מלאים כדי שכולם יוצגו
+        setCourses(response.data);
       } catch (error) {
         console.error('Failed to fetch courses:', error);
       }
@@ -75,6 +73,7 @@ export default function Courses({ isAdmin, userId }) {
         {courses.length > 0 ? (
           courses.map((course) => {
             const isPurchased = purchasedCourses.map(String).includes(String(course._id)); // בדוק אם המשתמש רכש את הקורס
+            const isFull = course.participants >= course.capacity; // בדיקה אם הקורס מלא
 
             // הוספת console.log לבדוק ערכים
             console.log('קורס ID:', course._id);
@@ -89,6 +88,9 @@ export default function Courses({ isAdmin, userId }) {
                 )}
                 <p>{course.description}</p>
                 <p className="price">מחיר: {course.price} ש"ח</p>
+
+                {/* הצגת תווית "מלא" אם אין מקום פנוי */}
+                {isFull && <span className="full-label">מלא</span>}
 
                 {/* הצגת מספר המשתתפים רק אם המשתמש הוא אדמין */}
                 {isAdmin && (
@@ -107,9 +109,6 @@ export default function Courses({ isAdmin, userId }) {
                     <button onClick={() => handleDelete(course._id)} className="delete-button">מחק</button>
                   </div>
                 )}
-
-
-                
               </div>
             );
           })

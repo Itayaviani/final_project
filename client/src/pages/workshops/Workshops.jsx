@@ -11,10 +11,8 @@ export default function Workshops({ isAdmin }) {
       try {
         const response = await axios.get('http://localhost:3000/api/v1/workshops');
 
-        // סינון הסדנאות כך שרק סדנאות שאינן מלאות יוצגו למשתמשים רגילים
-        const filteredWorkshops = isAdmin ? response.data : response.data.filter(workshop => workshop.participants < workshop.capacity);
-        
-        setWorkshops(filteredWorkshops);
+        // הצגת כל הסדנאות ללא סינון של הסדנאות המלאות
+        setWorkshops(response.data);
       } catch (error) {
         console.error('Failed to fetch workshops:', error);
       }
@@ -55,34 +53,42 @@ export default function Workshops({ isAdmin }) {
 
       <div className="workshops-container">
         {workshops.length > 0 ? (
-          workshops.map((workshop) => (
-            <div key={workshop._id} className="workshop-card">
-              <h3>{workshop.name}</h3>
-              {workshop.image && (
-                <img src={`http://localhost:3000/${workshop.image}`} alt={workshop.name} />
-              )}
-              <p>{workshop.description}</p>
-              <p className="price">מחיר: {workshop.price} ש"ח</p>
+          workshops.map((workshop) => {
+            const isFull = workshop.participants >= workshop.capacity; // בדיקה אם הסדנה מלאה
 
-              {/* הצגת מספר המשתתפים ותאריך היצירה רק אם המשתמש הוא אדמין */}
-              {isAdmin && (
-                <div>
-                  <p className="participants">משתתפים בסדנה: {workshop.participants} מתוך {workshop.capacity}</p>
-                  <p className="creation-date">נפתחה בתאריך: {new Date(workshop.createdAt).toLocaleDateString()}</p>
-                </div>
-              )}
+            return (
+              <div key={workshop._id} className="workshop-card">
+                <h3>{workshop.name}</h3>
+                {workshop.image && (
+                  <img src={`http://localhost:3000/${workshop.image}`} alt={workshop.name} />
+                )}
+                <p>{workshop.description}</p>
+                <p className="price">מחיר: {workshop.price} ש"ח</p>
 
-              <button onClick={() => handleDetails(workshop._id)} className="details-button">פרטים נוספים</button>
-              
-              {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
-              {isAdmin && (
-                <div className="workshop-actions">
-                  <button onClick={() => handleEdit(workshop._id)} className="edit-button">ערוך</button>
-                  <button onClick={() => handleDelete(workshop._id)} className="delete-button">מחק</button>
-                </div>
-              )}
-            </div>
-          ))
+                {/* הצגת תווית "מלא" אם אין מקום פנוי */}
+                {isFull && <span className="full-label">מלא</span>}
+
+                {/* הצגת מספר המשתתפים ותאריך היצירה רק אם המשתמש הוא אדמין */}
+                {isAdmin && (
+                  <div>
+                    <p className="participants">משתתפים בסדנה: {workshop.participants} מתוך {workshop.capacity}</p>
+                    <p className="creation-date">נפתחה בתאריך: {new Date(workshop.createdAt).toLocaleDateString()}</p>
+                  </div>
+                )}
+
+                {/* הכפתור נשאר פעיל גם אם הסדנה מלאה */}
+                <button onClick={() => handleDetails(workshop._id)} className="details-button">פרטים נוספים</button>
+                
+                {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
+                {isAdmin && (
+                  <div className="workshop-actions">
+                    <button onClick={() => handleEdit(workshop._id)} className="edit-button">ערוך</button>
+                    <button onClick={() => handleDelete(workshop._id)} className="delete-button">מחק</button>
+                  </div>
+                )}
+              </div>
+            );
+          })
         ) : (
           <p>אין סדנאות להצגה</p>
         )}

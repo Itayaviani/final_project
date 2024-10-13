@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios'; // נוסיף את axios לשליחת בקשת רכישה
+import axios from 'axios';
 import './workshopPayment.css'; // ייבוא עיצוב מתאים
 
 export default function WorkshopPayment() {
   const { workshopId } = useParams(); // קבלת מזהה הסדנה שנרכשה מהנתיב
   const navigate = useNavigate();
+
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [creditCard, setCreditCard] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
-  const [selectedCardType, setSelectedCardType] = useState(''); // הוספת מצב של הכפתור הנבחר (ויזה או מאסטרקארד)
+  const [selectedCardType, setSelectedCardType] = useState(''); // מצב הכפתור הנבחר (ויזה או מאסטרקארד)
 
   const [errors, setErrors] = useState({
     fullName: '',
@@ -19,16 +20,16 @@ export default function WorkshopPayment() {
     creditCard: '',
     expirationDate: '',
     cvv: '',
-    cardType: '', // הוספת שדה שגיאה עבור סוג הכרטיס
+    cardType: '', // שדה שגיאה עבור סוג הכרטיס
   });
 
   const [submitted, setSubmitted] = useState(false); // משתנה לבדיקת אם המשתמש ניסה לשלוח את הטופס
   const [isFormValid, setIsFormValid] = useState(false); // סטטוס תקינות הטופס
 
-  // פונקציה לוודא תקינות כל השדות
+  // פונקציה לוודא תקינות כל השדות, כולל בחירת סוג כרטיס אשראי
   const validateForm = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/; // אימות אימייל בפורמט example@example.com או example@example.co.il
-    const fullNameRegex = /^[A-Za-z\u0590-\u05FF\s]+$/; // אימות שהשם המלא מכיל רק אותיות בעברית/אנגלית ורווחים
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const fullNameRegex = /^[A-Za-z\u0590-\u05FF\s]+$/;
 
     const newErrors = {
       fullName: !fullNameRegex.test(fullName) && fullName.length > 0 ? 'שם מלא יכול להכיל רק אותיות בעברית או באנגלית ורווחים.' : '',
@@ -41,11 +42,11 @@ export default function WorkshopPayment() {
 
     setErrors(newErrors);
 
-    // הטופס תקין אם אין הודעות שגיאה
-    return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv && !newErrors.cardType;
+    // הטופס תקין אם כל השדות תקינים
+    return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv;
   };
 
-  // עדכון סטטוס הטופס בכל שינוי של שדה
+  // עדכון תקינות הטופס בכל שינוי בשדות
   useEffect(() => {
     setIsFormValid(validateForm());
   }, [fullName, email, creditCard, expirationDate, cvv, selectedCardType]);
@@ -75,7 +76,7 @@ export default function WorkshopPayment() {
   };
 
   const handleCardTypeSelect = (type) => {
-    setSelectedCardType(type); // עדכון אמצעי התשלום הנבחר
+    setSelectedCardType(type); // עדכון סוג הכרטיס הנבחר (ויזה/מאסטרקארד)
   };
 
   const handlePurchase = async () => {
@@ -87,20 +88,56 @@ export default function WorkshopPayment() {
 
     try {
       const response = await axios.post('http://localhost:3000/api/v1/workshops/purchase', purchaseData);
-      console.log('Purchase successful:', response.data);
+      
+      // בדיקת רכישה כפולה
+      if (response.data.purchased) {
+        alert('כבר רכשת את הסדנה הזו.');
+        resetForm(); // איפוס הטופס לאחר הרכישה
+      } else {
+        console.log('Purchase successful:', response.data);
+        alert('הרכישה בוצעה בהצלחה!');
+        navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
+      }
     } catch (error) {
       console.error('Error making purchase:', error);
+
+      if (error.response && error.response.status === 400) {
+        alert('הסדנה מלאה, לא ניתן לבצע רכישה נוספת.');
+      } else if (error.response && error.response.status === 404) {
+        alert('לא נמצאה הסדנה או המשתמש.');
+      } else {
+        alert('אירעה שגיאה בעת ביצוע הרכישה, אנא נסה שוב מאוחר יותר.');
+      }
     }
   };
 
-  const handlePayment = async (e) => {
+  const handlePayment = (e) => {
     e.preventDefault();
     setSubmitted(true); // סימון שנשלח הטופס
 
-    if (isFormValid) {
-      await handlePurchase();
-      navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
+    // אם לא נבחר סוג כרטיס, לאפשר לחיצה אך למנוע רכישה ולהציג את ההודעה
+    if (!selectedCardType) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        cardType: 'יש לבחור אמצעי תשלום (ויזה או מאסטרקארד).',
+      }));
+      return;
     }
+
+    // אם כל השדות תקינים, בצע את הרכישה
+    if (isFormValid && selectedCardType) {
+      handlePurchase(); // קריאה לפונקציה ששולחת את הנתונים לשרת
+    }
+  };
+
+  // פונקציה לאיפוס הטופס לאחר רכישה
+  const resetForm = () => {
+    setFullName('');
+    setEmail('');
+    setCreditCard('');
+    setExpirationDate('');
+    setCvv('');
+    setSelectedCardType('');
   };
 
   return (
@@ -115,7 +152,11 @@ export default function WorkshopPayment() {
             onChange={(e) => setFullName(e.target.value)}
             required
           />
-          {errors.fullName && <span className="error">{errors.fullName}</span>}
+          {errors.fullName ? (
+            <span className="error">{errors.fullName}</span>
+          ) : fullName.length > 0 && (
+            <span className="success">✔</span>
+          )}
         </div>
 
         <div className="form-group">
@@ -126,10 +167,14 @@ export default function WorkshopPayment() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          {errors.email && <span className="error">{errors.email}</span>}
+          {errors.email ? (
+            <span className="error">{errors.email}</span>
+          ) : email.length > 0 && (
+            <span className="success">✔</span>
+          )}
         </div>
 
-        {/* הוספת כפתורי ויזה ומאסטרקארד */}
+        {/* כפתורי ויזה ומאסטרקארד */}
         <div className="card-type-selection">
           <button
             type="button"
@@ -158,7 +203,11 @@ export default function WorkshopPayment() {
             onChange={handleCreditCardChange}
             required
           />
-          {errors.creditCard && <span className="error">{errors.creditCard}</span>}
+          {errors.creditCard ? (
+            <span className="error">{errors.creditCard}</span>
+          ) : creditCard.length === 16 && (
+            <span className="success">✔</span>
+          )}
         </div>
 
         <div className="form-group">
@@ -170,7 +219,11 @@ export default function WorkshopPayment() {
             onChange={handleExpirationDateChange}
             required
           />
-          {errors.expirationDate && <span className="error">{errors.expirationDate}</span>}
+          {errors.expirationDate ? (
+            <span className="error">{errors.expirationDate}</span>
+          ) : expirationDate.length === 5 && expirationDate.includes('/') && (
+            <span className="success">✔</span>
+          )}
         </div>
 
         <div className="form-group">
@@ -181,7 +234,11 @@ export default function WorkshopPayment() {
             onChange={handleCvvChange}
             required
           />
-          {errors.cvv && <span className="error">{errors.cvv}</span>}
+          {errors.cvv ? (
+            <span className="error">{errors.cvv}</span>
+          ) : cvv.length === 3 && (
+            <span className="success">✔</span>
+          )}
         </div>
 
         <button
