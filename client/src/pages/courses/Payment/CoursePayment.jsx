@@ -13,6 +13,7 @@ export default function CoursePayment() {
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
   const [selectedCardType, setSelectedCardType] = useState(''); // מצב הכפתור הנבחר (ויזה או מאסטרקארד)
+  const [installments, setInstallments] = useState(1); // כמות התשלומים, ברירת מחדל 1
   const [isCourseFull, setIsCourseFull] = useState(false); // סטטוס האם הקורס מלא
   const [participants, setParticipants] = useState(0); // מספר המשתתפים הנוכחי
   const [capacity, setCapacity] = useState(0); // תפוסה מקסימלית של הקורס
@@ -99,46 +100,44 @@ export default function CoursePayment() {
     setSelectedCardType(type); // עדכון אמצעי התשלום הנבחר
   };
 
-
-    // פונקציה לאיפוס הטופס
-    const resetForm = () => {
-      setFullName('');
-      setEmail('');
-      setCreditCard('');
-      setExpirationDate('');
-      setCvv('');
-      setSelectedCardType('');
-    };
+  // פונקציה לאיפוס הטופס
+  const resetForm = () => {
+    setFullName('');
+    setEmail('');
+    setCreditCard('');
+    setExpirationDate('');
+    setCvv('');
+    setSelectedCardType('');
+    setInstallments(1); // איפוס כמות התשלומים
+  };
 
   // פונקציה לשליחת הנתונים לשרת
+  const handlePurchase = async (purchaseData) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/v1/courses/purchase', purchaseData);
 
-const handlePurchase = async (purchaseData) => {
-  try {
-    const response = await axios.post('http://localhost:3000/api/v1/courses/purchase', purchaseData);
+      // בדוק אם הקורס כבר נרכש על פי תגובת השרת
+      if (response.data.purchased) {
+        alert('כבר רכשת את הקורס הזה.'); // הצגת הודעה למשתמש
+        resetForm();
+      } else {
+        console.log('Purchase successful:', response.data);
+        alert('הרכישה בוצעה בהצלחה!');
+        navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
+      }
+    } catch (error) {
+      console.error('Error making purchase:', error);
 
-    // בדוק אם הקורס כבר נרכש על פי תגובת השרת
-    if (response.data.purchased) {
-      alert('כבר רכשת את הקורס הזה.'); // הצגת הודעה למשתמש
-      resetForm()
-    } else {
-      console.log('Purchase successful:', response.data);
-      alert('הרכישה בוצעה בהצלחה!');
-      navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
+      // בדוק את הסטטוס של השגיאה שהתקבלה מהשרת
+      if (error.response && error.response.status === 400) {
+        alert('הקורס מלא, לא ניתן לבצע רכישה נוספת.');
+      } else if (error.response && error.response.status === 404) {
+        alert('לא נמצא הקורס או המשתמש.');
+      } else {
+        alert('אירעה שגיאה בעת ביצוע הרכישה, אנא נסה שוב מאוחר יותר.');
+      }
     }
-  } catch (error) {
-    console.error('Error making purchase:', error);
-
-    // בדוק את הסטטוס של השגיאה שהתקבלה מהשרת
-    if (error.response && error.response.status === 400) {
-      alert('הקורס מלא, לא ניתן לבצע רכישה נוספת.');
-    } else if (error.response && error.response.status === 404) {
-      alert('לא נמצא הקורס או המשתמש.');
-    } else {
-      alert('אירעה שגיאה בעת ביצוע הרכישה, אנא נסה שוב מאוחר יותר.');
-    }
-  }
-};
-
+  };
 
   const handlePayment = (e) => {
     e.preventDefault();
@@ -157,6 +156,7 @@ const handlePurchase = async (purchaseData) => {
         fullName,
         email,
         courseId,
+        installments, // הוספת כמות התשלומים לנתונים הנשלחים לשרת
       };
 
       handlePurchase(purchaseData); // קריאה לפונקציה ששולחת את הנתונים לשרת
@@ -265,6 +265,16 @@ const handlePurchase = async (purchaseData) => {
           ) : cvv.length === 3 && (
             <span className="success">✔</span>
           )}
+        </div>
+
+        {/* בחירת מספר תשלומים, מוצג תמיד */}
+        <div className="form-group">
+          <label>כמות תשלומים:</label>
+          <select value={installments} onChange={(e) => setInstallments(e.target.value)}>
+            {[...Array(12).keys()].map((n) => (
+              <option key={n + 1} value={n + 1}>{n + 1}</option>
+            ))}
+          </select>
         </div>
 
         <button

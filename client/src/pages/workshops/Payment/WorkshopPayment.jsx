@@ -4,7 +4,7 @@ import axios from 'axios';
 import './workshopPayment.css'; // ייבוא עיצוב מתאים
 
 export default function WorkshopPayment() {
-  const { workshopId } = useParams(); // קבלת מזהה הסדנה שנרכשה מהנתיב
+  const { workshopId } = useParams(); // קבלת מזהה הסדנה מהנתיב
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState('');
@@ -13,6 +13,7 @@ export default function WorkshopPayment() {
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
   const [selectedCardType, setSelectedCardType] = useState(''); // מצב הכפתור הנבחר (ויזה או מאסטרקארד)
+  const [installments, setInstallments] = useState(1); // כמות תשלומים ברירת מחדל 1
 
   const [errors, setErrors] = useState({
     fullName: '',
@@ -84,11 +85,12 @@ export default function WorkshopPayment() {
       fullName,
       email,
       workshopId, // ודא שזה workshopId ולא courseId
+      installments, // כמות התשלומים נשלחת כחלק מהנתונים
     };
 
     try {
       const response = await axios.post('http://localhost:3000/api/v1/workshops/purchase', purchaseData);
-      
+
       // בדיקת רכישה כפולה
       if (response.data.purchased) {
         alert('כבר רכשת את הסדנה הזו.');
@@ -138,6 +140,7 @@ export default function WorkshopPayment() {
     setExpirationDate('');
     setCvv('');
     setSelectedCardType('');
+    setInstallments(1); // איפוס כמות התשלומים לברירת מחדל
   };
 
   return (
@@ -239,6 +242,16 @@ export default function WorkshopPayment() {
           ) : cvv.length === 3 && (
             <span className="success">✔</span>
           )}
+        </div>
+
+        {/* בחירת מספר תשלומים, מוצג תמיד */}
+        <div className="form-group">
+          <label>כמות תשלומים:</label>
+          <select value={installments} onChange={(e) => setInstallments(e.target.value)}>
+            {[...Array(12).keys()].map((n) => (
+              <option key={n + 1} value={n + 1}>{n + 1}</option>
+            ))}
+          </select>
         </div>
 
         <button
