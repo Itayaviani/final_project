@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AddCourse.css'; // ייבוא קובץ ה-CSS
 
-
 export default function AddCourse({ addCourse }) {
   const [courseName, setCourseName] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
   const [coursePrice, setCoursePrice] = useState('');
-  const [courseCapacity, setCourseCapacity] = useState(''); // שדה חדש עבור הקיבולת
+  const [courseCapacity, setCourseCapacity] = useState(''); // שדה עבור הקיבולת
   const [courseImage, setCourseImage] = useState(null);
+  const [courseStartDate, setCourseStartDate] = useState(''); // שדה חדש עבור מועד תחילת הקורס
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(courseName, courseDescription, coursePrice, courseCapacity, courseImage);
+    console.log(courseName, courseDescription, coursePrice, courseCapacity, courseStartDate, courseImage);
     
     try {
       // יצירת FormData והוספת כל השדות הרלוונטיים
@@ -23,10 +23,11 @@ export default function AddCourse({ addCourse }) {
       formData.append('description', courseDescription);
       formData.append('price', coursePrice);
       formData.append('capacity', courseCapacity); // הוספת קיבולת
+      formData.append('startDate', courseStartDate); // הוספת מועד התחלה
       if (courseImage) {
         formData.append('image', courseImage);
       }
-  
+
       const response = await axios.post(
         'http://localhost:3000/api/v1/courses',
         formData,
@@ -36,14 +37,13 @@ export default function AddCourse({ addCourse }) {
           }
         }
       );
-  
+
       addCourse(response.data);
       navigate('/courses');
     } catch (error) {
       console.error('Failed to add course:', error);
     }
   };
-  
 
   const handleImageChange = (e) => {
     setCourseImage(e.target.files[0]);
@@ -85,6 +85,15 @@ export default function AddCourse({ addCourse }) {
             type="number"
             value={courseCapacity}
             onChange={(e) => setCourseCapacity(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>מועד תחילת הקורס:</label> {/* שדה חדש עבור מועד תחילת הקורס */}
+          <input
+            type="date"
+            value={courseStartDate}
+            onChange={(e) => setCourseStartDate(e.target.value)}
             required
           />
         </div>

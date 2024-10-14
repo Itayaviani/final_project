@@ -97,6 +97,7 @@ export default function Courses({ isAdmin, userId }) {
                   <div>
                     <p className="participants">משתתפים בקורס: {course.participants} מתוך {course.capacity}</p>
                     <p className="creation-date">נפתח בתאריך: {new Date(course.createdAt).toLocaleDateString()}</p>
+                    <p className="start-date">מועד תחילת הקורס: {new Date(course.startDate).toLocaleDateString()}</p> {/* מועד תחילת הקורס */}
                   </div>
                 )}
 

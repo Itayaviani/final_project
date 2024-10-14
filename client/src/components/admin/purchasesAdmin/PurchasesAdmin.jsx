@@ -57,7 +57,7 @@ const PurchasesAdmin = () => {
               <th>שם פריט</th>
               <th>מחיר</th>
               <th>תאריך רכישה</th>
-              <th>כמות רוכשים</th> {/* הוספת עמודה לכמות רוכשים */}
+              
             </tr>
           </thead>
           <tbody>
@@ -72,7 +72,7 @@ const PurchasesAdmin = () => {
                       <td>{course.name}</td>
                       <td>{course.price} ש"ח</td>
                       <td>{new Date(course.createdAt).toLocaleDateString()}</td>
-                      <td>{course.participants || 0}</td> {/* הצגת כמות הרוכשים */}
+                      
                     </tr>
                   ))}
                 
@@ -85,7 +85,7 @@ const PurchasesAdmin = () => {
                       <td>{workshop.name}</td>
                       <td>{workshop.price} ש"ח</td>
                       <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
-                      <td>{workshop.participants || 0}</td> {/* הצגת כמות הרוכשים */}
+                      
                     </tr>
                   ))}
               </>
