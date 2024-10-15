@@ -6,6 +6,7 @@ const multer = require('multer');
 const path = require('path');
 const User = require('../models/UserModel'); // וודא שהנתיב נכון בהתאם למבנה התיקיות שלך
 
+
 // הגדרת אחסון התמונות
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -24,7 +25,7 @@ router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // נתיב להוספת קורס חדש
 router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const { name, description, price, capacity } = req.body;
+    const { name, description, price, capacity, startDate } = req.body; // הוספת startDate מהבקשה
 
     // קבלת נתיב התמונה שהועלתה
     let courseImagePath = req.file ? req.file.path : '';
@@ -32,20 +33,24 @@ router.post('/', upload.single('image'), async (req, res) => {
     // החלפת כל התווים ההפוכים בתווים רגילים כדי לוודא שהתמונה ניתנת לשליפה כראוי
     courseImagePath = courseImagePath.replace(/\\/g, '/');
 
+    // יצירת הקורס החדש
     const newCourse = new Course({
       name,
       description,
       price,
       capacity,
-      image: courseImagePath, // שמירת הנתיב המעודכן
+      image: courseImagePath, // שמירת נתיב התמונה
+      startDate, // שמירת תאריך תחילת הקורס
     });
 
+    // שמירת הקורס במסד הנתונים
     await newCourse.save();
     res.status(201).json(newCourse);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
+
 
 // Route to get all courses
 router.get('/', async (req, res) => {
@@ -88,25 +93,27 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, capacity } = req.body;
+    const { name, description, price, capacity, startDate } = req.body; // הוספת startDate מהבקשה
 
-    // Find the course by ID
+    // מצא את הקורס לפי מזהה
     const course = await Course.findById(id);
     if (!course) {
       return res.status(404).json({ error: 'Course not found' });
     }
 
-    // Update course details
+    // עדכון פרטי הקורס
     course.name = name || course.name;
     course.description = description || course.description;
     course.price = price || course.price;
     course.capacity = capacity || course.capacity;
+    course.startDate = startDate ? new Date(startDate) : course.startDate; // עדכון תאריך ההתחלה
 
-    // Update the image only if a new one is uploaded
+    // עדכון התמונה רק אם הועלתה תמונה חדשה
     if (req.file) {
       course.image = req.file.path;
     }
 
+    // שמירת הקורס המעודכן
     const updatedCourse = await course.save();
 
     res.json(updatedCourse);
@@ -115,6 +122,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: 'Failed to update course' });
   }
 });
+
 
 
 // נתיב לרכישת קורס

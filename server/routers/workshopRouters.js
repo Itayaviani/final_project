@@ -24,7 +24,7 @@ router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // נתיב להוספת סדנה חדשה
 router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const { name, description, price, capacity } = req.body;
+    const { name, description, price, capacity, startDate } = req.body; // הוספת startDate מהבקשה
 
     // קבלת נתיב התמונה שהועלתה
     let workshopImagePath = req.file ? req.file.path : '';
@@ -32,20 +32,24 @@ router.post('/', upload.single('image'), async (req, res) => {
     // החלפת כל התווים ההפוכים בתווים רגילים כדי לוודא שהתמונה ניתנת לשליפה כראוי
     workshopImagePath = workshopImagePath.replace(/\\/g, '/');
 
+    // יצירת אובייקט חדש לסדנה כולל תאריך התחלה
     const newWorkshop = new Workshop({
       name,
       description,
       price,
       capacity,
+      startDate: new Date(startDate), // המרת מחרוזת לתאריך ושמירתו
       image: workshopImagePath,
     });
 
+    // שמירת הסדנה החדשה במסד הנתונים
     await newWorkshop.save();
     res.status(201).json(newWorkshop);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
+
 
 // נתיב לקבלת כל הסדנאות
 router.get('/', async (req, res) => {
@@ -88,7 +92,7 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, capacity } = req.body;
+    const { name, description, price, capacity, startDate } = req.body; // הוספת startDate
 
     // מצא את הסדנה לפי ID
     const workshop = await Workshop.findById(id);
@@ -101,6 +105,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     workshop.description = description || workshop.description;
     workshop.price = price || workshop.price;
     workshop.capacity = capacity || workshop.capacity;
+    workshop.startDate = startDate ? new Date(startDate) : workshop.startDate; // עדכון תאריך התחלה אם נשלח
 
     // עדכון התמונה רק אם התווספה תמונה חדשה
     if (req.file) {
@@ -115,6 +120,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: 'Failed to update workshop' });
   }
 });
+
 
 // נתיב לרכישת סדנה
 router.post('/purchase', async (req, res) => {

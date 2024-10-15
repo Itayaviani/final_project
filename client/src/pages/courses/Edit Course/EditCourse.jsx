@@ -9,6 +9,7 @@ export default function EditCourse() {
   const [courseDescription, setCourseDescription] = useState('');
   const [coursePrice, setCoursePrice] = useState('');
   const [courseCapacity, setCourseCapacity] = useState(''); // שדה חדש לקיבולת
+  const [courseStartDate, setCourseStartDate] = useState(''); // שדה חדש לתאריך התחלה
   const [courseImage, setCourseImage] = useState(null); // שדה עבור העלאת קובץ תמונה
   const [currentImage, setCurrentImage] = useState(''); // שמירה של התמונה הנוכחית
   const navigate = useNavigate();
@@ -17,11 +18,12 @@ export default function EditCourse() {
     const fetchCourse = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/courses/${courseId}`);
-        const { name, description, price, capacity, image } = response.data; // קבלת ערך הקיבולת והתמונה מהשרת
+        const { name, description, price, capacity, image, startDate } = response.data; // קבלת ערך הקיבולת, התמונה ותאריך ההתחלה מהשרת
         setCourseName(name);
         setCourseDescription(description);
         setCoursePrice(price);
         setCourseCapacity(capacity); // הגדרת הקיבולת
+        setCourseStartDate(startDate ? new Date(startDate).toISOString().split('T')[0] : ''); // הגדרת תאריך התחלה לפורמט הנכון
         setCurrentImage(image); // הגדרת התמונה הנוכחית
       } catch (error) {
         console.error('Failed to fetch course:', error);
@@ -35,21 +37,18 @@ export default function EditCourse() {
     e.preventDefault();
 
     // הכנת הנתונים לשליחה
-    const formData = new FormData();
-    formData.append('name', courseName);
-    formData.append('description', courseDescription);
-    formData.append('price', coursePrice);
-    formData.append('capacity', courseCapacity);
-    
-    // הוספת התמונה במידה ונבחרה
-    if (courseImage) {
-      formData.append('image', courseImage);
-    }
+    const formData = {
+      name: courseName,
+      description: courseDescription,
+      price: coursePrice,
+      capacity: courseCapacity,
+      startDate: courseStartDate, // שליחת תאריך ההתחלה
+    };
 
     try {
       await axios.put(`http://localhost:3000/api/v1/courses/${courseId}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // הגדרת סוג הנתונים כ-FormData
+          'Content-Type': 'application/json', // בקשה עם תוכן JSON
         },
       });
       
@@ -100,6 +99,15 @@ export default function EditCourse() {
               type="number"
               value={courseCapacity}
               onChange={(e) => setCourseCapacity(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>מועד תחילת הקורס:</label> {/* שדה חדש לתאריך תחילת הקורס */}
+            <input
+              type="date"
+              value={courseStartDate}
+              onChange={(e) => setCourseStartDate(e.target.value)}
               required
             />
           </div>

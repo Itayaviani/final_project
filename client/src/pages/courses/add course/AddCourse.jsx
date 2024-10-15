@@ -9,13 +9,14 @@ export default function AddCourse({ addCourse }) {
   const [coursePrice, setCoursePrice] = useState('');
   const [courseCapacity, setCourseCapacity] = useState(''); // שדה עבור הקיבולת
   const [courseImage, setCourseImage] = useState(null);
-  const [courseStartDate, setCourseStartDate] = useState(''); // שדה חדש עבור מועד תחילת הקורס
+  const [courseStartDate, setCourseStartDate] = useState(''); // שדה עבור מועד תחילת הקורס
+  const [error, setError] = useState(null); // לניהול שגיאות
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(courseName, courseDescription, coursePrice, courseCapacity, courseStartDate, courseImage);
-    
+    setError(null); // איפוס שגיאות קודמות
+
     try {
       // יצירת FormData והוספת כל השדות הרלוונטיים
       const formData = new FormData();
@@ -25,7 +26,7 @@ export default function AddCourse({ addCourse }) {
       formData.append('capacity', courseCapacity); // הוספת קיבולת
       formData.append('startDate', courseStartDate); // הוספת מועד התחלה
       if (courseImage) {
-        formData.append('image', courseImage);
+        formData.append('image', courseImage); // הוספת תמונה
       }
 
       const response = await axios.post(
@@ -33,20 +34,21 @@ export default function AddCourse({ addCourse }) {
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
           }
         }
       );
 
-      addCourse(response.data);
-      navigate('/courses');
+      addCourse(response.data); // עדכון המצב עם הקורס החדש
+      navigate('/courses'); // ניווט לרשימת הקורסים לאחר ההוספה
     } catch (error) {
-      console.error('Failed to add course:', error);
+      console.error('Failed to add course:', error.response ? error.response.data : error.message);
+      setError('Failed to add course. Please check the form and try again.'); // הצגת הודעת שגיאה
     }
   };
 
   const handleImageChange = (e) => {
-    setCourseImage(e.target.files[0]);
+    setCourseImage(e.target.files[0]); // טיפול בשינוי התמונה
   };
 
   return (
@@ -89,7 +91,7 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>מועד תחילת הקורס:</label> {/* שדה חדש עבור מועד תחילת הקורס */}
+          <label>מועד תחילת הקורס:</label> {/* שדה עבור מועד תחילת הקורס */}
           <input
             type="date"
             value={courseStartDate}
@@ -107,6 +109,7 @@ export default function AddCourse({ addCourse }) {
         </div>
         <button type="submit">הוסף קורס</button>
       </form>
+      {error && <p className="error-message">{error}</p>} {/* הצגת שגיאה אם קיימת */}
     </div>
   );
 }

@@ -10,18 +10,20 @@ export default function EditWorkshop() {
   const [workshopPrice, setWorkshopPrice] = useState('');
   const [workshopImage, setWorkshopImage] = useState('');
   const [workshopCapacity, setWorkshopCapacity] = useState(''); // הוספת קיבולת
+  const [workshopStartDate, setWorkshopStartDate] = useState(''); // הוספת שדה לתאריך התחלה
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWorkshop = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/workshops/${workshopId}`);
-        const { name, description, price, image, capacity } = response.data;
+        const { name, description, price, image, capacity, startDate } = response.data;
         setWorkshopName(name);
         setWorkshopDescription(description);
         setWorkshopPrice(price);
         setWorkshopImage(image);
         setWorkshopCapacity(capacity); // קביעת ערך הקיבולת
+        setWorkshopStartDate(startDate ? new Date(startDate).toISOString().split('T')[0] : ''); // קביעת תאריך התחלה לפורמט המתאים
       } catch (error) {
         console.error('Failed to fetch workshop:', error);
       }
@@ -38,7 +40,8 @@ export default function EditWorkshop() {
     formData.append('description', workshopDescription);
     formData.append('price', workshopPrice);
     formData.append('capacity', workshopCapacity);
-    if (workshopImage) {
+    formData.append('startDate', workshopStartDate); // הוספת תאריך התחלה ל-FormData
+    if (workshopImage && typeof workshopImage !== 'string') {
       formData.append('image', workshopImage);
     }
 
@@ -96,6 +99,15 @@ export default function EditWorkshop() {
               type="number"
               value={workshopCapacity}
               onChange={(e) => setWorkshopCapacity(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>תאריך תחילת הסדנא:</label> {/* שדה חדש לתאריך תחילת הסדנה */}
+            <input
+              type="date"
+              value={workshopStartDate}
+              onChange={(e) => setWorkshopStartDate(e.target.value)}
               required
             />
           </div>

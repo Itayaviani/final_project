@@ -25,6 +25,10 @@ const courseSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // ברירת מחדל היא התאריך הנוכחי בעת יצירת המסמך
   },
+  startDate: {
+    type: Date, // תאריך תחילת הקורס
+    required: [true, 'Course start date is required'], // הודעה מותאמת אישית אם התאריך חסר
+  },
   participants: {
     type: Number,
     default: 0, // ברירת מחדל היא 0 משתתפים בתחילת הקורס

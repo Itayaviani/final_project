@@ -8,12 +8,13 @@ export default function AddWorkshop({ addWorkshop }) {
   const [workshopDescription, setWorkshopDescription] = useState('');
   const [workshopPrice, setWorkshopPrice] = useState('');
   const [workshopCapacity, setWorkshopCapacity] = useState(''); // הוספת שדה לקיבולת הסדנה
+  const [workshopStartDate, setWorkshopStartDate] = useState(''); // שדה חדש לתאריך תחילת הסדנה
   const [workshopImage, setWorkshopImage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(workshopName, workshopDescription, workshopPrice, workshopCapacity, workshopImage);
+    console.log(workshopName, workshopDescription, workshopPrice, workshopCapacity, workshopStartDate, workshopImage);
     
     try {
       // יצירת אובייקט FormData כדי לשלוח את הנתונים כולל התמונה
@@ -22,6 +23,7 @@ export default function AddWorkshop({ addWorkshop }) {
       formData.append('description', workshopDescription);
       formData.append('price', workshopPrice);
       formData.append('capacity', workshopCapacity);
+      formData.append('startDate', workshopStartDate); // הוספת תאריך התחלת הסדנה ל-FormData
       formData.append('image', workshopImage);
 
       const response = await axios.post(
@@ -82,6 +84,15 @@ export default function AddWorkshop({ addWorkshop }) {
             type="number"
             value={workshopCapacity}
             onChange={(e) => setWorkshopCapacity(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>תאריך תחילת הסדנא:</label> {/* שדה חדש לתאריך התחלה */}
+          <input
+            type="date"
+            value={workshopStartDate}
+            onChange={(e) => setWorkshopStartDate(e.target.value)}
             required
           />
         </div>

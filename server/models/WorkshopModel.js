@@ -35,6 +35,10 @@ const workshopSchema = new mongoose.Schema({
     required: [true, 'Workshop capacity is required'], // יש להגדיר קיבולת עבור כל סדנה
     min: [1, 'Workshop capacity must be at least 1'], // קיבולת מינימלית של 1 משתתף
   },
+  startDate: { 
+    type: Date, // שדה חדש עבור מועד תחילת הסדנה
+    required: [true, 'Workshop start date is required'], // וודא כי התאריך הוא שדה חובה
+  },
 });
 
 // יצירת מודל סדנה על בסיס הסכימה

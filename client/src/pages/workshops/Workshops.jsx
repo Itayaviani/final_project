@@ -73,6 +73,7 @@ export default function Workshops({ isAdmin }) {
                   <div>
                     <p className="participants">משתתפים בסדנה: {workshop.participants} מתוך {workshop.capacity}</p>
                     <p className="creation-date">נפתחה בתאריך: {new Date(workshop.createdAt).toLocaleDateString()}</p>
+                    <p className="start-date">מועד תחילת הסדנה: {new Date(workshop.startDate).toLocaleDateString()}</p> {/* הצגת מועד תחילת הסדנה */}
                   </div>
                 )}
 
