@@ -12,7 +12,7 @@ function PersonalProcess() {
         <div className="personal-process-container">
             {/* כותרת ולוגו */}
             <header className="header">
-                <h1 className="logo">תהליך אישי  - טלי גל</h1>
+                <h1 className="logo">תהליך אישי - טלי גל</h1>
                 <p className="subtitle">ליווי אישי לצמיחה והגשמה עצמית</p>
             </header>
 
