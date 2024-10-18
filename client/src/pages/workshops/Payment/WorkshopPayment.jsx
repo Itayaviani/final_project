@@ -15,6 +15,9 @@ export default function WorkshopPayment() {
   const [selectedCardType, setSelectedCardType] = useState(''); // מצב הכפתור הנבחר (ויזה או מאסטרקארד)
   const [installments, setInstallments] = useState(1); // כמות תשלומים ברירת מחדל 1
 
+  const [hasWorkshopStarted, setHasWorkshopStarted] = useState(false); // סטטוס אם הסדנה התחילה
+  const [isWorkshopFull, setIsWorkshopFull] = useState(false); // סטטוס אם הסדנה מלאה
+
   const [errors, setErrors] = useState({
     fullName: '',
     email: '',
@@ -26,6 +29,29 @@ export default function WorkshopPayment() {
 
   const [submitted, setSubmitted] = useState(false); // משתנה לבדיקת אם המשתמש ניסה לשלוח את הטופס
   const [isFormValid, setIsFormValid] = useState(false); // סטטוס תקינות הטופס
+
+  useEffect(() => {
+    const fetchWorkshopDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/v1/workshops/${workshopId}`);
+        const workshop = response.data;
+
+        // בדיקת אם הסדנה כבר התחילה
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // התאמה להשוואה לפי תאריך בלבד
+        const startDate = new Date(workshop.startDate);
+        startDate.setHours(0, 0, 0, 0);
+        setHasWorkshopStarted(startDate <= today);
+
+        // בדיקת אם הסדנה מלאה
+        setIsWorkshopFull(workshop.participants >= workshop.capacity);
+      } catch (error) {
+        console.error('Error fetching workshop details:', error);
+      }
+    };
+
+    fetchWorkshopDetails();
+  }, [workshopId]);
 
   // פונקציה לוודא תקינות כל השדות, כולל בחירת סוג כרטיס אשראי
   const validateForm = () => {
@@ -104,7 +130,8 @@ export default function WorkshopPayment() {
       console.error('Error making purchase:', error);
 
       if (error.response && error.response.status === 400) {
-        alert('הסדנה מלאה, לא ניתן לבצע רכישה נוספת.');
+        alert("לא ניתן לבצע רכישה, סדנה זאת מלאה.");
+        navigate('/workshops'); // ניתוב חזרה לעמוד הסדנאות לאחר לחיצה על אישור ב-alert
       } else if (error.response && error.response.status === 404) {
         alert('לא נמצאה הסדנה או המשתמש.');
       } else {
@@ -123,6 +150,20 @@ export default function WorkshopPayment() {
         ...prevErrors,
         cardType: 'יש לבחור אמצעי תשלום (ויזה או מאסטרקארד).',
       }));
+      return;
+    }
+
+    // בדיקה אם הסדנה מלאה
+    if (isWorkshopFull) {
+      alert('לא ניתן לבצע רכישה, סדנה זאת מלאה.');
+      navigate('/workshops'); // ניתוב לעמוד הסדנאות לאחר לחיצה על "אישור"
+      return;
+    }
+
+    // בדיקה אם הסדנה התחילה
+    if (hasWorkshopStarted) {
+      alert('לא ניתן לבצע רכישה, סדנה זאת התחילה.');
+      navigate('/workshops'); // ניתוב לעמוד הסדנאות לאחר לחיצה על "אישור"
       return;
     }
 

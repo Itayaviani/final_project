@@ -17,6 +17,7 @@ export default function CoursePayment() {
   const [isCourseFull, setIsCourseFull] = useState(false); // סטטוס האם הקורס מלא
   const [participants, setParticipants] = useState(0); // מספר המשתתפים הנוכחי
   const [capacity, setCapacity] = useState(0); // תפוסה מקסימלית של הקורס
+  const [hasCourseStarted, setHasCourseStarted] = useState(false); // סטטוס האם הקורס התחיל
 
   const [errors, setErrors] = useState({
     fullName: '',
@@ -64,6 +65,14 @@ export default function CoursePayment() {
         setParticipants(course.participants);
         setCapacity(course.capacity);
         setIsCourseFull(course.participants >= course.capacity); // בדיקה אם הקורס מלא
+
+        // בדיקה אם הקורס כבר התחיל
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // התאמה לתאריך בלבד
+        const courseStartDate = new Date(course.startDate);
+        courseStartDate.setHours(0, 0, 0, 0);
+
+        setHasCourseStarted(courseStartDate <= today); // עדכון הסטטוס אם הקורס התחיל
       } catch (error) {
         console.error('Error fetching course details:', error);
       }
@@ -131,6 +140,7 @@ export default function CoursePayment() {
       // בדוק את הסטטוס של השגיאה שהתקבלה מהשרת
       if (error.response && error.response.status === 400) {
         alert('הקורס מלא, לא ניתן לבצע רכישה נוספת.');
+        navigate('/courses'); // ניתוב חזרה לעמוד הקורסים לאחר לחיצה על אישור ב-alert
       } else if (error.response && error.response.status === 404) {
         alert('לא נמצא הקורס או המשתמש.');
       } else {
@@ -151,15 +161,26 @@ export default function CoursePayment() {
       }));
     }
 
-    if (isFormValid && selectedCardType && !isCourseFull) {
-      const purchaseData = {
-        fullName,
-        email,
-        courseId,
-        installments, // הוספת כמות התשלומים לנתונים הנשלחים לשרת
-      };
+    // כאן לא נבצע בדיקה אם הכפתור מושבת - במקום זה נבצע את כל הבדיקות לאחר לחיצה
+    if (isFormValid && selectedCardType) {
+      if (isCourseFull) {
+        // הצגת הודעת alert אם הקורס מלא ואז ניתוב חזרה לעמוד הקורסים
+        alert("לא ניתן לבצע רכישה, קורס זה מלא.")
+        navigate('/courses'); // ניתוב חזרה לעמוד הקורסים לאחר לחיצה על אישור ב-alert
+      } else if (hasCourseStarted) {
+        // הצגת הודעת alert אם הקורס כבר התחיל ואז ניתוב חזרה לעמוד הקורסים
+        alert("לא ניתן לבצע רכישה, קורס זה התחיל.")
+        navigate('/courses'); // ניתוב חזרה לעמוד הקורסים לאחר לחיצה על אישור ב-alert
+      } else {
+        const purchaseData = {
+          fullName,
+          email,
+          courseId,
+          installments, // הוספת כמות התשלומים לנתונים הנשלחים לשרת
+        };
 
-      handlePurchase(purchaseData); // קריאה לפונקציה ששולחת את הנתונים לשרת
+        handlePurchase(purchaseData); // קריאה לפונקציה ששולחת את הנתונים לשרת
+      }
     }
   };
 
@@ -280,7 +301,6 @@ export default function CoursePayment() {
         <button
           type="submit"
           className="submit-button"
-          disabled={!isFormValid || isCourseFull} // מניעת לחיצה אם הקורס מלא
         >
           בצע תשלום
         </button>

@@ -62,6 +62,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+
 // Route to get a course by ID
 router.get('/:id', async (req, res) => {
   try {

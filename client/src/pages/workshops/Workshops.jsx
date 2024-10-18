@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import './workshops.css'; // ייבוא קובץ ה-CSS
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import "./workshops.css"; // ייבוא קובץ ה-CSS
 
 export default function Workshops({ isAdmin }) {
   const [workshops, setWorkshops] = useState([]);
+  const [loading, setLoading] = useState(true); // מצב טעינה
 
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/workshops');
+        const response = await axios.get(
+          "http://localhost:3000/api/v1/workshops"
+        );
 
         // הצגת כל הסדנאות ללא סינון של הסדנאות המלאות
         setWorkshops(response.data);
       } catch (error) {
-        console.error('Failed to fetch workshops:', error);
+        console.error("Failed to fetch workshops:", error);
+      } finally {
+        setLoading(false); // סיום מצב הטעינה
       }
     };
 
@@ -23,10 +28,12 @@ export default function Workshops({ isAdmin }) {
 
   const handleDelete = async (workshopId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/workshops/${workshopId}`);
-      setWorkshops(workshops.filter(workshop => workshop._id !== workshopId));
+      await axios.delete(
+        `http://localhost:3000/api/v1/workshops/${workshopId}`
+      );
+      setWorkshops(workshops.filter((workshop) => workshop._id !== workshopId));
     } catch (error) {
-      console.error('Failed to delete workshop:', error);
+      console.error("Failed to delete workshop:", error);
     }
   };
 
@@ -37,6 +44,13 @@ export default function Workshops({ isAdmin }) {
   const handleDetails = (workshopId) => {
     window.location.href = `/workshop-details/${workshopId}`;
   };
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // התאמה להשוואה לפי תאריך בלבד ללא שעות
+
+  if (loading) {
+    return <div>טוען סדנאות...</div>;
+  }
 
   return (
     <div>
@@ -54,37 +68,79 @@ export default function Workshops({ isAdmin }) {
       <div className="workshops-container">
         {workshops.length > 0 ? (
           workshops.map((workshop) => {
+            const startDate = new Date(workshop.startDate);
+            startDate.setHours(0, 0, 0, 0); // התאמה להשוואה לפי תאריך בלבד ללא שעות
             const isFull = workshop.participants >= workshop.capacity; // בדיקה אם הסדנה מלאה
+            const hasWorkshopStarted = startDate <= today; // בדיקה אם הסדנה התחילה
 
             return (
               <div key={workshop._id} className="workshop-card">
                 <h3>{workshop.name}</h3>
                 {workshop.image && (
-                  <img src={`http://localhost:3000/${workshop.image}`} alt={workshop.name} />
+                  <img
+                    src={`http://localhost:3000/${workshop.image}`}
+                    alt={workshop.name}
+                  />
                 )}
                 <p>{workshop.description}</p>
                 <p className="price">מחיר: {workshop.price} ש"ח</p>
 
-                {/* הצגת תווית "מלא" אם אין מקום פנוי */}
-                {isFull && <span className="full-label">מלא</span>}
+    
+
+                {isFull && hasWorkshopStarted ? (
+                  <div>
+                    <span className="full-label">סדנה זאת מלאה</span>
+                    <span className="started-label">סדנה זאת התחילה</span>
+                  </div>
+                ) : isFull ? (
+                  <span className="full-label">סדנה זאת מלאה</span>
+                ) : hasWorkshopStarted ? (
+                  <span className="started-label">סדנה זאת התחילה</span>
+                ) : null}
+
+                {/* הצגת מועד תחילת הסדנה למשתמשים רגילים ואדמינים */}
+                <p className="start-date">
+                  מועד תחילת הסדנה:{" "}
+                  {new Date(workshop.startDate).toLocaleDateString()}
+                </p>
+
+                {/* הכפתור נשאר פעיל גם אם הסדנה מלאה או התחילה */}
+                <button
+                  onClick={() => handleDetails(workshop._id)}
+                  className="details-button"
+                >
+                  פרטים נוספים
+                </button>
 
                 {/* הצגת מספר המשתתפים ותאריך היצירה רק אם המשתמש הוא אדמין */}
                 {isAdmin && (
                   <div>
-                    <p className="participants">משתתפים בסדנה: {workshop.participants} מתוך {workshop.capacity}</p>
-                    <p className="creation-date">נפתחה בתאריך: {new Date(workshop.createdAt).toLocaleDateString()}</p>
-                    <p className="start-date">מועד תחילת הסדנה: {new Date(workshop.startDate).toLocaleDateString()}</p> {/* הצגת מועד תחילת הסדנה */}
+                    <p className="participants">
+                      משתתפים בסדנה: {workshop.participants} מתוך{" "}
+                      {workshop.capacity}
+                    </p>
+                    <p className="creation-date">
+                      נפתחה בתאריך:{" "}
+                      {new Date(workshop.createdAt).toLocaleDateString()}
+                    </p>
                   </div>
                 )}
 
-                {/* הכפתור נשאר פעיל גם אם הסדנה מלאה */}
-                <button onClick={() => handleDetails(workshop._id)} className="details-button">פרטים נוספים</button>
-                
                 {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
                 {isAdmin && (
                   <div className="workshop-actions">
-                    <button onClick={() => handleEdit(workshop._id)} className="edit-button">ערוך</button>
-                    <button onClick={() => handleDelete(workshop._id)} className="delete-button">מחק</button>
+                    <button
+                      onClick={() => handleEdit(workshop._id)}
+                      className="edit-button"
+                    >
+                      ערוך
+                    </button>
+                    <button
+                      onClick={() => handleDelete(workshop._id)}
+                      className="delete-button"
+                    >
+                      מחק
+                    </button>
                   </div>
                 )}
               </div>
