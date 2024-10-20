@@ -59,6 +59,9 @@ const WorkshopsList = () => {
     }
   });
 
+  // מיון הסדנאות לפי הכנסות (מהגבוה לנמוך)
+  const sortedWorkshops = filteredWorkshops.sort((a, b) => calculateRevenue(b) - calculateRevenue(a));
+
   // פונקציה להצגת הטבלה לאחר לחיצה על כפתור
   const handleShowTable = (filterType) => {
     setFilter(filterType); // עדכון הסינון
@@ -94,7 +97,7 @@ const WorkshopsList = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredWorkshops.map((workshop) => (
+              {sortedWorkshops.map((workshop) => (
                 <tr key={workshop._id}>
                   <td>{workshop.name}</td>
                   <td>{workshop.price} ש"ח</td>

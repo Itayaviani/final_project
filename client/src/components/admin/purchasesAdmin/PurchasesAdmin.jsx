@@ -57,39 +57,42 @@ const PurchasesAdmin = () => {
               <th>שם פריט</th>
               <th>מחיר</th>
               <th>תאריך רכישה</th>
-              
             </tr>
           </thead>
           <tbody>
-            {purchases.map((userPurchase) => (
-              <>
-                {/* הצגת קורסים בהתאם לבחירה */}
-                {filteredType === 'courses' &&
-                  userPurchase.courses.map((course) => (
-                    <tr key={course._id}>
-                      <td>{userPurchase.name}</td>
-                      <td>קורס</td>
-                      <td>{course.name}</td>
-                      <td>{course.price} ש"ח</td>
-                      <td>{new Date(course.createdAt).toLocaleDateString()}</td>
-                      
-                    </tr>
-                  ))}
-                
-                {/* הצגת סדנאות בהתאם לבחירה */}
-                {filteredType === 'workshops' &&
-                  userPurchase.workshops.map((workshop) => (
-                    <tr key={workshop._id}>
-                      <td>{userPurchase.name}</td>
-                      <td>סדנה</td>
-                      <td>{workshop.name}</td>
-                      <td>{workshop.price} ש"ח</td>
-                      <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
-                      
-                    </tr>
-                  ))}
-              </>
-            ))}
+            {purchases
+              .map((userPurchase) => ({
+                ...userPurchase,
+                courses: userPurchase.courses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+                workshops: userPurchase.workshops.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+              }))
+              .map((userPurchase) => (
+                <>
+                  {/* הצגת קורסים בהתאם לבחירה */}
+                  {filteredType === 'courses' &&
+                    userPurchase.courses.map((course) => (
+                      <tr key={course._id}>
+                        <td>{userPurchase.name}</td>
+                        <td>קורס</td>
+                        <td>{course.name}</td>
+                        <td>{course.price} ש"ח</td>
+                        <td>{new Date(course.createdAt).toLocaleDateString()}</td>
+                      </tr>
+                    ))}
+
+                  {/* הצגת סדנאות בהתאם לבחירה */}
+                  {filteredType === 'workshops' &&
+                    userPurchase.workshops.map((workshop) => (
+                      <tr key={workshop._id}>
+                        <td>{userPurchase.name}</td>
+                        <td>סדנה</td>
+                        <td>{workshop.name}</td>
+                        <td>{workshop.price} ש"ח</td>
+                        <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
+                      </tr>
+                    ))}
+                </>
+              ))}
           </tbody>
         </table>
       )}

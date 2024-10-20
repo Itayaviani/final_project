@@ -59,6 +59,9 @@ const CoursesList = () => {
     }
   });
 
+  // מיון לפי הכנסות (מהגבוה לנמוך)
+  const sortedCourses = filteredCourses.sort((a, b) => calculateRevenue(b) - calculateRevenue(a));
+
   // פונקציה להצגת הטבלה לאחר לחיצה על כפתור
   const handleShowTable = (filterType) => {
     setFilter(filterType); // עדכון הסינון
@@ -94,7 +97,7 @@ const CoursesList = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredCourses.map((course) => (
+              {sortedCourses.map((course) => (
                 <tr key={course._id}>
                   <td>{course.name}</td>
                   <td>{course.price} ש"ח</td>
