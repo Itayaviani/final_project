@@ -49,22 +49,24 @@ const Profile = () => {
   return (
     <div className="profile-wrapper">
       <div className="profile-container">
-        <h1>פרופיל משתמש</h1>
+        <h1>:פרופיל משתמש</h1>
         <div className="profile-details">
-          <p>שם מלא: {user.name}</p>
-          <p>אימייל: {user.email}</p>
-          <p>טלפון: {user.phone}</p>
+          <p><span className="value">{user.name}</span> <span className="label">:שם מלא</span></p>
+          <p><span className="value">{user.email}</span> <span className="label">:אימייל</span></p>
+          <p><span className="value">{user.phone}</span> <span className="label">:טלפון</span></p>
         </div>
 
-        {/* Edit profile button */}
-        <Link to={`/edit-user/${user._id}`} className="edit-profile-button">
-          ערוך פרופיל
-        </Link>
+        <div className="button-container">
+          {/* Edit profile button */}
+          <Link to={`/edit-user/${user._id}`} className="edit-profile-button">
+            ערוך פרופיל
+          </Link>
 
-        {/* View purchases button */}
-        <button onClick={handleViewPurchases} className="view-purchases-button">
-          הרכישות שלי
-        </button>
+          {/* View purchases button */}
+          <button onClick={handleViewPurchases} className="view-purchases-button">
+            הרכישות שלי
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -32,36 +32,36 @@ const MyPurchases = () => {
   return (
     <div className="purchases-wrapper">
       <div className="purchases-container">
-        <h1>הרכישות שלי</h1>
+        <h1>:הרכישות שלי</h1>
         {error && <p className="error-message">{error}</p>}
 
         {purchases.courses.length > 0 || purchases.workshops.length > 0 ? (
           <table className="purchases-table">
             <thead>
               <tr>
-                <th>שם פריט</th>
-                <th>סוג פריט</th>
-                <th>מחיר</th>
-                <th>תאריך רכישה</th>
+                <th>תאריך רכישה</th> {/* הכותרת הראשונה */}
+                <th>מחיר</th> {/* הכותרת השנייה */}
+                <th>סוג פריט</th> {/* הכותרת השלישית */}
+                <th>שם פריט</th> {/* הכותרת הרביעית */}
               </tr>
             </thead>
             <tbody>
               {/* הצגת קורסים */}
               {purchases.courses.map((course) => (
                 <tr key={course._id}>
-                  <td>{course.name}</td>
-                  <td>קורס</td> {/* הוספת סוג הפריט */}
-                  <td>{course.price} ש"ח</td>
-                  <td>{new Date(course.createdAt).toLocaleDateString()}</td>
+                  <td>{new Date(course.createdAt).toLocaleDateString()}</td> {/* תאריך רכישה */}
+                  <td>{course.price} ש"ח</td> {/* מחיר */}
+                  <td>קורס</td> {/* סוג פריט */}
+                  <td>{course.name}</td> {/* שם פריט */}
                 </tr>
               ))}
               {/* הצגת סדנאות */}
               {purchases.workshops.map((workshop) => (
                 <tr key={workshop._id}>
-                  <td>{workshop.name}</td>
-                  <td>סדנה</td> {/* הוספת סוג הפריט */}
-                  <td>{workshop.price} ש"ח</td>
-                  <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
+                  <td>{new Date(workshop.createdAt).toLocaleDateString()}</td> {/* תאריך רכישה */}
+                  <td>{workshop.price} ש"ח</td> {/* מחיר */}
+                  <td>סדנה</td> {/* סוג פריט */}
+                  <td>{workshop.name}</td> {/* שם פריט */}
                 </tr>
               ))}
             </tbody>

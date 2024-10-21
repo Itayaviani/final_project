@@ -7,7 +7,7 @@
     color: #2d3e50;
     overflow-x: hidden;
     line-height: 1.8;
-    animation: fadeIn 2s ease-in-out;
+    animation: fadeIn 1s ease-in-out; /* שונה ל-1 שניה */
     box-sizing: border-box;
 }
 
@@ -45,8 +45,8 @@
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    animation: slideIn 1.5s ease-in-out;
-    border-left: 10px solid #48c9b0;
+    animation: slideIn 1s ease-in-out; /* שונה ל-1 שניה */
+    border-left: 10px solid #a9cce3;
 }
 
 /* פריסת תוכן */
@@ -74,6 +74,11 @@
 .personal-image:hover {
     transform: scale(1.08);
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* עיצוב ספציפי לתמונה השנייה */
+.image-content:nth-child(2) .personal-image {
+    max-width: 70%; /* התמונה השנייה תהיה קטנה ב-10% */
 }
 
 /* רשימות */

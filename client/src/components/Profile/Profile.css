@@ -1,145 +1,95 @@
-/* General body styling */
-body {
-  background-color: #222; /* Dark background to enhance contrast */
-  margin: 0; /* Remove default margin */
-}
-
-/* Wrapper to center the Profile component */
 .profile-wrapper {
-  display: flex; /* Flexbox to center content */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  min-height: 100vh; /* Full viewport height to center vertically */
-  width: 100%; /* Full width to ensure centering */
-  position: relative; /* Ensure it stays positioned correctly in flex */
-}
-
-/* Profile container styling */
-.profile-container {
-  position: relative; /* Position relative for pseudo-elements */
-  padding: 40px; /* Increased padding for a spacious feel */
-  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
-  border-radius: 16px; /* Rounded corners for a modern look */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
-  max-width: 600px; /* Maximum width for readability */
-  text-align: center;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  z-index: 1; /* Ensure it's above the background fade */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+  min-height: 100vh;
+  padding: 20px;
 }
 
-/* Black fade background using pseudo-element */
-.profile-container::before {
-  content: ''; /* Empty content */
-  position: absolute; /* Absolute positioning */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)); /* Strong black fade */
-  border-radius: 16px; /* Match border radius of container */
-  z-index: -1; /* Behind the profile container */
-}
+.profile-container {
+  width: 600px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(6, 6, 6, 0.937);
+  padding: 40px;
+  text-align: center;
 
-.profile-container:hover {
-  transform: translateY(-8px); /* Lift effect on hover */
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
 }
 
 .profile-container h1 {
-  font-size: 2.4em; /* Large font size for the header */
-  border-bottom: 3px solid #077af4; /* Thicker border for emphasis */
-  padding-bottom: 15px; /* Padding for spacing */
-  margin-bottom: 30px; /* Increased margin for separation */
-  color: #0265e6; /* Blue color for the header */
-  text-transform: uppercase; /* Uppercase text for impact */
-  letter-spacing: 2px; /* Increased letter spacing for a stylish look */
+  font-size: 2.5rem;
+  color: #2d3e50;
+  margin-bottom: 30px;
+  position: relative;
+  display: inline-block; /* כדי שהקו התחתון יהיה לפי רוחב הכותרת */
 }
 
-.profile-details {
-  margin-top: 20px;
+.profile-container h1::after {
+  content: '';
+  position: absolute;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white for contrast */
-  border-radius: 12px; /* Rounded corners for details section */
-  padding: 25px; /* Padding inside the details box */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  height: 2px;
+  background-color: #2d3e50; /* צבע הקו התחתון */
+  bottom: -10px; /* מרחק בין הכותרת לקו */
+  left: 0;
 }
 
 .profile-details p {
-  margin: 20px 0; /* Larger spacing between paragraphs */
-  font-size: 1.2em; /* Increased font size for better readability */
-  color: #333; /* Darker color for contrast */
-  line-height: 1.8; /* Improved line height for readability */
-  text-align: left; /* Left align text for a cleaner look */
+  font-size: 1.2rem;
+  margin: 15px 0;
+  color: #2d3e50;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
 }
 
-.profile-details p::before {
-  content: '• '; /* Bullet point for each detail */
-  color: #055bef; /* Blue bullet point */
+.label {
+  font-weight: 700;
+  text-align: left;
+  width: 30%;
+  margin-right: 120px;
+  margin-left: 40px;
 }
 
-.profile-details:hover {
-  background-color: rgba(240, 240, 240, 0.9); /* Slight change on hover */
-  transform: translateY(-5px); /* Slight lift effect on hover */
+.value {
+  font-weight: 400;
+  text-align: right;
+  width: 70%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.edit-profile-button,
+.view-purchases-button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  color: white;
+  background-color: #0288d1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.edit-profile-button:hover,
+.view-purchases-button:hover {
+  background-color: #026aa7;
+}
+
+.edit-profile-button {
+  margin-right: 10px;
+}
+
+.view-purchases-button {
+  margin-left: 10px;
 }
 
 .error-message {
-  color: #d9534f; /* Red color for errors */
-  font-weight: bold; /* Bold text for emphasis */
-  font-size: 18px; /* Larger font size for visibility */
-  text-align: center;
-  margin-top: 20px; /* Spacing above the error message */
-  padding: 15px; /* Padding for better appearance */
-  background-color: #f8d7da; /* Light red background for emphasis */
-  border: 1px solid #f5c6cb; /* Border matching the error theme */
-  border-radius: 8px; /* Rounded corners for the error box */
-  width: 80%; /* Width for the error message */
-  margin: 20px auto; /* Center the error box */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-/* Styling the 'Edit Profile' button */
-.edit-profile-button {
-  display: inline-block;
-  padding: 12px 25px;
-  margin-top: 30px;
-  background-color: #0265e6; /* Button background color */
-  color: #fff; /* Button text color */
-  font-size: 1.2em;
-  border: none;
-  border-radius: 8px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
-}
-
-.edit-profile-button:hover {
-  background-color: #055bef; /* Darker blue on hover */
-  transform: translateY(-5px); /* Lift effect on hover */
-  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
-}
-
-/* Styling the 'View Purchases' button */
-.view-purchases-button {
-  display: inline-block;
-  padding: 12px 25px;
-  margin-top: 15px;
-  background-color: #28a745; /* Green background color */
-  color: #fff; /* White text color */
-  font-size: 1.2em; /* Font size */
-  border: none; /* No border */
-  border-radius: 8px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
-}
-
-.view-purchases-button:hover {
-  background-color: #218838; /* Darker green on hover */
-  transform: translateY(-5px); /* Lift effect on hover */
-  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+  color: red;
+  font-size: 1.2rem;
 }
