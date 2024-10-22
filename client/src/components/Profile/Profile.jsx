@@ -58,8 +58,8 @@ const Profile = () => {
 
         {/* Edit profile button */}
         <Link to={`/edit-user/${user._id}`} className="edit-profile-button">
-          ערוך פרופיל
-        </Link>
+          עריכת הפרופיל
+        </Link>עןא
 
         {/* View purchases button */}
         <button onClick={handleViewPurchases} className="view-purchases-button">
