@@ -6,24 +6,30 @@ import './EditWorkshops.css'; // ייבוא קובץ ה-CSS
 export default function EditWorkshop() {
   const { workshopId } = useParams();
   const [workshopName, setWorkshopName] = useState('');
-  const [workshopDescription, setWorkshopDescription] = useState('');
+  const [workshopDescription, setWorkshopDescription] = useState(''); // תיאור קצר של הסדנה
+  const [workshopDetails, setWorkshopDetails] = useState(''); // פרטים מלאים של הסדנה
   const [workshopPrice, setWorkshopPrice] = useState('');
-  const [workshopImage, setWorkshopImage] = useState('');
-  const [workshopCapacity, setWorkshopCapacity] = useState(''); // הוספת קיבולת
-  const [workshopStartDate, setWorkshopStartDate] = useState(''); // הוספת שדה לתאריך התחלה
+  const [workshopCapacity, setWorkshopCapacity] = useState(''); // שדה עבור קיבולת משתתפים
+  const [workshopStartDate, setWorkshopStartDate] = useState(''); // תאריך תחילת הסדנה
+  const [workshopStartTime, setWorkshopStartTime] = useState(''); // שעת תחילת הסדנה
+  const [workshopImage, setWorkshopImage] = useState(null); // שדה עבור העלאת קובץ תמונה
+  const [currentImage, setCurrentImage] = useState(''); // שמירה של התמונה הנוכחית
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWorkshop = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/workshops/${workshopId}`);
-        const { name, description, price, image, capacity, startDate } = response.data;
+        const { name, workshopDescription, workshopDetails, price, capacity, image, startDate, startTime } = response.data; // קבלת הערכים מהשרת
         setWorkshopName(name);
-        setWorkshopDescription(description);
+        setWorkshopDescription(workshopDescription); // הגדרת התיאור הקצר
+        setWorkshopDetails(workshopDetails); // הגדרת פרטי הסדנה המלאים
         setWorkshopPrice(price);
-        setWorkshopImage(image);
-        setWorkshopCapacity(capacity); // קביעת ערך הקיבולת
-        setWorkshopStartDate(startDate ? new Date(startDate).toISOString().split('T')[0] : ''); // קביעת תאריך התחלה לפורמט המתאים
+        setWorkshopCapacity(capacity); // הגדרת הקיבולת
+        setWorkshopStartDate(startDate ? new Date(startDate).toISOString().split('T')[0] : ''); // הגדרת תאריך התחלה לפורמט הנכון
+        setWorkshopStartTime(startTime); // הגדרת שעת ההתחלה
+
+        setCurrentImage(image); // הגדרת התמונה הנוכחית
       } catch (error) {
         console.error('Failed to fetch workshop:', error);
       }
@@ -35,23 +41,24 @@ export default function EditWorkshop() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('name', workshopName);
-    formData.append('description', workshopDescription);
-    formData.append('price', workshopPrice);
-    formData.append('capacity', workshopCapacity);
-    formData.append('startDate', workshopStartDate); // הוספת תאריך התחלה ל-FormData
-    if (workshopImage && typeof workshopImage !== 'string') {
-      formData.append('image', workshopImage);
-    }
+    // הכנת הנתונים לשליחה
+    const formData = {
+      name: workshopName,
+      workshopDescription, // תיאור קצר של הסדנה
+      workshopDetails, // פרטי הסדנה המלאים
+      price: workshopPrice,
+      capacity: workshopCapacity,
+      startDate: `${workshopStartDate}T${workshopStartTime}`, // שליחת תאריך ושעה יחד
+      startTime: workshopStartTime, // הוספת שעת ההתחלה
+    };
 
     try {
       await axios.put(`http://localhost:3000/api/v1/workshops/${workshopId}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json', // בקשה עם תוכן JSON
         },
       });
-
+      
       navigate('/workshops');
     } catch (error) {
       console.error('Failed to edit workshop:', error);
@@ -65,10 +72,10 @@ export default function EditWorkshop() {
   return (
     <div className="edit-workshop-wrapper">
       <div className="edit-workshop-container">
-        <h1>עריכת סדנא</h1>
+        <h1>עריכת סדנה</h1>
         <form onSubmit={handleSubmit} className="edit-workshop-form">
           <div className="form-group">
-            <label>שם הסדנא:</label>
+            <label>שם הסדנה:</label>
             <input
               type="text"
               value={workshopName}
@@ -77,7 +84,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>פרטי הסדנא:</label>
+            <label>תיאור הסדנה:</label> {/* תיאור הסדנה הקצר */}
             <textarea
               value={workshopDescription}
               onChange={(e) => setWorkshopDescription(e.target.value)}
@@ -85,7 +92,15 @@ export default function EditWorkshop() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>מחיר הסדנא:</label>
+            <label>פרטי הסדנה:</label> {/* פרטי הסדנה המלאים */}
+            <textarea
+              value={workshopDetails}
+              onChange={(e) => setWorkshopDetails(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label>מחיר הסדנה:</label>
             <input
               type="number"
               value={workshopPrice}
@@ -103,7 +118,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>תאריך תחילת הסדנא:</label> {/* שדה חדש לתאריך תחילת הסדנה */}
+            <label>מועד תחילת הסדנה:</label> {/* שדה עבור תאריך תחילת הסדנה */}
             <input
               type="date"
               value={workshopStartDate}
@@ -111,23 +126,32 @@ export default function EditWorkshop() {
               required
             />
           </div>
-          
-          {/* הצגת התמונה הנוכחית מעל שדה העלאת התמונה החדשה */}
-          {workshopImage && typeof workshopImage === 'string' && (
-            <div className="current-image">
-              <p>תמונה נוכחית:</p>
-              <img src={`http://localhost:3000/${workshopImage}`} alt="Current Workshop" className="workshop-image" />
-            </div>
-          )}
-          
+          <div className="form-group">
+            <label>שעת תחילת הסדנה:</label> {/* שדה עבור שעת תחילת הסדנה */}
+            <input
+              type="time"
+              value={workshopStartTime}
+              onChange={(e) => setWorkshopStartTime(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>תמונה נוכחית:</label>
+            {currentImage && (
+              <div className="current-image">
+                <img src={`http://localhost:3000/${currentImage}`} alt="Current Workshop" />
+              </div>
+            )}
+          </div>
           <div className="form-group">
             <label>עדכן תמונה חדשה:</label>
-            <input type="file" accept="image/*" onChange={handleImageChange} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
           </div>
-
-          <button type="submit" className="submit-button">
-            שמור שינויים
-          </button>
+          <button type="submit" className="submit-button">שמור שינויים</button>
         </form>
       </div>
     </div>

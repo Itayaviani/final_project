@@ -5,11 +5,13 @@ import './AddCourse.css'; // ייבוא קובץ ה-CSS
 
 export default function AddCourse({ addCourse }) {
   const [courseName, setCourseName] = useState('');
-  const [courseDescription, setCourseDescription] = useState('');
+  const [courseDescription, setCourseDescription] = useState(''); // שדה עבור תיאור הקורס (תיאור קצר)
+  const [courseDetails, setCourseDetails] = useState(''); // שדה עבור פרטי הקורס (תיאור מפורט)
   const [coursePrice, setCoursePrice] = useState('');
   const [courseCapacity, setCourseCapacity] = useState(''); // שדה עבור הקיבולת
   const [courseImage, setCourseImage] = useState(null);
   const [courseStartDate, setCourseStartDate] = useState(''); // שדה עבור מועד תחילת הקורס
+  const [courseStartTime, setCourseStartTime] = useState(''); // שדה עבור שעת תחילת הקורס
   const [error, setError] = useState(null); // לניהול שגיאות
   const navigate = useNavigate();
 
@@ -21,12 +23,25 @@ export default function AddCourse({ addCourse }) {
       // יצירת FormData והוספת כל השדות הרלוונטיים
       const formData = new FormData();
       formData.append('name', courseName);
-      formData.append('description', courseDescription);
+      formData.append('courseDescription', courseDescription); // הוספת תיאור הקורס (תיאור קצר)
+      formData.append('courseDetails', courseDetails); // הוספת פרטי הקורס (תיאור מפורט)
       formData.append('price', coursePrice);
       formData.append('capacity', courseCapacity); // הוספת קיבולת
-      formData.append('startDate', courseStartDate); // הוספת מועד התחלה
+      formData.append('startDate', `${courseStartDate}T${courseStartTime}`); // הוספת מועד התחלה עם השעה
+      formData.append('startTime', courseStartTime); // הוספת שעת התחלה
+
+      // הדפסות בקונסול
+      console.log('courseName:', courseName);
+      console.log('courseDescription:', courseDescription);
+      console.log('courseDetails:', courseDetails);
+      console.log('coursePrice:', coursePrice);
+      console.log('courseCapacity:', courseCapacity);
+      console.log('courseStartDate:', courseStartDate);
+      console.log('courseStartTime:', courseStartTime);
+
       if (courseImage) {
         formData.append('image', courseImage); // הוספת תמונה
+        console.log('courseImage:', courseImage.name); // הצגת שם התמונה בקונסול
       }
 
       const response = await axios.post(
@@ -65,10 +80,20 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>פרטי הקורס:</label>
+          <label>תיאור הקורס:</label> {/* שדה עבור תיאור הקורס (תיאור קצר) */}
           <textarea
             value={courseDescription}
             onChange={(e) => setCourseDescription(e.target.value)}
+            placeholder="תיאור קצר של הקורס"
+            required
+          ></textarea>
+        </div>
+        <div>
+          <label>פרטי הקורס:</label> {/* שדה עבור פרטי הקורס (תיאור מפורט) */}
+          <textarea
+            value={courseDetails}
+            onChange={(e) => setCourseDetails(e.target.value)}
+            placeholder="פרטים מלאים על הקורס"
             required
           ></textarea>
         </div>
@@ -96,6 +121,15 @@ export default function AddCourse({ addCourse }) {
             type="date"
             value={courseStartDate}
             onChange={(e) => setCourseStartDate(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>שעת תחילת הקורס:</label> {/* שדה עבור שעת תחילת הקורס */}
+          <input
+            type="time"
+            value={courseStartTime}
+            onChange={(e) => setCourseStartTime(e.target.value)}
             required
           />
         </div>

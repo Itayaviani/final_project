@@ -28,7 +28,7 @@ function PersonalProcess() {
                         </p>
                     </div>
                     <div className="image-content">
-                        <img src={photo1} alt="תמונה 1" className="personal-image" />
+                        <img src={photo2} alt="תמונה 2" className="personal-image" />
                     </div>
                 </div>
             </section>
@@ -38,7 +38,7 @@ function PersonalProcess() {
                 <h2>תהליך אישי ליצירת שינוי מתוך משמעות</h2>
                 <div className="content-layout">
                     <div className="image-content">
-                        <img src={photo2} alt="תמונה 2" className="personal-image" />
+                        <img src={photo1} alt="תמונה 1" className="personal-image" />
                     </div>
                     <div className="text-content">
                         <p>התהליך כולל 12 פגישות אישיות מובנות בהן נפתח תודעה שתאפשר לך:</p>
@@ -84,8 +84,13 @@ function PersonalProcess() {
 
             {/* צור קשר */}
             <footer id="contact" className="footer">
-                <h2>צור קשר</h2>
-                <h3>מחכה לפגוש אותך, טלי גל</h3>
+            <h2>צור קשר</h2>
+    <h3>בואו נדבר - אני כאן בשבילכם!</h3>
+   
+    
+        <h3>זקוקים למידע נוסף על תהליך אישי שמתאים לכם? מתעניינים בקורס או סדנה ורוצים לקבל פרטים נוספים? יש לכם שאלות בנוגע לרכישה או תהליך הרשמה - אני זמינה כאן לכל צורך!</h3>
+        
+    
                 <div className="contact-list">
                     <div className="contact-item mail">
                         <FaEnvelope className="contact-icon" />

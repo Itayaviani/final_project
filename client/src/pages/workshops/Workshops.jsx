@@ -82,10 +82,8 @@ export default function Workshops({ isAdmin }) {
                     alt={workshop.name}
                   />
                 )}
-                <p>{workshop.description}</p>
+                <p>{workshop.workshopDescription}</p> {/* הצגת תיאור הסדנה הקצר */}
                 <p className="price">מחיר: {workshop.price} ש"ח</p>
-
-    
 
                 {isFull && hasWorkshopStarted ? (
                   <div>
@@ -101,7 +99,9 @@ export default function Workshops({ isAdmin }) {
                 {/* הצגת מועד תחילת הסדנה למשתמשים רגילים ואדמינים */}
                 <p className="start-date">
                   מועד תחילת הסדנה:{" "}
-                  {new Date(workshop.startDate).toLocaleDateString()}
+                  {new Date(workshop.startDate).toLocaleDateString()} 
+                  <br />
+                  שעת תחילת הסדנה: {workshop.startTime} {/* הצגת שעת התחילה */}
                 </p>
 
                 {/* הכפתור נשאר פעיל גם אם הסדנה מלאה או התחילה */}

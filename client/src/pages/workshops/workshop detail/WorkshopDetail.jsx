@@ -36,7 +36,8 @@ export default function WorkshopDetail() {
       {workshop.image && (
         <img src={`http://localhost:3000/${workshop.image}`} alt={workshop.name} className="workshop-image" />
       )}
-      <p>{workshop.description}</p>
+      <p>{workshop.description}</p> {/* הצגת תיאור הסדנה הקצר */}
+      <p>{workshop.workshopDetails}</p> {/* הצגת פרטי הסדנה המלאים */}
       <p>מחיר: {workshop.price} ש"ח</p>
       
       {/* הוספת כפתור לרכישה */}

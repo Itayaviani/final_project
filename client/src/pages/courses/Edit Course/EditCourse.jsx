@@ -6,10 +6,12 @@ import './EditCourse.css'; // ייבוא קובץ ה-CSS
 export default function EditCourse() {
   const { courseId } = useParams();
   const [courseName, setCourseName] = useState('');
-  const [courseDescription, setCourseDescription] = useState('');
+  const [courseDescription, setCourseDescription] = useState(''); // שדה עבור תיאור הקורס (תיאור קצר)
+  const [courseDetails, setCourseDetails] = useState(''); // שדה עבור פרטי הקורס (תיאור מפורט)
   const [coursePrice, setCoursePrice] = useState('');
   const [courseCapacity, setCourseCapacity] = useState(''); // שדה חדש לקיבולת
   const [courseStartDate, setCourseStartDate] = useState(''); // שדה חדש לתאריך התחלה
+  const [courseStartTime, setCourseStartTime] = useState(''); // שדה חדש לשעת התחלה
   const [courseImage, setCourseImage] = useState(null); // שדה עבור העלאת קובץ תמונה
   const [currentImage, setCurrentImage] = useState(''); // שמירה של התמונה הנוכחית
   const navigate = useNavigate();
@@ -18,12 +20,15 @@ export default function EditCourse() {
     const fetchCourse = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/courses/${courseId}`);
-        const { name, description, price, capacity, image, startDate } = response.data; // קבלת ערך הקיבולת, התמונה ותאריך ההתחלה מהשרת
+        const { name, courseDescription, courseDetails, price, capacity, image, startDate, startTime } = response.data; // קבלת ערך הקיבולת, התמונה ותאריך ההתחלה מהשרת
         setCourseName(name);
-        setCourseDescription(description);
+        setCourseDescription(courseDescription); // הגדרת התיאור הקצר
+        setCourseDetails(courseDetails); // הגדרת פרטי הקורס המלאים
         setCoursePrice(price);
         setCourseCapacity(capacity); // הגדרת הקיבולת
         setCourseStartDate(startDate ? new Date(startDate).toISOString().split('T')[0] : ''); // הגדרת תאריך התחלה לפורמט הנכון
+        setCourseStartTime(startTime); // הגדרת שעת ההתחלה
+
         setCurrentImage(image); // הגדרת התמונה הנוכחית
       } catch (error) {
         console.error('Failed to fetch course:', error);
@@ -39,10 +44,12 @@ export default function EditCourse() {
     // הכנת הנתונים לשליחה
     const formData = {
       name: courseName,
-      description: courseDescription,
+      courseDescription, // תיאור הקורס הקצר
+      courseDetails, // פרטי הקורס המלאים
       price: coursePrice,
       capacity: courseCapacity,
-      startDate: courseStartDate, // שליחת תאריך ההתחלה
+      startDate: `${courseStartDate}T${courseStartTime}`, // שליחת תאריך והשעה
+      startTime: courseStartTime, // הוספת שעת התחלה
     };
 
     try {
@@ -77,10 +84,18 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>פרטי הקורס:</label>
+            <label>תיאור הקורס:</label> {/* תיאור הקורס הקצר */}
             <textarea
               value={courseDescription}
               onChange={(e) => setCourseDescription(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label>פרטי הקורס:</label> {/* פרטי הקורס המלאים */}
+            <textarea
+              value={courseDetails}
+              onChange={(e) => setCourseDetails(e.target.value)}
               required
             ></textarea>
           </div>
@@ -108,6 +123,15 @@ export default function EditCourse() {
               type="date"
               value={courseStartDate}
               onChange={(e) => setCourseStartDate(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>שעת תחילת הקורס:</label> {/* שדה חדש לשעת תחילת הקורס */}
+            <input
+              type="time"
+              value={courseStartTime}
+              onChange={(e) => setCourseStartTime(e.target.value)}
               required
             />
           </div>

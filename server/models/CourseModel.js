@@ -7,9 +7,14 @@ const courseSchema = new mongoose.Schema({
     required: [true, 'Course name is required'], // הודעה מותאמת אישית אם השדה חסר
     trim: true, // הסרת רווחים מיותרים בתחילת וסוף המחרוזת
   },
-  description: {
+  courseDescription: {
     type: String,
-    required: [true, 'Course description is required'],
+    required: [true, 'Course description is required'], // שדה עבור תיאור הקורס
+    trim: true,
+  },
+  courseDetails: { // שדה זה נקרא כעת "פרטי הקורס"
+    type: String,
+    required: [true, 'Full course details are required'], // שדה עבור פרטי הקורס המלאים
     trim: true,
   },
   price: {
@@ -28,6 +33,10 @@ const courseSchema = new mongoose.Schema({
   startDate: {
     type: Date, // תאריך תחילת הקורס
     required: [true, 'Course start date is required'], // הודעה מותאמת אישית אם התאריך חסר
+  },
+  startTime: { // שדה חדש עבור שעת התחלת הקורס
+    type: String, // ניתן לשמור את השעה כ-String (למשל, בפורמט 'HH:mm')
+    required: [true, 'Course start time is required'], // הודעה מותאמת אישית אם השעה חסרה
   },
   participants: {
     type: Number,

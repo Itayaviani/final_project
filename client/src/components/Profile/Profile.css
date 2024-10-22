@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Profile.css */
 
 body {
@@ -8,11 +9,14 @@ body {
   padding: 0;
 }
 
+=======
+>>>>>>> d4e8b8880eadb50b198057c5fba89a87afff169d
 .profile-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+<<<<<<< HEAD
   background-color: #e0f7fa; /* צבע רקע מרגיע */
 }
 
@@ -57,4 +61,95 @@ h1 {
 .error-message {
   color: #e57373; /* צבע אדום בהיר להודעת שגיאה */
   font-size: 18px;
+=======
+  padding: 20px;
+}
+
+.profile-container {
+  width: 600px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(6, 6, 6, 0.937);
+  padding: 40px;
+  text-align: center;
+
+}
+
+.profile-container h1 {
+  font-size: 2.5rem;
+  color: #2d3e50;
+  margin-bottom: 30px;
+  position: relative;
+  display: inline-block; /* כדי שהקו התחתון יהיה לפי רוחב הכותרת */
+}
+
+.profile-container h1::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #2d3e50; /* צבע הקו התחתון */
+  bottom: -10px; /* מרחק בין הכותרת לקו */
+  left: 0;
+}
+
+.profile-details p {
+  font-size: 1.2rem;
+  margin: 15px 0;
+  color: #2d3e50;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  font-weight: 700;
+  text-align: left;
+  width: 30%;
+  margin-right: 120px;
+  margin-left: 40px;
+}
+
+.value {
+  font-weight: 400;
+  text-align: right;
+  width: 70%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.edit-profile-button,
+.view-purchases-button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  color: white;
+  background-color: #0288d1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.edit-profile-button:hover,
+.view-purchases-button:hover {
+  background-color: #026aa7;
+}
+
+.edit-profile-button {
+  margin-right: 10px;
+}
+
+.view-purchases-button {
+  margin-left: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 1.2rem;
+>>>>>>> d4e8b8880eadb50b198057c5fba89a87afff169d
 }

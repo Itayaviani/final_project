@@ -6,6 +6,7 @@ body, html {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
     color: #333;
+    text-align: center;
 }
 
 /* Wrapper to center the MyPurchases card */
@@ -24,27 +25,40 @@ body, html {
     padding: 40px;
     background-color: #ffffff;
     border-radius: 16px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     overflow-x: auto; /* Horizontal scrolling if needed */
+    box-shadow: 0 4px 10px rgba(6, 6, 6, 0.937);
+
+    
+    
 }
 
-/* Hover effect for the purchases container */
-.purchases-container:hover {
-    transform: translateY(-10px); /* Slight lift effect */
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-}
+
 
 /* Purchases Header */
 .purchases-container h1 {
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 30px;
-    color: #2a9df4;
+    color: #060606;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 2px;
+    position: relative;
+    display: inline-block; /* הקו התחתון יתאים לרוחב הכתוביות */
 }
+
+/* קו תחתון מתחת לכותרת לפי אורך הכותרת */
+.purchases-container h1::after {
+    content: '';
+    display: block;
+    width: 100%; /* הקו יהיה באורך הכותרת */
+    height: 4px; /* עובי הקו */
+    background-color: #020303; /* צבע הקו */
+    margin: 10px auto 0; /* רווח בין הכותרת לקו */
+}
+
+
 
 /* Error Message */
 .error-message {

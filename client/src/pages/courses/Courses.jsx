@@ -110,7 +110,7 @@ export default function Courses({ isAdmin, userId }) {
                   alt={course.name}
                 />
               )}
-              <p>{course.description}</p>
+              <p>{course.courseDescription}</p> {/* הצגת תיאור הקורס */}
               <p className="price">מחיר: {course.price} ש"ח</p>
 
               {course.isFull && course.hasCourseStarted ? (
@@ -148,6 +148,16 @@ export default function Courses({ isAdmin, userId }) {
                       : "לא נקבע תאריך"}
                   </p>{" "}
                   {/* מועד תחילת הקורס */}
+                  <p className="start-time">
+                    שעת תחילת הקורס:{" "}
+                    {course.startDate
+                      ? new Date(course.startDate).toLocaleTimeString('he-IL', {
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })
+                      : "לא נקבעה שעה"}
+                  </p>{" "}
+                  {/* שעת תחילת הקורס */}
                 </div>
               )}
 

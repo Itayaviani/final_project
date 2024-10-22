@@ -24,7 +24,7 @@ router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // נתיב להוספת סדנה חדשה
 router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const { name, description, price, capacity, startDate } = req.body; // הוספת startDate מהבקשה
+    const { name, workshopDescription, workshopDetails, price, capacity, startDate, startTime } = req.body; // הוספת startTime מהבקשה
 
     // קבלת נתיב התמונה שהועלתה
     let workshopImagePath = req.file ? req.file.path : '';
@@ -32,13 +32,15 @@ router.post('/', upload.single('image'), async (req, res) => {
     // החלפת כל התווים ההפוכים בתווים רגילים כדי לוודא שהתמונה ניתנת לשליפה כראוי
     workshopImagePath = workshopImagePath.replace(/\\/g, '/');
 
-    // יצירת אובייקט חדש לסדנה כולל תאריך התחלה
+    // יצירת אובייקט חדש לסדנה כולל תאריך ושעת התחלה
     const newWorkshop = new Workshop({
       name,
-      description,
+      workshopDescription, // תיאור הסדנה הקצר
+      workshopDetails, // פרטי הסדנה המלאים
       price,
       capacity,
       startDate: new Date(startDate), // המרת מחרוזת לתאריך ושמירתו
+      startTime, // שמירת שעת התחלת הסדנה
       image: workshopImagePath,
     });
 
@@ -49,7 +51,6 @@ router.post('/', upload.single('image'), async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
-
 
 // נתיב לקבלת כל הסדנאות
 router.get('/', async (req, res) => {
@@ -92,7 +93,7 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, capacity, startDate } = req.body; // הוספת startDate
+    const { name, workshopDescription, workshopDetails, price, capacity, startDate, startTime } = req.body;
 
     // מצא את הסדנה לפי ID
     const workshop = await Workshop.findById(id);
@@ -100,19 +101,28 @@ router.put('/:id', upload.single('image'), async (req, res) => {
       return res.status(404).json({ error: 'Workshop not found' });
     }
 
+    // לוג של שעת התחלה לפני העדכון
+    console.log('Workshop start time before update:', workshop.startTime);
+
     // עדכון פרטי הסדנה
     workshop.name = name || workshop.name;
-    workshop.description = description || workshop.description;
+    workshop.workshopDescription = workshopDescription || workshop.workshopDescription;
+    workshop.workshopDetails = workshopDetails || workshop.workshopDetails;
     workshop.price = price || workshop.price;
     workshop.capacity = capacity || workshop.capacity;
     workshop.startDate = startDate ? new Date(startDate) : workshop.startDate; // עדכון תאריך התחלה אם נשלח
+    workshop.startTime = startTime || workshop.startTime; // עדכון שעת התחלה
 
-    // עדכון התמונה רק אם התווספה תמונה חדשה
+    // עדכון התמונה רק אם הועלתה תמונה חדשה
     if (req.file) {
       workshop.image = req.file.path.replace(/\\/g, '/');
     }
 
+    // לוג של שעת התחלה לאחר העדכון
+    console.log('Workshop start time after update:', workshop.startTime);
+
     const updatedWorkshop = await workshop.save();
+    console.log('Updated workshop:', updatedWorkshop);  // וודא שהעדכון התבצע
 
     res.json(updatedWorkshop);
   } catch (err) {
@@ -120,7 +130,6 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: 'Failed to update workshop' });
   }
 });
-
 
 // נתיב לרכישת סדנה
 router.post('/purchase', async (req, res) => {
@@ -169,8 +178,8 @@ router.post('/purchase', async (req, res) => {
     workshop.participants += 1;
     await workshop.save();
 
-    // שלח את המייל עם שם הסדנה הנכון
-    await sendOrderConfirmationEmail(email, fullName, workshop.name, workshopId);
+    // שלח את המייל עם שם הסדנה הנכון, תאריך והשעה
+    await sendOrderConfirmationEmail(email, fullName, workshop.name, 'workshop', workshopId, workshop.startDate, workshop.startTime, workshop.workshopDetails);
     console.log('Email sent successfully');
 
     res.status(200).send('הזמנתך לסדנה התקבלה בהצלחה!');

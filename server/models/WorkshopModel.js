@@ -7,9 +7,14 @@ const workshopSchema = new mongoose.Schema({
     required: [true, 'Workshop name is required'], // הודעה מותאמת אישית אם השדה חסר
     trim: true, // הסרת רווחים מיותרים בתחילת וסוף המחרוזת
   },
-  description: {
+  workshopDescription: {
     type: String,
-    required: [true, 'Workshop description is required'],
+    required: [true, 'Workshop description is required'], // שדה עבור תיאור הסדנה
+    trim: true,
+  },
+  workshopDetails: { 
+    type: String,
+    required: [true, 'Full workshop details are required'], // שדה עבור פרטי הסדנה המלאים
     trim: true,
   },
   price: {
@@ -25,6 +30,14 @@ const workshopSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // ברירת מחדל היא התאריך הנוכחי בעת יצירת המסמך
   },
+  startDate: {
+    type: Date, // תאריך תחילת הסדנה
+    required: [true, 'Workshop start date is required'], // הודעה מותאמת אישית אם התאריך חסר
+  },
+  startTime: { 
+    type: String, // ניתן לשמור את השעה כ-String (למשל, בפורמט 'HH:mm')
+    required: [true, 'Workshop start time is required'], // הודעה מותאמת אישית אם השעה חסרה
+  },
   participants: {
     type: Number,
     default: 0, // ברירת מחדל היא 0 משתתפים בתחילת הסדנה
@@ -34,10 +47,6 @@ const workshopSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Workshop capacity is required'], // יש להגדיר קיבולת עבור כל סדנה
     min: [1, 'Workshop capacity must be at least 1'], // קיבולת מינימלית של 1 משתתף
-  },
-  startDate: { 
-    type: Date, // שדה חדש עבור מועד תחילת הסדנה
-    required: [true, 'Workshop start date is required'], // וודא כי התאריך הוא שדה חובה
   },
 });
 

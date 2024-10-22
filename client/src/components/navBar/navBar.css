@@ -1,8 +1,8 @@
 /* הגדרות כלליות ל-NavBar */
 .navbar-container {
   width: 100%;
-  background: linear-gradient(90deg, #1c1c1c 0%, #444444 100%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* צבע לבן ל-NavBar */
+  box-shadow: 0 4px 8px rgba(19, 19, 19, 0.916);
   font-family: 'Arial', sans-serif;
   position: fixed;
   top: 0;
@@ -36,7 +36,7 @@
 .navbar-item {
   margin: 0 15px;
   padding: 10px 20px;
-  color: white;
+  color: #151616; /* צבע תכלת לכתוביות */
   text-transform: uppercase;
   font-size: 14px;
   font-weight: bold;
@@ -50,8 +50,8 @@
 .navbar-item .user-icon {
   width: 30px;
   height: 30px;
-  background-color: #f39c12;
-  color: #1c1c1c;
+  background-color: #010b10; /* צבע תכלת לאייקון */
+  color: #ffffff; /* צבע לבן לכתוביות באייקון */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -69,7 +69,7 @@
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #f39c12;
+  background-color: #000000; /* פס בצבע שחור */
   visibility: hidden;
   transform: scaleX(0);
   transition: all 0.3s ease-in-out;
@@ -81,7 +81,7 @@
 }
 
 .navbar-item:hover {
-  color: #f39c12;
+  color: #0288d1; /* צבע תכלת על ריחוף */
 }
 
 .navbar-item:active {
@@ -96,16 +96,40 @@
   margin-right: 0;
 }
 
+/* כפתור התחברות/התנתקות */
 .navbar-item-login {
-  background: #f39c12;
-  color: #1c1c1c;
+  background: #0288d1; /* צבע תכלת לכפתור התחברות/התנתקות */
+  color: #ffffff; /* צבע לבן לכתוביות */
   border-radius: 20px;
   padding: 10px 25px;
   margin: 0 15px; /* כדי להתאים את המיקום */
+  position: relative;
+  border: 2px solid #0288d1; /* מסגרת כחולה */
+  transition: all 0.3s ease;
+}
+
+.navbar-item-login::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #000000; /* פס בצבע שחור */
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-item-login:hover::before {
+  visibility: visible;
+  transform: scaleX(1); /* קו שחור מופיע על ריחוף */
 }
 
 .navbar-item-login:hover {
-  background: #e67e22;
+  background: #0288d1; /* הצבע לא משתנה */
+  color: #ffffff; /* הצבע לא משתנה */
+  border-color: #0288d1; /* המסגרת לא משתנה */
 }
 
 /* סגנון כפתור תפריט במצב רספונסיבי */
@@ -113,7 +137,7 @@
   display: none;
   background: none;
   border: none;
-  color: white;
+  color: #0288d1; /* תכלת לכפתור */
   font-size: 24px;
   cursor: pointer;
   margin-left: auto;

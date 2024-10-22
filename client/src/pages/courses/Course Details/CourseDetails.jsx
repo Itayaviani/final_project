@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams,useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './courseDetails.css'; // ייבוא קובץ ה-CSS לעיצוב
-
 
 export default function CourseDetails() {
   const { courseId } = useParams(); // שימוש ב-useParams לקבלת ה-courseId מהנתיב
@@ -23,8 +22,8 @@ export default function CourseDetails() {
     fetchCourse();
   }, [courseId]);
 
-   // פונקציה לניתוב לעמוד התשלום
-   const handlePurchase = () => {
+  // פונקציה לניתוב לעמוד התשלום
+  const handlePurchase = () => {
     navigate(`/payment/courses/${courseId}`);
   };
 
@@ -36,7 +35,10 @@ export default function CourseDetails() {
     <div className="course-details-container">
       <h1>שם: {course.name}</h1>
       {course.image && <img src={`http://localhost:3000/${course.image}`} alt={course.name} className="course-image" />}
-      <p>{course.description}</p>
+      
+      {/* עדכון להצגת פרטי הקורס המלאים */}
+      <p>{course.courseDetails}</p>
+
       <p>מחיר: {course.price} ש"ח</p>
       
       {/* הוספת כפתור לרכישה */}

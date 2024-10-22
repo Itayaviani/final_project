@@ -6,7 +6,6 @@ const multer = require('multer');
 const path = require('path');
 const User = require('../models/UserModel'); // וודא שהנתיב נכון בהתאם למבנה התיקיות שלך
 
-
 // הגדרת אחסון התמונות
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -25,7 +24,7 @@ router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // נתיב להוספת קורס חדש
 router.post('/', upload.single('image'), async (req, res) => {
   try {
-    const { name, description, price, capacity, startDate } = req.body; // הוספת startDate מהבקשה
+    const { name, courseDescription, courseDetails, price, capacity, startDate, startTime } = req.body; // הוספת startTime מהבקשה
 
     // קבלת נתיב התמונה שהועלתה
     let courseImagePath = req.file ? req.file.path : '';
@@ -36,11 +35,13 @@ router.post('/', upload.single('image'), async (req, res) => {
     // יצירת הקורס החדש
     const newCourse = new Course({
       name,
-      description,
+      courseDescription, // תיאור הקורס הקצר
+      courseDetails, // פרטי הקורס המלאים
       price,
       capacity,
       image: courseImagePath, // שמירת נתיב התמונה
-      startDate, // שמירת תאריך תחילת הקורס
+      startDate: new Date(startDate), // שמירת תאריך תחילת הקורס
+      startTime, // שמירת שעת תחילת הקורס
     });
 
     // שמירת הקורס במסד הנתונים
@@ -51,7 +52,6 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
-
 // Route to get all courses
 router.get('/', async (req, res) => {
   try {
@@ -61,7 +61,6 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 // Route to get a course by ID
 router.get('/:id', async (req, res) => {
@@ -94,7 +93,7 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, capacity, startDate } = req.body; // הוספת startDate מהבקשה
+    const { name, courseDescription, courseDetails, price, capacity, startDate, startTime } = req.body; // הוספת startTime מהבקשה
 
     // מצא את הקורס לפי מזהה
     const course = await Course.findById(id);
@@ -104,10 +103,12 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 
     // עדכון פרטי הקורס
     course.name = name || course.name;
-    course.description = description || course.description;
+    course.courseDescription = courseDescription || course.courseDescription; // תיאור הקורס הקצר
+    course.courseDetails = courseDetails || course.courseDetails; // פרטי הקורס המלאים
     course.price = price || course.price;
     course.capacity = capacity || course.capacity;
     course.startDate = startDate ? new Date(startDate) : course.startDate; // עדכון תאריך ההתחלה
+    course.startTime = startTime || course.startTime; // עדכון שעת התחלה
 
     // עדכון התמונה רק אם הועלתה תמונה חדשה
     if (req.file) {
@@ -123,8 +124,6 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: 'Failed to update course' });
   }
 });
-
-
 
 // נתיב לרכישת קורס
 router.post('/purchase', async (req, res) => {
@@ -150,10 +149,9 @@ router.post('/purchase', async (req, res) => {
     }
 
     // חפש את המשתמש על פי כתובת האימייל
-    
     const user = await User.findOne({ email: email.trim() });
 
-    console.log("line 145 " , user)
+    console.log("line 145 ", user);
     if (!user) {
       console.log('User not found');  // לוג אם המשתמש לא נמצא
       return res.status(404).json({ error: 'User not found' });
@@ -166,7 +164,6 @@ router.post('/purchase', async (req, res) => {
       console.log('User has already purchased this course');
       return res.status(200).json({ message: 'Course already purchased', purchased: true });
     }
-    
 
     // הוסף את הקורס לרשימת הרכישות של המשתמש
     user.purchasedCourses.push(courseId);
@@ -176,8 +173,8 @@ router.post('/purchase', async (req, res) => {
     course.participants += 1;
     await course.save();
 
-    // שלח את המייל עם שם הקורס הנכון
-    await sendOrderConfirmationEmail(email, fullName, course.name, courseId);
+    // שלח את המייל עם שם הקורס הנכון, תאריך התחלה ושעת התחלה
+    await sendOrderConfirmationEmail(email, fullName, course.name, courseId, course.startDate, course.startTime, course.courseDetails);
     console.log('Email sent successfully');  // לוג להצלחה בשליחת המייל
 
     res.status(200).send('הזמנתך התקבלה בהצלחה!');
@@ -186,6 +183,5 @@ router.post('/purchase', async (req, res) => {
     res.status(500).json({ error: 'Failed to process purchase' });
   }
 });
-
 
 module.exports = router;
