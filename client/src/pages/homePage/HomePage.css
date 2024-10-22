@@ -1,0 +1,216 @@
+/* עיצוב כללי */
+.home-page {
+    width: 100vw;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #d6eaf8, #e8f6f3);
+    font-family: 'Roboto', sans-serif;
+    color: #2d3e50;
+    overflow-x: hidden;
+    line-height: 1.8;
+    animation: fadeIn 2s ease-in-out;
+    box-sizing: border-box;
+}
+
+/* כותרת ולוגו */
+.header {
+    background-color: #a9cce3;
+    text-align: center;
+    padding: 60px 0;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.logo {
+    font-size: 64px;
+    margin: 0;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #154360;
+}
+.subtitle {
+    font-size: 24px;
+    margin-top: 10px;
+    font-weight: 300;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* עיצוב תוכן כללי */
+.content-section {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    animation: slideIn 1.5s ease-in-out;
+    border-left: 10px solid #48c9b0;
+}
+
+/* פריסת תוכן */
+.content-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+.text-content {
+    flex: 1;
+    padding: 20px;
+}
+.image-content {
+    flex: 1;
+    text-align: center;
+}
+.home-image {
+    max-width: 80%;
+    border-radius: 20px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.home-image:hover {
+    transform: scale(1.08);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* רשימות */
+ul {
+    padding: 0;
+    list-style: none;
+}
+li {
+    margin-bottom: 15px;
+    font-size: 20px;
+    position: relative;
+    padding-left: 30px;
+}
+li::before {
+    content: '⭐';
+    position: absolute;
+    left: 0;
+    color: #f4d03f;
+    font-size: 24px;
+}
+
+/* כפתור קשר */
+.contact-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 30px;
+    background-color: #48c9b0;
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: background 0.4s ease, transform 0.3s ease;
+}
+.contact-button:hover {
+    background-color: #1abc9c;
+    transform: scale(1.1);
+}
+
+/* פוטר וקטע צור קשר */
+.footer {
+    background-color: #a9cce3;
+    color: #1c2833;
+    text-align: center;
+    padding: 60px 20px;
+    margin-top: 80px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(15, 14, 14, 0.15);
+}
+.footer h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* עיצוב קבוע עם אייקונים צבעוניים */
+.contact-list {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+.contact-item {
+    background: linear-gradient(135deg, #e8f8f5, #d1f2eb);
+    padding: 20px 30px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+.contact-item:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #d1f2eb, #a2d9ce);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.contact-icon {
+    font-size: 40px;
+    transform: rotate(0deg) scale(1);
+    transition: transform 0.3s ease;
+}
+.contact-item.facebook .contact-icon {
+    color: #4267B2;
+}
+.contact-item.instagram .contact-icon {
+    color: #E1306C;
+}
+.contact-item.whatsapp .contact-icon {
+    color: #25D366;
+}
+.contact-item.mail .contact-icon {
+    color: #D44638;
+}
+.contact-item a {
+    color: #2d3e50;
+    font-size: 22px;
+    text-decoration: none;
+    font-weight: 600;
+}
+.contact-item a:hover {
+    color: #1a1a1a;
+    text-decoration: underline;
+}
+
+/* אנימציות */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes slideIn {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* רספונסיביות */
+@media (max-width: 768px) {
+    .content-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+    .home-image {
+        max-width: 100%;
+    }
+    .contact-list {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

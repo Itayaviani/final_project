@@ -49,7 +49,7 @@ const Profile = () => {
   return (
     <div className="profile-wrapper">
       <div className="profile-container">
-        <h1>:פרופיל משתמש</h1>
+        <h1 className="profile-title">:פרופיל משתמש</h1> {/* הוספת הכיתה 'profile-title' */}
         <div className="profile-details">
           <p><span className="value">{user.name}</span> <span className="label">:שם מלא</span></p>
           <p><span className="value">{user.email}</span> <span className="label">:אימייל</span></p>
