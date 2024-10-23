@@ -86,25 +86,23 @@ const WorkshopsList = () => {
           <table>
             <thead>
               <tr>
-                <th>שם סדנה</th>
-                <th>מחיר</th>
-                <th>תיאור בקצרה</th>
-                <th>תאריך יצירה</th>
-                <th>משתתפים</th>
-                <th>הכנסות</th> {/* עמודה עבור ההכנסות */}
-                <th>סטטוס</th> {/* עמודה עבור הסטטוס */}
                 <th>פעולות</th>
+                <th>סטטוס</th>
+                <th>הכנסות</th>
+                <th>משתתפים</th>
+                <th>תאריך יצירה</th>
+                <th>תיאור בקצרה</th>
+                <th>מחיר</th>
+                <th>שם סדנה</th>
               </tr>
             </thead>
             <tbody>
               {sortedWorkshops.map((workshop) => (
                 <tr key={workshop._id}>
-                  <td>{workshop.name}</td>
-                  <td>{workshop.price} ש"ח</td>
-                  <td>{workshop.description}</td>
-                  <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
-                  <td>{workshop.participants} / {workshop.capacity}</td>
-                  <td>{calculateRevenue(workshop)} ש"ח</td> {/* הצגת ההכנסות */}
+                  <td>
+                    <button onClick={() => handleEditWorkshop(workshop._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
+                    <button className="delete" onClick={() => handleDeleteWorkshop(workshop._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}
+                  </td>
                   <td>
                     {/* בדיקה אם הסדנה מלאה והצגת הכיתוב */}
                     {workshop.participants >= workshop.capacity ? (
@@ -113,10 +111,12 @@ const WorkshopsList = () => {
                       <span className="available-workshop">נשארו {calculateAvailableSpots(workshop)} מקומות</span>
                     )}
                   </td>
-                  <td>
-                    <button onClick={() => handleEditWorkshop(workshop._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
-                    <button className="delete" onClick={() => handleDeleteWorkshop(workshop._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}
-                  </td>
+                  <td>{calculateRevenue(workshop)} ש"ח</td> {/* הצגת ההכנסות */}
+                  <td>{workshop.participants} / {workshop.capacity}</td>
+                  <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
+                  <td>{workshop.description}</td>
+                  <td>{workshop.price} ש"ח</td>
+                  <td>{workshop.name}</td>
                 </tr>
               ))}
             </tbody>

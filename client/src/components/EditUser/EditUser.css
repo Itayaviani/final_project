@@ -1,114 +1,105 @@
-/* General styling for the body and HTML */
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #eceff1, #f0f2f5); /* Soft gradient background */
+/* הוספת אנימציה כללית לעלייה */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* חזרה למקום המקורי */
+  }
 }
 
-/* Container for the edit user form */
+/* כל הסלקטורים הייחודיים תחת הקלאס הראשי edit-user-container */
 .edit-user-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 60px); /* Considering a top navbar */
+  min-height: 100vh;
   padding: 20px;
-  box-sizing: border-box;
+  text-align: center;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
-/* Styling for the form container */
-.edit-user-form-container {
+.edit-user-container .edit-user-form-container {
+  width: 700px;
   background-color: #ffffff;
-  padding: 50px; /* Increased padding for more space inside */
-  border-radius: 12px; /* Slightly more rounded corners */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Stronger shadow for more depth */
-  max-width: 800px; /* Increased max width for better spacing */
-  width: 100%;
-}
-
-/* Styling for the form header */
-.edit-user-form-container h2 {
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(6, 6, 6, 0.937);
+  padding: 40px;
   text-align: center;
-  margin-bottom: 40px; /* Increased margin for better spacing */
-  color: #333333;
-  font-size: 30px; /* Larger font for emphasis */
-  font-weight: bold; /* Bold font for prominence */
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
-/* Styling for the form groups */
-.edit-user-form-container .form-group {
-  margin-bottom: 25px; /* Increased margin between form groups */
-  display: flex; /* Flexbox for better layout control */
-  align-items: center; /* Center vertically */
-  justify-content: space-between; /* Space between elements */
+.edit-user-container .edit-user-form-container h2 {
+  font-size: 2.5rem;
+  color: #000000;
+  margin-bottom: 30px;
+  position: relative;
+  display: inline-block;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
-/* Styling for the form labels */
-.edit-user-form-container .form-group label {
-  flex: 1; /* Let label take up necessary space */
-  text-align: left; /* Align text to the left */
-  font-size: 18px; /* Larger font size */
-  color: #333; /* Darker color for better contrast */
-  font-weight: 500; /* Medium font weight */
-  margin-right: 20px; /* Increased margin to separate from input */
-}
-
-/* Styling for the form inputs */
-.edit-user-form-container .form-group input {
-  flex: 3; /* Increased flex for more input space */
-  padding: 14px; /* Slightly larger padding for a more substantial feel */
-  font-size: 18px; /* Larger font size */
-  border-radius: 6px; /* Slightly more rounded corners */
-  border: 1px solid #cccccc;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
-  width: 100%; /* Ensures inputs take full width available */
-}
-
-/* Focus effect for the form inputs */
-.edit-user-form-container .form-group input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* Soft blue glow on focus */
-  outline: none;
-}
-
-/* Styling for the submit button */
-.edit-user-form-container button {
+.edit-user-container .edit-user-form-container h2::after {
+  content: '';
+  position: absolute;
   width: 100%;
-  padding: 16px; /* Increased padding for a larger button */
-  font-size: 20px; /* Larger font size */
-  color: #ffffff;
-  background-color: #007bff; /* Standard blue color */
-  border: none;
-  border-radius: 6px; /* Consistent rounded corners */
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s; /* Added transform transition for better interaction */
-  margin-top: 20px; /* Margin to separate from form fields */
+  height: 2px;
+  background-color: #2d3e50;
+  bottom: -10px;
+  left: 0;
 }
 
-/* Hover effect for the submit button */
-.edit-user-form-container button:hover {
-  background-color: #0056b3;
-}
-
-/* Active effect for the submit button */
-.edit-user-form-container button:active {
-  transform: translateY(2px); /* Button press effect */
-}
-
-/* Styling for the error message */
-.error-message {
-  color: #d9534f; /* Red color for errors */
-  text-align: center;
+.edit-user-container .form-group {
   margin-bottom: 20px;
-  font-weight: bold; /* Bold text for emphasis */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  direction: rtl; /* Set direction to right-to-left for natural alignment */
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
-/* Styling for the loading message */
-.loading {
-  text-align: center;
-  font-size: 18px;
-  color: #555555;
-  margin-top: 20px; /* Margin to separate from other elements */
+.edit-user-container .form-group label {
+  font-weight: 700;
+  width: 30%;
+  text-align: right; /* Align label text to the right */
+  color: #000000;
+}
+
+.edit-user-container .form-group input {
+  width: 70%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  text-align: right; /* Align input text to the left */
+}
+
+.edit-user-container button {
+  padding: 15px 30px;
+  width: 250px;
+  font-size: 1.1rem;
+  color: white;
+  background-color: #0288d1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+}
+
+.edit-user-container button:hover {
+  background-color: #026aa7;
+}
+
+.edit-user-container .error-message {
+  color: red;
+  font-size: 1.2rem;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+}
+
+.edit-user-container .success-message {
+  color: green;
+  font-size: 1.2rem;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }

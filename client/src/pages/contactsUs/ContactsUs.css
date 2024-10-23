@@ -11,7 +11,7 @@ html, body {
 /* Title at the top of the page */
 .page-title {
   text-align: center;
-  color: #2d3e50;
+  color: #000000;
   font-size: 2.5rem;
   margin-bottom: 30px;
   font-weight: bold;
@@ -169,10 +169,16 @@ html, body {
 /* מפת וויז */
 .map-container {
   width: 500px;
+  height: 300px;
   margin-left: -90px; /* הזזת המפה שמאלה */
   position: relative;
-  left: -30px;
+  left: -10px;
   animation: fadeIn 1s ease-in-out; /* אנימציית Fade-in */
+}
+
+.waze-map {
+  width: 400px;
+  height: 350px;
 }
 
 /* אנימציית Fade-in */

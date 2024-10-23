@@ -37,26 +37,15 @@ export default function NavBar({ isLoggedIn, username, isAdmin, onLogout }) {
           <li className="navbar-item" onClick={() => navigate("/")}>
             דף בית
           </li>
-          <li className="navbar-item" onClick={() => navigate("/feminineLook")}>
-            מבט נשי
-          </li>
-          <li className="navbar-item" onClick={() => navigate("/niceToMeet")}>
-            נעים להכיר
-          </li>
           <li className="navbar-item" onClick={() => navigate("/personalProcess")}>
             תהליך אישי
           </li>
-          <li className="navbar-item" onClick={() => navigate("/communitiesAndOrganizations")}>
-            קהילות וארגונים
-          </li>
+         
           <li className="navbar-item" onClick={() => navigate("/courses")}>
             קורסים
           </li>
           <li className="navbar-item" onClick={() => navigate("/workshops")}>
             סדנאות
-          </li>
-          <li className="navbar-item" onClick={() => navigate("/projects")}>
-            הצצה לפרויקטים
           </li>
           <li className="navbar-item" onClick={() => navigate("/contactUs")}>
             צור קשר

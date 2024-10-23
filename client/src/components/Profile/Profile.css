@@ -1,10 +1,21 @@
-/* Profile.css */
+/* הוספת אנימציה כללית לעלייה */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* חזרה למקום המקורי */
+  }
+}
 
 body {
   font-family: 'Arial', sans-serif;
-  color: #333; /* צבע כהה לטקסט */
+  color: #000000; /* צבע כהה לטקסט */
   margin: 0;
   padding: 0;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה לגוף */
 }
 
 .profile-wrapper {
@@ -13,6 +24,8 @@ body {
   align-items: center;
   min-height: 100vh;
   width: 500px;
+  margin-left: 600px;
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
 .profile-container {
@@ -24,11 +37,12 @@ body {
   width: 100%;
   text-align: center;
   margin: 0 auto; /* מרכז את הקונטיינר */
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
 .profile-title {
   font-size: 2.5rem;
-  color: #2d3e50; /* צבע לכותרת */
+  color: #000000; /* צבע לכותרת */
   margin-bottom: 30px;
   position: relative;
   display: inline-block; /* כדי שהקו התחתון יהיה לפי רוחב הכותרת */
@@ -40,7 +54,7 @@ body {
   position: absolute;
   width: 100%;
   height: 4px; /* קו תחתון עבה יותר */
-  background-color: #2d3e50; /* צבע הקו התחתון */
+  background-color: #000000; /* צבע הקו התחתון */
   bottom: -20px; /* מרחק בין הכותרת לקו, הוגדל */
   left: 0;
 }
@@ -52,6 +66,7 @@ body {
   margin-top: 20px;
   gap: 15px;
   margin-right: 110px;
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
 .profile-details p {
@@ -59,7 +74,7 @@ body {
   justify-content: space-between;
   width: 100%; /* משתמש בכל הרוחב */
   font-size: 1.2rem;
-  color: #2d3e50;
+  color: #000000;
   font-weight: 600; /* מדגיש את כל השורות */
 }
 
@@ -80,6 +95,7 @@ body {
   display: flex;
   justify-content: center; /* מרכז את הכפתורים */
   margin-top: 50px;
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
 .edit-profile-button,

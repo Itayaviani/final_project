@@ -52,22 +52,22 @@ const UserList = () => {
         <table>
           <thead>
             <tr>
-              <th>שם משתמש</th>
-              <th>מספר פלאפון</th>
-              <th>אימייל</th>
               <th>פעולות</th>
+              <th>אימייל</th>
+              <th>מספר פלאפון</th>
+              <th>שם משתמש</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.phone}</td>
-                <td>{user.email}</td>
                 <td>
                   <button onClick={() => handleEditUser(user._id)}>ערוך</button>
                   <button onClick={() => handleDeleteUser(user._id)}>מחק</button>
                 </td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                <td>{user.name}</td>
               </tr>
             ))}
           </tbody>

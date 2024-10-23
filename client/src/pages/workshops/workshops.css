@@ -1,3 +1,15 @@
+/* הוספת אנימציה כללית לעלייה */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* חזרה למקום המקורי */
+  }
+}
+
 /* עיצוב עבור הקונטיינר הכללי של הסדנאות */
 .workshops-container {
   display: flex; /* סידור אופקי של הסדנאות */
@@ -5,6 +17,7 @@
   gap: 20px; /* רווח בין הסדנאות */
   padding: 20px; /* רווח פנימי של הקונטיינר */
   justify-content: center; /* מרכוז התוכן */
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
 /* עיצוב עבור כל סדנא */
@@ -20,6 +33,7 @@
   transition: transform 0.3s, box-shadow 0.3s;
   overflow: hidden; /* הסתרת פייד חיצוני */
   z-index: 1; /* מיקום מעל הפייד */
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
 /* פייד עבור הסדנה */
@@ -106,6 +120,7 @@
   display: flex;
   justify-content: center; /* ממרכז את הכפתור אופקית */
   margin: 20px 0; /* מרווח עליון ותחתון */
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
 .add-workshop-button {

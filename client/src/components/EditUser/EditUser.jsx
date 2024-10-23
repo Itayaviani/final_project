@@ -9,9 +9,8 @@ const EditUser = ({ setUsername }) => {
   const [user, setUser] = useState({ name: '', phone: '', email: '' });
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(''); // הודעת הצלחה
+  const [success, setSuccess] = useState(''); 
 
-  // משיכת פרטי המשתמש כאשר הקומפוננטה נטענת
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -45,15 +44,14 @@ const EditUser = ({ setUsername }) => {
         },
       });
 
-      // עדכון השם בגלובלי וב־localStorage
       localStorage.setItem('username', user.name);
       setUsername(user.name);
 
       setSuccess('User details updated successfully!');
       setError('');
       setTimeout(() => {
-        navigate('/profile'); // חזרה לפרופיל לאחר 2 שניות
-      }, 2000);
+        navigate('/profile');
+      }, 1000);
 
     } catch (err) {
       setError('Error updating user details');
@@ -66,23 +64,23 @@ const EditUser = ({ setUsername }) => {
   return (
     <div className="edit-user-container">
       <div className="edit-user-form-container">
-        <h2>עריכת פרטי משתמש</h2>
+        <h2>:עריכת פרטי משתמש</h2>
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>שם משתמש:</label>
-            <input type="text" name="name" value={user.name} onChange={handleChange} required />
-          </div>
           <div className="form-group">
             <label>מספר פלאפון:</label>
             <input type="text" name="phone" value={user.phone} onChange={handleChange} required />
           </div>
           <div className="form-group">
+            <label>שם משתמש:</label>  
+            <input type="text" name="name" value={user.name} onChange={handleChange} required />
+          </div>
+          <button type="submit">שמור</button>
+          <div className="form-group">
             <label>אימייל:</label>
             <input type="email" name="email" value={user.email} onChange={handleChange} required />
           </div>
-          <button type="submit">שמור</button>
         </form>
       </div>
     </div>

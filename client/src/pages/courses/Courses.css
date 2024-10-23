@@ -1,3 +1,15 @@
+/* הוספת אנימציה כללית לעלייה */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* חזרה למקום המקורי */
+  }
+}
+
 /* עיצוב עבור הקונטיינר הכללי של הקורסים */
 .courses-container {
   display: flex; /* סידור אופקי של הקורסים */
@@ -5,6 +17,7 @@
   gap: 20px; /* רווח בין הקורסים */
   padding: 20px; /* רווח פנימי של הקונטיינר */
   justify-content: center; /* מרכוז התוכן */
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
 .purchased-label {
@@ -28,8 +41,8 @@
   width: 300px;
   text-align: center;
   background-color: white;
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
-
 
 .course-card::before {
   content: ''; /* תוכן ריק לפייד */
@@ -48,7 +61,6 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.906);
 }
 
-/* שאר העיצובים נשארים כפי שהם */
 .course-card h3 {
   font-size: 1.6rem;
   color: #0c0c0c;
@@ -102,6 +114,7 @@
   display: flex;
   justify-content: center; /* ממרכז את הכפתור אופקית */
   margin: 20px 0; /* מרווח עליון ותחתון */
+  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
 .add-course-button {
@@ -164,16 +177,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* צל נוסף בכפתור */
 }
 
-.full-label {
-  display: inline-block;
-  background-color: red;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
+.full-label,
 .started-label {
   display: inline-block;
   background-color: red;
@@ -183,7 +187,3 @@
   font-weight: bold;
   margin-bottom: 10px;
 }
-
-
-
-

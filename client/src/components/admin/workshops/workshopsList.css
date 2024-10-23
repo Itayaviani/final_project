@@ -83,6 +83,8 @@ body, html {
     border-radius: 50px;
     cursor: pointer;
     transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    margin-right: 50px; /* רווח בין הכפתורים */
+
   }
   
   .workshops-list button:hover {

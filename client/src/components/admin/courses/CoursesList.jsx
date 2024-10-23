@@ -86,25 +86,23 @@ const CoursesList = () => {
           <table>
             <thead>
               <tr>
-                <th>שם קורס</th>
-                <th>מחיר</th>
-                <th>תיאור בקצרה</th>
-                <th>תאריך יצירה</th>
-                <th>משתתפים</th>
-                <th>הכנסות</th> {/* עמודה חדשה עבור ההכנסות */}
-                <th>סטטוס</th> {/* עמודה חדשה עבור הסטטוס */}
                 <th>פעולות</th>
+                <th>סטטוס</th>
+                <th>הכנסות</th>
+                <th>משתתפים</th>
+                <th>תאריך יצירה</th>
+                <th>תיאור בקצרה</th>
+                <th>מחיר</th>
+                <th>שם קורס</th>
               </tr>
             </thead>
             <tbody>
               {sortedCourses.map((course) => (
                 <tr key={course._id}>
-                  <td>{course.name}</td>
-                  <td>{course.price} ש"ח</td>
-                  <td>{course.description}</td>
-                  <td>{new Date(course.createdAt).toLocaleDateString()}</td>
-                  <td>{course.participants} / {course.capacity}</td>
-                  <td>{calculateRevenue(course)} ש"ח</td> {/* הצגת ההכנסות */}
+                  <td>
+                    <button onClick={() => handleEditCourse(course._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
+                    <button className="delete" onClick={() => handleDeleteCourse(course._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}
+                  </td>
                   <td>
                     {/* בדיקה אם הקורס מלא והצגת הכיתוב */}
                     {course.participants >= course.capacity ? (
@@ -113,10 +111,12 @@ const CoursesList = () => {
                       <span className="available-course">נשארו {calculateAvailableSpots(course)} מקומות</span>
                     )}
                   </td>
-                  <td>
-                    <button onClick={() => handleEditCourse(course._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
-                    <button className="delete" onClick={() => handleDeleteCourse(course._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}
-                  </td>
+                  <td>{calculateRevenue(course)} ש"ח</td> {/* הצגת ההכנסות */}
+                  <td>{course.participants} / {course.capacity}</td>
+                  <td>{new Date(course.createdAt).toLocaleDateString()}</td>
+                  <td>{course.description}</td>
+                  <td>{course.price} ש"ח</td>
+                  <td>{course.name}</td>
                 </tr>
               ))}
             </tbody>

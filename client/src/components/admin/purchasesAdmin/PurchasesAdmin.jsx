@@ -37,65 +37,69 @@ const PurchasesAdmin = () => {
   };
 
   return (
-    <div className="purchases-list">
-      <h1>היסטוריית רכישות</h1>
-      {error && <p className="error-message">{error}</p>}
+    <div className="purchases-admin-page">
+      <div className="purchases-wrapper">
+        <div className="purchases-list">
+          <h1>היסטוריית רכישות</h1>
+          {error && <p className="error-message">{error}</p>}
 
-      {/* הוספת כפתורים להצגת קורסים וסדנאות */}
-      <div className="filter-buttons">
-        <button onClick={showCourses}>הצג קורסים</button>
-        <button onClick={showWorkshops}>הצג סדנאות</button>
+          {/* הוספת כפתורים להצגת קורסים וסדנאות */}
+          <div className="filter-buttons">
+            <button onClick={showCourses}>הצג קורסים</button>
+            <button onClick={showWorkshops}>הצג סדנאות</button>
+          </div>
+
+          {/* הצגת הטבלה רק לאחר לחיצה על אחד הכפתורים */}
+          {filteredType && (
+            <table className="purchases-table">
+              <thead>
+                <tr>
+                  <th>תאריך רכישה</th>
+                  <th>מחיר</th>
+                  <th>שם פריט</th>
+                  <th>סוג פריט</th>
+                  <th>שם משתמש</th>
+                </tr>
+              </thead>
+              <tbody>
+                {purchases
+                  .map((userPurchase) => ({
+                    ...userPurchase,
+                    courses: userPurchase.courses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+                    workshops: userPurchase.workshops.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+                  }))
+                  .map((userPurchase) => (
+                    <React.Fragment key={userPurchase._id}>
+                      {/* הצגת קורסים בהתאם לבחירה */}
+                      {filteredType === 'courses' &&
+                        userPurchase.courses.map((course) => (
+                          <tr key={course._id}>
+                            <td>{new Date(course.createdAt).toLocaleDateString()}</td>
+                            <td>{course.price} ש"ח</td>
+                            <td>{course.name}</td>
+                            <td>קורס</td>
+                            <td>{userPurchase.name}</td>
+                          </tr>
+                        ))}
+
+                      {/* הצגת סדנאות בהתאם לבחירה */}
+                      {filteredType === 'workshops' &&
+                        userPurchase.workshops.map((workshop) => (
+                          <tr key={workshop._id}>
+                            <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
+                            <td>{workshop.price} ש"ח</td>
+                            <td>{workshop.name}</td>
+                            <td>סדנה</td>
+                            <td>{userPurchase.name}</td>
+                          </tr>
+                        ))}
+                    </React.Fragment>
+                  ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
-
-      {/* הצגת הטבלה רק לאחר לחיצה על אחד הכפתורים */}
-      {filteredType && (
-        <table className="purchases-table">
-          <thead>
-            <tr>
-              <th>שם משתמש</th>
-              <th>סוג פריט</th>
-              <th>שם פריט</th>
-              <th>מחיר</th>
-              <th>תאריך רכישה</th>
-            </tr>
-          </thead>
-          <tbody>
-            {purchases
-              .map((userPurchase) => ({
-                ...userPurchase,
-                courses: userPurchase.courses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-                workshops: userPurchase.workshops.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-              }))
-              .map((userPurchase) => (
-                <>
-                  {/* הצגת קורסים בהתאם לבחירה */}
-                  {filteredType === 'courses' &&
-                    userPurchase.courses.map((course) => (
-                      <tr key={course._id}>
-                        <td>{userPurchase.name}</td>
-                        <td>קורס</td>
-                        <td>{course.name}</td>
-                        <td>{course.price} ש"ח</td>
-                        <td>{new Date(course.createdAt).toLocaleDateString()}</td>
-                      </tr>
-                    ))}
-
-                  {/* הצגת סדנאות בהתאם לבחירה */}
-                  {filteredType === 'workshops' &&
-                    userPurchase.workshops.map((workshop) => (
-                      <tr key={workshop._id}>
-                        <td>{userPurchase.name}</td>
-                        <td>סדנה</td>
-                        <td>{workshop.name}</td>
-                        <td>{workshop.price} ש"ח</td>
-                        <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
-                      </tr>
-                    ))}
-                </>
-              ))}
-          </tbody>
-        </table>
-      )}
     </div>
   );
 };

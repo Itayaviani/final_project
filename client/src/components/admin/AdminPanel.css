@@ -1,3 +1,15 @@
+/* הוספת אנימציית Fade-In לכל האלמנטים */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* חזרה למקום המקורי */
+  }
+}
+
 /* Global Styles */
 body, html {
   margin: 0;
@@ -6,6 +18,7 @@ body, html {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
   color: #333;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Wrapper to center Admin Panel */
@@ -14,6 +27,7 @@ body, html {
   justify-content: center; /* מרכז אופקית */
   align-items: center; /* מרכז אנכית */
   min-height: 100vh; /* גובה מינימלי של הדף */
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Admin Panel Container */
@@ -26,6 +40,7 @@ body, html {
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 .admin-panel:hover {
@@ -42,6 +57,7 @@ body, html {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Category Container */
@@ -50,6 +66,7 @@ body, html {
   justify-content: center;
   gap: 40px;
   flex-wrap: wrap;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Individual Buttons */
@@ -62,6 +79,7 @@ body, html {
   border-radius: 30px;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 .category-container button:hover {
@@ -85,6 +103,7 @@ body, html {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Responsive Design for Smaller Screens */

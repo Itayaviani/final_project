@@ -1,3 +1,15 @@
+/* הוספת אנימציה כללית לעלייה */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* חזרה למקום המקורי */
+    }
+}
+
 /* Global background for the purchases page */
 body, html {
     margin: 0;
@@ -7,6 +19,7 @@ body, html {
     background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
     color: #333;
     text-align: center;
+    animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה לגוף */
 }
 
 /* Wrapper to center the MyPurchases card */
@@ -16,6 +29,7 @@ body, html {
     align-items: center;
     min-height: 100vh; /* Ensures full screen height */
     padding: 20px;
+    animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Purchases List Container */
@@ -28,12 +42,8 @@ body, html {
     transition: transform 0.3s, box-shadow 0.3s;
     overflow-x: auto; /* Horizontal scrolling if needed */
     box-shadow: 0 4px 10px rgba(6, 6, 6, 0.937);
-
-    
-    
+    animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
-
-
 
 /* Purchases Header */
 .purchases-container h1 {
@@ -46,6 +56,7 @@ body, html {
     letter-spacing: 2px;
     position: relative;
     display: inline-block; /* הקו התחתון יתאים לרוחב הכתוביות */
+    animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* קו תחתון מתחת לכותרת לפי אורך הכותרת */
@@ -58,8 +69,6 @@ body, html {
     margin: 10px auto 0; /* רווח בין הכותרת לקו */
 }
 
-
-
 /* Error Message */
 .error-message {
     color: #e74c3c;
@@ -71,6 +80,7 @@ body, html {
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Purchases Table */
@@ -83,6 +93,7 @@ body, html {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Table Head */
@@ -93,6 +104,7 @@ body, html {
     text-transform: uppercase;
     padding: 15px;
     text-align: left;
+    animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Table Row */
@@ -100,6 +112,7 @@ body, html {
     padding: 15px;
     border-bottom: 1px solid #dfe3e8;
     color: #34495e;
+    animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
 
 /* Alternate Row Background */

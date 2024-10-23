@@ -36,25 +36,25 @@ const Inquiries = () => {
         <table>
           <thead>
             <tr>
-              <th>שם פרטי</th>
-              <th>שם משפחה</th>
-              <th>נייד</th>
-              <th>אימייל</th>
-              <th>הודעה</th>
               <th>פעולות</th>
+              <th>הודעה</th>
+              <th>אימייל</th>
+              <th>נייד</th>
+              <th>שם משפחה</th>
+              <th>שם פרטי</th>
             </tr>
           </thead>
           <tbody>
             {inquiries.map((inquiry) => (
               <tr key={inquiry._id}>
-                <td>{inquiry.firstName}</td>
-                <td>{inquiry.lastName}</td>
-                <td>{inquiry.phone}</td>
-                <td>{inquiry.email}</td>
-                <td>{inquiry.message}</td>
                 <td>
                   <button onClick={() => handleDeleteInquiry(inquiry._id)}>מחק</button>
                 </td>
+                <td>{inquiry.message}</td>
+                <td>{inquiry.email}</td>
+                <td>{inquiry.phone}</td>
+                <td>{inquiry.lastName}</td>
+                <td>{inquiry.firstName}</td>
               </tr>
             ))}
           </tbody>

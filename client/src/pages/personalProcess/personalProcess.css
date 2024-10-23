@@ -1,3 +1,11 @@
+/* ודא ש-body וה-html יכולים לגלול */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
 /* עיצוב כללי */
 .personal-process-container {
     width: 100vw;
@@ -6,10 +14,12 @@
     font-family: 'Roboto', sans-serif;
     color: #2d3e50;
     overflow-x: hidden;
+    overflow-y: auto; /* אפשרות לגלילה אנכית */
     line-height: 1.8;
-    animation: fadeIn 1s ease-in-out; /* שונה ל-1 שניה */
+    animation: fadeIn 1s ease-in-out;
     box-sizing: border-box;
 }
+
 
 /* כותרת ולוגו */
 .header {

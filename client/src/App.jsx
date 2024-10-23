@@ -16,11 +16,7 @@ import EditCourse from './pages/courses/Edit Course/EditCourse';
 import CourseDetails from './pages/courses/Course Details/CourseDetails';
 import CoursePayment from './pages/courses/Payment/CoursePayment';
 import ThankYou from './pages/courses/thankYou/ThankYou';
-import FeminineLook from './pages/feminineLook/FeminineLook';
-import NiceToMeet from './pages/niceToMeet/NiceToMeet';
 import PersonalProcess from './pages/personalProcess/PersonalProcess';
-import CommunitiesAndOrganizations from './pages/communitiesAndOrganizations/CommunitiesAndOrganizations';
-import Projects from './pages/projects/Projects';
 import Header from './components/header/Header';
 import AdminPanel from './components/admin/AdminPanel';
 import EditUser from './components/EditUser/EditUser';
@@ -92,7 +88,6 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path='/register' element={<Signup />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setIsAdmin={setIsAdmin} />} />
-          <Route path='/feminineLook' element={<FeminineLook />} />
           
           {/* ניהול קורסים */}
           <Route path='/courses' element={<Courses courses={courses} isAdmin={isAdmin} userId={userId} />} />
@@ -111,10 +106,7 @@ function App() {
           <Route path="/admin/workshopsList" element={<WorkshopsList />} /> 
 
           {/* דפים נוספים */}
-          <Route path='/niceToMeet' element={<NiceToMeet />} />
           <Route path='/personalProcess' element={<PersonalProcess />} />
-          <Route path='/communitiesAndOrganizations' element={<CommunitiesAndOrganizations />} />
-          <Route path='/projects' element={<Projects />} />
           <Route path='/contactUs' element={<ContactsUs />} />
 
           {/* ניהול מערכת */}
