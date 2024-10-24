@@ -1,0 +1,27 @@
+.project-details-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .project-details-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .project-details-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .project-details-container p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  

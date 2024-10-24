@@ -1,0 +1,96 @@
+/* AddProject.css */
+
+/* עיצוב הקונטיינר הכולל של הטופס */
+.add-project-container {
+    max-width: 800px; /* הגבלת רוחב לקונטיינר */
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    text-align: left; /* טקסט מיושר לשמאל */
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .add-project-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* עיצוב כותרת הטופס */
+  .add-project-container h1 {
+    font-size: 2.5rem;
+    color: #444;
+    margin-bottom: 30px;
+    text-align: center; /* כותרת במרכז */
+  }
+  
+  /* עיצוב הטופס */
+  form {
+    display: grid; /* שימוש ב-grid לפריסת הטופס */
+    grid-template-columns: 1fr 1fr; /* שתי עמודות שוות בגודלן */
+    gap: 20px;
+    align-items: start;
+  }
+  
+  /* עיצוב קבוצת שדות */
+  .add-project-container div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* עיצוב תוויות */
+  .add-project-container label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+    font-size: 1.1rem;
+  }
+  
+  /* עיצוב שדות קלט */
+  .add-project-container input[type="text"],
+  .add-project-container textarea,
+  .add-project-container input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+  }
+  
+  .add-project-container input[type="text"]:focus,
+  .add-project-container textarea:focus,
+  .add-project-container input[type="file"]:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* עיצוב שדה טקסט */
+  .add-project-container textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  /* עיצוב הכפתור */
+  .add-project-container button[type="submit"] {
+    grid-column: span 2; /* הכפתור מתפרס על שתי העמודות */
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 50%; /* הגדרת רוחב לכפתור */
+    margin: 20px auto; /* ממרכז את הכפתור */
+  }
+  
+  .add-project-container button[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }

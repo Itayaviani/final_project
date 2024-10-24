@@ -3,6 +3,10 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Signup from './components/register/register';
 import Login from './components/Login/Login';
 import HomePage from './pages/homePage/HomePage';
+import AddProject from './pages/homePage/add project/AddProject';
+import EditProject from './pages/homePage/edit project/EditProject';
+import ProjectDetails from './pages/homePage/project details/ProjectDetails';
+
 import NavBar from './components/navBar/NavBar';
 import Workshops from './pages/workshops/Workshops';
 import AddWorkshop from './pages/workshops/add workshop/AddWorkshop';
@@ -79,13 +83,23 @@ function App() {
     setWorkshops([...workshops, workshop]);
   };
 
+  const [projects, setProjects] = useState([]);
+
+  const addProject = (newProject) => {
+    setProjects([...projects, newProject]);
+  };
+
   return (
     <div>
       <BrowserRouter>
         <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
         <NavBar isLoggedIn={isLoggedIn} username={username} isAdmin={isAdmin} onLogout={handleLogout} />
         <Routes>
-          <Route path='/' element={<HomePage />} />
+          <Route path='/' element={<HomePage isAdmin={isAdmin}/>} />
+          <Route path="/add-project" element={<AddProject addProject={addProject}/>} />
+          <Route path="/project-details/:projectId" element={<ProjectDetails />} />
+          <Route path="/edit-project/:projectId" element={<EditProject />} />
+
           <Route path='/register' element={<Signup />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setIsAdmin={setIsAdmin} />} />
           

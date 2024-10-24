@@ -6,30 +6,30 @@ import './EditCourse.css'; // ייבוא קובץ ה-CSS
 export default function EditCourse() {
   const { courseId } = useParams();
   const [courseName, setCourseName] = useState('');
-  const [courseDescription, setCourseDescription] = useState(''); // שדה עבור תיאור הקורס (תיאור קצר)
-  const [courseDetails, setCourseDetails] = useState(''); // שדה עבור פרטי הקורס (תיאור מפורט)
+  const [courseDescription, setCourseDescription] = useState('');
+  const [courseDetails, setCourseDetails] = useState('');
   const [coursePrice, setCoursePrice] = useState('');
-  const [courseCapacity, setCourseCapacity] = useState(''); // שדה חדש לקיבולת
-  const [courseStartDate, setCourseStartDate] = useState(''); // שדה חדש לתאריך התחלה
-  const [courseStartTime, setCourseStartTime] = useState(''); // שדה חדש לשעת התחלה
-  const [courseImage, setCourseImage] = useState(null); // שדה עבור העלאת קובץ תמונה
-  const [currentImage, setCurrentImage] = useState(''); // שמירה של התמונה הנוכחית
+  const [courseCapacity, setCourseCapacity] = useState('');
+  const [courseStartDate, setCourseStartDate] = useState('');
+  const [courseStartTime, setCourseStartTime] = useState('');
+  const [courseImage, setCourseImage] = useState(null);
+  const [currentImage, setCurrentImage] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/courses/${courseId}`);
-        const { name, courseDescription, courseDetails, price, capacity, image, startDate, startTime } = response.data; // קבלת ערך הקיבולת, התמונה ותאריך ההתחלה מהשרת
+        const { name, courseDescription, courseDetails, price, capacity, image, startDate, startTime } = response.data;
         setCourseName(name);
-        setCourseDescription(courseDescription); // הגדרת התיאור הקצר
-        setCourseDetails(courseDetails); // הגדרת פרטי הקורס המלאים
+        setCourseDescription(courseDescription);
+        setCourseDetails(courseDetails);
         setCoursePrice(price);
-        setCourseCapacity(capacity); // הגדרת הקיבולת
-        setCourseStartDate(startDate ? new Date(startDate).toISOString().split('T')[0] : ''); // הגדרת תאריך התחלה לפורמט הנכון
-        setCourseStartTime(startTime); // הגדרת שעת ההתחלה
-
-        setCurrentImage(image); // הגדרת התמונה הנוכחית
+        setCourseCapacity(capacity);
+        setCourseStartDate(startDate ? new Date(startDate).toISOString().split('T')[0] : '');
+        setCourseStartTime(startTime);
+        setCurrentImage(image);
       } catch (error) {
         console.error('Failed to fetch course:', error);
       }
@@ -41,32 +41,35 @@ export default function EditCourse() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // הכנת הנתונים לשליחה
-    const formData = {
-      name: courseName,
-      courseDescription, // תיאור הקורס הקצר
-      courseDetails, // פרטי הקורס המלאים
-      price: coursePrice,
-      capacity: courseCapacity,
-      startDate: `${courseStartDate}T${courseStartTime}`, // שליחת תאריך והשעה
-      startTime: courseStartTime, // הוספת שעת התחלה
-    };
+    const formData = new FormData();
+    formData.append('name', courseName);
+    formData.append('courseDescription', courseDescription);
+    formData.append('courseDetails', courseDetails);
+    formData.append('price', coursePrice);
+    formData.append('capacity', courseCapacity);
+    formData.append('startDate', `${courseStartDate}T${courseStartTime}`);
+    formData.append('startTime', courseStartTime);
+
+    // עדכון התמונה רק אם הועלה תמונה חדשה
+    if (courseImage) {
+      formData.append('image', courseImage);
+    }
 
     try {
       await axios.put(`http://localhost:3000/api/v1/courses/${courseId}`, formData, {
         headers: {
-          'Content-Type': 'application/json', // בקשה עם תוכן JSON
+          'Content-Type': 'multipart/form-data', // יש לשנות ל multipart/form-data כדי לשלוח תמונה
         },
       });
       
-      navigate('/courses');
+      navigate('/courses'); // ניתוב חזרה לדף הקורסים לאחר השמירה
     } catch (error) {
       console.error('Failed to edit course:', error);
     }
   };
 
   const handleImageChange = (e) => {
-    setCourseImage(e.target.files[0]);
+    setCourseImage(e.target.files[0]); // עדכון התמונה החדשה
   };
 
   return (
@@ -84,7 +87,7 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>תיאור הקורס:</label> {/* תיאור הקורס הקצר */}
+            <label>תיאור הקורס:</label>
             <textarea
               value={courseDescription}
               onChange={(e) => setCourseDescription(e.target.value)}
@@ -92,7 +95,7 @@ export default function EditCourse() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>פרטי הקורס:</label> {/* פרטי הקורס המלאים */}
+            <label>פרטי הקורס:</label>
             <textarea
               value={courseDetails}
               onChange={(e) => setCourseDetails(e.target.value)}
@@ -118,7 +121,7 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>מועד תחילת הקורס:</label> {/* שדה חדש לתאריך תחילת הקורס */}
+            <label>מועד תחילת הקורס:</label>
             <input
               type="date"
               value={courseStartDate}
@@ -127,7 +130,7 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>שעת תחילת הקורס:</label> {/* שדה חדש לשעת תחילת הקורס */}
+            <label>שעת תחילת הקורס:</label>
             <input
               type="time"
               value={courseStartTime}

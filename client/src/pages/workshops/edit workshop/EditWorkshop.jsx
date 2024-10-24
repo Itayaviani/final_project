@@ -9,7 +9,7 @@ export default function EditWorkshop() {
   const [workshopDescription, setWorkshopDescription] = useState(''); // תיאור קצר של הסדנה
   const [workshopDetails, setWorkshopDetails] = useState(''); // פרטים מלאים של הסדנה
   const [workshopPrice, setWorkshopPrice] = useState('');
-  const [workshopCapacity, setWorkshopCapacity] = useState(''); // שדה עבור קיבולת משתתפים
+  const [workshopCapacity, setWorkshopCapacity] = useState(''); // קיבולת משתתפים
   const [workshopStartDate, setWorkshopStartDate] = useState(''); // תאריך תחילת הסדנה
   const [workshopStartTime, setWorkshopStartTime] = useState(''); // שעת תחילת הסדנה
   const [workshopImage, setWorkshopImage] = useState(null); // שדה עבור העלאת קובץ תמונה
@@ -42,31 +42,35 @@ export default function EditWorkshop() {
     e.preventDefault();
 
     // הכנת הנתונים לשליחה
-    const formData = {
-      name: workshopName,
-      workshopDescription, // תיאור קצר של הסדנה
-      workshopDetails, // פרטי הסדנה המלאים
-      price: workshopPrice,
-      capacity: workshopCapacity,
-      startDate: `${workshopStartDate}T${workshopStartTime}`, // שליחת תאריך ושעה יחד
-      startTime: workshopStartTime, // הוספת שעת ההתחלה
-    };
+    const formData = new FormData();
+    formData.append('name', workshopName);
+    formData.append('workshopDescription', workshopDescription); // תיאור קצר של הסדנה
+    formData.append('workshopDetails', workshopDetails); // פרטי הסדנה המלאים
+    formData.append('price', workshopPrice);
+    formData.append('capacity', workshopCapacity);
+    formData.append('startDate', `${workshopStartDate}T${workshopStartTime}`); // שליחת תאריך והשעה
+    formData.append('startTime', workshopStartTime); // הוספת שעת התחלה
+
+    // עדכון התמונה רק אם הועלה תמונה חדשה
+    if (workshopImage) {
+      formData.append('image', workshopImage);
+    }
 
     try {
       await axios.put(`http://localhost:3000/api/v1/workshops/${workshopId}`, formData, {
         headers: {
-          'Content-Type': 'application/json', // בקשה עם תוכן JSON
+          'Content-Type': 'multipart/form-data', // בקשה עם תמונות
         },
       });
       
-      navigate('/workshops');
+      navigate('/workshops'); // ניתוב חזרה לדף הסדנאות לאחר השמירה
     } catch (error) {
       console.error('Failed to edit workshop:', error);
     }
   };
 
   const handleImageChange = (e) => {
-    setWorkshopImage(e.target.files[0]);
+    setWorkshopImage(e.target.files[0]); // עדכון התמונה החדשה
   };
 
   return (
@@ -84,7 +88,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>תיאור הסדנה:</label> {/* תיאור הסדנה הקצר */}
+            <label>תיאור הסדנה:</label>
             <textarea
               value={workshopDescription}
               onChange={(e) => setWorkshopDescription(e.target.value)}
@@ -92,7 +96,7 @@ export default function EditWorkshop() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>פרטי הסדנה:</label> {/* פרטי הסדנה המלאים */}
+            <label>פרטי הסדנה:</label>
             <textarea
               value={workshopDetails}
               onChange={(e) => setWorkshopDetails(e.target.value)}
@@ -118,7 +122,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>מועד תחילת הסדנה:</label> {/* שדה עבור תאריך תחילת הסדנה */}
+            <label>מועד תחילת הסדנה:</label>
             <input
               type="date"
               value={workshopStartDate}
@@ -127,7 +131,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>שעת תחילת הסדנה:</label> {/* שדה עבור שעת תחילת הסדנה */}
+            <label>שעת תחילת הסדנה:</label>
             <input
               type="time"
               value={workshopStartTime}
