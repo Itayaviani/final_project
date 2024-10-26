@@ -131,6 +131,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
   }
 });
 
+
 // נתיב לרכישת סדנה
 router.post('/purchase', async (req, res) => {
   console.log('Start processing workshop purchase request');
@@ -138,7 +139,6 @@ router.post('/purchase', async (req, res) => {
 
   console.log('Received purchase data:', { fullName, email, workshopId });
 
-  // חפש את שם הסדנה על פי ה-workshopId
   try {
     const workshop = await Workshop.findById(workshopId);
     if (!workshop) {
@@ -179,7 +179,16 @@ router.post('/purchase', async (req, res) => {
     await workshop.save();
 
     // שלח את המייל עם שם הסדנה הנכון, תאריך והשעה
-    await sendOrderConfirmationEmail(email, fullName, workshop.name, 'workshop', workshopId, workshop.startDate, workshop.startTime, workshop.workshopDetails);
+    await sendOrderConfirmationEmail(
+      email,
+      fullName,
+      workshop.name,
+      'workshop', // מציין שמדובר בסדנה
+      workshopId,
+      workshop.startDate,
+      workshop.startTime,
+      workshop.workshopDetails
+    );
     console.log('Email sent successfully');
 
     res.status(200).send('הזמנתך לסדנה התקבלה בהצלחה!');
@@ -188,5 +197,6 @@ router.post('/purchase', async (req, res) => {
     res.status(500).json({ error: 'Failed to process workshop purchase' });
   }
 });
+
 
 module.exports = router;

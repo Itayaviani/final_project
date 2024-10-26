@@ -87,24 +87,34 @@ exports.getUserPurchases = catchAsync(async (req, res, next) => {
     return next(new AppError("משתמש לא נמצא", 404));
   }
 
+  // ודא שהשדות קיימים כערכים ריקים אם הם לא מוגדרים
+  const purchasedCourses = user.purchasedCourses || [];
+  const purchasedWorkshops = user.purchasedWorkshops || [];
+
   res.status(200).json({
     status: "success",
     purchases: {
-      courses: user.purchasedCourses.map((course) => ({
-        _id: course._id,
-        name: course.name,
-        price: course.price,
-        createdAt: course.createdAt,
-      })),
-      workshops: user.purchasedWorkshops.map((workshop) => ({
-        _id: workshop._id,
-        name: workshop.name,
-        price: workshop.price,
-        createdAt: workshop.createdAt,
-      })),
+      courses: purchasedCourses
+        .filter(course => course)  // סינון ערכי null
+        .map((course) => ({
+          _id: course._id,
+          name: course.name,
+          price: course.price,
+          createdAt: course.createdAt,
+        })),
+      workshops: purchasedWorkshops
+        .filter(workshop => workshop)  // סינון ערכי null
+        .map((workshop) => ({
+          _id: workshop._id,
+          name: workshop.name,
+          price: workshop.price,
+          createdAt: workshop.createdAt,
+        })),
     },
   });
 });
+
+
 
 // פונקציה לשליפת כל הרכישות מכל המשתמשים
 exports.getAllUserPurchases = catchAsync(async (req, res, next) => {
@@ -116,18 +126,22 @@ exports.getAllUserPurchases = catchAsync(async (req, res, next) => {
     userId: user._id,
     name: user.name,
     email: user.email,
-    courses: user.purchasedCourses.map((course) => ({
-      _id: course._id,
-      name: course.name,
-      price: course.price,
-      createdAt: course.createdAt,
-    })),
-    workshops: user.purchasedWorkshops.map((workshop) => ({
-      _id: workshop._id,
-      name: workshop.name,
-      price: workshop.price,
-      createdAt: workshop.createdAt,
-    })),
+    courses: (user.purchasedCourses || [])
+      .filter(course => course)  // סינון ערכי null
+      .map((course) => ({
+        _id: course._id,
+        name: course.name,
+        price: course.price,
+        createdAt: course.createdAt,
+      })),
+    workshops: (user.purchasedWorkshops || [])
+      .filter(workshop => workshop)  // סינון ערכי null
+      .map((workshop) => ({
+        _id: workshop._id,
+        name: workshop.name,
+        price: workshop.price,
+        createdAt: workshop.createdAt,
+      })),
   }));
 
   res.status(200).json({
@@ -135,6 +149,7 @@ exports.getAllUserPurchases = catchAsync(async (req, res, next) => {
     data: { purchases: allPurchases },
   });
 });
+
 
 // קבלת כל המשתמשים
 exports.getAllUsers = catchAsync(async (req, res, next) => {

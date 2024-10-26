@@ -132,9 +132,17 @@ router.post('/purchase', async (req, res) => {
 
   console.log('Received purchase data:', { fullName, email, courseId });  // לוג למעקב
 
-  // חפש את שם הקורס על פי ה-courseId
   try {
-    const course = await Course.findById(courseId);
+    // ודא שה-courseId הוא ObjectId
+    const mongoose = require('mongoose');
+    const validCourseId = mongoose.Types.ObjectId.isValid(courseId) ? new mongoose.Types.ObjectId(courseId) : null;
+
+    if (!validCourseId) {
+      console.log('Invalid courseId');  // לוג אם ה-courseId לא תקין
+      return res.status(400).json({ error: 'Invalid courseId' });
+    }
+
+    const course = await Course.findById(validCourseId);
     if (!course) {
       console.log('Course not found');  // לוג אם הקורס לא נמצא
       return res.status(404).json({ error: 'Course not found' });
@@ -151,30 +159,40 @@ router.post('/purchase', async (req, res) => {
     // חפש את המשתמש על פי כתובת האימייל
     const user = await User.findOne({ email: email.trim() });
 
-    console.log("line 145 ", user);
+    console.log("User found:", user ? user.name : "Not found");
     if (!user) {
       console.log('User not found');  // לוג אם המשתמש לא נמצא
       return res.status(404).json({ error: 'User not found' });
     }
 
-    console.log('User found:', user.name);  // לוג אם המשתמש נמצא
+    // בדוק אם המערך purchasedCourses קיים, אם לא - אתחל אותו
+    user.purchasedCourses = user.purchasedCourses || [];
 
     // בדוק אם המשתמש כבר רכש את הקורס הזה
-    if (user.purchasedCourses.includes(courseId)) {
+    if (user.purchasedCourses.includes(validCourseId)) {
       console.log('User has already purchased this course');
       return res.status(200).json({ message: 'Course already purchased', purchased: true });
     }
 
     // הוסף את הקורס לרשימת הרכישות של המשתמש
-    user.purchasedCourses.push(courseId);
+    user.purchasedCourses.push(validCourseId);
     await user.save();
 
     // עדכון מספר המשתתפים בקורס
     course.participants += 1;
     await course.save();
 
-    // שלח את המייל עם שם הקורס הנכון, תאריך התחלה ושעת התחלה
-    await sendOrderConfirmationEmail(email, fullName, course.name, courseId, course.startDate, course.startTime, course.courseDetails);
+    // שלח את המייל עם פרטי הקורס
+    await sendOrderConfirmationEmail(
+      email,
+      fullName,
+      course.name,
+      'course', // מציין שזה קורס
+      validCourseId,
+      course.startDate,
+      course.startTime,
+      course.courseDetails
+    );
     console.log('Email sent successfully');  // לוג להצלחה בשליחת המייל
 
     res.status(200).send('הזמנתך התקבלה בהצלחה!');
@@ -183,5 +201,8 @@ router.post('/purchase', async (req, res) => {
     res.status(500).json({ error: 'Failed to process purchase' });
   }
 });
+
+
+
 
 module.exports = router;
