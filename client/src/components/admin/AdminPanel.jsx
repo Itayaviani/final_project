@@ -71,7 +71,7 @@ const AdminPanel = () => {
   return (
     <div className="admin-panel-wrapper">
       <div className="admin-panel">
-        <h1>לוח ניהול</h1>
+        <h1>דשבורד למנהל</h1>
         <div className="category-container">
           <button onClick={() => navigate('/users')}>משתמשים</button>
           <button onClick={() => navigate('/admin/coursesList')}>קורסים</button>
