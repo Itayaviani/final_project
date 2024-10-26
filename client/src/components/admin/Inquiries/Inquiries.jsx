@@ -48,7 +48,7 @@ const Inquiries = () => {
             {inquiries.map((inquiry) => (
               <tr key={inquiry._id}>
                 <td>
-                  <button onClick={() => handleDeleteInquiry(inquiry._id)}>מחק</button>
+                  <button className="delete" onClick={() => handleDeleteInquiry(inquiry._id)}>מחק</button>
                 </td>
                 <td>{inquiry.message}</td>
                 <td>{inquiry.email}</td>

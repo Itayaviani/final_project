@@ -100,7 +100,7 @@ const CoursesList = () => {
               {sortedCourses.map((course) => (
                 <tr key={course._id}>
                   <td>
-                    <button onClick={() => handleEditCourse(course._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
+                    <button className="edit" onClick={() => handleEditCourse(course._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
                     <button className="delete" onClick={() => handleDeleteCourse(course._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}
                   </td>
                   <td>

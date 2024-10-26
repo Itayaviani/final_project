@@ -62,8 +62,8 @@ const UserList = () => {
             {users.map((user) => (
               <tr key={user._id}>
                 <td>
-                  <button onClick={() => handleEditUser(user._id)}>ערוך</button>
-                  <button onClick={() => handleDeleteUser(user._id)}>מחק</button>
+                  <button className="edit-btn" onClick={() => handleEditUser(user._id)}>ערוך</button>
+                  <button className="delete-btn" onClick={() => handleDeleteUser(user._id)}>מחק</button>
                 </td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>

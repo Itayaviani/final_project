@@ -40,7 +40,7 @@
   text-align: center;
   font-size: 2.5em;
   margin-bottom: 40px;
-  color: #2a9df4;
+  color: #060606;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -62,7 +62,7 @@
 }
 
 .purchases-admin-page .purchases-table th {
-  background-color: #1e88e5;
+  background-color: #070707;
   color: white;
   font-weight: 700;
   text-transform: uppercase;
@@ -86,8 +86,8 @@
 .purchases-admin-page .filter-buttons button {
   padding: 12px 25px;
   font-size: 1em;
-  color: white;
-  background: linear-gradient(to right, #36d1dc, #5b86e5);
+  color: rgb(3, 3, 3);
+  background: linear-gradient(to right, #fbffff, #969393);
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -100,7 +100,7 @@
 }
 
 .purchases-admin-page .filter-buttons button:hover {
-  background: linear-gradient(to right, #5b86e5, #36d1dc);
+  background: linear-gradient(to right, #fbffff, #969393);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 

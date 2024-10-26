@@ -37,7 +37,7 @@ body, html {
   text-align: center;
   font-size: 2.5em;
   margin-bottom: 40px;
-  color: #2a9df4;
+  color: #000; /* כותרת בצבע שחור */
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -58,7 +58,7 @@ body, html {
 }
 
 .courses-list th {
-  background-color: #1e88e5;
+  background-color: #000000;
   color: white;
   font-weight: 700;
   text-transform: uppercase;
@@ -77,32 +77,43 @@ body, html {
 .courses-list button {
   padding: 12px 25px;
   font-size: 1em;
-  color: white;
-  background: linear-gradient(to right, #36d1dc, #5b86e5);
   border: none;
   border-radius: 50px;
   cursor: pointer;
   transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-  margin-right: 50px; /* רווח בין הכפתורים */
+  margin-right: 50px;
+  background: linear-gradient(to right, #fbffff, #969393);
 
 }
 
-.courses-list button:hover {
-  background: linear-gradient(to right, #5b86e5, #36d1dc); /* הפוך את הכיוון במעבר עכבר */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.courses-list button:active {
-  transform: translateY(3px); /* אפקט לחיצה */
-}
-
-/* Button Styles - Delete Button */
+/* Delete Button - Red */
 .courses-list button.delete {
-  background-color: #e74c3c; /* צבע אדום לכפתור מחיקה */
+  background: linear-gradient(to right, #e74c3c, #c0392b);
+  color: white;
 }
 
 .courses-list button.delete:hover {
-  background-color: #c0392b;
+  background: linear-gradient(to right, #c0392b, #e74c3c);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.courses-list button.delete:active {
+  transform: translateY(3px);
+}
+
+/* Edit Button - Gray */
+.courses-list button.edit {
+  background: #b7b8b9;
+  color: white;
+}
+
+.courses-list button.edit:hover {
+  background: #95a5a6;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.courses-list button.edit:active {
+  transform: translateY(3px);
 }
 
 /* Error Message */

@@ -100,7 +100,7 @@ const WorkshopsList = () => {
               {sortedWorkshops.map((workshop) => (
                 <tr key={workshop._id}>
                   <td>
-                    <button onClick={() => handleEditWorkshop(workshop._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
+                    <button className="edit" onClick={() => handleEditWorkshop(workshop._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
                     <button className="delete" onClick={() => handleDeleteWorkshop(workshop._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}
                   </td>
                   <td>
