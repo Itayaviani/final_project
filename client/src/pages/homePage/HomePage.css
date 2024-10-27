@@ -60,10 +60,30 @@
   border-left: 10px solid #a9cce3;
 }
 
+.homepage-container h4{
+  color: black;
+  display: inline-block; /* כדי שהקו יתאים לאורך הטקסט */
+  position: relative; /* מאפשר הוספת קו תחתון מותאם */
+  font-size: 2em;
+}
+
+
+h4::after {
+  content: ""; /* אלמנט ריק שייצור את הקו */
+  display: block;
+  width: 100%; /* מתאים לאורך הכותרת */
+  height: 2px; /* עובי הקו */
+  background-color: black; /* צבע הקו */
+  position: absolute;
+  bottom: -5px; /* רווח מתחת לכותרת */
+  left: 0;
+}
+
+
 .homepage-container .introduction-section h2 {
   font-size: 2.4rem;
   font-weight: bold;
-  color: #333333;
+  color: #080808;
   text-align: center;
   margin-bottom: 20px;
   text-transform: uppercase;

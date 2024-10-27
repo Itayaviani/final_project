@@ -80,7 +80,7 @@ export default function HomePage({ isAdmin }) {
         </p>
       </div>
 
-      <h2>הפרויקטים שלי</h2>
+      <h4>:הצצה לפרויקטים</h4>
 
       {isAdmin && (
         <div className="add-project-button-container">

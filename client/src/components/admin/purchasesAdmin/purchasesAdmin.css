@@ -57,7 +57,7 @@
 
 .purchases-admin-page .purchases-table th,
 .purchases-admin-page .purchases-table td {
-  text-align: left;
+  text-align: center;
   padding: 15px 25px;
   border-bottom: 1px solid #dfe3e8;
 }

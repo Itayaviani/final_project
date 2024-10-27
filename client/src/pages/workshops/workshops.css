@@ -22,17 +22,14 @@
 
 /* עיצוב עבור כל סדנא */
 .workshop-card {
-  position: relative; /* מיקום יחסי */
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  width: 300px; /* רוחב קבוע לכל קופסה */
-  padding: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.992);
+ position: relative;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgb(0, 0, 0);
+  border-radius: 8px;
+  margin: 10px;
+  width: 300px;
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  overflow: hidden; /* הסתרת פייד חיצוני */
-  z-index: 1; /* מיקום מעל הפייד */
+  background-color: white;
   animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
 }
 
