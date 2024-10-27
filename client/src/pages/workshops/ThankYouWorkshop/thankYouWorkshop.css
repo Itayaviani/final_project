@@ -1,0 +1,36 @@
+.thank-you-container-workshop {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+}
+
+.thank-you-container-workshop h1 {
+    color: #28a745;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.thank-you-container-workshop p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.back-button-workshop {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button-workshop:hover {
+    background-color: #0056b3;
+}

@@ -96,24 +96,16 @@ export default function Workshops({ isAdmin }) {
                   <span className="started-label">סדנה זאת התחילה</span>
                 ) : null}
 
-                {/* הצגת מועד תחילת הסדנה למשתמשים רגילים ואדמינים */}
-                <p className="start-date">
-                  מועד תחילת הסדנה:{" "}
-                  {new Date(workshop.startDate).toLocaleDateString()} 
-                  <br />
-                  שעת תחילת הסדנה: {workshop.startTime} {/* הצגת שעת התחילה */}
-                </p>
-
-                {/* הכפתור נשאר פעיל גם אם הסדנה מלאה או התחילה */}
-                <button
+                  {/* הכפתור נשאר פעיל גם אם הסדנה מלאה או התחילה */}
+                  <button
                   onClick={() => handleDetails(workshop._id)}
                   className="details-button"
                 >
                   פרטים נוספים
                 </button>
 
-                {/* הצגת מספר המשתתפים ותאריך היצירה רק אם המשתמש הוא אדמין */}
-                {isAdmin && (
+                         {/* הצגת מספר המשתתפים ותאריך היצירה רק אם המשתמש הוא אדמין */}
+                         {isAdmin && (
                   <div>
                     <p className="participants">
                       משתתפים בסדנה: {workshop.participants} מתוך{" "}
@@ -125,6 +117,28 @@ export default function Workshops({ isAdmin }) {
                     </p>
                   </div>
                 )}
+                
+                {/* הצגת מועד ושעת תחילת הסדנה לכל המשתמשים */}
+<p className="start-date">
+  מועד תחילת הסדנה:{" "}
+  {workshop.startDate
+    ? new Date(workshop.startDate).toLocaleDateString()
+    : "לא נקבע תאריך"}
+</p>
+<p className="start-time">
+  שעת תחילת הסדנה:{" "}
+  {workshop.startDate
+    ? new Date(workshop.startDate).toLocaleTimeString('he-IL', {
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    : "לא נקבעה שעה"}
+</p>
+
+
+              
+
+       
 
                 {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
                 {isAdmin && (

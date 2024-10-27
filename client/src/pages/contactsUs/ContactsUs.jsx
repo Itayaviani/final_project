@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'; // ייבוא Axios
 import './ContactsUs.css';
 import photo3 from './pictures/photo3.jpg'; // ייבוא התמונה
+import logoTali from './pictures/logoTali-removebg-preview (1).png';
 
 function ContactsUs() {
   const [form, setForm] = useState({
@@ -53,7 +54,7 @@ function ContactsUs() {
           <div className="form-content-with-image">
             <div className="form-fields">
               {/* שורה ראשונה: שם פרטי ושם משפחה */}
-              <div className="form-row">
+              <div className="form-group-container">
                 <div className="form-group">
                   <input
                     type="text"
@@ -125,7 +126,7 @@ function ContactsUs() {
 
             {/* Image Section */}
             <div className="image-container">
-              <img src={photo3} alt="Contact illustration" className="contact-image" />
+              <img src={logoTali} alt="Contact illustration" className="contact-image" />
             </div>
           </div>
         </form>

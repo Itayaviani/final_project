@@ -57,7 +57,7 @@ export default function Register() {
   return (
     <div className="register-wrapper">
       <div className="container-register">
-        <h2 className="title-register">הרשמה</h2>
+        <h2 className="title-register">להרשמה</h2>
         <form onSubmit={handleSubmit} className="form-register">
           <div className="label-input-register">
             <label htmlFor="name"></label>

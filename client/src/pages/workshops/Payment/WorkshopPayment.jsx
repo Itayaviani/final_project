@@ -124,7 +124,8 @@ export default function WorkshopPayment() {
       } else {
         console.log('Purchase successful:', response.data);
         alert('הרכישה בוצעה בהצלחה!');
-        navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
+        navigate('/thank-you-workshop'); // ניתוב לדף תודה לסדנאות לאחר הצלחת התשלום
+
       }
     } catch (error) {
       console.error('Error making purchase:', error);

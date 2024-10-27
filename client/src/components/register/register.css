@@ -51,6 +51,7 @@ body {
   width: 100%;
   margin-bottom: 25px;
   position: relative; /* Relative position for input effects */
+  
 }
 
 .label-input-register input {
@@ -60,6 +61,7 @@ body {
   border-radius: 4px;
   font-size: 16px;
   transition: border-color 0.3s, box-shadow 0.3s; /* Transition for focus effect */
+  text-align: right;
 }
 
 .label-input-register input:focus {

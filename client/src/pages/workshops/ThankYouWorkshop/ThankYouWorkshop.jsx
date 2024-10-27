@@ -1,14 +1,14 @@
 import React from 'react';
-import './thankYou.css';
+import './thankYouWorkshop.css';
 
-export default function ThankYou() {
+export default function ThankYouWorkshop() {
   return (
-    <div className="thank-you-container">
+    <div className="thank-you-container-workshop">
       <h1>תודה על הרכישה!</h1>
       <p>הרכישה בוצעה בהצלחה, מייל עם פרטי הרכישה נשלח אליך.</p>
       <p>אם יש לך שאלות נוספות, ניתן לפנות לשירות הלקוחות שלנו.</p>
-      <button onClick={() => window.location.href = '/courses'} className="back-button">
-        חזרה לקורסים
+      <button onClick={() => window.location.href = '/workshops'} className="back-button-workshop">
+        חזרה לסדנאות
       </button>
     </div>
   );

@@ -10,6 +10,7 @@
   box-sizing: border-box;
 }
 
+
 /* Wrapper to center the PurchasesList */
 .purchases-admin-page .purchases-wrapper {
   display: flex;
@@ -76,6 +77,7 @@
 .purchases-admin-page .purchases-table tr:hover {
   background-color: #e3e9f0;
 }
+
 
 /* Button Styles */
 .purchases-admin-page .filter-buttons {

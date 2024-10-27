@@ -141,25 +141,25 @@ export default function Courses({ isAdmin, userId }) {
                     נפתח בתאריך:{" "}
                     {new Date(course.createdAt).toLocaleDateString()}
                   </p>
-                  <p className="start-date">
-                    מועד תחילת הקורס:{" "}
-                    {course.startDate
-                      ? new Date(course.startDate).toLocaleDateString()
-                      : "לא נקבע תאריך"}
-                  </p>{" "}
-                  {/* מועד תחילת הקורס */}
-                  <p className="start-time">
-                    שעת תחילת הקורס:{" "}
-                    {course.startDate
-                      ? new Date(course.startDate).toLocaleTimeString('he-IL', {
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })
-                      : "לא נקבעה שעה"}
-                  </p>{" "}
-                  {/* שעת תחילת הקורס */}
                 </div>
               )}
+
+              {/* הצגת מועד ושעת תחילת הקורס לכל המשתמשים */}
+              <p className="start-date">
+                מועד תחילת הקורס:{" "}
+                {course.startDate
+                  ? new Date(course.startDate).toLocaleDateString()
+                  : "לא נקבע תאריך"}
+              </p>
+              <p className="start-time">
+                שעת תחילת הקורס:{" "}
+                {course.startDate
+                  ? new Date(course.startDate).toLocaleTimeString('he-IL', {
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })
+                  : "לא נקבעה שעה"}
+              </p>
 
               {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
               {isAdmin && (

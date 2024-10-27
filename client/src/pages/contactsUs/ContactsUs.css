@@ -70,6 +70,13 @@ html, body {
   flex: 0 0 48%; /* שני שדות יופיעו אחד ליד השני */
 }
 
+/* סידור השדה "שם פרטי" בצד ימין ו"השם משפחה" בצד שמאל */
+.form-group-container {
+  display: flex;
+  flex-direction: row-reverse; /* שם פרטי בצד ימין, שם משפחה בצד שמאל */
+  gap: 20px; /* רווח בין השדות */
+}
+
 .form-group.full-width {
   flex: 0 0 100%; /* סיבת פנייה תתפוס את כל הרוחב */
 }

@@ -132,7 +132,7 @@ export default function CoursePayment() {
       } else {
         console.log('Purchase successful:', response.data);
         alert('הרכישה בוצעה בהצלחה!');
-        navigate('/thank-you'); // ניתוב לדף תודה לאחר הצלחת התשלום
+        navigate('/thank-you-course'); // ניתוב לעמוד תודה של קורסים
       }
     } catch (error) {
       console.error('Error making purchase:', error);

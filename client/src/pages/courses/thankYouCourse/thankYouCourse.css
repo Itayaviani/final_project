@@ -1,4 +1,4 @@
-.thank-you-container {
+.thank-you-container-course {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,19 +9,19 @@
     text-align: center;
   }
   
-  h1 {
+  .thank-you-container-course h1 {
     color: #28a745;
     font-size: 2.5rem;
     margin-bottom: 20px;
   }
   
-  p {
+  .thank-you-container-course p {
     font-size: 1.2rem;
     color: #333;
     margin-bottom: 20px;
   }
   
-  .back-button {
+  .back-button-course {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -31,7 +31,7 @@
     transition: background-color 0.3s ease;
   }
   
-  .back-button:hover {
+  .back-button-course:hover {
     background-color: #0056b3;
   }
   

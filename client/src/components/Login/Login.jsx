@@ -48,7 +48,7 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
   return (
     <div className="login-wrapper">
       <div className="container-login">
-        <h2 className="title-login">התחברות</h2>
+        <h2 className="title-login">להתחברות</h2>
         <form onSubmit={onSubmit} className="form-login">
           <div className="label-input-login">
             <label htmlFor="email"></label>

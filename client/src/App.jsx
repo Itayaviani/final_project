@@ -13,13 +13,16 @@ import AddWorkshop from './pages/workshops/add workshop/AddWorkshop';
 import EditWorkshop from './pages/workshops/edit workshop/EditWorkshop';
 import WorkshopDetail from './pages/workshops/workshop detail/WorkshopDetail';
 import WorkshopPayment from './pages/workshops/Payment/WorkshopPayment';
-import WorkshopsList from './components/admin/workshops/WorkshopsList'; 
+import WorkshopsList from './components/admin/workshops/WorkshopsList';
+import ThankYouWorkshop from './pages/workshops/ThankYouWorkshop/ThankYouWorkshop';
+
 import Courses from './pages/courses/Courses';
 import AddCourse from './pages/courses/add course/AddCourse';
 import EditCourse from './pages/courses/Edit Course/EditCourse';
 import CourseDetails from './pages/courses/Course Details/CourseDetails';
 import CoursePayment from './pages/courses/Payment/CoursePayment';
-import ThankYou from './pages/courses/thankYou/ThankYou';
+import ThankYouCourse from './pages/courses/thankYouCourse/ThankYouCourse';
+
 import PersonalProcess from './pages/personalProcess/PersonalProcess';
 import Header from './components/header/Header';
 import AdminPanel from './components/admin/AdminPanel';
@@ -109,7 +112,7 @@ function App() {
           <Route path="/edit-course/:courseId" element={<EditCourse />} />
           <Route path="/course-details/:courseId" element={<CourseDetails />} />
           <Route path="/payment/courses/:courseId" element={<CoursePayment />} />
-          <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/thank-you-course" element={<ThankYouCourse />} />
           
           {/* ניהול סדנאות */}
           <Route path='/workshops' element={<Workshops workshops={workshops} isAdmin={isAdmin} />} />
@@ -118,6 +121,7 @@ function App() {
           <Route path="/workshop-details/:workshopId" element={<WorkshopDetail />} />
           <Route path="/payment/workshops/:workshopId" element={<WorkshopPayment />} />
           <Route path="/admin/workshopsList" element={<WorkshopsList />} /> 
+          <Route path="/thank-you-workshop" element={<ThankYouWorkshop />} />
 
           {/* דפים נוספים */}
           <Route path='/personalProcess' element={<PersonalProcess />} />
