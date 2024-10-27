@@ -89,13 +89,13 @@
 }
 
 .navbar-item-login {
-  background: #0288d1;
-  color: #ffffff;
+  background: linear-gradient(to right, #fbffff, #969393);
+  color: #060606;
   border-radius: 20px;
   padding: 10px 25px;
   margin: 0 15px;
   position: relative;
-  border: 2px solid #0288d1;
+  border: 2px solid #000000;
   transition: all 0.3s ease;
 }
 

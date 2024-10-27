@@ -12,33 +12,34 @@ html, body {
     min-height: 100vh;
     background: linear-gradient(135deg, #d6eaf8, #e8f6f3);
     font-family: 'Roboto', sans-serif;
-    color: #2d3e50;
+    color: #000000;
     overflow-x: hidden;
-    overflow-y: auto; /* אפשרות לגלילה אנכית */
+    overflow-y: auto;
     line-height: 1.8;
     animation: fadeIn 1s ease-in-out;
     box-sizing: border-box;
 }
-
 
 /* כותרת ולוגו */
 .header {
     background-color: #a9cce3;
     text-align: center;
     padding: 60px 0;
-    color: #fff;
+    color: #000000;
     position: sticky;
     top: 0;
     z-index: 10;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+
 .logo {
     font-size: 64px;
     margin: 0;
     letter-spacing: 2px;
     font-weight: 700;
-    color: #154360;
+    color: #000000;
 }
+
 .subtitle {
     font-size: 24px;
     margin-top: 10px;
@@ -55,7 +56,7 @@ html, body {
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    animation: slideIn 1s ease-in-out; /* שונה ל-1 שניה */
+    animation: slideIn 1s ease-in-out;
     border-left: 10px solid #a9cce3;
 }
 
@@ -67,20 +68,24 @@ html, body {
     gap: 50px;
     flex-wrap: wrap;
 }
+
 .text-content {
     flex: 1;
     padding: 20px;
 }
+
 .image-content {
     flex: 1;
     text-align: center;
 }
+
 .personal-image {
     max-width: 80%;
     border-radius: 20px;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
+
 .personal-image:hover {
     transform: scale(1.08);
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
@@ -88,7 +93,7 @@ html, body {
 
 /* עיצוב ספציפי לתמונה השנייה */
 .image-content:nth-child(2) .personal-image {
-    max-width: 70%; /* התמונה השנייה תהיה קטנה ב-10% */
+    max-width: 70%;
 }
 
 /* רשימות */
@@ -96,12 +101,14 @@ ul {
     padding: 0;
     list-style: none;
 }
+
 li {
     margin-bottom: 15px;
     font-size: 20px;
     position: relative;
     padding-left: 30px;
 }
+
 li::before {
     content: '⭐';
     position: absolute;
@@ -122,6 +129,7 @@ li::before {
     border-radius: 30px;
     transition: background 0.4s ease, transform 0.3s ease;
 }
+
 .contact-button:hover {
     background-color: #1abc9c;
     transform: scale(1.1);
@@ -132,18 +140,18 @@ li::before {
     background-color: #a9cce3;
     color: #1c2833;
     text-align: center;
-    padding: 60px 20px;
-    margin-top: 80px;
+    padding: 10px 20px;
+    margin-bottom: 0px;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(15, 14, 14, 0.15);
 }
+
 .footer h2 {
     font-size: 36px;
     margin-bottom: 20px;
     font-weight: 600;
 }
 
-/* עיצוב קבוע עם אייקונים צבעוניים */
 .contact-list {
     display: flex;
     justify-content: center;
@@ -151,6 +159,8 @@ li::before {
     margin-top: 30px;
     flex-wrap: wrap;
 }
+
+/* עיצוב כרטיסי קשר */
 .contact-item {
     background: linear-gradient(135deg, #e8f8f5, #d1f2eb);
     padding: 20px 30px;
@@ -160,39 +170,67 @@ li::before {
     gap: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     cursor: pointer;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.94);
 }
+
 .contact-item:hover {
     transform: scale(1.1);
     background: linear-gradient(135deg, #d1f2eb, #a2d9ce);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.947);
 }
+
+/* עיצוב אייקונים */
 .contact-icon {
     font-size: 40px;
     transform: rotate(0deg) scale(1);
     transition: transform 0.3s ease;
 }
+
+/* צבעי אייקונים לכל פלטפורמה */
 .contact-item.facebook .contact-icon {
     color: #4267B2;
 }
+
 .contact-item.instagram .contact-icon {
     color: #E1306C;
 }
+
 .contact-item.whatsapp .contact-icon {
     color: #25D366;
 }
+
 .contact-item.mail .contact-icon {
     color: #D44638;
 }
+
+/* עיצוב הקישורים */
 .contact-item a {
-    color: #2d3e50;
+    color: #0c0c0c;
     font-size: 22px;
     text-decoration: none;
     font-weight: 600;
 }
+
 .contact-item a:hover {
     color: #1a1a1a;
     text-decoration: underline;
+}
+
+/* עיצוב הטקסט של פלטפורמות */
+.contact-item p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.platform-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.platform-address {
+    font-style: italic;
+    color: #666;
 }
 
 /* אנימציות */
@@ -204,6 +242,7 @@ li::before {
         opacity: 1;
     }
 }
+
 @keyframes slideIn {
     0% {
         transform: translateY(50px);

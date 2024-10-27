@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // ייבוא Axios
 import './ContactsUs.css';
-import photo4 from './pictures/photo4.jpg'; // ייבוא התמונה
+import photo3 from './pictures/photo3.jpg'; // ייבוא התמונה
 
 function ContactsUs() {
   const [form, setForm] = useState({
@@ -125,17 +125,17 @@ function ContactsUs() {
 
             {/* Image Section */}
             <div className="image-container">
-              <img src={photo4} alt="Contact illustration" className="contact-image" />
+              <img src={photo3} alt="Contact illustration" className="contact-image" />
             </div>
           </div>
         </form>
       </div>
 
       <div className="additional-info">
-        <h2>בואו נדבר - אני כאן בשבילכם!</h2>
+        <h2>!בואו נדבר - אני כאן בשבילכם</h2>
         <p>
-          זקוקים למידע נוסף על תהליך אישי שמתאים לכם? מתעניינים בקורס או סדנה ורוצים לקבל פרטים נוספים? 
-          יש לכם שאלות בנוגע לרכישה או תהליך הרשמה - אני זמינה כאן לכל צורך!
+          !זקוקים למידע נוסף על תהליך אישי שמתאים לכם? מתעניינים בקורס או סדנה ורוצים לקבל פרטים נוספים? 
+          יש לכם שאלות בנוגע לרכישה או תהליך הרשמה - אני זמינה כאן לכל צורך
         </p>
       </div>
     </div>

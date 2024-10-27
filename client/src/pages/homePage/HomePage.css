@@ -37,7 +37,7 @@
   margin: 0;
   letter-spacing: 2px;
   font-weight: 700;
-  color: #154360;
+  color: #060606;
 }
 
 .homepage-container .subtitle {
@@ -85,7 +85,7 @@
 .homepage-container .project-card {
   position: relative;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgb(0, 0, 0);
   border-radius: 8px;
   margin: 10px;
   width: 300px;
@@ -94,9 +94,26 @@
   animation: fadeInUp 1s ease-in-out;
 }
 
+.homepage-container .project-card::before {
+  content: ''; /* תוכן ריק לפייד */
+  position: absolute; /* מיקום מוחלט */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* פייד אפור */
+  border-radius: 10px;
+  z-index: -1; /* פייד מאחורי הכרטיס */
+}
+
+.homepage-container .project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgb(0, 0, 0);
+}
+
 .homepage-container .project-card h3 {
   font-size: 1.6rem;
-  color: #0c0c0c;
+  color: #000000;
   margin-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -111,7 +128,7 @@
 
 .homepage-container .project-card p {
   font-size: 1rem;
-  color: #0a0a0a;
+  color: #000000;
   margin-bottom: 10px;
   line-height: 1.5;
 }
@@ -169,8 +186,8 @@
   background-color: #a9cce3;
   color: #1c2833;
   text-align: center;
-  padding: 60px 20px;
-  margin-top: 80px;
+  padding: 10px 20px;
+  margin-bottom: 0px;
   border-radius: 20px;
   box-shadow: 0 8px 16px rgba(15, 14, 14, 0.15);
 }
@@ -189,6 +206,7 @@
   flex-wrap: wrap;
 }
 
+/* עיצוב כרטיסי קשר */
 .homepage-container .contact-item {
   background: linear-gradient(135deg, #e8f8f5, #d1f2eb);
   padding: 20px 30px;
@@ -198,23 +216,39 @@
   gap: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   cursor: pointer;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgb(0, 0, 0);
 }
 
 .homepage-container .contact-item:hover {
   transform: scale(1.1);
   background: linear-gradient(135deg, #d1f2eb, #a2d9ce);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.984);
 }
 
+/* עיצוב אייקונים */
 .homepage-container .contact-icon {
   font-size: 40px;
   transform: rotate(0deg) scale(1);
   transition: transform 0.3s ease;
 }
 
+/* צבעי אייקונים לכל פלטפורמה */
+.homepage-container .contact-item.facebook .contact-icon {
+  color: #4267B2;
+}
+.homepage-container .contact-item.instagram .contact-icon {
+  color: #E1306C;
+}
+.homepage-container .contact-item.whatsapp .contact-icon {
+  color: #25D366;
+}
+.homepage-container .contact-item.mail .contact-icon {
+  color: #D44638;
+}
+
+/* עיצוב הקישורים */
 .homepage-container .contact-item a {
-  color: #2d3e50;
+  color: #0c0c0c;
   font-size: 22px;
   text-decoration: none;
   font-weight: 600;
@@ -225,38 +259,98 @@
   text-decoration: underline;
 }
 
+/* עיצוב הטקסט של פלטפורמות */
+.homepage-container .contact-item p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* סגנון שם הפלטפורמה */
+.homepage-container .contact-item .platform-name {
+  font-weight: bold;
+  color: #333;
+}
+
+/* סגנון הכתובת (כגון אימייל או קישור) */
+.homepage-container .contact-item .platform-address {
+  font-style: italic;
+  color: #666;
+}
+
+/* עיצוב פעולות בכרטיס */
+.homepage-container .project-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.homepage-container .edit-button,
+.homepage-container .delete-button {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgb(0, 0, 0);
+}
+
+.homepage-container .edit-button {
+  background-color: #6a6b6a;
+  color: #ffffff;
+}
+
+.homepage-container .edit-button:hover {
+  background-color: #757575;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgb(0, 0, 0);
+}
+
+.homepage-container .delete-button {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.homepage-container .delete-button:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgb(0, 0, 0);
+}
+
 /* אנימציות */
 @keyframes fadeIn {
   0% {
-      opacity: 0;
+    opacity: 0;
   }
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
 @keyframes slideIn {
   0% {
-      transform: translateY(50px);
-      opacity: 0;
+    transform: translateY(50px);
+    opacity: 0;
   }
   100% {
-      transform: translateY(0);
-      opacity: 1;
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
 /* רספונסיביות */
 @media (max-width: 768px) {
   .homepage-container .content-layout {
-      flex-direction: column;
-      align-items: center;
+    flex-direction: column;
+    align-items: center;
   }
   .homepage-container .project-card img {
-      max-width: 100%;
+    max-width: 100%;
   }
   .homepage-container .contact-list {
-      flex-direction: column;
-      gap: 20px;
+    flex-direction: column;
+    gap: 20px;
   }
 }

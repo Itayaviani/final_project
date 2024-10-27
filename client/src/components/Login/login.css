@@ -23,7 +23,7 @@ body {
   background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
   padding: 50px;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* Deeper shadow for depth */
+  box-shadow: 0 8px 30px rgb(0, 0, 0); /* Deeper shadow for depth */
   max-width: 400px;
   width: 100%;
   text-align: center;
@@ -34,7 +34,7 @@ body {
 .title-login {
   margin-bottom: 30px;
   font-size: 28px; /* Slightly larger font */
-  color: #333;
+  color: #000000;
   font-weight: bold;
   text-transform: uppercase; /* Uppercase for emphasis */
   letter-spacing: 1.5px; /* Spacing between letters */

@@ -25,7 +25,7 @@ const sendOrderConfirmationEmail = (email, fullName, serviceName, serviceType, s
     hour12: false 
   });
 
-  const subject = `אישור רכישה עבור ${serviceType === 'course' ? 'קורס' : 'סדנה'} ${serviceName}`;
+  const subject = `אישור רכישה עבור ${serviceType === 'course' ? 'קורס' : 'סדנת'} ${serviceName}`;
 
   const text = `
   שלום ${fullName},

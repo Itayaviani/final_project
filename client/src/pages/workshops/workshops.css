@@ -23,12 +23,12 @@
 /* עיצוב עבור כל סדנא */
 .workshop-card {
   position: relative; /* מיקום יחסי */
-  background-color: #ffffff;
+  background-color: white;
   border: 1px solid #ddd;
   border-radius: 10px;
   width: 300px; /* רוחב קבוע לכל קופסה */
   padding: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.992);
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
   overflow: hidden; /* הסתרת פייד חיצוני */
