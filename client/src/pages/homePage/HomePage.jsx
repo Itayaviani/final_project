@@ -48,7 +48,7 @@ export default function HomePage({ isAdmin }) {
     <div className="homepage-container">
       {/* כותרת ולוגו בדף הבית */}
       <header className="header">
-        <h1 className="logo">דף הבית - טלי גל</h1>
+        <h1 className="logo">קצת עלי ועל הפרויקטים שלי</h1>
         <p className="subtitle">ליווי אישי לצמיחה והגשמה עצמית</p>
       </header>
 

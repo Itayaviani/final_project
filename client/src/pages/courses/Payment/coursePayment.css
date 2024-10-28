@@ -19,7 +19,7 @@
 }
 
 .card-type-button.selected {
-  border: 2px solid #28a745;
+  border: 2px solid #1160d6; /* כחול כהה יותר כאשר הכפתור נבחר */
   border-radius: 8px;
 }
 
@@ -29,4 +29,68 @@
   font-size: 0.9rem;
   margin-top: 5px;
   text-align: center;
+}
+
+/* עיצוב קבוצת שדות טופס */
+.form-group {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse; /* הופך את הסדר כך שה-label מימין וה-input משמאל */
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  text-align: right;
+  width: 40%; /* קביעת רוחב קבוע לתווית */
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%; /* רוחב מלא לשדה */
+  max-width: 250px; /* מגביל את הרוחב המרבי של השדות */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* עיצוב כפתור הרכישה */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff; /* צבע כחול לכפתור */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* צל לכפתור */
+}
+
+.submit-button:hover {
+  background-color: #0056b3; /* כחול כהה יותר כשמעבירים עכבר */
+  transform: translateY(-2px); /* הזזת הכפתור למעלה בעת ריחוף */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* צל נוסף בעת ריחוף */
+}
+
+.submit-button:active {
+  background-color: #004085; /* כחול כהה יותר בעת לחיצה */
+  transform: translateY(1px); /* הורדה קלה של הכפתור בעת לחיצה */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* צל פחות חזק בעת לחיצה */
+}
+
+/* הודעת שגיאה כללית */
+.error {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.success {
+  color: #28a745;
+  font-size: 0.9rem;
+  margin-left: 5px;
 }
