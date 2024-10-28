@@ -1,128 +1,111 @@
-/* General body styling */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #e0eafc, #cfdef3); /* Soft gradient background */
-  overflow: hidden;
-  padding-top: 60px; /* Leave space for Navbar */
+/* General styling for the Register page */
+.register-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  padding-top: 60px;
 }
 
-/* Wrapper to center the Register component */
-.register-wrapper {
-  display: flex; /* Flexbox to center content */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  min-height: 100vh; /* Full viewport height to center vertically */
-  width: 100%; /* Full width to ensure centering */
-  position: relative; /* Ensure it stays positioned correctly in flex */
-}
-
-/* Container styling for registration form */
-.container-register {
-  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
-  padding: 50px;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgb(0, 0, 0); /* Deeper shadow for depth */
-  max-width: 450px;
+.register-page-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px; /* Reduced padding */
+  border-radius: 10px; /* Slightly smaller border radius */
+  box-shadow: 0 8px 25px rgb(0, 0, 0); /* Reduced shadow */
+  max-width: 400px; /* Reduced max-width */
   width: 100%;
   text-align: center;
-  animation: fadeIn 1s ease-out; /* Fade-in animation */
+  animation: fadeIn 1s ease-out;
 }
 
-/* Title styling */
-.title-register {
-  margin-bottom: 30px;
-  font-size: 28px; /* Slightly larger font */
+.register-page-title {
+  margin-bottom: 25px;
+  font-size: 26px; /* Slightly reduced font size */
   color: #000000;
   font-weight: bold;
-  text-transform: uppercase; /* Uppercase for emphasis */
-  letter-spacing: 1.5px; /* Spacing between letters */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
-/* Form styling */
-.form-register {
+.register-page-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.label-input-register {
+.register-page-input-group {
   width: 100%;
-  margin-bottom: 25px;
-  position: relative; /* Relative position for input effects */
-  
+  margin-bottom: 20px; /* Reduced spacing */
+  position: relative;
 }
 
-.label-input-register input {
+.register-page-input-group input {
   width: 100%;
-  padding: 12px;
+  padding: 10px; /* Reduced padding */
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 16px;
-  transition: border-color 0.3s, box-shadow 0.3s; /* Transition for focus effect */
+  font-size: 15px; /* Slightly smaller font size */
+  transition: border-color 0.3s, box-shadow 0.3s;
   text-align: right;
 }
 
-.label-input-register input:focus {
+.register-page-input-group input:focus {
   border-color: #007bff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Blue glow effect on focus */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
   outline: none;
 }
 
-/* Button styling */
-.btn-register {
-  background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient button */
+.register-page-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
   color: white;
-  padding: 12px 24px; /* Increased padding for larger button */
+  padding: 10px 20px; /* Reduced padding */
   border: none;
-  border-radius: 25px; /* Rounded button */
-  font-size: 18px;
+  border-radius: 22px; /* Slightly smaller border radius */
+  font-size: 17px; /* Slightly reduced font size */
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
-.btn-register:hover {
-  background: linear-gradient(135deg, #0056b3, #004494); /* Darker gradient on hover */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+.register-page-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004494);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Reduced shadow */
 }
 
-.btn-register:active {
-  transform: scale(0.96); /* Button press effect */
+.register-page-btn:active {
+  transform: scale(0.96);
 }
 
-/* Error message styling */
-.error-message {
-  color: #d9534f; /* Bootstrap red for consistency */
+.register-page-error {
+  color: #d9534f;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 15px; /* Reduced font size */
   margin-top: 15px;
-  background-color: #f8d7da; /* Light red background */
-  padding: 10px;
-  border-radius: 5px;
+  background-color: #f8d7da;
+  padding: 8px; /* Reduced padding */
+  border-radius: 4px; /* Slightly smaller border radius */
   border: 1px solid #f5c6cb;
-  width: calc(100% - 20px); /* Adjust width */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow for emphasis */
-  animation: shake 0.3s; /* Shake animation on error */
+  width: calc(100% - 20px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+  animation: shake 0.3s;
 }
 
-/* Navigation to login */
-.navToLogin {
-  margin-top: 25px;
+.register-page-navToLogin {
+  margin-top: 20px;
 }
 
-.register-link {
+.register-page-link {
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s;
 }
 
-.register-link:hover {
+.register-page-link:hover {
   color: #0056b3;
 }
 
-/* Keyframes for fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -134,7 +117,6 @@ body {
   }
 }
 
-/* Keyframes for shake animation */
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);
