@@ -54,7 +54,6 @@ export default function Workshops({ isAdmin }) {
 
   return (
     <div>
-      <h1>סדנאות</h1>
 
       {/* הצגת כפתור הוספת הסדנא רק אם המשתמש הוא אדמין */}
       {isAdmin && (

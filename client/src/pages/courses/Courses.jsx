@@ -85,8 +85,7 @@ export default function Courses({ isAdmin, userId }) {
 
   return (
     <div>
-      <h1>קורסים</h1>
-
+      
       {/* הצגת כפתור הוספת הקורס רק אם המשתמש הוא אדמין */}
       {isAdmin && (
         <div className="add-course-button-container">

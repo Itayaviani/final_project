@@ -18,7 +18,7 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 1.5px;
   animation: fadeIn 1s ease-in-out; /* אנימציית Fade-in */
-  margin-bottom: -20px;
+  margin-bottom: 20px;
 }
 
 /* עיצוב לדף ה-ContactsUs בלבד */
@@ -196,5 +196,73 @@ html, body {
   }
   100% {
     opacity: 1;
+  }
+}
+
+/* רספונסיביות */
+@media (max-width: 1200px) {
+  .page-title {
+    font-size: 2.2rem;
+  }
+  .contacts-us-container {
+    padding: 15px;
+  }
+  .image-container {
+    width: 200px;
+  }
+  .form-group input, .form-group textarea {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  .submit-btn {
+    padding: 12px 15px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+  }
+  .contacts-us-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .image-container {
+    position: static;
+    width: 180px;
+    margin-bottom: 20px;
+  }
+  .form-row {
+    flex-direction: column;
+  }
+  .form-group {
+    flex: 0 0 100%;
+  }
+  .submit-btn {
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  .contacts-us-container {
+    padding: 10px;
+  }
+  .form-group input, .form-group textarea {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  .submit-btn {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+  .map-container, .waze-map {
+    width: 100%;
+    height: auto;
   }
 }

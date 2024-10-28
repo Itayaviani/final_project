@@ -47,11 +47,11 @@ const EditUser = ({ setUsername }) => {
       localStorage.setItem('username', user.name);
       setUsername(user.name);
 
-      setSuccess('User details updated successfully!');
+      setSuccess('!פרטי המשתמש עודכנו בהצלחה');
       setError('');
       setTimeout(() => {
         navigate('/profile');
-      }, 1000);
+      }, 2000);
 
     } catch (err) {
       setError('Error updating user details');

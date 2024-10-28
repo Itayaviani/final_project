@@ -37,7 +37,7 @@
   padding: 20px;
   box-shadow: 0 4px 8px rgb(0, 0, 0);
   border-radius: 8px;
-  margin: 10px;
+  margin-top: 70px;
   width: 300px;
   text-align: center;
   background-color: white;
@@ -118,6 +118,7 @@
 }
 
 .add-course-button {
+  margin-top: 80px;
   display: inline-block;
   padding: 12px 24px;
   background-color: #007bff;

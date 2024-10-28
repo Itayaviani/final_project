@@ -12,9 +12,9 @@
 
 /* עיצוב עבור הקונטיינר הכללי של הסדנאות */
 .workshops-container {
-  display: flex; /* סידור אופקי של הסדנאות */
+  display: flex; /* סידור אופקי של הקורסים */
   flex-wrap: wrap; /* מעבר לשורה הבאה במקרה של חוסר מקום */
-  gap: 20px; /* רווח בין הסדנאות */
+  gap: 20px; /* רווח בין הקורסים */
   padding: 20px; /* רווח פנימי של הקונטיינר */
   justify-content: center; /* מרכוז התוכן */
   animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
@@ -22,11 +22,11 @@
 
 /* עיצוב עבור כל סדנא */
 .workshop-card {
- position: relative;
+  position: relative;
   padding: 20px;
   box-shadow: 0 4px 8px rgb(0, 0, 0);
   border-radius: 8px;
-  margin: 10px;
+  margin-top: 70px;
   width: 300px;
   text-align: center;
   background-color: white;
@@ -43,7 +43,7 @@
   height: 100%;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* פייד אפור יותר ברור */
   border-radius: 10px;
-  z-index: -1; /* פייד מאחורי הסדנא */
+  z-index: -1; /* פייד מאחורי הקורס */
 }
 
 .workshop-card:hover {
@@ -121,6 +121,7 @@
 }
 
 .add-workshop-button {
+  margin-top: 80px;
   display: inline-block;
   padding: 12px 24px;
   background-color: #007bff;
