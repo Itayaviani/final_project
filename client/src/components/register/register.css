@@ -11,10 +11,10 @@
 
 .register-page-container {
   background: rgba(255, 255, 255, 0.9);
-  padding: 40px; /* Reduced padding */
-  border-radius: 10px; /* Slightly smaller border radius */
-  box-shadow: 0 8px 25px rgb(0, 0, 0); /* Reduced shadow */
-  max-width: 400px; /* Reduced max-width */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgb(0, 0, 0);
+  max-width: 400px;
   width: 100%;
   text-align: center;
   animation: fadeIn 1s ease-out;
@@ -22,7 +22,7 @@
 
 .register-page-title {
   margin-bottom: 25px;
-  font-size: 26px; /* Slightly reduced font size */
+  font-size: 26px;
   color: #000000;
   font-weight: bold;
   text-transform: uppercase;
@@ -37,16 +37,16 @@
 
 .register-page-input-group {
   width: 100%;
-  margin-bottom: 20px; /* Reduced spacing */
+  margin-bottom: 20px;
   position: relative;
 }
 
 .register-page-input-group input {
   width: 100%;
-  padding: 10px; /* Reduced padding */
+  padding: 10px 10px 10px 35px; /* מרווח לאייקון */
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 15px; /* Slightly smaller font size */
+  font-size: 15px;
   transition: border-color 0.3s, box-shadow 0.3s;
   text-align: right;
 }
@@ -57,20 +57,29 @@
   outline: none;
 }
 
+.register-page-input-group .icon {
+  position: absolute;
+  left: 20px; /* מיקום האייקון מימין */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  font-size: 18px;
+}
+
 .register-page-btn {
   background: linear-gradient(135deg, #007bff, #0056b3);
   color: white;
-  padding: 10px 20px; /* Reduced padding */
+  padding: 10px 20px;
   border: none;
-  border-radius: 22px; /* Slightly smaller border radius */
-  font-size: 17px; /* Slightly reduced font size */
+  border-radius: 22px;
+  font-size: 17px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .register-page-btn:hover {
   background: linear-gradient(135deg, #0056b3, #004494);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Reduced shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .register-page-btn:active {
@@ -80,14 +89,14 @@
 .register-page-error {
   color: #d9534f;
   font-weight: bold;
-  font-size: 15px; /* Reduced font size */
+  font-size: 15px;
   margin-top: 15px;
   background-color: #f8d7da;
-  padding: 8px; /* Reduced padding */
-  border-radius: 4px; /* Slightly smaller border radius */
+  padding: 8px;
+  border-radius: 4px;
   border: 1px solid #f5c6cb;
   width: calc(100% - 20px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   animation: shake 0.3s;
 }
 

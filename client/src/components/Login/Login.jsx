@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import "./login.css";
 
 export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
@@ -51,7 +52,7 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
         <h2 className="title-login">להתחברות</h2>
         <form onSubmit={onSubmit} className="form-login">
           <div className="label-input-login">
-            <label htmlFor="email"></label>
+            <span className="icon"><FaEnvelope /></span>
             <input
               type="email"
               name="email"
@@ -61,7 +62,7 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
             />
           </div>
           <div className="label-input-login">
-            <label htmlFor="password"></label>
+            <span className="icon"><FaLock /></span>
             <input
               type="password"
               name="password"

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FaUser, FaPhone, FaEnvelope, FaLock } from "react-icons/fa";
 import "./register.css";
 
 export default function Register() {
@@ -26,10 +27,10 @@ export default function Register() {
         "http://localhost:3000/api/v1/users/register",
         inputData
       );
-      console.log('Registration successful:', response.data);
+      console.log("Registration successful:", response.data);
 
-      alert('ההרשמה בוצעה בהצלחה, ברוך/ה הבא/ה!');
-      
+      alert("ההרשמה בוצעה בהצלחה, ברוך/ה הבא/ה!");
+
       setInputData({
         name: "",
         phone: "",
@@ -37,10 +38,9 @@ export default function Register() {
         password: ""
       });
 
-      navigate('/login');
-
+      navigate("/login");
     } catch (error) {
-      const serverMessage = error.response?.data?.message || 'ההרשמה נכשלה, אנא נסה/י מחדש.';
+      const serverMessage = error.response?.data?.message || "ההרשמה נכשלה, אנא נסה/י מחדש.";
       setErrorMessage(serverMessage);
       alert(serverMessage);
     }
@@ -52,7 +52,7 @@ export default function Register() {
         <h2 className="register-page-title">להרשמה</h2>
         <form onSubmit={handleSubmit} className="register-page-form">
           <div className="register-page-input-group">
-            <label htmlFor="name"></label>
+            <span className="icon"><FaUser /></span>
             <input
               type="text"
               name="name"
@@ -63,7 +63,7 @@ export default function Register() {
             />
           </div>
           <div className="register-page-input-group">
-            <label htmlFor="phone"></label>
+            <span className="icon"><FaPhone /></span>
             <input
               type="text"
               name="phone"
@@ -74,7 +74,7 @@ export default function Register() {
             />
           </div>
           <div className="register-page-input-group">
-            <label htmlFor="email"></label>
+            <span className="icon"><FaEnvelope /></span>
             <input
               type="email"
               name="email"
@@ -85,7 +85,7 @@ export default function Register() {
             />
           </div>
           <div className="register-page-input-group">
-            <label htmlFor="password"></label>
+            <span className="icon"><FaLock /></span>
             <input
               type="password"
               name="password"
@@ -99,7 +99,7 @@ export default function Register() {
         </form>
 
         {errorMessage && <p className="register-page-error">{errorMessage}</p>}
-        
+
         <div className="register-page-navToLogin">
           <p className="register-page-link">
             כבר רשום/ה? <Link to="/login">להתחברות</Link>
