@@ -66,6 +66,7 @@
     background-color: #f9f9f9;
     transition: all 0.3s ease;
     box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.05);
+    
   }
   
   .form-group input:focus {
@@ -99,7 +100,7 @@
   }
   
   .submit-button {
-    background: linear-gradient(135deg, #28a745, #218838);
+    background: linear-gradient(135deg, #056ef8, #0b73eb);
     color: white;
     padding: 18px 35px;
     font-size: 1.4em;
@@ -107,7 +108,7 @@
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(40, 167, 69, 0.4);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     text-transform: uppercase;
     letter-spacing: 2px;
   }
@@ -119,8 +120,8 @@
   }
   
   .submit-button:hover:enabled {
-    background: linear-gradient(135deg, #218838, #1e7e34);
-    box-shadow: 0 12px 25px rgba(40, 167, 69, 0.6);
+    background: linear-gradient(135deg, #0463d7, #083ae0);
+    box-shadow: 0 12px 25px rgb(7, 7, 7);
     transform: translateY(-4px);
   }
   

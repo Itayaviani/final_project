@@ -1,45 +1,129 @@
+/* עיצוב למיכל פרטי הקורס */
 .course-details-container {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 1550px;
+  margin: 60px auto;
+  padding: 50px;
+  background: linear-gradient(145deg, #e3e3e3, #ffffff);
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgb(0, 0, 0);
   text-align: center;
+  font-family: 'Roboto', sans-serif;
+  transition: all 0.4s ease;
 }
 
+/* כותרת הקורס */
 .course-details-container h1 {
-  font-size: 2rem;
-  margin-bottom: 20px;
+  font-size: 2.5em;
+  color: #000000;
+  font-weight: bold;
+  margin-bottom: 30px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  position: relative;
 }
 
-.course-details-container img {
-  max-width: 100%;
+.course-details-container h1::after {
+  content: '';
+  width: 120px;
+  height: 4px;
+  display: block;
+  margin: 12px auto;
+  border-radius: 2px;
+}
+
+/* עיצוב תמונה עם אפקט זום וצל */
+.course-image {
+  width: 100%;
+  max-width: 800px;
+  max-height: 500px;
   height: auto;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0 10px 25px rgb(144, 143, 143);
+}
+
+.course-image:hover {
+  transform: scale(1.08);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* תיבת טקסט עבור כל מקטע של 200 מילים */
+.course-text-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+  text-align: right;
+}
+
+.course-text-box {
+  background: #f4f9ff;
+  padding: 20px;
+  border: 1px solid #d1e7ff;
   border-radius: 10px;
-  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgb(63, 62, 62);
 }
 
-.course-details-container p {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
+.course-text-box p {
+  font-size: 1.3em;
+  color: #040404;
+  line-height: 1.6;
+  margin: 0;
 }
 
-.purchase-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #28a745; /* צבע הכפתור */
-  color: #ffffff;
-  border: none;
-  border-radius: 50px; /* פינות עגולות יותר */
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+/* עיצוב מחיר */
+.course-details-container p:last-of-type {
+  font-size: 1.5em;
+  color: #010101;
+  font-weight: bold;
   margin-top: 15px;
 }
 
+/* כפתור רכישה מרשים עם אנימציה */
+.purchase-button {
+  padding: 16px 40px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(145deg, #007bff, #0056b3);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
 .purchase-button:hover {
-  background-color: #218838;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* צל נוסף בכפתור */
+  background: linear-gradient(145deg, #0056b3, #003f87);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+.purchase-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* אפקטי ריחוף ומעבר */
+.course-details-container:hover {
+  transform: scale(1.01);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 600px) {
+  .course-details-container {
+    padding: 25px;
+  }
+
+  .course-details-container h1 {
+    font-size: 2em;
+  }
+
+  .purchase-button {
+    padding: 12px 28px;
+    font-size: 1em;
+  }
 }

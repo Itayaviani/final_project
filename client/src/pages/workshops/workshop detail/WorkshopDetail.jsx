@@ -4,9 +4,9 @@ import axios from 'axios';
 import './WorkshopDetail.css';
 
 export default function WorkshopDetail() {
-  const { workshopId } = useParams(); // שימוש ב-useParams לקבלת ה-workshopId מהנתיב
+  const { workshopId } = useParams();
   const [workshop, setWorkshop] = useState(null);
-  const navigate = useNavigate(); // שימוש ב-useNavigate לניווט בין דפים
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchWorkshop = async () => {
@@ -21,14 +21,29 @@ export default function WorkshopDetail() {
     fetchWorkshop();
   }, [workshopId]);
 
-  // פונקציה לניתוב לעמוד התשלום
   const handlePurchase = () => {
     navigate(`/payment/workshops/${workshopId}`);
+  };
+
+  // פונקציה לחלוקה לפסקאות של 200 מילים עם סינון פסקאות ריקות
+  const splitTextIntoParagraphs = (text) => {
+    const words = text.split(' ');
+    const paragraphs = [];
+    for (let i = 0; i < words.length; i += 200) {
+      const paragraph = words.slice(i, i + 200).join(' ').trim();
+      if (paragraph) { // רק אם הפסקה לא ריקה, נוסיף אותה לרשימה
+        paragraphs.push(paragraph);
+      }
+    }
+    return paragraphs;
   };
 
   if (!workshop) {
     return <p>טוען פרטים...</p>;
   }
+
+  const descriptionParagraphs = splitTextIntoParagraphs(workshop.description || '');
+  const detailsParagraphs = splitTextIntoParagraphs(workshop.workshopDetails || '');
 
   return (
     <div className="workshop-details-container">
@@ -36,11 +51,27 @@ export default function WorkshopDetail() {
       {workshop.image && (
         <img src={`http://localhost:3000/${workshop.image}`} alt={workshop.name} className="workshop-image" />
       )}
-      <p>{workshop.description}</p> {/* הצגת תיאור הסדנה הקצר */}
-      <p>{workshop.workshopDetails}</p> {/* הצגת פרטי הסדנה המלאים */}
+      
+      {/* הצגת תיאור הסדנא במקטעים */}
+      <div className="workshop-text-section">
+        {descriptionParagraphs.map((paragraph, index) => (
+          <div key={`desc-${index}`} className="workshop-text-box">
+            <p>{paragraph}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* הצגת פרטי הסדנא במקטעים */}
+      <div className="workshop-text-section">
+        {detailsParagraphs.map((paragraph, index) => (
+          <div key={`details-${index}`} className="workshop-text-box">
+            <p>{paragraph}</p>
+          </div>
+        ))}
+      </div>
+
       <p>מחיר: {workshop.price} ש"ח</p>
       
-      {/* הוספת כפתור לרכישה */}
       <button onClick={handlePurchase} className="purchase-button">רכוש סדנא</button>
     </div>
   );

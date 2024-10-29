@@ -1,109 +1,129 @@
-/* General container styling */
+/* עיצוב למיכל פרטי הסדנא */
 .workshop-details-container {
-  max-width: 1700px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #f0f8ff; /* Light background for a clean look */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
-  border-radius: 15px;
-  font-family: 'Helvetica', sans-serif;
-  text-align: center; /* Align text to the left for readability */
+  max-width: 1550px;
+  margin: 60px auto;
+  padding: 50px;
+  background: linear-gradient(145deg, #e3e3e3, #ffffff);
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgb(0, 0, 0);
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  transition: all 0.4s ease;
 }
 
-/* Title styling */
+/* כותרת הסדנא */
 .workshop-details-container h1 {
-  font-size: 2.8em;
-  color: #333;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
+  font-size: 2.5em;
+  color: #000000;
   font-weight: bold;
-  text-align: center; /* Center title for emphasis */
-  padding-bottom: 10px;
-  border-bottom: 2px solid #ddd; /* Subtle underline */
+  margin-bottom: 30px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  position: relative;
 }
 
-/* Image styling */
+.workshop-details-container h1::after {
+  content: '';
+  width: 120px;
+  height: 4px;
+  display: block;
+  margin: 12px auto;
+  border-radius: 2px;
+}
+
+/* עיצוב תמונה עם אפקט זום וצל */
 .workshop-image {
   width: 100%;
+  max-width: 800px;
+  max-height: 500px;
   height: auto;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for image */
+  border-radius: 15px;
+  margin-bottom: 25px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0 10px 25px rgb(144, 143, 143);
 }
 
-/* Short description styling */
-.workshop-details-container p {
-  font-size: 1.2em;
-  line-height: 1.8; /* More space between lines */
-  color: #555;
-  margin: 20px 0;
-  padding: 0 15px; /* Padding for the text */
+.workshop-image:hover {
+  transform: scale(1.08);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
 }
 
-/* Full details block (special styling for details) */
-.workshop-details-container p.full-details {
-  font-size: 1.3em;
-  line-height: 1.9;
-  color: #444;
-  margin-top: 30px;
+/* תיבת טקסט עבור כל מקטע של 50 מילים */
+.workshop-text-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+  text-align: right;
+}
+
+.workshop-text-box {
+  background: #f4f9ff;
   padding: 20px;
-  background-color: #e8f4f8; /* Soft background for full details */
+  border: 1px solid #d1e7ff;
   border-radius: 10px;
-  border-left: 4px solid #007bff; /* Emphasis line on the left */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 15px rgb(63, 62, 62);
 }
 
-/* Price styling */
-.workshop-details-container p.price {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #222;
-  margin: 30px 0 20px;
-  text-align: right; /* Align price to the right */
-  border-top: 2px solid #ddd;
-  padding-top: 20px;
-}
-
-/* Button styling */
-.purchase-button {
-  background-color: #28a745; /* Green color for purchase button */
-  color: white;
-  padding: 15px 40px;
+.workshop-text-box p {
   font-size: 1.3em;
+  color: #040404;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* עיצוב טקסט לפרטי הסדנא */
+.workshop-details-container p:last-of-type {
+  font-size: 1.5em;
+  color: #010101;
   font-weight: bold;
+  margin-top: 15px;
+}
+
+/* כפתור רכישה מרשים עם אנימציה */
+.purchase-button {
+  padding: 16px 40px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(145deg, #007bff, #0056b3);
   border: none;
-  border-radius: 5px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2); /* More pronounced shadow */
+  letter-spacing: 1.5px;
 }
 
 .purchase-button:hover {
-  background-color: #218838; /* Darker green on hover */
+  background: linear-gradient(145deg, #0056b3, #003f87);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
+.purchase-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* אפקטי ריחוף ומעבר */
+.workshop-details-container:hover {
+  transform: scale(1.01);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 600px) {
   .workshop-details-container {
-    padding: 20px;
+    padding: 25px;
   }
 
   .workshop-details-container h1 {
-    font-size: 2.4em;
-  }
-
-  .workshop-details-container p {
-    font-size: 1em;
+    font-size: 2em;
   }
 
   .purchase-button {
-    width: 100%;
-    padding: 15px;
-    font-size: 1.2em;
+    padding: 12px 28px;
+    font-size: 1em;
   }
 }
