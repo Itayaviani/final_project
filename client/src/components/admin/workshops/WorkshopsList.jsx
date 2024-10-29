@@ -6,8 +6,9 @@ import './workshopsList.css';
 const WorkshopsList = () => {
   const [workshops, setWorkshops] = useState([]);
   const [error, setError] = useState('');
-  const [filter, setFilter] = useState(''); // מצב לסינון
+  const [filter, setFilter] = useState(''); // מצב לסינון כללי (כמו תפוסה מלאה או פנויה)
   const [showTable, setShowTable] = useState(false); // מצב להצגת הטבלה
+  const [searchTerm, setSearchTerm] = useState(''); // מצב לחיפוש לפי שם סדנה
   const navigate = useNavigate(); // הגדרת navigate
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const WorkshopsList = () => {
     return workshop.capacity - workshop.participants;
   };
 
-  // סינון הסדנאות לפי מצב
+  // סינון הסדנאות לפי מצב תפוסה
   const filteredWorkshops = workshops.filter(workshop => {
     if (filter === 'available') {
       return workshop.participants < workshop.capacity; // סדנאות עם מקומות פנויים
@@ -59,8 +60,14 @@ const WorkshopsList = () => {
     }
   });
 
+  // סינון לפי חיפוש שם סדנה, כך שהשם יתחיל בערך החיפוש בלבד
+const searchedWorkshops = filteredWorkshops.filter(workshop =>
+  workshop.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+);
+
+
   // מיון הסדנאות לפי הכנסות (מהגבוה לנמוך)
-  const sortedWorkshops = filteredWorkshops.sort((a, b) => calculateRevenue(b) - calculateRevenue(a));
+  const sortedWorkshops = searchedWorkshops.sort((a, b) => calculateRevenue(b) - calculateRevenue(a));
 
   // פונקציה להצגת הטבלה לאחר לחיצה על כפתור
   const handleShowTable = (filterType) => {
@@ -80,6 +87,17 @@ const WorkshopsList = () => {
           <button onClick={() => handleShowTable('available')}>סדנאות עם מקומות פנויים</button>
           <button onClick={() => handleShowTable('full')}>סדנאות בתפוסה מלאה</button>
         </div>
+
+        {/* אינפוט לחיפוש סדנה */}
+        {showTable && (
+          <input
+            type="text"
+            placeholder="חפש סדנה לפי שם"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        )}
 
         {/* הצגת הטבלה רק לאחר לחיצה על כפתור */}
         {showTable && (

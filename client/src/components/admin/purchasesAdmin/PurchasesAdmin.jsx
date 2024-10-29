@@ -6,6 +6,7 @@ const PurchasesAdmin = () => {
   const [purchases, setPurchases] = useState([]);
   const [error, setError] = useState('');
   const [filteredType, setFilteredType] = useState(null); // שינוי ברירת המחדל ל-null כדי להסתיר את הטבלה בהתחלה
+  const [searchTerm, setSearchTerm] = useState(''); // מצב לחיפוש לפי שם משתמש
 
   useEffect(() => {
     const fetchPurchases = async () => {
@@ -36,6 +37,11 @@ const PurchasesAdmin = () => {
     setFilteredType('workshops');
   };
 
+  // סינון לפי שם משתמש
+  const filteredPurchases = purchases.filter(userPurchase =>
+    userPurchase.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="purchases-admin-page">
       <div className="purchases-wrapper">
@@ -43,11 +49,22 @@ const PurchasesAdmin = () => {
           <h1>היסטוריית רכישות</h1>
           {error && <p className="error-message">{error}</p>}
 
-          {/* הוספת כפתורים להצגת קורסים וסדנאות */}
+          {/* כפתורים להצגת קורסים וסדנאות */}
           <div className="filter-buttons">
             <button onClick={showCourses}>הצג קורסים</button>
             <button onClick={showWorkshops}>הצג סדנאות</button>
           </div>
+
+          {/* תיבת חיפוש לפי שם משתמש */}
+          {filteredType && (
+            <input
+              type="text"
+              placeholder="חפש לפי שם משתמש"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          )}
 
           {/* הצגת הטבלה רק לאחר לחיצה על אחד הכפתורים */}
           {filteredType && (
@@ -62,7 +79,7 @@ const PurchasesAdmin = () => {
                 </tr>
               </thead>
               <tbody>
-                {purchases
+                {filteredPurchases
                   .map((userPurchase) => ({
                     ...userPurchase,
                     courses: userPurchase.courses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),

@@ -8,6 +8,7 @@ const CoursesList = () => {
   const [error, setError] = useState('');
   const [filter, setFilter] = useState(''); // מצב לסינון, ריק כברירת מחדל
   const [showTable, setShowTable] = useState(false); // מצב להצגת הטבלה, ברירת מחדל false
+  const [searchTerm, setSearchTerm] = useState(''); // מצב לחיפוש לפי שם קורס
   const navigate = useNavigate(); // הגדרת navigate
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const CoursesList = () => {
     return course.capacity - course.participants;
   };
 
-  // סינון הקורסים לפי מצב
+  // סינון הקורסים לפי מצב תפוסה
   const filteredCourses = courses.filter(course => {
     if (filter === 'available') {
       return course.participants < course.capacity; // קורסים עם מקומות פנויים
@@ -59,8 +60,13 @@ const CoursesList = () => {
     }
   });
 
-  // מיון לפי הכנסות (מהגבוה לנמוך)
-  const sortedCourses = filteredCourses.sort((a, b) => calculateRevenue(b) - calculateRevenue(a));
+  // סינון לפי חיפוש שם קורס כך שהשם יתחיל בערך החיפוש בלבד
+  const searchedCourses = filteredCourses.filter(course =>
+    course.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
+
+  // מיון הקורסים לפי הכנסות (מהגבוה לנמוך)
+  const sortedCourses = searchedCourses.sort((a, b) => calculateRevenue(b) - calculateRevenue(a));
 
   // פונקציה להצגת הטבלה לאחר לחיצה על כפתור
   const handleShowTable = (filterType) => {
@@ -80,6 +86,17 @@ const CoursesList = () => {
           <button onClick={() => handleShowTable('available')}>קורסים עם מקומות פנויים</button>
           <button onClick={() => handleShowTable('full')}>קורסים בתפוסה מלאה</button>
         </div>
+
+        {/* אינפוט לחיפוש קורס לפי שם */}
+        {showTable && (
+          <input
+            type="text"
+            placeholder="חפש קורס לפי שם"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        )}
 
         {/* הצגת הטבלה רק לאחר לחיצה על כפתור */}
         {showTable && (

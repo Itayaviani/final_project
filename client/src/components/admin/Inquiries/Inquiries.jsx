@@ -5,6 +5,7 @@ import './Inquiries.css'; // וודא שה-CSS תואם לשם הקובץ הנכ
 const Inquiries = () => {
   const [inquiries, setInquiries] = useState([]);
   const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState(''); // מצב לחיפוש לפי שם פרטי
 
   useEffect(() => {
     const fetchInquiries = async () => {
@@ -28,11 +29,26 @@ const Inquiries = () => {
     }
   };
 
+  // סינון הפניות לפי שם פרטי
+  const filteredInquiries = inquiries.filter(inquiry =>
+    inquiry.firstName.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="inquiries-list-wrapper">
       <div className="inquiries-list">
         <h1>רשימת פניות צור קשר</h1>
         {error && <p className="error-message">{error}</p>}
+
+        {/* אינפוט לחיפוש לפי שם פרטי */}
+        <input
+          type="text"
+          placeholder="חפש לפי שם פרטי"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+
         <table>
           <thead>
             <tr>
@@ -45,7 +61,7 @@ const Inquiries = () => {
             </tr>
           </thead>
           <tbody>
-            {inquiries.map((inquiry) => (
+            {filteredInquiries.map((inquiry) => (
               <tr key={inquiry._id}>
                 <td>
                   <button className="delete" onClick={() => handleDeleteInquiry(inquiry._id)}>מחק</button>

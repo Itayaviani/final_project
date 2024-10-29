@@ -6,6 +6,13 @@ import './AdminPanel.css';
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [stats, setStats] = useState({
+    users: 0,
+    courses: 0,
+    workshops: 0,
+    contacts: 0,
+    purchases: 0,
+  });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -33,8 +40,19 @@ const AdminPanel = () => {
       }
     };
 
+    // שליפת הנתונים עבור הכמויות
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/admin/stats');
+        setStats(response.data);
+      } catch (error) {
+        setError('שגיאה בטעינת נתוני הסטטיסטיקות');
+      }
+    };
+
     fetchUsers();
     fetchCourses();
+    fetchStats();
   }, []);
 
   const handleDeleteUser = async (id) => {
@@ -71,7 +89,17 @@ const AdminPanel = () => {
   return (
     <div className="admin-panel-wrapper">
       <div className="admin-panel">
+        {/* כפתורים עם הכמויות */}
+        <div className="stats-buttons">
+          <button>משתמשים: {stats.users}</button>
+          <button>קורסים: {stats.courses}</button>
+          <button>סדנאות: {stats.workshops}</button>
+          <button>פניות צור קשר: {stats.contacts}</button>
+          <button>רכישות: {stats.purchases}</button>
+        </div>
+
         <h1>:דשבורד למנהל</h1>
+        
         <div className="category-container">
           <button onClick={() => navigate('/users')}>משתמשים</button>
           <button onClick={() => navigate('/admin/coursesList')}>קורסים</button>

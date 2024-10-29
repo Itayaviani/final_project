@@ -5,6 +5,7 @@ import './userList.css';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(''); // מצב עבור החיפוש
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -44,11 +45,26 @@ const UserList = () => {
     navigate(`/edit-user/${id}`);
   };
 
+  // סינון המשתמשים לפי ערך החיפוש, כך שיבדוק אם השם מתחיל בערך החיפוש
+  const filteredUsers = users.filter(user =>
+    user.name.startsWith(searchTerm)
+  );
+
   return (
     <div className="user-list-wrapper">
       <div className="user-list">
         <h1>רשימת משתמשים</h1>
         {error && <p className="error-message">{error}</p>}
+        
+        {/* תיבת חיפוש */}
+        <input
+          type="text"
+          placeholder="חפש משתמש לפי שם"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+        
         <table>
           <thead>
             <tr>
@@ -59,7 +75,7 @@ const UserList = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <tr key={user._id}>
                 <td>
                   <button className="edit-btn" onClick={() => handleEditUser(user._id)}>ערוך</button>
