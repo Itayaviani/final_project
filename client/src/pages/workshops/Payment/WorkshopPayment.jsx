@@ -190,7 +190,7 @@ export default function WorkshopPayment() {
       <h1>הכנס פרטי תשלום</h1>
       <form onSubmit={handlePayment} className="payment-form">
         <div className="form-group">
-          <label>שם מלא:</label>
+          <label>:שם מלא</label>
           <input
             type="text"
             value={fullName}
@@ -205,7 +205,7 @@ export default function WorkshopPayment() {
         </div>
 
         <div className="form-group">
-          <label>אימייל:</label>
+          <label>:אימייל</label>
           <input
             type="email"
             value={email}
@@ -241,7 +241,7 @@ export default function WorkshopPayment() {
         {submitted && !selectedCardType && <span className="card-error">{errors.cardType}</span>}
 
         <div className="form-group">
-          <label>מספר כרטיס אשראי:</label>
+          <label>:מספר כרטיס אשראי</label>
           <input
             type="text"
             value={creditCard}
@@ -256,7 +256,7 @@ export default function WorkshopPayment() {
         </div>
 
         <div className="form-group">
-          <label>תוקף כרטיס:</label>
+          <label>:תוקף כרטיס</label>
           <input
             type="text"
             placeholder="MM/YY"
@@ -272,7 +272,7 @@ export default function WorkshopPayment() {
         </div>
 
         <div className="form-group">
-          <label>CVV:</label>
+          <label>:CVV</label>
           <input
             type="text"
             value={cvv}
@@ -288,7 +288,7 @@ export default function WorkshopPayment() {
 
         {/* בחירת מספר תשלומים, מוצג תמיד */}
         <div className="form-group">
-          <label>כמות תשלומים:</label>
+          <label>:כמות תשלומים</label>
           <select value={installments} onChange={(e) => setInstallments(e.target.value)}>
             {[...Array(12).keys()].map((n) => (
               <option key={n + 1} value={n + 1}>{n + 1}</option>
