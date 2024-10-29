@@ -4,7 +4,7 @@
     margin: 60px auto;
     padding: 50px;
     background: linear-gradient(135deg, #ffffff, #f8f9fa);
-    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 18px 35px rgb(0, 0, 0);
     border-radius: 18px;
     text-align: center;
     font-family: 'Poppins', sans-serif;

@@ -4,6 +4,9 @@
   justify-content: center;
   margin-bottom: 5px;
 }
+.payment-page-container{
+  box-shadow: 0 10px 20px rgb(0, 0, 0);
+}
 
 .card-type-button {
   border: 2px solid transparent;
