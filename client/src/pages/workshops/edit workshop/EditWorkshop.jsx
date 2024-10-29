@@ -79,7 +79,7 @@ export default function EditWorkshop() {
         <h1>עריכת סדנה</h1>
         <form onSubmit={handleSubmit} className="edit-workshop-form">
           <div className="form-group">
-            <label>שם הסדנה:</label>
+            <label>:שם הסדנה</label>
             <input
               type="text"
               value={workshopName}
@@ -88,7 +88,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>תיאור הסדנה:</label>
+            <label>:תיאור הסדנה</label>
             <textarea
               value={workshopDescription}
               onChange={(e) => setWorkshopDescription(e.target.value)}
@@ -96,7 +96,7 @@ export default function EditWorkshop() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>פרטי הסדנה:</label>
+            <label>:פרטי הסדנה</label>
             <textarea
               value={workshopDetails}
               onChange={(e) => setWorkshopDetails(e.target.value)}
@@ -104,7 +104,7 @@ export default function EditWorkshop() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>מחיר הסדנה:</label>
+            <label>:מחיר הסדנה</label>
             <input
               type="number"
               value={workshopPrice}
@@ -113,7 +113,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>קיבולת משתתפים:</label>
+            <label>:קיבולת משתתפים</label>
             <input
               type="number"
               value={workshopCapacity}
@@ -122,7 +122,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>מועד תחילת הסדנה:</label>
+            <label>:מועד תחילת הסדנה</label>
             <input
               type="date"
               value={workshopStartDate}
@@ -131,7 +131,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>שעת תחילת הסדנה:</label>
+            <label>:שעת תחילת הסדנה</label>
             <input
               type="time"
               value={workshopStartTime}
@@ -140,7 +140,7 @@ export default function EditWorkshop() {
             />
           </div>
           <div className="form-group">
-            <label>תמונה נוכחית:</label>
+            <label>:תמונה נוכחית</label>
             {currentImage && (
               <div className="current-image">
                 <img src={`http://localhost:3000/${currentImage}`} alt="Current Workshop" />
@@ -148,7 +148,7 @@ export default function EditWorkshop() {
             )}
           </div>
           <div className="form-group">
-            <label>עדכן תמונה חדשה:</label>
+            <label>:עדכן תמונה חדשה</label>
             <input
               type="file"
               accept="image/*"

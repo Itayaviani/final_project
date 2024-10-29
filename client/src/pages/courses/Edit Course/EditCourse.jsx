@@ -78,7 +78,7 @@ export default function EditCourse() {
         <h1>עריכת קורס</h1>
         <form onSubmit={handleSubmit} className="edit-course-form">
           <div className="form-group">
-            <label>שם הקורס:</label>
+            <label>:שם הקורס</label>
             <input
               type="text"
               value={courseName}
@@ -87,7 +87,7 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>תיאור הקורס:</label>
+            <label>:תיאור הקורס</label>
             <textarea
               value={courseDescription}
               onChange={(e) => setCourseDescription(e.target.value)}
@@ -95,7 +95,7 @@ export default function EditCourse() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>פרטי הקורס:</label>
+            <label>:פרטי הקורס</label>
             <textarea
               value={courseDetails}
               onChange={(e) => setCourseDetails(e.target.value)}
@@ -103,7 +103,7 @@ export default function EditCourse() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>מחיר הקורס:</label>
+            <label>:מחיר הקורס</label>
             <input
               type="number"
               value={coursePrice}
@@ -112,7 +112,7 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>קיבולת משתתפים:</label>
+            <label>:קיבולת משתתפים</label>
             <input
               type="number"
               value={courseCapacity}
@@ -121,7 +121,7 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>מועד תחילת הקורס:</label>
+            <label>:מועד תחילת הקורס</label>
             <input
               type="date"
               value={courseStartDate}
@@ -130,7 +130,7 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>שעת תחילת הקורס:</label>
+            <label>:שעת תחילת הקורס</label>
             <input
               type="time"
               value={courseStartTime}
@@ -139,7 +139,7 @@ export default function EditCourse() {
             />
           </div>
           <div className="form-group">
-            <label>תמונה נוכחית:</label>
+            <label>:תמונה נוכחית</label>
             {currentImage && (
               <div className="current-image">
                 <img src={`http://localhost:3000/${currentImage}`} alt="Current Course" />
@@ -147,7 +147,7 @@ export default function EditCourse() {
             )}
           </div>
           <div className="form-group">
-            <label>עדכן תמונה חדשה:</label>
+            <label>:עדכן תמונה חדשה</label>
             <input
               type="file"
               accept="image/*"
