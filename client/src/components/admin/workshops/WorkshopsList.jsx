@@ -111,11 +111,11 @@ const WorkshopsList = () => {
                       <span className="available-workshop">נשארו {calculateAvailableSpots(workshop)} מקומות</span>
                     )}
                   </td>
-                  <td>{calculateRevenue(workshop)} ש"ח</td> {/* הצגת ההכנסות */}
+                  <td className='price-cell-workshopList'>{calculateRevenue(workshop)} ש"ח</td> {/* הצגת ההכנסות */}
                   <td>{workshop.participants} / {workshop.capacity}</td>
                   <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
                   <td>{workshop.description}</td>
-                  <td>{workshop.price} ש"ח</td>
+                  <td className='price-cell-workshopList'>{workshop.price} ש"ח</td>
                   <td>{workshop.name}</td>
                 </tr>
               ))}

@@ -50,7 +50,7 @@ const MyPurchases = () => {
               {purchases.courses.map((course) => (
                 <tr key={course._id}>
                   <td>{new Date(course.createdAt).toLocaleDateString()}</td> {/* תאריך רכישה */}
-                  <td>{course.price} ש"ח</td> {/* מחיר */}
+                  <td className="price-cell-myPurchases">{course.price} ש"ח</td> {/* מחיר */}
                   <td>קורס</td> {/* סוג פריט */}
                   <td>{course.name}</td> {/* שם פריט */}
                 </tr>
@@ -59,7 +59,7 @@ const MyPurchases = () => {
               {purchases.workshops.map((workshop) => (
                 <tr key={workshop._id}>
                   <td>{new Date(workshop.createdAt).toLocaleDateString()}</td> {/* תאריך רכישה */}
-                  <td>{workshop.price} ש"ח</td> {/* מחיר */}
+                  <td className="price-cell-myPurchases">{workshop.price} ש"ח</td> {/* מחיר */}
                   <td>סדנה</td> {/* סוג פריט */}
                   <td>{workshop.name}</td> {/* שם פריט */}
                 </tr>

@@ -139,3 +139,9 @@ body, html {
     font-size: 0.9em;
   }
 }
+
+.price-cell-workshopList{
+  direction: rtl;
+  text-align: center;
+  padding-right: 5px; /* תוכל לשנות את הערך בהתאם לצורך */
+}

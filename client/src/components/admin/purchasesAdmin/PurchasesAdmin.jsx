@@ -75,7 +75,7 @@ const PurchasesAdmin = () => {
                         userPurchase.courses.map((course) => (
                           <tr key={course._id}>
                             <td>{new Date(course.createdAt).toLocaleDateString()}</td>
-                            <td>{course.price} ש"ח</td>
+                            <td className="price-cell-purchasesAdmin">{course.price} ש"ח</td>
                             <td>{course.name}</td>
                             <td>קורס</td>
                             <td>{userPurchase.name}</td>
@@ -87,7 +87,7 @@ const PurchasesAdmin = () => {
                         userPurchase.workshops.map((workshop) => (
                           <tr key={workshop._id}>
                             <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
-                            <td>{workshop.price} ש"ח</td>
+                            <td className="price-cell-purchasesAdmin">{workshop.price} ש"ח</td>
                             <td>{workshop.name}</td>
                             <td>סדנה</td>
                             <td>{userPurchase.name}</td>

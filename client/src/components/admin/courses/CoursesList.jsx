@@ -111,11 +111,11 @@ const CoursesList = () => {
                       <span className="available-course">נשארו {calculateAvailableSpots(course)} מקומות</span>
                     )}
                   </td>
-                  <td>{calculateRevenue(course)} ש"ח</td> {/* הצגת ההכנסות */}
+                  <td className='price-cell-courseList'>{calculateRevenue(course)} ש"ח</td> {/* הצגת ההכנסות */}
                   <td>{course.participants} / {course.capacity}</td>
                   <td>{new Date(course.createdAt).toLocaleDateString()}</td>
                   <td>{course.description}</td>
-                  <td>{course.price} ש"ח</td>
+                  <td className='price-cell-courseList'>{course.price} ש"ח</td>
                   <td>{course.name}</td>
                 </tr>
               ))}
