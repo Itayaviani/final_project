@@ -1,122 +1,171 @@
-/* הגדרות כלליות עבור ה-container */
-.edit-workshop-container {
-    max-width: 800px; /* Increased width for horizontal layout */
-    margin: 50px auto; /* Center the container and add space from the top */
-    padding: 40px;
-    background-color: #ffffff; /* White background for a clean look */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    font-family: 'Arial', sans-serif; /* Consistent font */
-    color: #333; /* Dark text color for contrast */
-    direction: rtl; /* הגדרת הכיוון של הטקסט מימין לשמאל */
-    text-align: right; /* יישור כללי לימין */
-}
-  
-.workshop-image {
-    max-width: 100%; /* הגדר את התמונה כך שתהיה ברוחב מקסימלי של 100% מהאלמנט המכיל */
-    height: auto; /* שמירת יחס הגובה-רוחב של התמונה */
-    display: block; /* מבטיח שהתמונה לא תהיה אלמנט inline */
-    margin: 0 auto; /* ממרכז את התמונה */
-    border: 1px solid #ccc; /* אופציונלי: מסגרת מסביב לתמונה */
-    padding: 5px; /* אופציונלי: ריווח מסביב לתמונה */
-    max-height: 300px; /* הגבלת גובה מקסימלי של התמונה */
-}
-  
-/* Styling for the header */
-.edit-workshop-container h1 {
-    text-align: center; /* Center the title */
-    margin-bottom: 30px; /* Space below the title */
-    font-size: 28px; /* Larger font size for prominence */
-    color: #090909; /* A green color to match a theme or indicate editing */
-    border-bottom: 2px solid #000000; /* Bottom border for emphasis */
-    padding-bottom: 10px; /* Padding below text for spacing */
-}
-  
-/* Form styling */
-.edit-workshop-form {
+/* עיצוב כולל לעמוד עריכת הסדנא */
+.edit-workshop-wrapper {
     display: flex;
-    flex-direction: column; /* Stack form groups vertically */
-    gap: 20px; /* Space between form groups */
-}
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
+  }
   
-/* Form group styling for horizontal layout */
-.form-group {
-    display: flex; /* Flexbox for horizontal alignment */
-    align-items: center; /* Center items vertically within each form group */
-    gap: 20px; /* Space between label and input */
-}
+  .edit-workshop-container {
+    max-width: 800px;
+    width: 100%;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgb(0, 0, 0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
   
-/* Label styling */
-.form-group label {
-    flex: 1; /* Allow label to take up necessary space */
-    font-weight: bold; /* Bold text for labels */
-    margin-left: 10px; /* Space between label and input */
-    text-align: right; /* Right align labels */
-}
+  .edit-workshop-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
   
-/* Input and textarea styling */
-.edit-workshop-form input[type="text"],
-.edit-workshop-form input[type="number"],
-.edit-workshop-form textarea {
-    flex: 2; /* Allow inputs to take more space */
-    padding: 10px; /* Padding inside the input */
-    border: 1px solid #ddd; /* Light border for inputs */
-    border-radius: 5px; /* Rounded corners for inputs */
-    font-size: 16px; /* Font size for inputs */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus */
-}
+  /* כותרת */
+  .edit-workshop-container h1 {
+    font-size: 2.5em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    position: relative;
+  }
   
-.edit-workshop-form input[type="text"]:focus,
-.edit-workshop-form input[type="number"]:focus,
-.edit-workshop-form textarea:focus {
-    border-color: #0558cb; /* Green border on focus */
-    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3); /* Green glow effect on focus */
-    outline: none; /* Remove default outline */
-}
+  .edit-workshop-container h1::after {
+    content: '';
+    width: 80px;
+    height: 4px;
+    display: block;
+    margin: 15px auto;
+    border-radius: 2px;
+  }
   
-/* Textarea specific styling */
-.edit-workshop-form textarea {
-    resize: vertical; /* Allow vertical resize only */
-    height: 100px; /* Set a minimum height */
-}
+  /* עיצוב טופס */
+  .edit-workshop-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
   
-/* Button styling */
-.submit-button {
-    padding: 12px 20px; /* Padding for the button */
-    background-color: #0069e0; /* Green background */
-    color: white; /* White text color */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 18px; /* Font size for the button */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
-    margin-top: 20px; /* Margin to separate from form fields */
-    width: 200px; /* Fixed width for button */
-    align-self: center; /* Center the button horizontally */
-}
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+  }
   
-/* Button hover and active effects */
-.submit-button:hover {
-    background-color: #0068f1; /* Darker green on hover */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow on hover */
-}
+  .form-group label {
+    font-size: 1.2em;
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
   
-.submit-button:active {
-    transform: translateY(2px); /* Slight movement on click */
-}
-
-/* התמונה הנוכחית */
-.current-image {
-    text-align: right; /* יישור הטקסט לימין */
-    margin-bottom: 10px; /* ריווח מתחת לתמונה הנוכחית */
-}
-
-.current-image img {
-  max-width: 100%; /* הגדר את התמונה כך שתהיה ברוחב מקסימלי של 100% מהאלמנט המכיל */
-  height: auto; /* שמירת יחס הגובה-רוחב של התמונה */
-  display: block; /* מבטיח שהתמונה לא תהיה אלמנט inline */
-  margin: 0 auto; /* ממרכז את התמונה */
-  border: 1px solid #ccc; /* אופציונלי: מסגרת מסביב לתמונה */
-  padding: 5px; /* אופציונלי: ריווח מסביב לתמונה */
-  max-height: 300px; /* הגבלת גובה מקסימלי של התמונה */
-}
+  .form-group input,
+  .form-group textarea {
+    padding: 12px 15px;
+    font-size: 1em;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #007bff;
+    background-color: #e3f2fd;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  /* עיצוב התמונה הנוכחית */
+  .current-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .current-image img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* עיצוב כפתור העלאת תמונה חדשה */
+  .form-group input[type="file"] {
+    font-size: 1em;
+    color: #333;
+    background: #f0f4f8;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .form-group input[type="file"]::file-selector-button {
+    padding: 8px 15px;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .form-group input[type="file"]::file-selector-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* עיצוב כפתור שמירת שינויים */
+  .submit-button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(145deg, #007bff, #0056b3);
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .submit-button:hover {
+    background: linear-gradient(145deg, #0056b3, #003f87);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .submit-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* התאמה למסכים קטנים */
+  @media screen and (max-width: 600px) {
+    .edit-workshop-container {
+      padding: 30px;
+    }
+  
+    .edit-workshop-container h1 {
+      font-size: 2em;
+    }
+  
+    .submit-button {
+      font-size: 1em;
+      padding: 12px;
+    }
+  }
+  
