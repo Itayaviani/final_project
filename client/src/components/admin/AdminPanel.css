@@ -117,3 +117,43 @@ body, html {
     padding: 30px;
   }
 }
+/* Style for Status Buttons */
+.stats-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stats-buttons button {
+  padding: 20px 40px;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #097fc4, #36d1dc); /* Reverse gradient */
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.stats-buttons button:hover {
+  background: linear-gradient(to right, #097fc4, #36d1dc); /* Reverse gradient */
+  transform: scale(1.08);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+}
+
+.stats-buttons button:active {
+  transform: translateY(3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .stats-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

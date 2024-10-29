@@ -6,15 +6,14 @@ body, html {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
   color: #333;
-  
 }
 
 /* Wrapper to center User List */
 .user-list-wrapper {
   display: flex;
-  justify-content: center; /* מרכז אופקית */
-  align-items: center; /* מרכז אנכית */
-  min-height: 100vh; /* גובה מינימלי של הדף */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 /* User List Container */
@@ -27,7 +26,6 @@ body, html {
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  
 }
 
 .user-list:hover {
@@ -40,10 +38,40 @@ body, html {
   text-align: center;
   font-size: 2.5em;
   margin-bottom: 40px;
-  color: #000; /* Changed to black */
+  color: #000;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+
+/* Search Input Style */
+.search-input {
+  margin-top: 50px;
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 20px;
+  font-size: 1.1em;
+  border: 2px solid #ddd;
+  border-radius: 30px;
+  outline: none;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  background: linear-gradient(to right, #f9f9f9, #e9e9e9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: right; /* Aligns text to the right */
+  direction: rtl; /* Ensures text starts from the right */
+}
+
+.search-input:focus {
+  border-color: #5b86e5;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-size: 0.9em;
+  text-align: center; /* Aligns placeholder to the right */
+  direction: rtl;
 }
 
 /* Table Styles */
