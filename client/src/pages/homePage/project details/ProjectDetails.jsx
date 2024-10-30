@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './ProjectDetails.css'; // ייבוא קובץ ה-CSS לעיצוב
+import './ProjectDetails.css';
 
 export default function ProjectDetails() {
-  const { projectId } = useParams(); // שימוש ב-useParams לקבלת ה-projectId מהנתיב
+  const { projectId } = useParams();
   const [project, setProject] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -20,21 +21,43 @@ export default function ProjectDetails() {
     fetchProject();
   }, [projectId]);
 
+  // פונקציה לחלוקה לפסקאות של 200 מילים עם סינון פסקאות ריקות
+  const splitTextIntoParagraphs = (text) => {
+    const words = text.split(' ');
+    const paragraphs = [];
+    for (let i = 0; i < words.length; i += 200) {
+      const paragraph = words.slice(i, i + 200).join(' ').trim();
+      if (paragraph) {
+        paragraphs.push(paragraph);
+      }
+    }
+    return paragraphs;
+  };
+
   if (!project) {
     return <p>טוען פרטים...</p>;
   }
 
+  const detailsParagraphs = splitTextIntoParagraphs(project.projectDetails || '');
+
   return (
     <div className="project-details-container">
-      <h1>שם: {project.name}</h1>
+      <h1>שם הפרויקט: {project.name}</h1>
       {project.images && project.images.length > 0 && (
         <img src={`http://localhost:3000/${project.images[0]}`} alt={project.name} className="project-image" />
       )}
 
-      {/* הצגת פרטי הפרויקט המלאים */}
-      <div className="project-details-content">
-        <p>{project.projectDetails}</p>
+      {/* הצגת פרטי הפרויקט במקטעים */}
+      <div className="project-text-section">
+        {detailsParagraphs.map((paragraph, index) => (
+          <div key={`details-${index}`} className="project-text-box">
+            <p>{paragraph}</p>
+          </div>
+        ))}
       </div>
+      
+      {/* כפתור לחזרה לרשימת הפרויקטים */}
+      <button onClick={() => navigate('/')} className="back-button">חזרה לפרויקטים</button>
     </div>
   );
 }
