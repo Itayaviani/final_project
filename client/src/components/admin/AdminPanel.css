@@ -38,7 +38,7 @@ body, html {
   padding: 50px;
   background-color: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 40px rgb(0, 0, 0);
   transition: transform 0.3s, box-shadow 0.3s;
   animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
 }
