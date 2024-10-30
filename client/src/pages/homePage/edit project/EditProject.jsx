@@ -69,7 +69,7 @@ export default function EditProject() {
         <h1>עריכת פרויקט</h1>
         <form onSubmit={handleSubmit} className="edit-project-form">
           <div className="form-group">
-            <label>שם הפרויקט:</label>
+            <label>:שם הפרויקט</label>
             <input
               type="text"
               value={projectName}
@@ -78,7 +78,7 @@ export default function EditProject() {
             />
           </div>
           <div className="form-group">
-            <label>תיאור הפרויקט:</label>
+            <label>:תיאור הפרויקט</label>
             <textarea
               value={projectDescription}
               onChange={(e) => setProjectDescription(e.target.value)}
@@ -86,7 +86,7 @@ export default function EditProject() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>פרטי הפרויקט:</label>
+            <label>:פרטי הפרויקט</label>
             <textarea
               value={projectDetails}
               onChange={(e) => setProjectDetails(e.target.value)}
@@ -94,7 +94,7 @@ export default function EditProject() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>תמונות נוכחיות:</label>
+            <label>:תמונות נוכחיות</label>
             {currentImages && currentImages.length > 0 && (
               <div className="current-images">
                 {currentImages.map((image, index) => (
@@ -108,7 +108,7 @@ export default function EditProject() {
             )}
           </div>
           <div className="form-group">
-            <label>עדכן תמונות חדשות:</label>
+            <label>:עדכן תמונות חדשות</label>
             <input
               type="file"
               accept="image/*"

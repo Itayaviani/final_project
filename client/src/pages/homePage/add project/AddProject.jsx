@@ -60,7 +60,7 @@ export default function AddProject({ addProject }) {
       <h1>הוספת פרויקט חדש</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>שם הפרויקט:</label>
+          <label>:שם הפרויקט</label>
           <input
             type="text"
             value={projectName}
@@ -69,7 +69,7 @@ export default function AddProject({ addProject }) {
           />
         </div>
         <div>
-          <label>תיאור הפרויקט:</label>
+          <label>:תיאור הפרויקט</label>
           <textarea
             value={projectDescription}
             onChange={(e) => setProjectDescription(e.target.value)}
@@ -78,7 +78,7 @@ export default function AddProject({ addProject }) {
           ></textarea>
         </div>
         <div>
-          <label>פרטי הפרויקט:</label>
+          <label>:פרטי הפרויקט</label>
           <textarea
             value={projectDetails}
             onChange={(e) => setProjectDetails(e.target.value)}
@@ -87,7 +87,7 @@ export default function AddProject({ addProject }) {
           ></textarea>
         </div>
         <div>
-          <label>תמונות לפרויקט:</label>
+          <label>:תמונות לפרויקט</label>
           <input
             type="file"
             accept="image/*"

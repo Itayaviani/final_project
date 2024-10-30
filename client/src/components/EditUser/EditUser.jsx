@@ -69,17 +69,17 @@ const EditUser = ({ setUsername }) => {
         {success && <p className="success-message">{success}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
+          <input type="text" name="phone" value={user.phone} onChange={handleChange} required />
             <label>מספר פלאפון:</label>
-            <input type="text" name="phone" value={user.phone} onChange={handleChange} required />
           </div>
           <div className="form-group">
+          <input type="text" name="name" value={user.name} onChange={handleChange} required />
             <label>שם משתמש:</label>  
-            <input type="text" name="name" value={user.name} onChange={handleChange} required />
           </div>
           <button type="submit">שמור</button>
           <div className="form-group">
+          <input type="email" name="email" value={user.email} onChange={handleChange} required />
             <label>אימייל:</label>
-            <input type="email" name="email" value={user.email} onChange={handleChange} required />
           </div>
         </form>
       </div>
