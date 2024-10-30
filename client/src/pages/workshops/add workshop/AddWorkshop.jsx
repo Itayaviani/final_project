@@ -61,7 +61,7 @@ export default function AddWorkshop({ addWorkshop }) {
       <h1>הוספת סדנא חדשה</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>שם הסדנא:</label>
+          <label>:שם הסדנא</label>
           <input
             type="text"
             value={workshopName}
@@ -70,23 +70,25 @@ export default function AddWorkshop({ addWorkshop }) {
           />
         </div>
         <div>
-          <label>תיאור הסדנא:</label>
+          <label>:תיאור הסדנא</label>
           <textarea
             value={workshopDescription}
             onChange={(e) => setWorkshopDescription(e.target.value)}
+            placeholder="תיאור קצר של הסדנא"
             required
           ></textarea>
         </div>
         <div>
-          <label>פרטי הסדנא:</label>
+          <label>:פרטי הסדנא</label>
           <textarea
             value={workshopDetails}
             onChange={(e) => setWorkshopDetails(e.target.value)}
+            placeholder="פרטים מלאים על הסדנא"
             required
           ></textarea>
         </div>
         <div>
-          <label>מחיר הסדנא:</label>
+          <label>:מחיר הסדנא</label>
           <input
             type="number"
             value={workshopPrice}
@@ -95,7 +97,7 @@ export default function AddWorkshop({ addWorkshop }) {
           />
         </div>
         <div>
-          <label>קיבולת משתתפים בסדנא:</label>
+          <label>:קיבולת משתתפים בסדנא</label>
           <input
             type="number"
             value={workshopCapacity}
@@ -104,7 +106,7 @@ export default function AddWorkshop({ addWorkshop }) {
           />
         </div>
         <div>
-          <label>תאריך תחילת הסדנא:</label>
+          <label>:תאריך תחילת הסדנא</label>
           <input
             type="date"
             value={workshopStartDate}
@@ -113,7 +115,7 @@ export default function AddWorkshop({ addWorkshop }) {
           />
         </div>
         <div>
-          <label>שעת תחילת הסדנא:</label>
+          <label>:שעת תחילת הסדנא</label>
           <input
             type="time"
             value={workshopStartTime}
@@ -122,7 +124,7 @@ export default function AddWorkshop({ addWorkshop }) {
           />
         </div>
         <div>
-          <label>תמונה לסדנא:</label>
+          <label>:תמונה לסדנא</label>
           <input
             type="file"
             accept="image/*"

@@ -71,7 +71,7 @@ export default function AddCourse({ addCourse }) {
       <h1>הוספת קורס חדש</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>שם הקורס:</label>
+          <label>:שם הקורס</label>
           <input
             type="text"
             value={courseName}
@@ -80,7 +80,7 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>תיאור הקורס:</label> {/* שדה עבור תיאור הקורס (תיאור קצר) */}
+          <label>:תיאור הקורס</label> {/* שדה עבור תיאור הקורס (תיאור קצר) */}
           <textarea
             value={courseDescription}
             onChange={(e) => setCourseDescription(e.target.value)}
@@ -89,7 +89,7 @@ export default function AddCourse({ addCourse }) {
           ></textarea>
         </div>
         <div>
-          <label>פרטי הקורס:</label> {/* שדה עבור פרטי הקורס (תיאור מפורט) */}
+          <label>:פרטי הקורס</label> {/* שדה עבור פרטי הקורס (תיאור מפורט) */}
           <textarea
             value={courseDetails}
             onChange={(e) => setCourseDetails(e.target.value)}
@@ -98,7 +98,7 @@ export default function AddCourse({ addCourse }) {
           ></textarea>
         </div>
         <div>
-          <label>מחיר הקורס:</label>
+          <label>:מחיר הקורס</label>
           <input
             type="number"
             value={coursePrice}
@@ -107,7 +107,7 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>קיבולת משתתפים:</label>
+          <label>:קיבולת משתתפים</label>
           <input
             type="number"
             value={courseCapacity}
@@ -116,7 +116,7 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>מועד תחילת הקורס:</label> {/* שדה עבור מועד תחילת הקורס */}
+          <label>:מועד תחילת הקורס</label> {/* שדה עבור מועד תחילת הקורס */}
           <input
             type="date"
             value={courseStartDate}
@@ -125,7 +125,7 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>שעת תחילת הקורס:</label> {/* שדה עבור שעת תחילת הקורס */}
+          <label>:שעת תחילת הקורס</label> {/* שדה עבור שעת תחילת הקורס */}
           <input
             type="time"
             value={courseStartTime}
@@ -134,7 +134,7 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>תמונה לקורס:</label>
+          <label>:תמונה לקורס</label>
           <input
             type="file"
             accept="image/*"

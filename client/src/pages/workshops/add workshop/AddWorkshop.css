@@ -7,7 +7,7 @@
     padding: 40px;
     background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgb(0, 0, 0);
     font-family: 'Arial', sans-serif;
     color: #333;
     text-align: left; /* טקסט מיושר לשמאל */
@@ -22,7 +22,7 @@
   /* עיצוב כותרת הטופס */
   .add-workshop-container h1 {
     font-size: 2.5rem;
-    color: #444;
+    color: #050505;
     margin-bottom: 30px;
     text-align: center; /* כותרת במרכז */
   }
@@ -39,13 +39,14 @@
   .add-workshop-container div {
     display: flex;
     flex-direction: column;
+    text-align: right;
   }
   
   /* עיצוב תוויות */
   .add-workshop-container label {
     margin-bottom: 8px;
     font-weight: bold;
-    color: #555;
+    color: #000000;
     font-size: 1.1rem;
   }
   
@@ -75,13 +76,14 @@
   .add-workshop-container textarea {
     resize: vertical;
     min-height: 100px;
+    text-align: right;
   }
   
   /* עיצוב הכפתור */
   .add-workshop-container button[type="submit"] {
     grid-column: span 2; /* הכפתור מתפרס על שתי העמודות */
     padding: 12px;
-    background-color: #007bff;
+    background-color: #1109f2;
     color: white;
     border: none;
     border-radius: 6px;
@@ -90,9 +92,11 @@
     transition: background-color 0.3s, transform 0.3s;
     width: 50%; /* הגדרת רוחב לכפתור */
     margin: 20px auto; /* ממרכז את הכפתור */
+    box-shadow: 0 8px 16px rgb(0, 0, 0);
+
   }
   
   .add-workshop-container button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #0c06c3;
     transform: translateY(-2px);
   }
