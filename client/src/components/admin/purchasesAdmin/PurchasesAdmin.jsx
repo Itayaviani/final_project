@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import './purchasesAdmin.css';
 
 const PurchasesAdmin = () => {
   const [purchases, setPurchases] = useState([]);
   const [error, setError] = useState('');
-  const [filteredType, setFilteredType] = useState(null); // שינוי ברירת המחדל ל-null כדי להסתיר את הטבלה בהתחלה
-  const [searchTerm, setSearchTerm] = useState(''); // מצב לחיפוש לפי שם משתמש
+  const [filteredType, setFilteredType] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   useEffect(() => {
     const fetchPurchases = async () => {
@@ -17,7 +21,20 @@ const PurchasesAdmin = () => {
           },
         });
 
-        setPurchases(response.data.data.purchases); // עדכון המצב עם רשימת הרכישות
+        const allPurchases = response.data.data.purchases.flatMap(userPurchase => [
+          ...userPurchase.courses.map(course => ({
+            ...course,
+            type: 'קורס',
+            userName: userPurchase.name,
+          })),
+          ...userPurchase.workshops.map(workshop => ({
+            ...workshop,
+            type: 'סדנה',
+            userName: userPurchase.name,
+          })),
+        ]).sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
+
+        setPurchases(allPurchases);
       } catch (err) {
         console.error('Error fetching purchases:', err);
         setError('שגיאה בטעינת הרכישות');
@@ -27,20 +44,24 @@ const PurchasesAdmin = () => {
     fetchPurchases();
   }, []);
 
-  // פונקציה להצגת כל הקורסים בלבד
   const showCourses = () => {
-    setFilteredType('courses');
+    setFilteredType('קורס');
   };
 
-  // פונקציה להצגת כל הסדנאות בלבד
   const showWorkshops = () => {
-    setFilteredType('workshops');
+    setFilteredType('סדנה');
   };
 
-  // סינון לפי שם משתמש
-  const filteredPurchases = purchases.filter(userPurchase =>
-    userPurchase.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-  );
+  const filteredPurchases = purchases.filter(purchase => {
+    const purchaseDate = new Date(purchase.purchaseDate);
+    const isWithinType = !filteredType || purchase.type === filteredType;
+    const isWithinSearch = purchase.userName.toLowerCase().startsWith(searchTerm.toLowerCase());
+    const isWithinDateRange =
+      (!startDate || purchaseDate >= startDate) &&
+      (!endDate || purchaseDate <= endDate);
+
+    return isWithinType && isWithinSearch && isWithinDateRange;
+  });
 
   return (
     <div className="purchases-admin-page">
@@ -49,13 +70,11 @@ const PurchasesAdmin = () => {
           <h1>היסטוריית רכישות</h1>
           {error && <p className="error-message">{error}</p>}
 
-          {/* כפתורים להצגת קורסים וסדנאות */}
           <div className="filter-buttons">
             <button onClick={showCourses}>הצג קורסים</button>
             <button onClick={showWorkshops}>הצג סדנאות</button>
           </div>
 
-          {/* תיבת חיפוש לפי שם משתמש */}
           {filteredType && (
             <input
               type="text"
@@ -66,7 +85,24 @@ const PurchasesAdmin = () => {
             />
           )}
 
-          {/* הצגת הטבלה רק לאחר לחיצה על אחד הכפתורים */}
+          {/* תאריכון לבחירת טווח תאריכים */}
+          <div className="date-picker-wrapper">
+            <label>בחר תאריך התחלה:</label>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              isClearable
+              placeholderText="תאריך התחלה"
+            />
+            <label>בחר תאריך סיום:</label>
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              isClearable
+              placeholderText="תאריך סיום"
+            />
+          </div>
+
           {filteredType && (
             <table className="purchases-table">
               <thead>
@@ -79,39 +115,15 @@ const PurchasesAdmin = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredPurchases
-                  .map((userPurchase) => ({
-                    ...userPurchase,
-                    courses: userPurchase.courses.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-                    workshops: userPurchase.workshops.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-                  }))
-                  .map((userPurchase) => (
-                    <React.Fragment key={userPurchase._id}>
-                      {/* הצגת קורסים בהתאם לבחירה */}
-                      {filteredType === 'courses' &&
-                        userPurchase.courses.map((course) => (
-                          <tr key={course._id}>
-                            <td>{new Date(course.createdAt).toLocaleDateString()}</td>
-                            <td className="price-cell-purchasesAdmin">{course.price} ש"ח</td>
-                            <td>{course.name}</td>
-                            <td>קורס</td>
-                            <td>{userPurchase.name}</td>
-                          </tr>
-                        ))}
-
-                      {/* הצגת סדנאות בהתאם לבחירה */}
-                      {filteredType === 'workshops' &&
-                        userPurchase.workshops.map((workshop) => (
-                          <tr key={workshop._id}>
-                            <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
-                            <td className="price-cell-purchasesAdmin">{workshop.price} ש"ח</td>
-                            <td>{workshop.name}</td>
-                            <td>סדנה</td>
-                            <td>{userPurchase.name}</td>
-                          </tr>
-                        ))}
-                    </React.Fragment>
-                  ))}
+                {filteredPurchases.map((purchase) => (
+                  <tr key={purchase._id}>
+                    <td>{purchase.purchaseDate ? new Date(purchase.purchaseDate).toLocaleString() : 'תאריך לא זמין'}</td>
+                    <td className="price-cell-purchasesAdmin">{purchase.price} ש"ח</td>
+                    <td>{purchase.name}</td>
+                    <td>{purchase.type}</td>
+                    <td>{purchase.userName}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           )}

@@ -3,7 +3,7 @@ import axios from 'axios';
 import './MyPurchases.css';
 
 const MyPurchases = () => {
-  const [purchases, setPurchases] = useState({ courses: [], workshops: [] });
+  const [purchases, setPurchases] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -18,8 +18,15 @@ const MyPurchases = () => {
           }
         );
 
-        console.log('Purchased courses and workshops:', response.data.purchases);
-        setPurchases(response.data.purchases);
+        console.log('Response data:', response.data.purchases);
+
+        // מיזוג של כל הרכישות (קורסים וסדנאות) במערך אחד ומיון לפי purchaseDate
+        const allPurchases = [
+          ...response.data.purchases.courses.map((course) => ({ ...course, type: 'קורס' })),
+          ...response.data.purchases.workshops.map((workshop) => ({ ...workshop, type: 'סדנה' }))
+        ].sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
+
+        setPurchases(allPurchases);
       } catch (error) {
         console.error('Failed to fetch purchased courses:', error);
         setError('שגיאה בטעינת הרכישות');
@@ -35,33 +42,27 @@ const MyPurchases = () => {
         <h1>:הרכישות שלי</h1>
         {error && <p className="error-message">{error}</p>}
 
-        {purchases.courses.length > 0 || purchases.workshops.length > 0 ? (
+        {purchases.length > 0 ? (
           <table className="purchases-table">
             <thead>
               <tr>
-                <th>תאריך רכישה</th> {/* הכותרת הראשונה */}
-                <th>מחיר</th> {/* הכותרת השנייה */}
-                <th>סוג פריט</th> {/* הכותרת השלישית */}
-                <th>שם פריט</th> {/* הכותרת הרביעית */}
+                <th>תאריך רכישה</th>
+                <th>מחיר</th>
+                <th>סוג פריט</th>
+                <th>שם פריט</th>
               </tr>
             </thead>
             <tbody>
-              {/* הצגת קורסים */}
-              {purchases.courses.map((course) => (
-                <tr key={course._id}>
-                  <td>{new Date(course.createdAt).toLocaleDateString()}</td> {/* תאריך רכישה */}
-                  <td className="price-cell-myPurchases">{course.price} ש"ח</td> {/* מחיר */}
-                  <td>קורס</td> {/* סוג פריט */}
-                  <td>{course.name}</td> {/* שם פריט */}
-                </tr>
-              ))}
-              {/* הצגת סדנאות */}
-              {purchases.workshops.map((workshop) => (
-                <tr key={workshop._id}>
-                  <td>{new Date(workshop.createdAt).toLocaleDateString()}</td> {/* תאריך רכישה */}
-                  <td className="price-cell-myPurchases">{workshop.price} ש"ח</td> {/* מחיר */}
-                  <td>סדנה</td> {/* סוג פריט */}
-                  <td>{workshop.name}</td> {/* שם פריט */}
+              {purchases.map((purchase) => (
+                <tr key={purchase._id}>
+                  <td>
+                    {purchase.purchaseDate 
+                      ? new Date(purchase.purchaseDate).toLocaleString() 
+                      : 'תאריך לא זמין'}
+                  </td>
+                  <td className="price-cell-myPurchases">{purchase.price} ש"ח</td>
+                  <td>{purchase.type}</td>
+                  <td>{purchase.name}</td>
                 </tr>
               ))}
             </tbody>

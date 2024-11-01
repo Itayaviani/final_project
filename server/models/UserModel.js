@@ -7,9 +7,14 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   isAdmin: { type: Boolean, default: false },
-  purchasedCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
-  purchasedWorkshops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workshop' }] 
-  
+  purchasedCourses: [{
+    course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+    purchaseDate: { type: Date, default: Date.now }
+  }],
+  purchasedWorkshops: [{
+    workshop: { type: mongoose.Schema.Types.ObjectId, ref: 'Workshop' },
+    purchaseDate: { type: Date, default: Date.now }
+  }]
 });
 
 UserSchema.pre('save', async function (next) {

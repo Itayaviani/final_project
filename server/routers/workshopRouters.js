@@ -164,14 +164,17 @@ router.post('/purchase', async (req, res) => {
     console.log('User found:', user.name);
 
     // בדוק אם המשתמש כבר רכש את הסדנה הזו
-    if (user.purchasedWorkshops && user.purchasedWorkshops.includes(workshopId)) {
+    if (user.purchasedWorkshops && user.purchasedWorkshops.some(purchase => purchase.workshop.equals(workshopId))) {
       console.log('User has already purchased this workshop');
       return res.status(200).json({ message: 'Workshop already purchased', purchased: true });
     }
 
-    // הוסף את הסדנה לרשימת הרכישות של המשתמש
-    user.purchasedWorkshops = user.purchasedWorkshops || []; // וודא שמתקיים מערך סדנאות שנרכשו
-    user.purchasedWorkshops.push(workshopId);
+    // הוסף את הסדנה לרשימת הרכישות של המשתמש עם תאריך הרכישה
+    user.purchasedWorkshops = user.purchasedWorkshops || [];
+    user.purchasedWorkshops.push({
+      workshop: workshopId,
+      purchaseDate: new Date() // הוספת תאריך רכישה נוכחי
+    });
     await user.save();
 
     // עדכון מספר המשתתפים בסדנה
@@ -197,6 +200,7 @@ router.post('/purchase', async (req, res) => {
     res.status(500).json({ error: 'Failed to process workshop purchase' });
   }
 });
+
 
 
 module.exports = router;

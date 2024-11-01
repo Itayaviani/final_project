@@ -80,8 +80,14 @@ exports.getUserPurchases = catchAsync(async (req, res, next) => {
   const userId = req.user.id;
 
   const user = await User.findById(userId)
-    .populate("purchasedCourses")
-    .populate("purchasedWorkshops");
+    .populate({
+      path: 'purchasedCourses.course',
+      select: 'name price'
+    })
+    .populate({
+      path: 'purchasedWorkshops.workshop',
+      select: 'name price'
+    });
 
   if (!user) {
     return next(new AppError("משתמש לא נמצא", 404));
@@ -95,52 +101,56 @@ exports.getUserPurchases = catchAsync(async (req, res, next) => {
     status: "success",
     purchases: {
       courses: purchasedCourses
-        .filter(course => course)  // סינון ערכי null
-        .map((course) => ({
-          _id: course._id,
-          name: course.name,
-          price: course.price,
-          createdAt: course.createdAt,
+        .filter(course => course && course.course)  // סינון ערכי null
+        .map((purchase) => ({
+          _id: purchase.course._id,
+          name: purchase.course.name,
+          price: purchase.course.price,
+          purchaseDate: purchase.purchaseDate, // תאריך הרכישה
         })),
       workshops: purchasedWorkshops
-        .filter(workshop => workshop)  // סינון ערכי null
-        .map((workshop) => ({
-          _id: workshop._id,
-          name: workshop.name,
-          price: workshop.price,
-          createdAt: workshop.createdAt,
+        .filter(workshop => workshop && workshop.workshop)  // סינון ערכי null
+        .map((purchase) => ({
+          _id: purchase.workshop._id,
+          name: purchase.workshop.name,
+          price: purchase.workshop.price,
+          purchaseDate: purchase.purchaseDate, // תאריך הרכישה
         })),
     },
   });
 });
 
-
-
 // פונקציה לשליפת כל הרכישות מכל המשתמשים
 exports.getAllUserPurchases = catchAsync(async (req, res, next) => {
   const users = await User.find()
-    .populate("purchasedCourses")
-    .populate("purchasedWorkshops");
+    .populate({
+      path: 'purchasedCourses.course',
+      select: 'name price'
+    })
+    .populate({
+      path: 'purchasedWorkshops.workshop',
+      select: 'name price'
+    });
 
   const allPurchases = users.map((user) => ({
     userId: user._id,
     name: user.name,
     email: user.email,
     courses: (user.purchasedCourses || [])
-      .filter(course => course)  // סינון ערכי null
-      .map((course) => ({
-        _id: course._id,
-        name: course.name,
-        price: course.price,
-        createdAt: course.createdAt,
+      .filter(purchase => purchase && purchase.course)  // סינון ערכי null ו-course
+      .map((purchase) => ({
+        _id: purchase.course._id,
+        name: purchase.course.name,
+        price: purchase.course.price,
+        purchaseDate: purchase.purchaseDate, // שימוש ב-purchaseDate במקום createdAt
       })),
     workshops: (user.purchasedWorkshops || [])
-      .filter(workshop => workshop)  // סינון ערכי null
-      .map((workshop) => ({
-        _id: workshop._id,
-        name: workshop.name,
-        price: workshop.price,
-        createdAt: workshop.createdAt,
+      .filter(purchase => purchase && purchase.workshop)  // סינון ערכי null ו-workshop
+      .map((purchase) => ({
+        _id: purchase.workshop._id,
+        name: purchase.workshop.name,
+        price: purchase.workshop.price,
+        purchaseDate: purchase.purchaseDate, // שימוש ב-purchaseDate במקום createdAt
       })),
   }));
 

@@ -1,36 +1,44 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Course = require('../models/CourseModel');
-const { sendOrderConfirmationEmail } = require('../utils/emailService');
-const multer = require('multer');
-const path = require('path');
-const User = require('../models/UserModel'); // וודא שהנתיב נכון בהתאם למבנה התיקיות שלך
+const Course = require("../models/CourseModel");
+const { sendOrderConfirmationEmail } = require("../utils/emailService");
+const multer = require("multer");
+const path = require("path");
+const User = require("../models/UserModel"); // וודא שהנתיב נכון בהתאם למבנה התיקיות שלך
 
 // הגדרת אחסון התמונות
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
+    cb(null, Date.now() + "-" + file.originalname);
+  },
 });
 
 const upload = multer({ storage: storage });
 
 // חשיפת תיקיית 'uploads' כמשאב סטטי
-router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+router.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // נתיב להוספת קורס חדש
-router.post('/', upload.single('image'), async (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
   try {
-    const { name, courseDescription, courseDetails, price, capacity, startDate, startTime } = req.body; // הוספת startTime מהבקשה
+    const {
+      name,
+      courseDescription,
+      courseDetails,
+      price,
+      capacity,
+      startDate,
+      startTime,
+    } = req.body; // הוספת startTime מהבקשה
 
     // קבלת נתיב התמונה שהועלתה
-    let courseImagePath = req.file ? req.file.path : '';
+    let courseImagePath = req.file ? req.file.path : "";
 
     // החלפת כל התווים ההפוכים בתווים רגילים כדי לוודא שהתמונה ניתנת לשליפה כראוי
-    courseImagePath = courseImagePath.replace(/\\/g, '/');
+    courseImagePath = courseImagePath.replace(/\\/g, "/");
 
     // יצירת הקורס החדש
     const newCourse = new Course({
@@ -53,7 +61,7 @@ router.post('/', upload.single('image'), async (req, res) => {
 });
 
 // Route to get all courses
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const courses = await Course.find(); // שלוף את כל השדות ללא הגבלה
     res.json(courses);
@@ -63,11 +71,11 @@ router.get('/', async (req, res) => {
 });
 
 // Route to get a course by ID
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
     if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
     res.json(course);
   } catch (err) {
@@ -76,29 +84,37 @@ router.get('/:id', async (req, res) => {
 });
 
 // Route to delete a course by ID
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deletedCourse = await Course.findByIdAndDelete(id);
     if (!deletedCourse) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
-    res.status(200).json({ message: 'Course deleted successfully' });
+    res.status(200).json({ message: "Course deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
 // נתיב לעדכון קורס
-router.put('/:id', upload.single('image'), async (req, res) => {
+router.put("/:id", upload.single("image"), async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, courseDescription, courseDetails, price, capacity, startDate, startTime } = req.body; // הוספת startTime מהבקשה
+    const {
+      name,
+      courseDescription,
+      courseDetails,
+      price,
+      capacity,
+      startDate,
+      startTime,
+    } = req.body; // הוספת startTime מהבקשה
 
     // מצא את הקורס לפי מזהה
     const course = await Course.findById(id);
     if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
 
     // עדכון פרטי הקורס
@@ -120,40 +136,44 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 
     res.json(updatedCourse);
   } catch (err) {
-    console.error('Failed to update course:', err);
-    res.status(500).json({ error: 'Failed to update course' });
+    console.error("Failed to update course:", err);
+    res.status(500).json({ error: "Failed to update course" });
   }
 });
 
 // נתיב לרכישת קורס
-router.post('/purchase', async (req, res) => {
-  console.log('Start processing purchase request');  // לוג למעקב
+router.post("/purchase", async (req, res) => {
+  console.log("Start processing purchase request"); // לוג למעקב
   const { fullName, email, courseId } = req.body;
 
-  console.log('Received purchase data:', { fullName, email, courseId });  // לוג למעקב
+  console.log("Received purchase data:", { fullName, email, courseId }); // לוג למעקב
 
   try {
     // ודא שה-courseId הוא ObjectId
-    const mongoose = require('mongoose');
-    const validCourseId = mongoose.Types.ObjectId.isValid(courseId) ? new mongoose.Types.ObjectId(courseId) : null;
+    const mongoose = require("mongoose");
+    const validCourseId = mongoose.Types.ObjectId.isValid(courseId)
+      ? new mongoose.Types.ObjectId(courseId)
+      : null;
 
     if (!validCourseId) {
-      console.log('Invalid courseId');  // לוג אם ה-courseId לא תקין
-      return res.status(400).json({ error: 'Invalid courseId' });
+      console.log("Invalid courseId"); // לוג אם ה-courseId לא תקין
+      return res.status(400).json({ error: "Invalid courseId" });
     }
 
     const course = await Course.findById(validCourseId);
     if (!course) {
-      console.log('Course not found');  // לוג אם הקורס לא נמצא
-      return res.status(404).json({ error: 'Course not found' });
+      console.log("Course not found"); // לוג אם הקורס לא נמצא
+      return res.status(404).json({ error: "Course not found" });
     }
 
-    console.log('Course found:', course.name);  // לוג אם הקורס נמצא
+    console.log("Course found:", course.name); // לוג אם הקורס נמצא
 
     // בדיקה אם הקורס הגיע לתפוסה המקסימלית
     if (course.participants >= course.capacity) {
-      console.log('Course is full');  // לוג אם הקורס מלא
-      return res.status(400).json({ error: 'The course is full. Registration is not possible.' });
+      console.log("Course is full"); // לוג אם הקורס מלא
+      return res
+        .status(400)
+        .json({ error: "The course is full. Registration is not possible." });
     }
 
     // חפש את המשתמש על פי כתובת האימייל
@@ -161,21 +181,32 @@ router.post('/purchase', async (req, res) => {
 
     console.log("User found:", user ? user.name : "Not found");
     if (!user) {
-      console.log('User not found');  // לוג אם המשתמש לא נמצא
-      return res.status(404).json({ error: 'User not found' });
+      console.log("User not found"); // לוג אם המשתמש לא נמצא
+      return res.status(404).json({ error: "User not found" });
     }
 
     // בדוק אם המערך purchasedCourses קיים, אם לא - אתחל אותו
     user.purchasedCourses = user.purchasedCourses || [];
 
     // בדוק אם המשתמש כבר רכש את הקורס הזה
-    if (user.purchasedCourses.includes(validCourseId)) {
-      console.log('User has already purchased this course');
-      return res.status(200).json({ message: 'Course already purchased', purchased: true });
+    if (
+      user.purchasedCourses.some(
+        (purchase) =>
+          purchase.course &&
+          purchase.course.toString() === validCourseId.toString()
+      )
+    ) {
+      console.log("User has already purchased this course");
+      return res
+        .status(200)
+        .json({ message: "Course already purchased", purchased: true });
     }
 
-    // הוסף את הקורס לרשימת הרכישות של המשתמש
-    user.purchasedCourses.push(validCourseId);
+    // הוסף את הקורס לרשימת הרכישות של המשתמש עם תאריך הרכישה הנוכחי
+    user.purchasedCourses.push({
+      course: validCourseId,
+      purchaseDate: new Date(),
+    });
     await user.save();
 
     // עדכון מספר המשתתפים בקורס
@@ -187,22 +218,19 @@ router.post('/purchase', async (req, res) => {
       email,
       fullName,
       course.name,
-      'course', // מציין שזה קורס
+      "course", // מציין שזה קורס
       validCourseId,
       course.startDate,
       course.startTime,
       course.courseDetails
     );
-    console.log('Email sent successfully');  // לוג להצלחה בשליחת המייל
+    console.log("Email sent successfully"); // לוג להצלחה בשליחת המייל
 
-    res.status(200).send('הזמנתך התקבלה בהצלחה!');
+    res.status(200).send("הזמנתך התקבלה בהצלחה!");
   } catch (err) {
-    console.error('Error occurred during purchase process:', err);  // לוג במקרה של שגיאה
-    res.status(500).json({ error: 'Failed to process purchase' });
+    console.error("Error occurred during purchase process:", err); // לוג במקרה של שגיאה
+    res.status(500).json({ error: "Failed to process purchase" });
   }
 });
-
-
-
 
 module.exports = router;
