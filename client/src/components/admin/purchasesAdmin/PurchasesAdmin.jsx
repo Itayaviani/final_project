@@ -45,11 +45,13 @@ const PurchasesAdmin = () => {
   }, []);
 
   const showCourses = () => {
-    setFilteredType('קורס');
+    setFilteredType(null); // Clear the previous filter type
+    setTimeout(() => setFilteredType('קורס'), 0); // Set the filter type to 'קורס'
   };
 
   const showWorkshops = () => {
-    setFilteredType('סדנה');
+    setFilteredType(null); // Clear the previous filter type
+    setTimeout(() => setFilteredType('סדנה'), 0); // Set the filter type to 'סדנה'
   };
 
   const filteredPurchases = purchases.filter(purchase => {
