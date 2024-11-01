@@ -10,7 +10,6 @@
   box-sizing: border-box;
 }
 
-
 /* Wrapper to center the PurchasesList */
 .purchases-admin-page .purchases-wrapper {
   display: flex;
@@ -78,7 +77,6 @@
   background-color: #e3e9f0;
 }
 
-
 /* Button Styles */
 .purchases-admin-page .filter-buttons {
   text-align: center;
@@ -123,6 +121,33 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.purchases-admin-page .date-picker-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* Space between the two date pickers */
+  margin-bottom: 30px;
+  direction: rtl; /* Switches label alignment to the right of the input */
+}
+
+/* Style for each date picker label */
+.purchases-admin-page .date-picker-wrapper label {
+  font-size: 1em;
+  font-weight: 600;
+  color: #333;
+  margin-right: 5px; /* Small gap between label and input */
+  white-space: nowrap; /* Prevent label from breaking into a new line */
+}
+
+
+.purchases-admin-page .date-picker-wrapper .react-datepicker-wrapper {
+  width: auto;
+}
+
+.purchases-admin-page .date-picker-wrapper label:first-of-type {
+  margin-right: 10px; /* רווח בין הכותרת לתאריך התחלה */
+}
+
 /* עיצוב רספונסיבי */
 @media (max-width: 768px) {
   .purchases-admin-page .purchases-list {
@@ -136,6 +161,11 @@
   .purchases-admin-page .filter-buttons button {
     width: 100%;
     margin-bottom: 10px;
+  }
+
+  .purchases-admin-page .date-picker-wrapper {
+    flex-direction: column;
+    gap: 10px; /* פחות רווח עבור מסכים קטנים */
   }
 }
 

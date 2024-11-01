@@ -4,6 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-y: auto;
+    
 }
 
 /* עיצוב כללי */
@@ -18,6 +19,7 @@ html, body {
     line-height: 1.8;
     animation: fadeIn 1s ease-in-out;
     box-sizing: border-box;
+    
 }
 
 /* כותרת ולוגו */
@@ -25,7 +27,7 @@ html, body {
     background-color: #a9cce3;
     text-align: center;
     padding: 60px 0;
-    color: #fffefe;
+    color: #000000;
     position: sticky;
     top: 0;
     z-index: 10;
@@ -67,6 +69,7 @@ html, body {
     justify-content: space-between;
     gap: 50px;
     flex-wrap: wrap;
+    
 }
 
 .text-content {
@@ -112,7 +115,7 @@ li {
 li::before {
     content: '⭐';
     position: absolute;
-    left: 0;
+    right: 0;
     color: #f4d03f;
     font-size: 24px;
 }

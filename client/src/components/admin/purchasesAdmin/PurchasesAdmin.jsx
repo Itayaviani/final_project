@@ -88,21 +88,23 @@ const PurchasesAdmin = () => {
           )}
 
           {/* תאריכון לבחירת טווח תאריכים */}
+
           <div className="date-picker-wrapper">
-            <label>בחר תאריך התחלה:</label>
+          <label>בחר תאריך התחלה:</label>
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               isClearable
               placeholderText="תאריך התחלה"
             />
-            <label>בחר תאריך סיום:</label>
+           <label>בחר תאריך סיום:</label>
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
               isClearable
               placeholderText="תאריך סיום"
             />
+            
           </div>
 
           {filteredType && (

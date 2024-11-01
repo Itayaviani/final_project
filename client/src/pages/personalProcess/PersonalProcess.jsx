@@ -41,7 +41,7 @@ function PersonalProcess() {
                         <img src={photo1} alt="תמונה 1" className="personal-image" />
                     </div>
                     <div className="text-content">
-                        <p>התהליך כולל 12 פגישות אישיות מובנות בהן נפתח תודעה שתאפשר לך:</p>
+                        <p>:התהליך כולל 12 פגישות אישיות מובנות בהן נפתח תודעה שתאפשר לך</p>
                         <ul>
                             <li>לחוות את החיים ממקום של בחירה</li>
                             <li>לזהות את הרצונות האמיתיים שלך</li>
