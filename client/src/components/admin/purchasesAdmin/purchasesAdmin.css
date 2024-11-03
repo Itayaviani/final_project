@@ -8,6 +8,8 @@
   padding: 20px;
   background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
   box-sizing: border-box;
+  font-family: Arial, sans-serif;
+
 }
 
 /* Wrapper to center the PurchasesList */
