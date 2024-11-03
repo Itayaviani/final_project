@@ -21,18 +21,28 @@ const PurchasesAdmin = () => {
           },
         });
 
+        // יצירת מזהה ייחודי מבוסס על מזהה הפריט ושם המשתמש כדי למנוע שכפול
         const allPurchases = response.data.data.purchases.flatMap(userPurchase => [
-          ...userPurchase.courses.map(course => ({
-            ...course,
-            type: 'קורס',
-            userName: userPurchase.name,
-          })),
-          ...userPurchase.workshops.map(workshop => ({
-            ...workshop,
-            type: 'סדנה',
-            userName: userPurchase.name,
-          })),
-        ]).sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
+          ...userPurchase.courses
+            .map(course => ({
+              ...course,
+              type: 'קורס',
+              userName: userPurchase.name,
+              uniqueId: `${course._id}-${userPurchase.name}`
+            })),
+          ...userPurchase.workshops
+            .map(workshop => ({
+              ...workshop,
+              type: 'סדנה',
+              userName: userPurchase.name,
+              uniqueId: `${workshop._id}-${userPurchase.name}`
+            })),
+        ]).reduce((acc, item) => {
+          if (!acc.some(existingItem => existingItem.uniqueId === item.uniqueId)) {
+            acc.push(item);
+          }
+          return acc;
+        }, []).sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
 
         setPurchases(allPurchases);
       } catch (err) {
@@ -45,13 +55,13 @@ const PurchasesAdmin = () => {
   }, []);
 
   const showCourses = () => {
-    setFilteredType(null); // Clear the previous filter type
-    setTimeout(() => setFilteredType('קורס'), 0); // Set the filter type to 'קורס'
+    setFilteredType(null);
+    setTimeout(() => setFilteredType('קורס'), 0);
   };
 
   const showWorkshops = () => {
-    setFilteredType(null); // Clear the previous filter type
-    setTimeout(() => setFilteredType('סדנה'), 0); // Set the filter type to 'סדנה'
+    setFilteredType(null);
+    setTimeout(() => setFilteredType('סדנה'), 0);
   };
 
   const filteredPurchases = purchases.filter(purchase => {
@@ -59,8 +69,8 @@ const PurchasesAdmin = () => {
     const isWithinType = !filteredType || purchase.type === filteredType;
     const isWithinSearch = purchase.userName.toLowerCase().startsWith(searchTerm.toLowerCase());
     const isWithinDateRange =
-      (!startDate || purchaseDate >= startDate) &&
-      (!endDate || purchaseDate <= endDate);
+      (!startDate || purchaseDate >= new Date(startDate.setHours(0, 0, 0, 0))) &&
+      (!endDate || purchaseDate <= new Date(endDate.setHours(23, 59, 59, 999)));
 
     return isWithinType && isWithinSearch && isWithinDateRange;
   });
@@ -87,24 +97,23 @@ const PurchasesAdmin = () => {
             />
           )}
 
-          {/* תאריכון לבחירת טווח תאריכים */}
-
           <div className="date-picker-wrapper">
-          <label>בחר תאריך התחלה:</label>
+            <label>בחר תאריך התחלה:</label>
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               isClearable
               placeholderText="תאריך התחלה"
+              dateFormat="dd/MM/yyyy"
             />
-           <label>בחר תאריך סיום:</label>
+            <label>בחר תאריך סיום:</label>
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
               isClearable
               placeholderText="תאריך סיום"
+              dateFormat="dd/MM/yyyy"
             />
-            
           </div>
 
           {filteredType && (
@@ -120,7 +129,7 @@ const PurchasesAdmin = () => {
               </thead>
               <tbody>
                 {filteredPurchases.map((purchase) => (
-                  <tr key={purchase._id}>
+                  <tr key={purchase.uniqueId}>
                     <td>{purchase.purchaseDate ? new Date(purchase.purchaseDate).toLocaleString() : 'תאריך לא זמין'}</td>
                     <td className="price-cell-purchasesAdmin">{purchase.price} ש"ח</td>
                     <td>{purchase.name}</td>
