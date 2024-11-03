@@ -78,6 +78,27 @@ const PurchasesAdmin = () => {
 
   const filteredTotal = filteredPurchases.length;
 
+  // חישוב הרווח הכספי הכולל בהתאם לסינון
+  const totalRevenue = filteredPurchases.reduce((acc, purchase) => acc + (purchase.price || 0), 0);
+
+  // פונקציה למציאת הפריט הנרכש ביותר והפחות נרכש בהתאם לסינון תאריכים
+  const getPurchaseStats = (type) => {
+    const items = filteredPurchases.filter(purchase => purchase.type === type);
+    const itemCount = items.reduce((count, item) => {
+      count[item.name] = (count[item.name] || 0) + 1;
+      return count;
+    }, {});
+    const mostPurchasedItem = Object.keys(itemCount).reduce((a, b) => itemCount[a] > itemCount[b] ? a : b, null);
+    const leastPurchasedItem = Object.keys(itemCount).reduce((a, b) => itemCount[a] < itemCount[b] ? a : b, null);
+    return { 
+      mostPurchased: { name: mostPurchasedItem, count: itemCount[mostPurchasedItem] || 0 },
+      leastPurchased: { name: leastPurchasedItem, count: itemCount[leastPurchasedItem] || 0 }
+    };
+  };
+
+  const courseStats = getPurchaseStats('קורס');
+  const workshopStats = getPurchaseStats('סדנה');
+
   return (
     <div className="purchases-admin-page">
       <div className="purchases-wrapper">
@@ -116,7 +137,32 @@ const PurchasesAdmin = () => {
               placeholderText="תאריך סיום"
               dateFormat="dd/MM/yyyy"
             />
-            <span className="total-count">סה"כ: {filteredTotal}</span>
+          </div>
+
+          <div className="total-count">סה"כ: {filteredTotal}</div>
+          <div className="total-revenue">סה"כ רווח כספי: {totalRevenue.toLocaleString()} ש"ח</div>
+
+          <div className="purchase-stats">
+            {filteredType === 'קורס' && (
+              <>
+                <p>הקורס הנרכש ביותר: {courseStats.mostPurchased.name} ({courseStats.mostPurchased.count} רכישות)</p>
+                <p>הקורס הפחות נרכש: {courseStats.leastPurchased.name} ({courseStats.leastPurchased.count} רכישות)</p>
+              </>
+            )}
+            {filteredType === 'סדנה' && (
+              <>
+                <p>הסדנה הנרכשת ביותר: {workshopStats.mostPurchased.name} ({workshopStats.mostPurchased.count} רכישות)</p>
+                <p>הסדנה הפחות נרכשת: {workshopStats.leastPurchased.name} ({workshopStats.leastPurchased.count} רכישות)</p>
+              </>
+            )}
+            {filteredType === null && (
+              <>
+                <p>הקורס הנרכש ביותר: {courseStats.mostPurchased.name} ({courseStats.mostPurchased.count} רכישות)</p>
+                <p>הקורס הפחות נרכש: {courseStats.leastPurchased.name} ({courseStats.leastPurchased.count} רכישות)</p>
+                <p>הסדנה הנרכשת ביותר: {workshopStats.mostPurchased.name} ({workshopStats.mostPurchased.count} רכישות)</p>
+                <p>הסדנה הפחות נרכשת: {workshopStats.leastPurchased.name} ({workshopStats.leastPurchased.count} רכישות)</p>
+              </>
+            )}
           </div>
 
           <table className="purchases-table">

@@ -189,3 +189,9 @@
   display: inline-block;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.total-revenue {
+  margin-top: 10px; /* ריווח בין סה"כ לסה"כ רווח כספי */
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
