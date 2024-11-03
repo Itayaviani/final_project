@@ -139,31 +139,33 @@ const PurchasesAdmin = () => {
             />
           </div>
 
-          <div className="total-count">סה"כ: {filteredTotal}</div>
-          <div className="total-revenue">סה"כ רווח כספי: {totalRevenue.toLocaleString()} ש"ח</div>
+          <div className="stats-card">
+  <div className="total-count">סה"כ: {filteredTotal}</div>
+  <div className="total-revenue">סה"כ רווח כספי: {totalRevenue.toLocaleString()} ש"ח</div>
 
-          <div className="purchase-stats">
-            {filteredType === 'קורס' && (
-              <>
-                <p>הקורס הנרכש ביותר: {courseStats.mostPurchased.name} ({courseStats.mostPurchased.count} רכישות)</p>
-                <p>הקורס הפחות נרכש: {courseStats.leastPurchased.name} ({courseStats.leastPurchased.count} רכישות)</p>
-              </>
-            )}
-            {filteredType === 'סדנה' && (
-              <>
-                <p>הסדנה הנרכשת ביותר: {workshopStats.mostPurchased.name} ({workshopStats.mostPurchased.count} רכישות)</p>
-                <p>הסדנה הפחות נרכשת: {workshopStats.leastPurchased.name} ({workshopStats.leastPurchased.count} רכישות)</p>
-              </>
-            )}
-            {filteredType === null && (
-              <>
-                <p>הקורס הנרכש ביותר: {courseStats.mostPurchased.name} ({courseStats.mostPurchased.count} רכישות)</p>
-                <p>הקורס הפחות נרכש: {courseStats.leastPurchased.name} ({courseStats.leastPurchased.count} רכישות)</p>
-                <p>הסדנה הנרכשת ביותר: {workshopStats.mostPurchased.name} ({workshopStats.mostPurchased.count} רכישות)</p>
-                <p>הסדנה הפחות נרכשת: {workshopStats.leastPurchased.name} ({workshopStats.leastPurchased.count} רכישות)</p>
-              </>
-            )}
-          </div>
+  <div className="purchase-stats">
+    {filteredType === 'קורס' && (
+      <>
+        <p>הקורס הנרכש ביותר: {courseStats.mostPurchased.name} ({courseStats.mostPurchased.count} רכישות)</p>
+        <p>הקורס הפחות נרכש: {courseStats.leastPurchased.name} ({courseStats.leastPurchased.count} רכישות)</p>
+      </>
+    )}
+    {filteredType === 'סדנה' && (
+      <>
+        <p>הסדנה הנרכשת ביותר: {workshopStats.mostPurchased.name} ({workshopStats.mostPurchased.count} רכישות)</p>
+        <p>הסדנה הפחות נרכשת: {workshopStats.leastPurchased.name} ({workshopStats.leastPurchased.count} רכישות)</p>
+      </>
+    )}
+    {filteredType === null && (
+      <>
+        <p>הקורס הנרכש ביותר: {courseStats.mostPurchased.name} ({courseStats.mostPurchased.count} רכישות)</p>
+        <p>הקורס הפחות נרכש: {courseStats.leastPurchased.name} ({courseStats.leastPurchased.count} רכישות)</p>
+        <p>הסדנה הנרכשת ביותר: {workshopStats.mostPurchased.name} ({workshopStats.mostPurchased.count} רכישות)</p>
+        <p>הסדנה הפחות נרכשת: {workshopStats.leastPurchased.name} ({workshopStats.leastPurchased.count} רכישות)</p>
+      </>
+    )}
+  </div>
+</div>
 
           <table className="purchases-table">
             <thead>

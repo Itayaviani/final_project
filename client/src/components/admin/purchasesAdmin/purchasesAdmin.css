@@ -178,20 +178,37 @@
   right: auto; /* מבטל את המיקום הימני */
   left: 10px; /* מציב את האיקס בצד שמאל */
 }
-.total-count {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  background-color: #f2f2f2;
-  padding: 8px 12px;
-  border-radius: 8px;
-  margin-left: 10px;
-  display: inline-block;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* עיצוב כללי לכרטיס */
+.stats-card {
+  border: 1px solid #ddd; /* גבול עדין */
+  border-radius: 8px; /* פינות מעוגלות */
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.993); /* צל קטן */
+  margin-top: 20px; /* מרווח מעל הכרטיס */
+  max-width: 400px; /* רוחב מקסימלי */
+  margin-left: auto;
+  margin-right: auto;
 }
-.total-revenue {
-  margin-top: 10px; /* ריווח בין סה"כ לסה"כ רווח כספי */
-  font-size: 16px;
+
+/* עיצוב עבור סה"כ וסה"כ רווח כספי */
+.total-count, .total-revenue {
+  font-size: 18px;
   font-weight: bold;
   color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* עיצוב עבור הסטטיסטיקות */
+.purchase-stats p {
+  font-size: 16px;
+  color: #555;
+  margin: 5px 0;
+  text-align: center;
+}
+
+/* ריווח כללי בין האלמנטים בכרטיס */
+.stats-card > *:not(:last-child) {
+  margin-bottom: 15px;
 }
