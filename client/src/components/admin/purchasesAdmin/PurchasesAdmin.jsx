@@ -21,7 +21,6 @@ const PurchasesAdmin = () => {
           },
         });
 
-        // יצירת מזהה ייחודי מבוסס על מזהה הפריט ושם המשתמש כדי למנוע שכפול
         const allPurchases = response.data.data.purchases.flatMap(userPurchase => [
           ...userPurchase.courses
             .map(course => ({
@@ -54,14 +53,16 @@ const PurchasesAdmin = () => {
     fetchPurchases();
   }, []);
 
-  const showCourses = () => {
+  const showAll = () => {
     setFilteredType(null);
-    setTimeout(() => setFilteredType('קורס'), 0);
+  };
+
+  const showCourses = () => {
+    setFilteredType('קורס');
   };
 
   const showWorkshops = () => {
-    setFilteredType(null);
-    setTimeout(() => setFilteredType('סדנה'), 0);
+    setFilteredType('סדנה');
   };
 
   const filteredPurchases = purchases.filter(purchase => {
@@ -75,6 +76,8 @@ const PurchasesAdmin = () => {
     return isWithinType && isWithinSearch && isWithinDateRange;
   });
 
+  const filteredTotal = filteredPurchases.length;
+
   return (
     <div className="purchases-admin-page">
       <div className="purchases-wrapper">
@@ -83,19 +86,18 @@ const PurchasesAdmin = () => {
           {error && <p className="error-message">{error}</p>}
 
           <div className="filter-buttons">
+            <button onClick={showAll}>הצג הכל</button>
             <button onClick={showCourses}>הצג קורסים</button>
             <button onClick={showWorkshops}>הצג סדנאות</button>
           </div>
 
-          {filteredType && (
-            <input
-              type="text"
-              placeholder="חפש לפי שם משתמש"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
-          )}
+          <input
+            type="text"
+            placeholder="חפש לפי שם משתמש"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
 
           <div className="date-picker-wrapper">
             <label>בחר תאריך התחלה:</label>
@@ -114,32 +116,31 @@ const PurchasesAdmin = () => {
               placeholderText="תאריך סיום"
               dateFormat="dd/MM/yyyy"
             />
+            <span className="total-count">סה"כ: {filteredTotal}</span>
           </div>
 
-          {filteredType && (
-            <table className="purchases-table">
-              <thead>
-                <tr>
-                  <th>תאריך רכישה</th>
-                  <th>מחיר</th>
-                  <th>שם פריט</th>
-                  <th>סוג פריט</th>
-                  <th>שם משתמש</th>
+          <table className="purchases-table">
+            <thead>
+              <tr>
+                <th>תאריך רכישה</th>
+                <th>מחיר</th>
+                <th>שם פריט</th>
+                <th>סוג פריט</th>
+                <th>שם משתמש</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredPurchases.map((purchase) => (
+                <tr key={purchase.uniqueId}>
+                  <td>{purchase.purchaseDate ? new Date(purchase.purchaseDate).toLocaleString() : 'תאריך לא זמין'}</td>
+                  <td className="price-cell-purchasesAdmin">{purchase.price} ש"ח</td>
+                  <td>{purchase.name}</td>
+                  <td>{purchase.type}</td>
+                  <td>{purchase.userName}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {filteredPurchases.map((purchase) => (
-                  <tr key={purchase.uniqueId}>
-                    <td>{purchase.purchaseDate ? new Date(purchase.purchaseDate).toLocaleString() : 'תאריך לא זמין'}</td>
-                    <td className="price-cell-purchasesAdmin">{purchase.price} ש"ח</td>
-                    <td>{purchase.name}</td>
-                    <td>{purchase.type}</td>
-                    <td>{purchase.userName}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

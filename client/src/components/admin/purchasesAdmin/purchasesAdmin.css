@@ -174,3 +174,18 @@
   text-align: center;
   padding-right: 5px; /* תוכל לשנות את הערך בהתאם לצורך */
 }
+.date-picker-wrapper .react-datepicker__close-icon {
+  right: auto; /* מבטל את המיקום הימני */
+  left: 10px; /* מציב את האיקס בצד שמאל */
+}
+.total-count {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  background-color: #f2f2f2;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-left: 10px;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
