@@ -4,6 +4,9 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-y: auto;
+}
+
+*{
     font-family: Arial, sans-serif;
 
 }
@@ -13,7 +16,7 @@ html, body {
     width: 100vw;
     min-height: 100vh;
     background: linear-gradient(135deg, #d6eaf8, #e8f6f3);
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, sans-serif;
     color: #000000;
     overflow-x: hidden;
     overflow-y: auto;
@@ -25,18 +28,18 @@ html, body {
 
 /* כותרת ולוגו */
 .header {
-    background-color: #a9cce3;
-    text-align: center;
-    padding: 60px 0;
-    color: #000000;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+   background-color: #a9cce3;
+  text-align: center;
+  padding: 60px 0;
+  color: #000000;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .logo {
-    font-size: 64px;
+    font-size: 60px;
     margin: 0;
     letter-spacing: 2px;
     font-weight: 700;
@@ -44,11 +47,12 @@ html, body {
 }
 
 .subtitle {
-    font-size: 24px;
+    font-size: 34px;
     margin-top: 10px;
-    font-weight: 300;
-    font-style: italic;
+    font-weight: 700;
     opacity: 0.8;
+    color: rgb(39, 38, 38);
+    
 }
 
 /* עיצוב תוכן כללי */
@@ -76,6 +80,9 @@ html, body {
 .text-content {
     flex: 1;
     padding: 20px;
+    font-size: 22px; /* כאן אפשר להגדיר כל גודל שתרצה */
+
+    
 }
 
 .image-content {
@@ -271,4 +278,8 @@ li::before {
         flex-direction: column;
         gap: 20px;
     }
+}
+.content-section {
+    font-size: 22px; /* כאן אפשר להגדיר כל גודל שתרצה */
+
 }

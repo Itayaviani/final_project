@@ -6,6 +6,8 @@ html, body {
   height: 100%;
   background-color: #fff; /* רקע לבן לכל הדף */
   font-family: 'Arial', sans-serif;
+      font-size: 22px; /* כאן אפשר להגדיר כל גודל שתרצה */
+
 }
 
 /* Title at the top of the page */
@@ -68,6 +70,7 @@ html, body {
 
 .form-group {
   flex: 0 0 48%; /* שני שדות יופיעו אחד ליד השני */
+  
 }
 
 /* סידור השדה "שם פרטי" בצד ימין ו"השם משפחה" בצד שמאל */
@@ -75,6 +78,7 @@ html, body {
   display: flex;
   flex-direction: row-reverse; /* שם פרטי בצד ימין, שם משפחה בצד שמאל */
   gap: 20px; /* רווח בין השדות */
+  
 }
 
 .form-group.full-width {
@@ -88,6 +92,8 @@ html, body {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-size: 21px; /* כאן אפשר להגדיר כל גודל שתרצה */
+
 }
 
 /* עיצוב השדות */

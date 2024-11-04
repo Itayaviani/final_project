@@ -12,8 +12,8 @@
   width: 100vw;
   min-height: 100vh;
   background: linear-gradient(135deg, #d6eaf8, #e8f6f3);
-  font-family: 'Roboto', sans-serif;
-  color: #2d3e50;
+  font-family: Arial, sans-serif; 
+  color: #050505;
   overflow-x: hidden;
   overflow-y: auto;
   line-height: 1.8;
@@ -34,19 +34,21 @@
 }
 
 .homepage-container .logo {
-  font-size: 64px;
+  font-size: 60px;
   margin: 0;
   letter-spacing: 2px;
   font-weight: 700;
-  color: #060606;
+  color: #000000;
 }
 
 .homepage-container .subtitle {
-  font-size: 24px;
-  margin-top: 10px;
-  font-weight: 300;
-  font-style: italic;
-  opacity: 0.8;
+  font-size: 34px;
+    margin-top: 10px;
+    font-weight: 700;
+    opacity: 0.8;
+    color: rgb(39, 38, 38);
+    
+
 }
 
 /* עיצוב התוכן של נעים להכיר */
@@ -59,8 +61,11 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   animation: slideIn 1s ease-in-out;
   border-left: 10px solid #a9cce3;
-}
+  font-size: 22px; /* כאן אפשר להגדיר כל גודל שתרצה */
 
+}
+.homepage-container h5 {
+  font-size: 37px; /* כאן אפשר להגדיר כל גודל שתרצה */}
 /* כותרת הצצה לפרויקטים עם מסגרת ואפקטים נוספים */
 .homepage-container h4 {
   color: black;

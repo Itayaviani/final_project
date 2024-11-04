@@ -14,6 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .navbar {
@@ -22,6 +23,7 @@
   align-items: center;
   padding: 10px 0;
   width: 100%;
+  
 }
 
 .navbar-menu {
@@ -31,6 +33,7 @@
   margin: 0;
   justify-content: space-evenly;
   width: 100%;
+  
 }
 
 .navbar-item {
@@ -45,6 +48,8 @@
   position: relative;
   display: flex;
   align-items: center;
+  font-size: 17px; /* או כל גודל שתרצה */
+
 }
 
 .navbar-item .user-icon {

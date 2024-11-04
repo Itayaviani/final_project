@@ -130,20 +130,27 @@
   gap: 20px; /* Space between the two date pickers */
   margin-bottom: 30px;
   direction: rtl; /* Switches label alignment to the right of the input */
+  
+  
 }
 
 /* Style for each date picker label */
 .purchases-admin-page .date-picker-wrapper label {
-  font-size: 1em;
+  font-size: 1.3em;
   font-weight: 600;
   color: #333;
   margin-right: 5px; /* Small gap between label and input */
   white-space: nowrap; /* Prevent label from breaking into a new line */
+  
 }
+.purchases-admin-page .date-picker-wrapper input {
+  font-size: 1.0em;
 
+}
 
 .purchases-admin-page .date-picker-wrapper .react-datepicker-wrapper {
   width: auto;
+  
 }
 
 .purchases-admin-page .date-picker-wrapper label:first-of-type {
@@ -191,11 +198,12 @@
   max-width: 400px; /* רוחב מקסימלי */
   margin-left: auto;
   margin-right: auto;
+  
 }
 
 /* עיצוב עבור סה"כ וסה"כ רווח כספי */
 .total-count, .total-revenue {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
@@ -204,7 +212,7 @@
 
 /* עיצוב עבור הסטטיסטיקות */
 .purchase-stats p {
-  font-size: 16px;
+  font-size: 20px;
   color: #555;
   margin: 5px 0;
   text-align: center;
