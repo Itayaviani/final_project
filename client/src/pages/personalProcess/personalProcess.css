@@ -84,6 +84,9 @@ html, body {
 
     
 }
+.text-content li{
+    font-size: 22px;
+}
 
 .image-content {
     flex: 1;

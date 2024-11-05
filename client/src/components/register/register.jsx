@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaUser, FaPhone, FaEnvelope, FaLock } from "react-icons/fa";
+import { FaUser, FaPhone, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa"; // ייבוא אייקוני העין
 import "./register.css";
 
 export default function Register() {
@@ -12,11 +12,16 @@ export default function Register() {
     password: ""
   });
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // סטייט לניהול תצוגת הסיסמה
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
     setErrorMessage("");
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // שינוי מצב התצוגה של הסיסמה
   };
 
   const handleSubmit = async (e) => {
@@ -87,13 +92,16 @@ export default function Register() {
           <div className="register-page-input-group">
             <span className="icon"><FaLock /></span>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} // תצוגה על פי מצב הסטייט
               name="password"
               value={inputData.password}
               onChange={handleChange}
               placeholder="סיסמא"
               required
             />
+            <span className="icon eye-icon" onClick={togglePasswordVisibility}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />} {/* הצגת אייקון לפי מצב התצוגה */}
+            </span>
           </div>
           <button type="submit" className="register-page-btn">להרשמה</button>
         </form>

@@ -2,15 +2,21 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // ייבוא אייקוני העין
 import "./login.css";
 
 export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
   const [inputData, setInputData] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // סטייט לניהול תצוגת הסיסמה
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // שינוי מצב התצוגה של הסיסמה
   };
 
   const onSubmit = async (e) => {
@@ -64,12 +70,15 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
           <div className="label-input-login">
             <span className="icon"><FaLock /></span>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} // תצוגה על פי מצב הסטייט
               name="password"
               placeholder="סיסמא"
               onChange={handleChange}
               required
             />
+            <span className="icon eye-icon" onClick={togglePasswordVisibility}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />} {/* הצגת אייקון לפי מצב התצוגה */}
+            </span>
           </div>
           <button type="submit" className="btn-login">
             להתחברות
