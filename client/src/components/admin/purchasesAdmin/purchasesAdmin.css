@@ -9,7 +9,6 @@
   background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
   box-sizing: border-box;
   font-family: Arial, sans-serif;
-
 }
 
 /* Wrapper to center the PurchasesList */
@@ -94,11 +93,11 @@
   border-radius: 50px;
   cursor: pointer;
   transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-  margin-right: 50px; /* רווח בין הכפתורים */
+  margin-right: 50px;
 }
 
 .purchases-admin-page .filter-buttons button:last-child {
-  margin-right: 0; /* מסיר רווח מיותר מהכפתור האחרון */
+  margin-right: 0;
 }
 
 .purchases-admin-page .filter-buttons button:hover {
@@ -127,11 +126,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px; /* Space between the two date pickers */
+  gap: 20px;
   margin-bottom: 30px;
-  direction: rtl; /* Switches label alignment to the right of the input */
-  
-  
+  direction: rtl;
 }
 
 /* Style for each date picker label */
@@ -139,22 +136,20 @@
   font-size: 1.3em;
   font-weight: 600;
   color: #333;
-  margin-right: 5px; /* Small gap between label and input */
-  white-space: nowrap; /* Prevent label from breaking into a new line */
-  
+  margin-right: 5px;
+  white-space: nowrap;
 }
+
 .purchases-admin-page .date-picker-wrapper input {
   font-size: 1.0em;
-
 }
 
 .purchases-admin-page .date-picker-wrapper .react-datepicker-wrapper {
   width: auto;
-  
 }
 
 .purchases-admin-page .date-picker-wrapper label:first-of-type {
-  margin-right: 10px; /* רווח בין הכותרת לתאריך התחלה */
+  margin-right: 10px;
 }
 
 /* עיצוב רספונסיבי */
@@ -174,31 +169,32 @@
 
   .purchases-admin-page .date-picker-wrapper {
     flex-direction: column;
-    gap: 10px; /* פחות רווח עבור מסכים קטנים */
+    gap: 10px;
   }
 }
 
 .price-cell-purchasesAdmin {
   direction: rtl;
   text-align: center;
-  padding-right: 5px; /* תוכל לשנות את הערך בהתאם לצורך */
+  padding-right: 5px;
 }
+
 .date-picker-wrapper .react-datepicker__close-icon {
-  right: auto; /* מבטל את המיקום הימני */
-  left: 10px; /* מציב את האיקס בצד שמאל */
+  right: auto;
+  left: 10px;
 }
+
 /* עיצוב כללי לכרטיס */
 .stats-card {
-  border: 1px solid #ddd; /* גבול עדין */
-  border-radius: 8px; /* פינות מעוגלות */
+  border: 1px solid #ddd;
+  border-radius: 8px;
   padding: 20px;
   background-color: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.993); /* צל קטן */
-  margin-top: 20px; /* מרווח מעל הכרטיס */
-  max-width: 400px; /* רוחב מקסימלי */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.993);
+  margin-top: 20px;
+  max-width: 400px;
   margin-left: auto;
   margin-right: auto;
-  
 }
 
 /* עיצוב עבור סה"כ וסה"כ רווח כספי */
@@ -221,4 +217,41 @@
 /* ריווח כללי בין האלמנטים בכרטיס */
 .stats-card > *:not(:last-child) {
   margin-bottom: 15px;
+}
+
+.purchase-stats h4 {
+  font-size: 20px;
+  color: #555;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.purchase-stats table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+.purchase-stats th,
+.purchase-stats td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+/* עיצוב עבור כותרות הטבלה */
+.purchase-stats th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* ריווח כללי בין האלמנטים בכרטיס */
+.stats-card > *:not(:last-child) {
+  margin-bottom: 15px;
+}
+/* עיצוב כותרות "הכי פחות נרכשים" ו-"הכי פחות נרכשות" */
+.least-purchased-title {
+  text-align: center;
+  padding: 10px 0;
+  background-color: #f2f2f2;
 }

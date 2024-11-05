@@ -25,5 +25,6 @@ router.put("/:id", protect, userController.updateUser);
 
 // **Route to get all purchases from all users** (Admin Only)
 router.get("/purchases/all", protect, userController.getAllUserPurchases); 
+router.get('/purchases/statistics', userController.getPurchaseStatistics);
 
 module.exports = router;

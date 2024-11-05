@@ -210,3 +210,72 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     data: { user },
   });
 });
+exports.getPurchaseStatistics = catchAsync(async (req, res, next) => {
+  const users = await User.find()
+    .populate({
+      path: 'purchasedCourses.course',
+      select: 'name price'
+    })
+    .populate({
+      path: 'purchasedWorkshops.workshop',
+      select: 'name price'
+    });
+
+  const allPurchases = users.flatMap(user => [
+    ...user.purchasedCourses.map(purchase => ({
+      name: purchase.course?.name,
+      price: purchase.course?.price || 0,
+      type: 'קורס'
+    })),
+    ...user.purchasedWorkshops.map(purchase => ({
+      name: purchase.workshop?.name,
+      price: purchase.workshop?.price || 0,
+      type: 'סדנה'
+    }))
+  ]);
+
+  // חישוב הרווח הכולל
+  const totalRevenue = allPurchases.reduce((acc, purchase) => acc + (purchase.price || 0), 0);
+
+// פונקציה למציאת כל הפריטים הנרכשים ביותר והפחות נרכשים
+const calculateMostAndLeastPurchased = (type) => {
+  const filteredPurchases = allPurchases.filter(purchase => purchase.type === type);
+  
+  // חישוב מספר הרכישות לכל פריט
+  const itemCount = filteredPurchases.reduce((count, item) => {
+    count[item.name] = (count[item.name] || 0) + 1;
+    return count;
+  }, {});
+
+  // מציאת הכמות המקסימלית והמינימלית של רכישות
+  const maxCount = Math.max(...Object.values(itemCount));
+  const minCount = Math.min(...Object.values(itemCount));
+
+  // מציאת כל הפריטים עם הכמות המקסימלית והמינימלית
+  const mostPurchasedItems = Object.keys(itemCount)
+    .filter(name => itemCount[name] === maxCount)
+    .map(name => ({ name, count: itemCount[name] }));
+
+  const leastPurchasedItems = Object.keys(itemCount)
+    .filter(name => itemCount[name] === minCount)
+    .map(name => ({ name, count: itemCount[name] }));
+
+  return {
+    mostPurchased: mostPurchasedItems,
+    leastPurchased: leastPurchasedItems
+  };
+};
+
+
+  const courseStats = calculateMostAndLeastPurchased('קורס');
+  const workshopStats = calculateMostAndLeastPurchased('סדנה');
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      totalRevenue,
+      courseStats,
+      workshopStats
+    }
+  });
+});

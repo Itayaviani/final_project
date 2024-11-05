@@ -1,56 +1,84 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './purchasesAdmin.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./purchasesAdmin.css";
 
 const PurchasesAdmin = () => {
   const [purchases, setPurchases] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [filteredType, setFilteredType] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  useEffect(() => {
-    const fetchPurchases = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/v1/users/purchases/all', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [courseStats, setCourseStats] = useState({
+    mostPurchased: [],
+    leastPurchased: [],
+  });
+  const [workshopStats, setWorkshopStats] = useState({
+    mostPurchased: [],
+    leastPurchased: [],
+  });
 
-        const allPurchases = response.data.data.purchases.flatMap(userPurchase => [
-          ...userPurchase.courses
-            .map(course => ({
-              ...course,
-              type: 'קורס',
-              userName: userPurchase.name,
-              uniqueId: `${course._id}-${userPurchase.name}`
-            })),
-          ...userPurchase.workshops
-            .map(workshop => ({
-              ...workshop,
-              type: 'סדנה',
-              userName: userPurchase.name,
-              uniqueId: `${workshop._id}-${userPurchase.name}`
-            })),
-        ]).reduce((acc, item) => {
-          if (!acc.some(existingItem => existingItem.uniqueId === item.uniqueId)) {
-            acc.push(item);
+  useEffect(() => {
+    const fetchPurchasesAndStats = async () => {
+      try {
+        const purchasesResponse = await axios.get(
+          "http://localhost:3000/api/v1/users/purchases/all",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
           }
-          return acc;
-        }, []).sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
+        );
+
+        const allPurchases = purchasesResponse.data.data.purchases
+          .flatMap((userPurchase) => [
+            ...userPurchase.courses.map((course) => ({
+              ...course,
+              type: "קורס",
+              userName: userPurchase.name,
+              uniqueId: `${course._id}-${userPurchase.name}`,
+            })),
+            ...userPurchase.workshops.map((workshop) => ({
+              ...workshop,
+              type: "סדנה",
+              userName: userPurchase.name,
+              uniqueId: `${workshop._id}-${userPurchase.name}`,
+            })),
+          ])
+          .reduce((acc, item) => {
+            if (!acc.some((existingItem) => existingItem.uniqueId === item.uniqueId)) {
+              acc.push(item);
+            }
+            return acc;
+          }, [])
+          .sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
 
         setPurchases(allPurchases);
+
+        const statsResponse = await axios.get(
+          "http://localhost:3000/api/v1/users/purchases/statistics",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        const { totalRevenue, courseStats, workshopStats } = statsResponse.data.data;
+        setTotalRevenue(totalRevenue);
+        setCourseStats(courseStats);
+        setWorkshopStats(workshopStats);
       } catch (err) {
-        console.error('Error fetching purchases:', err);
-        setError('שגיאה בטעינת הרכישות');
+        console.error("Error fetching purchases or statistics:", err);
+        setError("שגיאה בטעינת הרכישות או הסטטיסטיקות");
       }
     };
 
-    fetchPurchases();
+    fetchPurchasesAndStats();
   }, []);
 
   const showAll = () => {
@@ -58,14 +86,14 @@ const PurchasesAdmin = () => {
   };
 
   const showCourses = () => {
-    setFilteredType('קורס');
+    setFilteredType("קורס");
   };
 
   const showWorkshops = () => {
-    setFilteredType('סדנה');
+    setFilteredType("סדנה");
   };
 
-  const filteredPurchases = purchases.filter(purchase => {
+  const filteredPurchases = purchases.filter((purchase) => {
     const purchaseDate = new Date(purchase.purchaseDate);
     const isWithinType = !filteredType || purchase.type === filteredType;
     const isWithinSearch = purchase.userName.toLowerCase().startsWith(searchTerm.toLowerCase());
@@ -78,26 +106,66 @@ const PurchasesAdmin = () => {
 
   const filteredTotal = filteredPurchases.length;
 
-  // חישוב הרווח הכספי הכולל בהתאם לסינון
-  const totalRevenue = filteredPurchases.reduce((acc, purchase) => acc + (purchase.price || 0), 0);
+  const hasCoursePurchases = filteredPurchases.some(
+    (purchase) => purchase.type === "קורס"
+  );
+  const hasWorkshopPurchases = filteredPurchases.some(
+    (purchase) => purchase.type === "סדנה"
+  );
 
-  // פונקציה למציאת הפריט הנרכש ביותר והפחות נרכש בהתאם לסינון תאריכים
-  const getPurchaseStats = (type) => {
-    const items = filteredPurchases.filter(purchase => purchase.type === type);
-    const itemCount = items.reduce((count, item) => {
-      count[item.name] = (count[item.name] || 0) + 1;
-      return count;
-    }, {});
-    const mostPurchasedItem = Object.keys(itemCount).reduce((a, b) => itemCount[a] > itemCount[b] ? a : b, null);
-    const leastPurchasedItem = Object.keys(itemCount).reduce((a, b) => itemCount[a] < itemCount[b] ? a : b, null);
-    return { 
-      mostPurchased: { name: mostPurchasedItem, count: itemCount[mostPurchasedItem] || 0 },
-      leastPurchased: { name: leastPurchasedItem, count: itemCount[leastPurchasedItem] || 0 }
+  const calculateFilteredStatistics = () => {
+    const total = filteredPurchases.reduce(
+      (acc, purchase) => acc + (purchase.price || 0),
+      0
+    );
+
+    if (total !== totalRevenue) {
+      setTotalRevenue(total);
+    }
+
+    const getStats = (type) => {
+      const items = filteredPurchases.filter(
+        (purchase) => purchase.type === type
+      );
+      const itemCount = items.reduce((count, item) => {
+        count[item.name] = (count[item.name] || 0) + 1;
+        return count;
+      }, {});
+
+      const maxCount = Math.max(...Object.values(itemCount), 0);
+      const minCount = Math.min(
+        ...Object.values(itemCount).filter((count) => count > 0),
+        Infinity
+      );
+
+      const mostPurchasedItems = Object.keys(itemCount)
+        .filter((name) => itemCount[name] === maxCount)
+        .map((name) => ({ name, count: itemCount[name] }));
+
+      const leastPurchasedItems = Object.keys(itemCount)
+        .filter((name) => itemCount[name] === minCount)
+        .map((name) => ({ name, count: itemCount[name] }));
+
+      return {
+        mostPurchased: mostPurchasedItems,
+        leastPurchased: leastPurchasedItems,
+      };
     };
+
+    const newCourseStats = getStats("קורס");
+    const newWorkshopStats = getStats("סדנה");
+
+    if (JSON.stringify(newCourseStats) !== JSON.stringify(courseStats)) {
+      setCourseStats(newCourseStats);
+    }
+    if (JSON.stringify(newWorkshopStats) !== JSON.stringify(workshopStats)) {
+      setWorkshopStats(newWorkshopStats);
+    }
   };
 
-  const courseStats = getPurchaseStats('קורס');
-  const workshopStats = getPurchaseStats('סדנה');
+  useEffect(() => {
+    calculateFilteredStatistics();
+  }, [filteredPurchases]);
 
   return (
     <div className="purchases-admin-page">
@@ -140,32 +208,74 @@ const PurchasesAdmin = () => {
           </div>
 
           <div className="stats-card">
-  <div className="total-count">סה"כ: {filteredTotal}</div>
-  <div className="total-revenue">סה"כ רווח כספי: {totalRevenue.toLocaleString()} ש"ח</div>
+            <div className="total-count">סה"כ כמות רכישות : {filteredTotal}</div>
+            <div className="total-revenue">סה"כ רווח כספי: {totalRevenue.toLocaleString()} ש"ח</div>
 
-  <div className="purchase-stats">
-    {filteredType === 'קורס' && (
-      <>
-        <p>הקורס הנרכש ביותר: {courseStats.mostPurchased.name} ({courseStats.mostPurchased.count} רכישות)</p>
-        <p>הקורס הפחות נרכש: {courseStats.leastPurchased.name} ({courseStats.leastPurchased.count} רכישות)</p>
-      </>
-    )}
-    {filteredType === 'סדנה' && (
-      <>
-        <p>הסדנה הנרכשת ביותר: {workshopStats.mostPurchased.name} ({workshopStats.mostPurchased.count} רכישות)</p>
-        <p>הסדנה הפחות נרכשת: {workshopStats.leastPurchased.name} ({workshopStats.leastPurchased.count} רכישות)</p>
-      </>
-    )}
-    {filteredType === null && (
-      <>
-        <p>הקורס הנרכש ביותר: {courseStats.mostPurchased.name} ({courseStats.mostPurchased.count} רכישות)</p>
-        <p>הקורס הפחות נרכש: {courseStats.leastPurchased.name} ({courseStats.leastPurchased.count} רכישות)</p>
-        <p>הסדנה הנרכשת ביותר: {workshopStats.mostPurchased.name} ({workshopStats.mostPurchased.count} רכישות)</p>
-        <p>הסדנה הפחות נרכשת: {workshopStats.leastPurchased.name} ({workshopStats.leastPurchased.count} רכישות)</p>
-      </>
-    )}
-  </div>
-</div>
+            <div className="purchase-stats">
+              {hasCoursePurchases && (
+                <>
+                  <h4>קורסים</h4>
+                  <p>:הכי נרכשים</p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>כמות רכישות</th>
+                        <th>שם קורס</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {courseStats.mostPurchased?.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.count}</td>
+                          <td>{item.name}</td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td colSpan="2" className="least-purchased-title">הכי פחות נרכשים:</td>
+                      </tr>
+                      {courseStats.leastPurchased?.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.count}</td>
+                          <td>{item.name}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </>
+              )}
+              {hasWorkshopPurchases && (
+                <>
+                  <h4>סדנאות</h4>
+                  <p>:הכי נרכשות</p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>כמות רכישות</th>
+                        <th>שם סדנה</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {workshopStats.mostPurchased?.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.count}</td>
+                          <td>{item.name}</td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td colSpan="2" className="least-purchased-title">הכי פחות נרכשות:</td>
+                      </tr>
+                      {workshopStats.leastPurchased?.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.count}</td>
+                          <td>{item.name}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </>
+              )}
+            </div>
+          </div>
 
           <table className="purchases-table">
             <thead>
@@ -180,8 +290,14 @@ const PurchasesAdmin = () => {
             <tbody>
               {filteredPurchases.map((purchase) => (
                 <tr key={purchase.uniqueId}>
-                  <td>{purchase.purchaseDate ? new Date(purchase.purchaseDate).toLocaleString() : 'תאריך לא זמין'}</td>
-                  <td className="price-cell-purchasesAdmin">{purchase.price} ש"ח</td>
+                  <td>
+                    {purchase.purchaseDate
+                      ? new Date(purchase.purchaseDate).toLocaleString()
+                      : "תאריך לא זמין"}
+                  </td>
+                  <td className="price-cell-purchasesAdmin">
+                    {purchase.price} ש"ח
+                  </td>
                   <td>{purchase.name}</td>
                   <td>{purchase.type}</td>
                   <td>{purchase.userName}</td>
