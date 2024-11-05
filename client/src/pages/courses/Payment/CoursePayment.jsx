@@ -12,6 +12,7 @@ export default function CoursePayment() {
   const [creditCard, setCreditCard] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
+  const [idNumber, setIdNumber] = useState(''); // תעודת זהות
   const [selectedCardType, setSelectedCardType] = useState(''); // מצב הכפתור הנבחר (ויזה או מאסטרקארד)
   const [installments, setInstallments] = useState(1); // כמות התשלומים, ברירת מחדל 1
   const [isCourseFull, setIsCourseFull] = useState(false); // סטטוס האם הקורס מלא
@@ -25,6 +26,7 @@ export default function CoursePayment() {
     creditCard: '',
     expirationDate: '',
     cvv: '',
+    idNumber: '',
     cardType: '',
   });
 
@@ -35,6 +37,7 @@ export default function CoursePayment() {
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     const fullNameRegex = /^[A-Za-z\u0590-\u05FF\s]+$/;
+    const idNumberRegex = /^\d{9}$/; // וידוא שתעודת הזהות היא בדיוק 9 ספרות
 
     const newErrors = {
       fullName: !fullNameRegex.test(fullName) && fullName.length > 0 ? 'שם מלא יכול להכיל רק אותיות בעברית או באנגלית ורווחים.' : '',
@@ -42,18 +45,19 @@ export default function CoursePayment() {
       creditCard: creditCard.length !== 16 && creditCard.length > 0 ? 'מספר כרטיס האשראי חייב להכיל 16 ספרות.' : '',
       expirationDate: (expirationDate.length !== 5 || !expirationDate.includes('/')) && expirationDate.length > 0 ? 'תוקף הכרטיס חייב להיות בפורמט MM/YY.' : '',
       cvv: cvv.length !== 3 && cvv.length > 0 ? 'CVV חייב להכיל 3 ספרות.' : '',
+      idNumber: !idNumberRegex.test(idNumber) && idNumber.length > 0 ? 'תעודת זהות חייבת להכיל 9 ספרות.' : '',
       cardType: !selectedCardType ? 'יש לבחור אמצעי תשלום (ויזה או מאסטרקארד).' : '',
     };
 
     setErrors(newErrors);
 
-    return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv;
+    return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv && !newErrors.idNumber;
   };
 
   // בדיקת תקינות טופס
   useEffect(() => {
     setIsFormValid(validateForm());
-  }, [fullName, email, creditCard, expirationDate, cvv, selectedCardType]);
+  }, [fullName, email, creditCard, expirationDate, cvv, idNumber, selectedCardType]);
 
   // קבלת פרטי הקורס
   useEffect(() => {
@@ -105,6 +109,13 @@ export default function CoursePayment() {
     }
   };
 
+  const handleIdNumberChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
+    if (value.length <= 9) {
+      setIdNumber(value);
+    }
+  };
+
   const handleCardTypeSelect = (type) => {
     setSelectedCardType(type); // עדכון אמצעי התשלום הנבחר
   };
@@ -116,31 +127,28 @@ export default function CoursePayment() {
     setCreditCard('');
     setExpirationDate('');
     setCvv('');
+    setIdNumber(''); // איפוס תעודת זהות
     setSelectedCardType('');
     setInstallments(1); // איפוס כמות התשלומים
   };
 
-  // פונקציה לשליחת הנתונים לשרת
   const handlePurchase = async (purchaseData) => {
     try {
       const response = await axios.post('http://localhost:3000/api/v1/courses/purchase', purchaseData);
 
-      // בדוק אם הקורס כבר נרכש על פי תגובת השרת
       if (response.data.purchased) {
-        alert('כבר רכשת את הקורס הזה.'); // הצגת הודעה למשתמש
+        alert('כבר רכשת את הקורס הזה.');
         resetForm();
       } else {
         console.log('Purchase successful:', response.data);
         alert('הרכישה בוצעה בהצלחה!');
-        navigate('/thank-you-course'); // ניתוב לעמוד תודה של קורסים
+        navigate('/thank-you-course');
       }
     } catch (error) {
       console.error('Error making purchase:', error);
-
-      // בדוק את הסטטוס של השגיאה שהתקבלה מהשרת
       if (error.response && error.response.status === 400) {
         alert('הקורס מלא, לא ניתן לבצע רכישה נוספת.');
-        navigate('/courses'); // ניתוב חזרה לעמוד הקורסים לאחר לחיצה על אישור ב-alert
+        navigate('/courses');
       } else if (error.response && error.response.status === 404) {
         alert('לא נמצא הקורס או המשתמש.');
       } else {
@@ -151,9 +159,8 @@ export default function CoursePayment() {
 
   const handlePayment = (e) => {
     e.preventDefault();
-    setSubmitted(true); // סימון שנשלח הטופס
+    setSubmitted(true);
 
-    // בדיקה אם כל שדות הקלט תקינים, אך אם אמצעי תשלום לא נבחר, יש להציג הודעת שגיאה
     if (!selectedCardType) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -161,25 +168,23 @@ export default function CoursePayment() {
       }));
     }
 
-    // כאן לא נבצע בדיקה אם הכפתור מושבת - במקום זה נבצע את כל הבדיקות לאחר לחיצה
     if (isFormValid && selectedCardType) {
       if (isCourseFull) {
-        // הצגת הודעת alert אם הקורס מלא ואז ניתוב חזרה לעמוד הקורסים
         alert("לא ניתן לבצע רכישה, קורס זה מלא.")
-        navigate('/courses'); // ניתוב חזרה לעמוד הקורסים לאחר לחיצה על אישור ב-alert
+        navigate('/courses');
       } else if (hasCourseStarted) {
-        // הצגת הודעת alert אם הקורס כבר התחיל ואז ניתוב חזרה לעמוד הקורסים
         alert("לא ניתן לבצע רכישה, קורס זה התחיל.")
-        navigate('/courses'); // ניתוב חזרה לעמוד הקורסים לאחר לחיצה על אישור ב-alert
+        navigate('/courses');
       } else {
         const purchaseData = {
           fullName,
           email,
           courseId,
-          installments, // הוספת כמות התשלומים לנתונים הנשלחים לשרת
+          idNumber, // הוספת תעודת זהות לנתונים הנשלחים לשרת
+          installments,
         };
 
-        handlePurchase(purchaseData); // קריאה לפונקציה ששולחת את הנתונים לשרת
+        handlePurchase(purchaseData);
       }
     }
   };
@@ -239,7 +244,6 @@ export default function CoursePayment() {
           </button>
         </div>
 
-        {/* הצגת שגיאה אם לא נבחר כרטיס רק לאחר ניסיון תשלום */}
         {submitted && !selectedCardType && <span className="card-error">{errors.cardType}</span>}
 
         {/* שדות נוספים של כרטיס אשראי */}
@@ -273,6 +277,7 @@ export default function CoursePayment() {
             <span className="success">✔</span>
           )}
         </div>
+
         <div className="form-group">
           <label>:CVV</label>
           <input
@@ -288,7 +293,22 @@ export default function CoursePayment() {
           )}
         </div>
 
-        {/* בחירת מספר תשלומים, מוצג תמיד */}
+        {/* שדה תעודת זהות */}
+        <div className="form-group">
+          <label>:תעודת זהות</label>
+          <input
+            type="text"
+            value={idNumber}
+            onChange={handleIdNumberChange}
+            required
+          />
+          {errors.idNumber ? (
+            <span className="error">{errors.idNumber}</span>
+          ) : idNumber.length === 9 && (
+            <span className="success">✔</span>
+          )}
+        </div>
+
         <div className="form-group">
           <label>:כמות תשלומים</label>
           <select value={installments} onChange={(e) => setInstallments(e.target.value)}>
@@ -298,10 +318,7 @@ export default function CoursePayment() {
           </select>
         </div>
 
-        <button
-          type="submit"
-          className="submit-button"
-        >
+        <button type="submit" className="submit-button">
           בצע תשלום
         </button>
       </form>

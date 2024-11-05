@@ -15,6 +15,7 @@
   border-radius: 12px;
   box-shadow: 0 10px 20px rgb(0, 0, 0);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
 }
 
 .edit-course-container:hover {

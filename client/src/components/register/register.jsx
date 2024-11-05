@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaUser, FaPhone, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa"; // ייבוא אייקוני העין
+import { FaUser, FaPhone, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaIdCard } from "react-icons/fa"; // ייבוא אייקוני העין ותעודת זהות
 import "./register.css";
 
 export default function Register() {
@@ -9,6 +9,7 @@ export default function Register() {
     name: "",
     phone: "",
     email: "",
+    idNumber: "", // הוספת שדה תעודת זהות
     password: ""
   });
   const [errorMessage, setErrorMessage] = useState("");
@@ -40,6 +41,7 @@ export default function Register() {
         name: "",
         phone: "",
         email: "",
+        idNumber: "", // איפוס שדה תעודת זהות
         password: ""
       });
 
@@ -86,6 +88,17 @@ export default function Register() {
               value={inputData.email}
               onChange={handleChange}
               placeholder="אימייל"
+              required
+            />
+          </div>
+          <div className="register-page-input-group">
+            <span className="icon"><FaIdCard /></span>
+            <input
+              type="text"
+              name="idNumber"
+              value={inputData.idNumber}
+              onChange={handleChange}
+              placeholder="תעודת זהות"
               required
             />
           </div>

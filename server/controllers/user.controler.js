@@ -22,7 +22,7 @@ const createAndSendToken = (user, statusCode, res) => {
 
 // רישום משתמש חדש
 exports.register = catchAsync(async (req, res, next) => {
-  const { email, phone, name, password } = req.body;
+  const { email, phone, name, password, idNumber } = req.body; // הוספת תעודת זהות
 
   const existingUserByEmail = await User.findOne({ email });
   const existingUserByPhone = await User.findOne({ phone });
@@ -39,7 +39,7 @@ exports.register = catchAsync(async (req, res, next) => {
     return res.status(400).json({ message: "מספר הטלפון הזה כבר קיים במערכת" });
   }
 
-  const newUser = await User.create({ name, email, phone, password });
+  const newUser = await User.create({ name, email, phone, password, idNumber }); // שמירת תעודת זהות
   createAndSendToken(newUser, 201, res);
 });
 
@@ -93,7 +93,6 @@ exports.getUserPurchases = catchAsync(async (req, res, next) => {
     return next(new AppError("משתמש לא נמצא", 404));
   }
 
-  // ודא שהשדות קיימים כערכים ריקים אם הם לא מוגדרים
   const purchasedCourses = user.purchasedCourses || [];
   const purchasedWorkshops = user.purchasedWorkshops || [];
 
@@ -106,7 +105,7 @@ exports.getUserPurchases = catchAsync(async (req, res, next) => {
           _id: purchase.course._id,
           name: purchase.course.name,
           price: purchase.course.price,
-          purchaseDate: purchase.purchaseDate, // תאריך הרכישה
+          purchaseDate: purchase.purchaseDate,
         })),
       workshops: purchasedWorkshops
         .filter(workshop => workshop && workshop.workshop)  // סינון ערכי null
@@ -114,7 +113,7 @@ exports.getUserPurchases = catchAsync(async (req, res, next) => {
           _id: purchase.workshop._id,
           name: purchase.workshop.name,
           price: purchase.workshop.price,
-          purchaseDate: purchase.purchaseDate, // תאריך הרכישה
+          purchaseDate: purchase.purchaseDate,
         })),
     },
   });
@@ -136,21 +135,22 @@ exports.getAllUserPurchases = catchAsync(async (req, res, next) => {
     userId: user._id,
     name: user.name,
     email: user.email,
+    idNumber: user.idNumber, // הוספת תעודת זהות
     courses: (user.purchasedCourses || [])
-      .filter(purchase => purchase && purchase.course)  // סינון ערכי null ו-course
+      .filter(purchase => purchase && purchase.course)
       .map((purchase) => ({
         _id: purchase.course._id,
         name: purchase.course.name,
         price: purchase.course.price,
-        purchaseDate: purchase.purchaseDate, // שימוש ב-purchaseDate במקום createdAt
+        purchaseDate: purchase.purchaseDate,
       })),
     workshops: (user.purchasedWorkshops || [])
-      .filter(purchase => purchase && purchase.workshop)  // סינון ערכי null ו-workshop
+      .filter(purchase => purchase && purchase.workshop)
       .map((purchase) => ({
         _id: purchase.workshop._id,
         name: purchase.workshop.name,
         price: purchase.workshop.price,
-        purchaseDate: purchase.purchaseDate, // שימוש ב-purchaseDate במקום createdAt
+        purchaseDate: purchase.purchaseDate,
       })),
   }));
 
@@ -159,7 +159,6 @@ exports.getAllUserPurchases = catchAsync(async (req, res, next) => {
     data: { purchases: allPurchases },
   });
 });
-
 
 // קבלת כל המשתמשים
 exports.getAllUsers = catchAsync(async (req, res, next) => {

@@ -26,13 +26,14 @@ body {
   animation: fadeInUp 1s ease-in-out;
   margin-top: 40px;
   
+  
 }
 
 .profile-container {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.927);
-  padding: 30px;
+  padding: 20px;
   max-width: 600px; /* רוחב רחב יותר */
   width: 100%;
   text-align: center;
@@ -42,7 +43,7 @@ body {
 }
 
 .profile-title {
-  font-size: 2.5rem;
+  font-size: 2.1rem;
   color: #000000; /* צבע לכותרת */
   margin-bottom: 30px;
   position: relative;

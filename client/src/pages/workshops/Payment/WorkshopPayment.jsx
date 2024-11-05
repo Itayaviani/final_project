@@ -12,6 +12,7 @@ export default function WorkshopPayment() {
   const [creditCard, setCreditCard] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
+  const [idNumber, setIdNumber] = useState(''); // תעודת זהות
   const [selectedCardType, setSelectedCardType] = useState(''); // מצב הכפתור הנבחר (ויזה או מאסטרקארד)
   const [installments, setInstallments] = useState(1); // כמות תשלומים ברירת מחדל 1
 
@@ -24,6 +25,7 @@ export default function WorkshopPayment() {
     creditCard: '',
     expirationDate: '',
     cvv: '',
+    idNumber: '', // שדה שגיאה עבור תעודת זהות
     cardType: '', // שדה שגיאה עבור סוג הכרטיס
   });
 
@@ -53,10 +55,11 @@ export default function WorkshopPayment() {
     fetchWorkshopDetails();
   }, [workshopId]);
 
-  // פונקציה לוודא תקינות כל השדות, כולל בחירת סוג כרטיס אשראי
+  // פונקציה לוודא תקינות כל השדות, כולל בחירת סוג כרטיס אשראי ותעודת זהות
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     const fullNameRegex = /^[A-Za-z\u0590-\u05FF\s]+$/;
+    const idNumberRegex = /^\d{9}$/; // תעודת זהות בת 9 ספרות בלבד
 
     const newErrors = {
       fullName: !fullNameRegex.test(fullName) && fullName.length > 0 ? 'שם מלא יכול להכיל רק אותיות בעברית או באנגלית ורווחים.' : '',
@@ -64,19 +67,20 @@ export default function WorkshopPayment() {
       creditCard: creditCard.length !== 16 && creditCard.length > 0 ? 'מספר כרטיס האשראי חייב להכיל 16 ספרות.' : '',
       expirationDate: (expirationDate.length !== 5 || !expirationDate.includes('/')) && expirationDate.length > 0 ? 'תוקף הכרטיס חייב להיות בפורמט MM/YY.' : '',
       cvv: cvv.length !== 3 && cvv.length > 0 ? 'CVV חייב להכיל 3 ספרות.' : '',
+      idNumber: !idNumberRegex.test(idNumber) && idNumber.length > 0 ? 'תעודת זהות חייבת להכיל 9 ספרות.' : '',
       cardType: !selectedCardType ? 'יש לבחור אמצעי תשלום (ויזה או מאסטרקארד).' : '', // בדיקת שגיאה עבור סוג הכרטיס
     };
 
     setErrors(newErrors);
 
     // הטופס תקין אם כל השדות תקינים
-    return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv;
+    return !Object.values(newErrors).some((error) => error);
   };
 
   // עדכון תקינות הטופס בכל שינוי בשדות
   useEffect(() => {
     setIsFormValid(validateForm());
-  }, [fullName, email, creditCard, expirationDate, cvv, selectedCardType]);
+  }, [fullName, email, creditCard, expirationDate, cvv, idNumber, selectedCardType]);
 
   const handleCreditCardChange = (e) => {
     const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
@@ -102,6 +106,13 @@ export default function WorkshopPayment() {
     }
   };
 
+  const handleIdNumberChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
+    if (value.length <= 9) {
+      setIdNumber(value);
+    }
+  };
+
   const handleCardTypeSelect = (type) => {
     setSelectedCardType(type); // עדכון סוג הכרטיס הנבחר (ויזה/מאסטרקארד)
   };
@@ -112,6 +123,7 @@ export default function WorkshopPayment() {
       email,
       workshopId, // ודא שזה workshopId ולא courseId
       installments, // כמות התשלומים נשלחת כחלק מהנתונים
+      idNumber, // שליחת תעודת הזהות כחלק מהנתונים
     };
 
     try {
@@ -181,6 +193,7 @@ export default function WorkshopPayment() {
     setCreditCard('');
     setExpirationDate('');
     setCvv('');
+    setIdNumber('');
     setSelectedCardType('');
     setInstallments(1); // איפוס כמות התשלומים לברירת מחדל
   };
@@ -282,6 +295,21 @@ export default function WorkshopPayment() {
           {errors.cvv ? (
             <span className="error">{errors.cvv}</span>
           ) : cvv.length === 3 && (
+            <span className="success">✔</span>
+          )}
+        </div>
+
+        <div className="form-group">
+          <label>:תעודת זהות</label>
+          <input
+            type="text"
+            value={idNumber}
+            onChange={handleIdNumberChange}
+            required
+          />
+          {errors.idNumber ? (
+            <span className="error">{errors.idNumber}</span>
+          ) : idNumber.length === 9 && (
             <span className="success">✔</span>
           )}
         </div>
