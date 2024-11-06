@@ -154,3 +154,10 @@ body, html {
   text-align: center;
   padding-right: 5px; /* תוכל לשנות את הערך בהתאם לצורך */
 }
+
+.courses-list td .action-buttons {
+  display: flex;
+  gap: 10px; /* רווח בין הכפתורים */
+  justify-content: center; /* ממרכז את הכפתורים בתא */
+  align-items: center;
+}

@@ -168,3 +168,10 @@ body, html {
     font-size: 0.9em;
   }
 }
+
+.user-list td .action-buttons {
+  display: flex;
+  gap: 10px; /* רווח בין הכפתורים */
+  justify-content: center; /* ממרכז את הכפתורים בתא */
+  align-items: center;
+}

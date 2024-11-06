@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './userList.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./userList.css";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(''); // מצב עבור החיפוש
-  const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState(""); // מצב עבור החיפוש
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/v1/users', {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:3000/api/v1/users", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setUsers(response.data.data.users);
       } catch (err) {
-        setError('שגיאה בטעינת המשתמשים');
+        setError("שגיאה בטעינת המשתמשים");
       }
     };
 
@@ -29,15 +29,15 @@ const UserList = () => {
 
   const handleDeleteUser = async (id) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       await axios.delete(`http://localhost:3000/api/v1/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUsers(users.filter(user => user._id !== id));
+      setUsers(users.filter((user) => user._id !== id));
     } catch (err) {
-      setError('שגיאה במחיקת המשתמש');
+      setError("שגיאה במחיקת המשתמש");
     }
   };
 
@@ -46,7 +46,7 @@ const UserList = () => {
   };
 
   // סינון המשתמשים לפי ערך החיפוש, כך שיבדוק אם השם מתחיל בערך החיפוש
-  const filteredUsers = users.filter(user =>
+  const filteredUsers = users.filter((user) =>
     user.name.startsWith(searchTerm)
   );
 
@@ -55,7 +55,7 @@ const UserList = () => {
       <div className="user-list">
         <h1>רשימת משתמשים</h1>
         {error && <p className="error-message">{error}</p>}
-        
+
         {/* תיבת חיפוש */}
         <input
           type="text"
@@ -64,7 +64,7 @@ const UserList = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
-        
+
         <table>
           <thead>
             <tr>
@@ -78,9 +78,22 @@ const UserList = () => {
             {filteredUsers.map((user) => (
               <tr key={user._id}>
                 <td>
-                  <button className="edit-btn" onClick={() => handleEditUser(user._id)}>ערוך</button>
-                  <button className="delete-btn" onClick={() => handleDeleteUser(user._id)}>מחק</button>
+                  <div className="action-buttons">
+                    <button
+                      className="edit-btn"
+                      onClick={() => handleEditUser(user._id)}
+                    >
+                      ערוך
+                    </button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDeleteUser(user._id)}
+                    >
+                      מחק
+                    </button>
+                  </div>
                 </td>
+
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
                 <td>{user.name}</td>

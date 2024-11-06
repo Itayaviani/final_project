@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './workshopsList.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./workshopsList.css";
 
 const WorkshopsList = () => {
   const [workshops, setWorkshops] = useState([]);
-  const [error, setError] = useState('');
-  const [filter, setFilter] = useState(''); // מצב לסינון כללי (כמו תפוסה מלאה או פנויה)
+  const [error, setError] = useState("");
+  const [filter, setFilter] = useState(""); // מצב לסינון כללי (כמו תפוסה מלאה או פנויה)
   const [showTable, setShowTable] = useState(false); // מצב להצגת הטבלה
-  const [searchTerm, setSearchTerm] = useState(''); // מצב לחיפוש לפי שם סדנה
+  const [searchTerm, setSearchTerm] = useState(""); // מצב לחיפוש לפי שם סדנה
   const navigate = useNavigate(); // הגדרת navigate
 
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/workshops');
+        const response = await axios.get(
+          "http://localhost:3000/api/v1/workshops"
+        );
         setWorkshops(response.data);
       } catch (err) {
-        setError('שגיאה בטעינת הסדנאות');
+        setError("שגיאה בטעינת הסדנאות");
       }
     };
 
@@ -28,9 +30,9 @@ const WorkshopsList = () => {
   const handleDeleteWorkshop = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/api/v1/workshops/${id}`);
-      setWorkshops(workshops.filter(workshop => workshop._id !== id)); // עדכון הסטייט לאחר המחיקה
+      setWorkshops(workshops.filter((workshop) => workshop._id !== id)); // עדכון הסטייט לאחר המחיקה
     } catch (err) {
-      setError('שגיאה במחיקת הסדנה');
+      setError("שגיאה במחיקת הסדנה");
     }
   };
 
@@ -50,10 +52,10 @@ const WorkshopsList = () => {
   };
 
   // סינון הסדנאות לפי מצב תפוסה
-  const filteredWorkshops = workshops.filter(workshop => {
-    if (filter === 'available') {
+  const filteredWorkshops = workshops.filter((workshop) => {
+    if (filter === "available") {
       return workshop.participants < workshop.capacity; // סדנאות עם מקומות פנויים
-    } else if (filter === 'full') {
+    } else if (filter === "full") {
       return workshop.participants >= workshop.capacity; // סדנאות מלאות
     } else {
       return true; // הצגת כל הסדנאות
@@ -61,13 +63,14 @@ const WorkshopsList = () => {
   });
 
   // סינון לפי חיפוש שם סדנה, כך שהשם יתחיל בערך החיפוש בלבד
-const searchedWorkshops = filteredWorkshops.filter(workshop =>
-  workshop.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-);
-
+  const searchedWorkshops = filteredWorkshops.filter((workshop) =>
+    workshop.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+  );
 
   // מיון הסדנאות לפי הכנסות (מהגבוה לנמוך)
-  const sortedWorkshops = searchedWorkshops.sort((a, b) => calculateRevenue(b) - calculateRevenue(a));
+  const sortedWorkshops = searchedWorkshops.sort(
+    (a, b) => calculateRevenue(b) - calculateRevenue(a)
+  );
 
   // פונקציה להצגת הטבלה לאחר לחיצה על כפתור
   const handleShowTable = (filterType) => {
@@ -80,12 +83,18 @@ const searchedWorkshops = filteredWorkshops.filter(workshop =>
       <div className="workshops-list">
         <h1>רשימת סדנאות</h1>
         {error && <p className="error-message">{error}</p>}
-        
+
         {/* כפתורים לסינון הסדנאות */}
         <div className="filter-buttons">
-          <button onClick={() => handleShowTable('all')}>הצג את כל הסדנאות</button>
-          <button onClick={() => handleShowTable('available')}>סדנאות עם מקומות פנויים</button>
-          <button onClick={() => handleShowTable('full')}>סדנאות בתפוסה מלאה</button>
+          <button onClick={() => handleShowTable("all")}>
+            הצג את כל הסדנאות
+          </button>
+          <button onClick={() => handleShowTable("available")}>
+            סדנאות עם מקומות פנויים
+          </button>
+          <button onClick={() => handleShowTable("full")}>
+            סדנאות בתפוסה מלאה
+          </button>
         </div>
 
         {/* אינפוט לחיפוש סדנה */}
@@ -118,22 +127,43 @@ const searchedWorkshops = filteredWorkshops.filter(workshop =>
               {sortedWorkshops.map((workshop) => (
                 <tr key={workshop._id}>
                   <td>
-                    <button className="edit" onClick={() => handleEditWorkshop(workshop._id)}>ערוך</button> {/* שימוש בפונקציית עריכה */}
-                    <button className="delete" onClick={() => handleDeleteWorkshop(workshop._id)}>מחק</button> {/* שימוש בפונקציית מחיקה */}
+                    <div className="action-buttons">
+                      <button
+                        className="edit"
+                        onClick={() => handleEditWorkshop(workshop._id)}
+                      >
+                        ערוך
+                      </button>
+                      <button
+                        className="delete"
+                        onClick={() => handleDeleteWorkshop(workshop._id)}
+                      >
+                        מחק
+                      </button>
+                    </div>
                   </td>
                   <td>
                     {/* בדיקה אם הסדנה מלאה והצגת הכיתוב */}
                     {workshop.participants >= workshop.capacity ? (
                       <span className="full-workshop">הסדנה מלאה</span>
                     ) : (
-                      <span className="available-workshop">נשארו {calculateAvailableSpots(workshop)} מקומות</span>
+                      <span className="available-workshop">
+                        נשארו {calculateAvailableSpots(workshop)} מקומות
+                      </span>
                     )}
                   </td>
-                  <td className='price-cell-workshopList'>{calculateRevenue(workshop)} ש"ח</td> {/* הצגת ההכנסות */}
-                  <td>{workshop.participants} / {workshop.capacity}</td>
+                  <td className="price-cell-workshopList">
+                    {calculateRevenue(workshop)} ש"ח
+                  </td>{" "}
+                  {/* הצגת ההכנסות */}
+                  <td>
+                    {workshop.participants} / {workshop.capacity}
+                  </td>
                   <td>{new Date(workshop.createdAt).toLocaleDateString()}</td>
                   <td>{workshop.workshopDescription}</td>
-                  <td className='price-cell-workshopList'>{workshop.price} ש"ח</td>
+                  <td className="price-cell-workshopList">
+                    {workshop.price} ש"ח
+                  </td>
                   <td>{workshop.name}</td>
                 </tr>
               ))}
