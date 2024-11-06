@@ -15,6 +15,7 @@ const CoursesList = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/v1/courses');
+        console.log(response.data); 
         setCourses(response.data);
       } catch (err) {
         setError('שגיאה בטעינת הקורסים');
@@ -131,7 +132,7 @@ const CoursesList = () => {
                   <td className='price-cell-courseList'>{calculateRevenue(course)} ש"ח</td> {/* הצגת ההכנסות */}
                   <td>{course.participants} / {course.capacity}</td>
                   <td>{new Date(course.createdAt).toLocaleDateString()}</td>
-                  <td>{course.description}</td>
+                  <td>{course.courseDescription}</td>
                   <td className='price-cell-courseList'>{course.price} ש"ח</td>
                   <td>{course.name}</td>
                 </tr>

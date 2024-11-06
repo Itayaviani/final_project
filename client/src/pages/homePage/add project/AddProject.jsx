@@ -91,7 +91,6 @@ export default function AddProject({ addProject }) {
           <input
             type="file"
             accept="image/*"
-            multiple
             onChange={handleImageChange} // תמיכה בהעלאת מספר תמונות
           />
         </div>
