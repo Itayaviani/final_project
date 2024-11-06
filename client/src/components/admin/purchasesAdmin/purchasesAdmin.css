@@ -1,3 +1,5 @@
+/* PurchasesAdmin.css */
+
 /* עיצוב כללי רק עבור דף ה-PurchasesAdmin */
 .purchases-admin-page {
   display: flex;
@@ -47,11 +49,31 @@
   letter-spacing: 2px;
 }
 
-/* Table Styles */
+/* Purchases Stats Scrollable Area */
+.stats-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 300px; /* גובה מקסימלי עבור גלילה */
+  overflow-y: auto; /* מאפשר גלילה אנכית */
+}
+
+/* Purchases Table Scrollable Area */
+.purchases-admin-page .purchases-table-container {
+  max-height: 400px; /* גובה מקסימלי עם גלילה */
+  overflow-y: auto; /* מאפשר גלילה אנכית */
+}
+
+/* Purchases Table Styling */
 .purchases-admin-page .purchases-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 30px;
   font-size: 1em;
 }
 
@@ -184,19 +206,6 @@
   left: 10px;
 }
 
-/* עיצוב כללי לכרטיס */
-.stats-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.993);
-  margin-top: 20px;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* עיצוב עבור סה"כ וסה"כ רווח כספי */
 .total-count, .total-revenue {
   font-size: 22px;
@@ -245,10 +254,6 @@
   font-weight: bold;
 }
 
-/* ריווח כללי בין האלמנטים בכרטיס */
-.stats-card > *:not(:last-child) {
-  margin-bottom: 15px;
-}
 /* עיצוב כותרות "הכי פחות נרכשים" ו-"הכי פחות נרכשות" */
 .least-purchased-title {
   text-align: center;

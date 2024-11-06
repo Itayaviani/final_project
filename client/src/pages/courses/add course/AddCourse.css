@@ -2,104 +2,127 @@
 
 /* עיצוב הקונטיינר הכולל של הטופס */
 .add-course-container {
-    max-width: 800px; /* הגבלת רוחב לקונטיינר */
-    margin: 50px auto;
-    padding: 40px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgb(0, 0, 0);
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    text-align: left; /* טקסט מיושר לשמאל */
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .add-course-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* עיצוב כותרת הטופס */
-  .add-course-container h1 {
-    font-size: 2.5rem;
-    color: #050505;
-    margin-bottom: 30px;
-    text-align: center; /* כותרת במרכז */
-  }
-  
-  /* עיצוב הטופס */
-  form {
-    display: grid; /* שימוש ב-grid לפריסת הטופס */
-    grid-template-columns: 1fr 1fr; /* שתי עמודות שוות בגודלן */
-    gap: 20px;
-    align-items: start;
-  }
-  
-  /* עיצוב קבוצת שדות */
-  .add-course-container div {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* עיצוב תוויות */
-  .add-course-container label {
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #000000;
-    font-size: 1.1rem;
-    text-align: right;
-  }
-  
-  /* עיצוב שדות קלט */
-  .add-course-container input[type="text"],
-  .add-course-container input[type="number"],
-  .add-course-container textarea,
-  .add-course-container input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-    box-sizing: border-box;
-    text-align: right;
-  }
-  
-  .add-course-container input[type="text"]:focus,
-  .add-course-container input[type="number"]:focus,
-  .add-course-container textarea:focus,
-  .add-course-container input[type="file"]:focus {
-    border-color: #007bff;
-    outline: none;
-    
-  }
-  
-  /* עיצוב שדה טקסט */
-  .add-course-container textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  /* עיצוב הכפתור */
-  .add-course-container button[type="submit"] {
-    grid-column: span 2; /* הכפתור מתפרס על שתי העמודות */
-    padding: 12px;
-    background-color: #1109f2;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    width: 50%; /* הגדרת רוחב לכפתור */
-    margin: 20px auto; /* ממרכז את הכפתור */
-    box-shadow: 0 8px 16px rgb(0, 0, 0);
+  max-width: 800px; /* הגבלת רוחב לקונטיינר */
+  margin: 80px auto 50px; /* ריווח למרחק מה-navbar */
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgb(0, 0, 0);
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  text-align: left; /* טקסט מיושר לשמאל */
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-sizing: border-box;
+}
 
+.add-course-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* עיצוב כותרת הטופס */
+.add-course-container h1 {
+  font-size: 2rem;
+  color: #050505;
+  margin-bottom: 30px;
+  text-align: center; /* כותרת במרכז */
+}
+
+/* עיצוב הטופס */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media screen and (max-width: 600px) {
+  form {
+      grid-template-columns: 1fr; /* מעבר לעמודה אחת במסכים קטנים */
   }
-  
-  .add-course-container button[type="submit"]:hover {
-    background-color: #0c06c3;
-    transform: translateY(-2px);
-    
+}
+
+/* עיצוב קבוצת שדות */
+.add-course-container div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* עיצוב תוויות */
+.add-course-container label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #000000;
+  font-size: 1rem;
+  text-align: right;
+}
+
+/* עיצוב שדות קלט עם כיווניות מימין לשמאל */
+.add-course-container input[type="text"],
+.add-course-container input[type="number"],
+.add-course-container input[type="date"],
+.add-course-container input[type="time"],
+.add-course-container textarea,
+.add-course-container input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+  direction: rtl; /* כיוון טקסט מימין לשמאל */
+  text-align: right; /* יישור הטקסט וה-placeholder לימין */
+}
+
+.add-course-container input[type="text"]:focus,
+.add-course-container input[type="number"]:focus,
+.add-course-container textarea:focus,
+.add-course-container input[type="file"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* עיצוב שדה טקסט */
+.add-course-container textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* עיצוב הכפתור */
+.add-course-container button[type="submit"] {
+  grid-column: span 2;
+  padding: 12px;
+  background-color: #1109f2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  width: 50%; /* הגדרת רוחב לכפתור */
+  margin: 20px auto; /* ממרכז את הכפתור */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.add-course-container button[type="submit"]:hover {
+  background-color: #0c06c3;
+  transform: translateY(-2px);
+}
+
+/* התאמה למסכים קטנים */
+@media screen and (max-width: 600px) {
+  .add-course-container {
+      padding: 20px; /* ריווח קטן יותר במסכים קטנים */
   }
-  
+
+  .add-course-container h1 {
+      font-size: 1.8rem; /* הקטנת כותרת במסכים קטנים */
+  }
+
+  .add-course-container button[type="submit"] {
+      width: 100%; /* הכפתור יתפרס על כל הרוחב במסכים קטנים */
+      font-size: 0.9rem;
+      padding: 10px;
+  }
+}

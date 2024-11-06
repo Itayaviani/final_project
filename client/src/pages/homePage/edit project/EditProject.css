@@ -1,9 +1,12 @@
+/* EditProject.css */
+
 /* עיצוב כולל לעמוד עריכת הפרויקט */
 .edit-project-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding: 20px;
   background: linear-gradient(135deg, #e3f2fd, #ffffff);
 }
 
@@ -11,6 +14,7 @@
   max-width: 800px;
   width: 100%;
   padding: 40px;
+  margin-top: 80px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 10px 20px rgb(0, 0, 0);
@@ -24,21 +28,21 @@
 
 /* כותרת */
 .edit-project-container h1 {
-  font-size: 2.5em;
+  font-size: 2rem;
   color: #333;
   text-align: center;
   margin-bottom: 30px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   position: relative;
 }
 
 .edit-project-container h1::after {
   content: '';
-  width: 80px;
-  height: 4px;
+  width: 60px;
+  height: 3px;
   display: block;
-  margin: 15px auto;
+  margin: 10px auto;
   border-radius: 2px;
 }
 
@@ -46,7 +50,7 @@
 .edit-project-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .form-group {
@@ -56,7 +60,7 @@
 }
 
 .form-group label {
-  font-size: 1.2em;
+  font-size: 1rem;
   color: #555;
   font-weight: bold;
   margin-bottom: 5px;
@@ -64,11 +68,11 @@
 
 .form-group input,
 .form-group textarea {
-  padding: 12px 15px;
+  padding: 10px;
   font-size: 1em;
   color: #333;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 6px;
   background: #f9f9f9;
   transition: all 0.3s ease;
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -84,40 +88,41 @@
 
 textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 80px;
 }
 
 /* עיצוב התמונה הנוכחית */
-.current-image img {
-  max-width: 100%;
+.current-image {
+  max-width: 300px; /* Set consistent max-width */
+  width: 100%;
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.current-image img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+.current-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* עיצוב כפתור העלאת תמונה חדשה */
 .form-group input[type="file"] {
-  font-size: 1em;
+  font-size: 0.9em;
   color: #333;
   background: #f0f4f8;
-  padding: 10px;
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
 .form-group input[type="file"]::file-selector-button {
-  padding: 8px 15px;
+  padding: 6px 12px;
   color: #ffffff;
   background-color: #007bff;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -129,42 +134,42 @@ textarea {
 /* עיצוב כפתור שמירת שינויים */
 .submit-button {
   width: 100%;
-  padding: 15px;
+  padding: 12px;
   background: linear-gradient(145deg, #007bff, #0056b3);
   color: white;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold;
   text-transform: uppercase;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .submit-button:hover {
   background: linear-gradient(145deg, #0056b3, #003f87);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2);
 }
 
 .submit-button:active {
   transform: translateY(2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* התאמה למסכים קטנים */
 @media screen and (max-width: 600px) {
   .edit-project-container {
-    padding: 30px;
+      padding: 20px;
   }
 
   .edit-project-container h1 {
-    font-size: 2em;
+      font-size: 1.8rem;
   }
 
   .submit-button {
-    font-size: 1em;
-    padding: 12px;
+      font-size: 0.9em;
+      padding: 10px;
   }
 }

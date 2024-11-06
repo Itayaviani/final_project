@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import './EditProject.css'; // ייבוא קובץ ה-CSS
+import './EditProject.css';
 
 export default function EditProject() {
-  const { projectId } = useParams(); // שימוש במזהה הפרויקט מהנתיב
+  const { projectId } = useParams();
   const [projectName, setProjectName] = useState('');
-  const [projectDescription, setProjectDescription] = useState(''); // תיאור קצר של הפרויקט
-  const [projectDetails, setProjectDetails] = useState(''); // פרטי הפרויקט המלאים
-  const [projectImages, setProjectImages] = useState([]); // תמונות חדשות
-  const [currentImages, setCurrentImages] = useState([]); // תמונות נוכחיות
-  const [error, setError] = useState(''); // לניהול הודעות שגיאה
+  const [projectDescription, setProjectDescription] = useState('');
+  const [projectDetails, setProjectDetails] = useState('');
+  const [projectImages, setProjectImages] = useState(null);
+  const [currentImages, setCurrentImages] = useState([]);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    // פונקציה לשליפת פרטי הפרויקט לפי מזהה
     const fetchProject = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/v1/projects/${projectId}`);
@@ -22,7 +21,7 @@ export default function EditProject() {
         setProjectName(name);
         setProjectDescription(projectDescription);
         setProjectDetails(projectDetails);
-        setCurrentImages(images); // הצגת התמונות הנוכחיות
+        setCurrentImages(images);
       } catch (error) {
         console.error('Failed to fetch project:', error);
       }
@@ -32,35 +31,31 @@ export default function EditProject() {
   }, [projectId]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // מניעת רענון הדף
-
+    e.preventDefault();
     const formData = new FormData();
     formData.append('name', projectName);
     formData.append('projectDescription', projectDescription);
     formData.append('projectDetails', projectDetails);
 
-    if (projectImages.length > 0) {
-      for (let i = 0; i < projectImages.length; i++) {
-        formData.append('images', projectImages[i]);
-      }
+    if (projectImages) {
+      formData.append('images', projectImages);
     }
 
     try {
       await axios.put(`http://localhost:3000/api/v1/projects/${projectId}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // עדכון בקשה עם תמונות
+          'Content-Type': 'multipart/form-data',
         },
       });
-
-      navigate('/'); // ניתוב חזרה לעמוד הבית לאחר עדכון מוצלח
+      navigate('/');
     } catch (error) {
-      setError('Failed to update project. Please check your input.'); // טיפול בשגיאה
+      setError('Failed to update project. Please check your input.');
       console.error('Failed to edit project:', error);
     }
   };
 
   const handleImageChange = (e) => {
-    setProjectImages(Array.from(e.target.files)); // הגדרת תמונות חדשות
+    setProjectImages(e.target.files[0]);
   };
 
   return (
@@ -94,7 +89,7 @@ export default function EditProject() {
             ></textarea>
           </div>
           <div className="form-group">
-            <label>:תמונות נוכחיות</label>
+            <label>:תמונה נוכחית</label>
             {currentImages && currentImages.length > 0 && (
               <div className="current-images">
                 {currentImages.map((image, index) => (
@@ -102,23 +97,24 @@ export default function EditProject() {
                     key={index}
                     src={`http://localhost:3000/${image}`}
                     alt={`Project ${index + 1}`}
+                    className="current-image"
                   />
                 ))}
               </div>
             )}
           </div>
           <div className="form-group">
-            <label>:עדכן תמונות חדשות</label>
+            <label>:עדכן תמונה חדשה</label>
             <input
               type="file"
               accept="image/*"
-              multiple
               onChange={handleImageChange}
+              className="custom-file-input"
             />
           </div>
           <button type="submit" className="submit-button">שמור שינויים</button>
         </form>
-        {error && <p className="error-message">{error}</p>} {/* הצגת הודעת שגיאה */}
+        {error && <p className="error-message">{error}</p>}
       </div>
     </div>
   );

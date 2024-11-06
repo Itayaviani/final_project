@@ -87,7 +87,7 @@ export default function AddProject({ addProject }) {
           ></textarea>
         </div>
         <div>
-          <label>:תמונות לפרויקט</label>
+          <label>:תמונה לפרויקט</label>
           <input
             type="file"
             accept="image/*"

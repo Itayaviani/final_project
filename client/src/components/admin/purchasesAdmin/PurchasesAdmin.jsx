@@ -231,7 +231,7 @@ const PurchasesAdmin = () => {
                         </tr>
                       ))}
                       <tr>
-                        <td colSpan="2" className="least-purchased-title">הכי פחות נרכשים:</td>
+                        <td colSpan="2" className="least-purchased-title">:הכי פחות נרכשים</td>
                       </tr>
                       {courseStats.leastPurchased?.map((item, index) => (
                         <tr key={index}>
@@ -262,7 +262,7 @@ const PurchasesAdmin = () => {
                         </tr>
                       ))}
                       <tr>
-                        <td colSpan="2" className="least-purchased-title">הכי פחות נרכשות:</td>
+                        <td colSpan="2" className="least-purchased-title">:הכי פחות נרכשות</td>
                       </tr>
                       {workshopStats.leastPurchased?.map((item, index) => (
                         <tr key={index}>
@@ -277,34 +277,36 @@ const PurchasesAdmin = () => {
             </div>
           </div>
 
-          <table className="purchases-table">
-            <thead>
-              <tr>
-                <th>תאריך רכישה</th>
-                <th>מחיר</th>
-                <th>שם פריט</th>
-                <th>סוג פריט</th>
-                <th>שם משתמש</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredPurchases.map((purchase) => (
-                <tr key={purchase.uniqueId}>
-                  <td>
-                    {purchase.purchaseDate
-                      ? new Date(purchase.purchaseDate).toLocaleString()
-                      : "תאריך לא זמין"}
-                  </td>
-                  <td className="price-cell-purchasesAdmin">
-                    {purchase.price} ש"ח
-                  </td>
-                  <td>{purchase.name}</td>
-                  <td>{purchase.type}</td>
-                  <td>{purchase.userName}</td>
+          <div className="purchases-table-container">
+            <table className="purchases-table">
+              <thead>
+                <tr>
+                  <th>תאריך רכישה</th>
+                  <th>מחיר</th>
+                  <th>שם פריט</th>
+                  <th>סוג פריט</th>
+                  <th>שם משתמש</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredPurchases.map((purchase) => (
+                  <tr key={purchase.uniqueId}>
+                    <td>
+                      {purchase.purchaseDate
+                        ? new Date(purchase.purchaseDate).toLocaleString()
+                        : "תאריך לא זמין"}
+                    </td>
+                    <td className="price-cell-purchasesAdmin">
+                      {purchase.price} ש"ח
+                    </td>
+                    <td>{purchase.name}</td>
+                    <td>{purchase.type}</td>
+                    <td>{purchase.userName}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
