@@ -20,45 +20,80 @@ const createAndSendToken = (user, statusCode, res) => {
   });
 };
 
+
 // רישום משתמש חדש
 exports.register = catchAsync(async (req, res, next) => {
-  const { email, phone, name, password, idNumber } = req.body; // הוספת תעודת זהות
+  const { email, phone, name, password, idNumber } = req.body;
 
+  // מערך לאיסוף שמות השדות שכבר קיימים
+  const existingFields = [];
+
+  // בדיקת קיום משתמש לפי אימייל, טלפון ותעודת זהות
   const existingUserByEmail = await User.findOne({ email });
   const existingUserByPhone = await User.findOne({ phone });
+  const existingUserByIdNumber = await User.findOne({ idNumber });
 
-  if (existingUserByEmail && existingUserByPhone) {
-    return res.status(400).json({
-      message: "מייל ומספר טלפון אלה כבר קיימים במערכת",
-    });
-  }
+  // הוספת השדה למערך אם הוא כבר קיים
   if (existingUserByEmail) {
-    return res.status(400).json({ message: "המייל הזה כבר קיים במערכת" });
+    existingFields.push({ field: "כתובת האימייל", gender: "female" });
   }
   if (existingUserByPhone) {
-    return res.status(400).json({ message: "מספר הטלפון הזה כבר קיים במערכת" });
+    existingFields.push({ field: "מספר הטלפון", gender: "male" });
+  }
+  if (existingUserByIdNumber) {
+    existingFields.push({ field: "תעודת הזהות", gender: "female" });
   }
 
-  const newUser = await User.create({ name, email, phone, password, idNumber }); // שמירת תעודת זהות
+  // אם יש שדות שכבר קיימים, בונים את ההודעה ומחזירים שגיאה
+  if (existingFields.length > 0) {
+    const fieldsList = existingFields.map(item => item.field).join(", ");
+    const hasFemaleFields = existingFields.some(item => item.gender === "female");
+
+    // בחירת הניסוח המתאים לפי זכר/נקבה ורבים/יחיד
+    const errorMessage =
+      existingFields.length === 1
+        ? `${fieldsList} כבר ${hasFemaleFields ? "קיימת" : "קיים"} במערכת`
+        : `${fieldsList} כבר קיימים במערכת`;
+
+    return res.status(400).json({ message: errorMessage });
+  }
+
+  // יצירת משתמש חדש ושמירת תעודת זהות
+  const newUser = await User.create({ name, email, phone, password, idNumber });
   createAndSendToken(newUser, 201, res);
 });
+
+
+
 
 // התחברות משתמש
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
+  // בדיקה אם האימייל והסיסמה סופקו בבקשה
   if (!email || !password) {
-    return next(new AppError("Please provide email and password", 400));
+    return res.status(400).json({ message: "יש לספק אימייל וסיסמה" });
   }
 
+  // חיפוש המשתמש לפי אימייל
   const user = await User.findOne({ email }).select("+password");
 
-  if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError("Incorrect email or password", 401));
+  // בדיקה אם האימייל לא נמצא
+  if (!user) {
+    return res.status(404).json({ message: "אימייל זה לא קיים במאגר" });
   }
 
+  // בדיקה אם הסיסמה שגויה
+  const isPasswordCorrect = await user.correctPassword(password, user.password);
+  if (!isPasswordCorrect) {
+    return res.status(401).json({ message: "סיסמא שגויה, אנא נסה שנית" });
+  }
+
+  // אם האימייל והסיסמה תקינים, יוצרים טוקן ושולחים תגובה
   createAndSendToken(user, 200, res);
 });
+
+
 
 // קבלת פרטי המשתמש המחובר
 exports.getMe = catchAsync(async (req, res, next) => {

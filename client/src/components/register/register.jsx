@@ -48,7 +48,18 @@ export default function Register() {
       navigate("/login");
     } catch (error) {
       const serverMessage = error.response?.data?.message || "ההרשמה נכשלה, אנא נסה/י מחדש.";
-      setErrorMessage(serverMessage);
+
+      // טיפול בשגיאות עבור תעודת זהות קיימת
+      if (serverMessage.includes("תעודת הזהות")) {
+        setErrorMessage("תעודת הזהות הזו כבר קיימת במערכת");
+      } else if (serverMessage.includes("מייל")) {
+        setErrorMessage("המייל הזה כבר קיים במערכת");
+      } else if (serverMessage.includes("מספר הטלפון")) {
+        setErrorMessage("מספר הטלפון הזה כבר קיים במערכת");
+      } else {
+        setErrorMessage(serverMessage);
+      }
+
       alert(serverMessage);
     }
   };
@@ -105,7 +116,7 @@ export default function Register() {
           <div className="register-page-input-group">
             <span className="icon"><FaLock /></span>
             <input
-              type={showPassword ? "text" : "password"} // תצוגה על פי מצב הסטייט
+              type={showPassword ? "text" : "password"}
               name="password"
               value={inputData.password}
               onChange={handleChange}
@@ -113,13 +124,13 @@ export default function Register() {
               required
             />
             <span className="icon eye-icon" onClick={togglePasswordVisibility}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />} {/* הצגת אייקון לפי מצב התצוגה */}
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
           <button type="submit" className="register-page-btn">להרשמה</button>
         </form>
 
-        {errorMessage && <p className="register-page-error">{errorMessage}</p>}
+        {/* {errorMessage && <p className="register-page-error">{errorMessage}</p>} */}
 
         <div className="register-page-navToLogin">
           <p className="register-page-link">

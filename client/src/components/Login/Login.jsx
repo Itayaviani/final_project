@@ -7,7 +7,6 @@ import "./login.css";
 
 export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
   const [inputData, setInputData] = useState({});
-  const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false); // סטייט לניהול תצוגת הסיסמה
   const navigate = useNavigate();
 
@@ -33,10 +32,10 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
       const username = response.data.data.user.name;
       const isAdmin = response.data.data.user.isAdmin;
       const token = response.data.token;
-      
+
       localStorage.setItem("username", username);
       localStorage.setItem("isAdmin", isAdmin);
-      localStorage.setItem("token", token); // Save the token
+      localStorage.setItem("token", token); // שמירת הטוקן
 
       setIsLoggedIn(true);
       setUsername(username);
@@ -44,11 +43,20 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
 
       navigate("/");
     } catch (error) {
-      console.error(
-        "Error logging in:",
-        error.response?.data?.message || error.message
-      );
-      setErrorMessage("Email or password is incorrect. Please try again.");
+      // הדפסת לוג של השגיאה כדי להבין מה התקבל מהשרת
+      console.error("Error response:", error.response);
+
+      // בדיקה אם התקבלה תשובה מהשרת
+      const serverMessage = error.response?.data?.message || "שגיאה בלתי צפויה. אנא נסה שוב.";
+
+      // הצגת הודעות שגיאה מותאמות
+      if (error.response?.status === 404 && serverMessage.includes("Email not found")) {
+        alert("המייל שהוזן לא קיים במאגר. אנא נסה שוב.");
+      } else if (error.response?.status === 400 && serverMessage.includes("Incorrect password")) {
+        alert("הסיסמה שהוזנה שגויה. אנא נסה שוב.");
+      } else {
+        alert(serverMessage);
+      }
     }
   };
 
@@ -70,21 +78,20 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
           <div className="label-input-login">
             <span className="icon"><FaLock /></span>
             <input
-              type={showPassword ? "text" : "password"} // תצוגה על פי מצב הסטייט
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="סיסמא"
               onChange={handleChange}
               required
             />
             <span className="icon eye-icon" onClick={togglePasswordVisibility}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />} {/* הצגת אייקון לפי מצב התצוגה */}
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
           <button type="submit" className="btn-login">
             להתחברות
           </button>
         </form>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
         <div className="navToRegister">
           <p className="login-link">
             עדיין לא רשום/ה? <Link to="/register">להרשמה</Link>
