@@ -14,10 +14,10 @@ export default function EditProject() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // פונקציה לאחזור נתוני הפרויקט מהשרת
+
     const fetchProject = async () => {
       try {
-        //קבלת הפרוייקט לפי מזהה הפרויקט לשם עריכתו
+
         const response = await axios.get(`http://localhost:3000/api/v1/projects/${projectId}`);
         const { name, projectDescription, projectDetails, images } = response.data;
         setProjectName(name);
@@ -32,7 +32,7 @@ export default function EditProject() {
     fetchProject();
   }, [projectId]);
 
-  // פונקציה לטיפול בשליחת הטופס
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -45,7 +45,7 @@ export default function EditProject() {
     }
 
     try {
-      /// שליחת בקשת PUT לשרת לעדכון נתוני הפרויקט
+
       await axios.put(`http://localhost:3000/api/v1/projects/${projectId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -58,7 +58,7 @@ export default function EditProject() {
     }
   };
 
-  // פונקציה לטיפול בשינוי הקלט של התמונה
+
   const handleImageChange = (e) => {
     setProjectImages(e.target.files[0]);
   };

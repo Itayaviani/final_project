@@ -3,14 +3,14 @@ import axios from 'axios';
 import './Inquiries.css'; 
 
 const Inquiries = () => {
-  const [inquiries, setInquiries] = useState([]);//רשימת פניות הלקוחות
+  const [inquiries, setInquiries] = useState([]);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState(''); 
 
   useEffect(() => {
     const fetchInquiries = async () => {
       try {
-        //טעינת הפניות מהשרת
+
         const response = await axios.get('http://localhost:3000/api/v1/contacts');
         setInquiries(response.data.data);
       } catch (err) {
@@ -21,18 +21,18 @@ const Inquiries = () => {
     fetchInquiries();
   }, []);
 
-    // פונקציה למחיקת פנייה
+
   const handleDeleteInquiry = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/api/v1/contacts/${id}`);
-      // עדכון מצב הפניות כך שהפנייה שנמחקה לא תופיע יותר
+
       setInquiries(inquiries.filter(inquiry => inquiry._id !== id));
     } catch (err) {
       setError('שגיאה במחיקת הפנייה');
     }
   };
 
-    // סינון הפניות לפי שם פרטי שמתחיל בטקסט שהוזן בשדה החיפוש
+
   const filteredInquiries = inquiries.filter(inquiry =>
     inquiry.firstName.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
@@ -43,7 +43,7 @@ const Inquiries = () => {
         <h1>רשימת פניות צור קשר</h1>
         {error && <p className="error-message">{error}</p>}
 
-        {/* אינפוט לחיפוש לפי שם פרטי */}
+        {}
         <input
           type="text"
           placeholder="חפש לפי שם פרטי"

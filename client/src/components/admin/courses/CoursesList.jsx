@@ -6,7 +6,7 @@ import "./coursesList.css";
 const CoursesList = () => {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState("");
-  const [filter, setFilter] = useState(""); // מצב לשמירת סינון הקורסים (קורסים מלאים/ זמינים)
+  const [filter, setFilter] = useState(""); 
   const [showTable, setShowTable] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate(); 
@@ -14,7 +14,7 @@ const CoursesList = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        // בקשה לשרת לקבלת רשימת הקורסים
+
         const response = await axios.get(
           "http://localhost:3000/api/v1/courses"
         );
@@ -38,46 +38,46 @@ const CoursesList = () => {
     }
   };
 
-  // פונקציה לעריכת קורס
+
   const handleEditCourse = (id) => {
-    navigate(`/edit-course/${id}`); // ניווט לדף עריכת הקורס
+    navigate(`/edit-course/${id}`); 
   };
 
-  // פונקציה לחישוב הכנסות
+
   const calculateRevenue = (course) => {
     return course.participants * course.price;
   };
 
-  // פונקציה לחישוב כמות המקומות הפנויים בקורס
+
   const calculateAvailableSpots = (course) => {
     return course.capacity - course.participants;
   };
 
-  // סינון הקורסים לפי מצב תפוסה
+
   const filteredCourses = courses.filter((course) => {
     if (filter === "available") {
-      return course.participants < course.capacity; // קורסים עם מקומות פנויים
+      return course.participants < course.capacity; 
     } else if (filter === "full") {
-      return course.participants >= course.capacity; // קורסים מלאים
+      return course.participants >= course.capacity;   
     } else {
-      return true; // הצגת כל הקורסים
+      return true; 
     }
   });
 
-  // סינון לפי חיפוש שם קורס כך שהשם יתחיל בערך החיפוש בלבד
+
   const searchedCourses = filteredCourses.filter((course) =>
     course.name.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
-  // מיון הקורסים לפי הכנסות (מהגבוה לנמוך)
+
   const sortedCourses = searchedCourses.sort(
     (a, b) => calculateRevenue(b) - calculateRevenue(a)
   );
 
-  // פונקציה להצגת הטבלה לאחר לחיצה על כפתור
+
   const handleShowTable = (filterType) => {
-    setFilter(filterType); // עדכון הסינון
-    setShowTable(true); // הצגת הטבלה
+    setFilter(filterType); 
+    setShowTable(true); 
   };
 
   return (
@@ -108,7 +108,7 @@ const CoursesList = () => {
           />
         )}
 
-        {/* הצגת הטבלה רק לאחר לחיצה על כפתור */}
+
         {showTable && (
           <table>
             <thead>
@@ -143,7 +143,7 @@ const CoursesList = () => {
                     </div>
                   </td>
                   <td>
-                    {/* בדיקה אם הקורס מלא והצגת הכיתוב */}
+                    {}
                     {course.participants >= course.capacity ? (
                       <span className="full-course">הקורס מלא</span>
                     ) : (
@@ -155,7 +155,7 @@ const CoursesList = () => {
                   <td className="price-cell-courseList">
                     {calculateRevenue(course)} ש"ח
                   </td>{" "}
-                  {/* הצגת ההכנסות */}
+                  {}
                   <td>
                     {course.participants} / {course.capacity}
                   </td>

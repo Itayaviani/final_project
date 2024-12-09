@@ -14,13 +14,13 @@ export default function AddWorkshop({ addWorkshop }) {
   const [workshopImage, setWorkshopImage] = useState(null);
   const [error, setError] = useState(null);
 
-  //פונקציה שמטפלת בשליחת הטופס
+
   const handleSubmit = async (e) => {
-    e.preventDefault();// מניעת רענון הדף בברירת מחדל
+    e.preventDefault();
     setError(null);
 
     try {
-      //יצירת אובייקט FormData כדי לשלוח נתונים שכוללים קבצים
+
       const formData = new FormData();
       formData.append('name', workshopName);
       formData.append('workshopDescription', workshopDescription); 
@@ -33,7 +33,7 @@ export default function AddWorkshop({ addWorkshop }) {
       if (workshopImage) {
         formData.append('image', workshopImage);
       }
-      // שליחת בקשת POST לשרת להוספת סדנה חדשה
+
       const response = await axios.post(
         'http://localhost:3000/api/v1/workshops',
         formData,
@@ -52,7 +52,7 @@ export default function AddWorkshop({ addWorkshop }) {
     }
   };
 
-  // פונקציה לעדכון המצב כאשר קובץ תמונה נבחר
+
   const handleImageChange = (e) => {
     setWorkshopImage(e.target.files[0]); 
   };

@@ -63,7 +63,7 @@ function App() {
     }
   }, []);
 
-  // פונקציה להתנתקות מהמערכת
+
   const handleLogout = () => {
     localStorage.removeItem('username');
     localStorage.removeItem('isAdmin');
@@ -78,19 +78,19 @@ function App() {
   const [courses, setCourses] = useState([]);
   const [workshops, setWorkshops] = useState([]);
 
-// פונקציה להוספת קורס חדש לרשימה
+
   const addCourse = (course) => {
     setCourses([...courses, course]);
   };
 
-  // פונקציה להוספת סדנה חדשה לרשימה
+
   const addWorkshop = (workshop) => {
     setWorkshops([...workshops, workshop]);
   };
 
   const [projects, setProjects] = useState([]);
 
-  // פונקציה להוספת פרויקט חדש לרשימה
+
   const addProject = (newProject) => {
     setProjects([...projects, newProject]);
   };
@@ -109,7 +109,7 @@ function App() {
           <Route path='/register' element={<Signup />} />
           <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setIsAdmin={setIsAdmin} />} />
           
-          {/* ניהול קורסים */}
+          {}
           <Route path='/courses' element={<Courses courses={courses} isAdmin={isAdmin} userId={userId} />} />
           <Route path="/add-course" element={<AddCourse addCourse={addCourse} />} />
           <Route path="/edit-course/:courseId" element={<EditCourse />} />
@@ -117,7 +117,7 @@ function App() {
           <Route path="/payment/courses/:courseId" element={<CoursePayment />} />
           <Route path="/thank-you-course" element={<ThankYouCourse />} />
           
-          {/* ניהול סדנאות */}
+          {}
           <Route path='/workshops' element={<Workshops workshops={workshops} isAdmin={isAdmin} />} />
           <Route path="/add-workshop" element={<AddWorkshop addWorkshop={addWorkshop} />} />
           <Route path="/edit-workshop/:workshopId" element={<EditWorkshop />} />
@@ -130,7 +130,7 @@ function App() {
           <Route path='/personalProcess' element={<PersonalProcess />} />
           <Route path='/contactUs' element={<ContactsUs />} />
 
-          {/* ניהול מערכת */}
+          {}
           {isAdmin && <Route path='/admin' element={<AdminPanel />} />}
           {isAdmin && <Route path='/users' element={<UserList />} />}
           {isAdmin && <Route path='/admin/coursesList' element={<CoursesList />} />}
@@ -138,7 +138,7 @@ function App() {
           {isAdmin && <Route path='/admin/workshopsList' element={<WorkshopsList />} />}
           {isAdmin && <Route path='/admin/purchases' element={<PurchasesAdmin />} />}
 
-          {/* פרופיל משתמש */}
+          {}
           {isLoggedIn && <Route path='/profile' element={<Profile />} />}
           {isLoggedIn && <Route path='/my-purchases' element={<MyPurchases userId={userId} />} />} {/* מעביר את ה-userId ל-MyPurchases */}
           {isLoggedIn && <Route path='/edit-user/:id' element={<EditUser setUsername={setUsername} />} />}

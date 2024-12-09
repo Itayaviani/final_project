@@ -8,11 +8,11 @@ export default function Courses({ isAdmin, userId }) {
   const [purchasedCourses, setPurchasedCourses] = useState([]);
   const [loading, setLoading] = useState(true); 
 
-  // שימוש ב-useEffect להבאת רשימת הקורסים מהשרת בעת טעינת הקומפוננטה
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        // בקשה לשרת לקבלת כל הקורסים
+
         const response = await axios.get(
           "http://localhost:3000/api/v1/courses"
         );
@@ -20,18 +20,18 @@ export default function Courses({ isAdmin, userId }) {
       } catch (error) {
         console.error("Failed to fetch courses:", error);
       } finally {
-        setLoading(false); // להפסיק את מצב הטעינה לאחר קבלת הנתונים
+        setLoading(false); 
       }
     };
 
     fetchCourses();
   }, [isAdmin]);
 
-  // שימוש ב-useEffect להבאת רשימת הקורסים שנרכשו על ידי המשתמש
+
   useEffect(() => {
     const fetchPurchasedCourses = async () => {
       try {
-        // בקשה לשרת לקבלת רשימת הקורסים שנרכשו על ידי המשתמש
+
         const response = await axios.get(
           `http://localhost:3000/api/v1/users/${userId}/purchases`
         );
@@ -46,7 +46,7 @@ export default function Courses({ isAdmin, userId }) {
     }
   }, [userId]);
 
-  // פונקציה למחיקת קורס על ידי שליחת בקשה לשרת
+
   const handleDelete = async (courseId) => {
     try {
 
@@ -57,12 +57,12 @@ export default function Courses({ isAdmin, userId }) {
     }
   };
 
-  // פונקציה לניווט לעמוד עריכת הקורס
+
   const handleEdit = (courseId) => {
     window.location.href = `/edit-course/${courseId}`;
   };
 
-  // פונקציה לניווט לעמוד פרטי הקורס
+
   const handleDetails = (courseId) => {
     window.location.href = `/course-details/${courseId}`;
   };
@@ -76,14 +76,14 @@ export default function Courses({ isAdmin, userId }) {
     startDate.setHours(0, 0, 0, 0);
     const isPurchased = purchasedCourses
       .map(String)
-      .includes(String(course._id)); // בדיקה אם הקורס נרכש
-    const hasCourseStarted = startDate <= today; // בדיקה אם הקורס התחיל
+      .includes(String(course._id)); 
+    const hasCourseStarted = startDate <= today;
 
     return {
       ...course,
       isPurchased,
       hasCourseStarted, 
-      isFull: course.participants >= course.capacity, // בדיקה אם הקורס מלא
+      isFull: course.participants >= course.capacity, 
     };
   });
 

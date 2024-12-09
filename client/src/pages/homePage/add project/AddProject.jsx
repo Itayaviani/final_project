@@ -11,9 +11,9 @@ export default function AddProject({ addProject }) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-    // פונקציה לטיפול בלחיצה על כפתור שליחת הטופס
+
   const handleSubmit = async (e) => {
-    e.preventDefault(); // מניעת רענון הדף
+    e.preventDefault(); 
     setError(null);
 
     try {
@@ -23,7 +23,7 @@ export default function AddProject({ addProject }) {
       formData.append('projectDescription', projectDescription);
       formData.append('projectDetails', projectDetails);
 
-      // הוספת כל התמונות שנבחרו (אם קיימות) ל-FormData
+
       if (projectImages.length > 0) {
         for (let i = 0; i < projectImages.length; i++) {
           formData.append('images', projectImages[i]);
@@ -31,7 +31,7 @@ export default function AddProject({ addProject }) {
       }
 
       const response = await axios.post(
-        // שליחת בקשת POST לשרת להוספת פרויקט חדש
+
         'http://localhost:3000/api/v1/projects',
         formData,
         {
@@ -41,7 +41,7 @@ export default function AddProject({ addProject }) {
         }
       );
 
-      // קריאה לפונקציה שהועברה כפרופס לשם עדכון רשימת הפרויקטים
+
       addProject(response.data);
 
       
@@ -53,9 +53,9 @@ export default function AddProject({ addProject }) {
     }
   };
 
-  // פונקציה לטיפול בשינוי התמונה בטופס
+
   const handleImageChange = (e) => {
-    setProjectImages(Array.from(e.target.files)); // טיפול בשינוי התמונות
+    setProjectImages(Array.from(e.target.files)); 
   };
 
   return (

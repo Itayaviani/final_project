@@ -6,7 +6,7 @@ export default function NavBar({ isLoggedIn, username, isAdmin, onLogout }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // פונקציה לחישוב האותיות הראשונות של השם המלא
+
   const getInitials = (name) => {
     const nameParts = name.split(' ');
     const initials = nameParts[0][0] + (nameParts[1] ? nameParts[1][0] : '');

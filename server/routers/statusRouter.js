@@ -14,7 +14,7 @@ router.get('/stats', async (req, res) => {
         const workshopCount = await Workshop.countDocuments();
         const contactCount = await Contact.countDocuments();
 
-        // שליפת כל המשתמשים עם המידע המלא על הרכישות
+
         const users = await User.find().lean();
 
         let calculatedPurchaseCount = 0;
@@ -27,7 +27,7 @@ router.get('/stats', async (req, res) => {
             calculatedPurchaseCount += totalUserPurchases;
         });
 
-        console.log('Calculated Total Purchases:', calculatedPurchaseCount); // בדיקת התוצאה של כמות הרכישות
+        console.log('Calculated Total Purchases:', calculatedPurchaseCount); 
 
         res.json({
             users: userCount,

@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// נתיב חדש להחזרת כל הרכישות של המשתמש
+
 router.get("/me/purchases", async (req, res) => {
   try {
     const { userId } = req.params;
@@ -66,10 +66,10 @@ router.get("/me/purchases", async (req, res) => {
       return res.status(404).json({ message: "המשתמש לא נמצא" });
     }
 
-    // שלוף את כל הקורסים שהמשתמש רכש
+
     const purchasedCourses = await Course.find({ _id: { $in: user.purchasedCourses } });
 
-    // שלוף את כל הסדנאות שהמשתמש רכש
+
     const purchasedWorkshops = await Workshop.find({ _id: { $in: user.purchasedWorkshops || [] } });
 
     res.status(200).json({

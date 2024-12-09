@@ -8,11 +8,11 @@ export default function WorkshopDetail() {
   const [workshop, setWorkshop] = useState(null);
   const navigate = useNavigate();
 
-  // שימוש ב-useEffect לביצוע בקשת HTTP להבאת פרטי הסדנה בעת טעינת הרכיב
+
   useEffect(() => {
     const fetchWorkshop = async () => {
       try {
-        // בקשה לשרת לקבלת פרטי הסדנה לפי מזהה
+
         const response = await axios.get(`http://localhost:3000/api/v1/workshops/${workshopId}`);
         setWorkshop(response.data);
       } catch (error) {
@@ -23,18 +23,18 @@ export default function WorkshopDetail() {
     fetchWorkshop();
   }, [workshopId]);
 
-  // פונקציה לניווט לעמוד תשלום עבור הסדנה
+
   const handlePurchase = () => {
     navigate(`/payment/workshops/${workshopId}`);
   };
 
-  // פונקציה לחלוקה לפסקאות של 200 מילים עם סינון פסקאות ריקות
+
   const splitTextIntoParagraphs = (text) => {
     const words = text.split(' ');
     const paragraphs = [];
     for (let i = 0; i < words.length; i += 200) {
       const paragraph = words.slice(i, i + 200).join(' ').trim();
-      if (paragraph) { // רק אם הפסקה לא ריקה, נוסיף אותה לרשימה
+      if (paragraph) { 
         paragraphs.push(paragraph);
       }
     }
@@ -45,7 +45,7 @@ export default function WorkshopDetail() {
     return <p>טוען פרטים...</p>;
   }
 
-  // חלוקת תיאור הסדנה ופרטי הסדנה לפסקאות
+
   const descriptionParagraphs = splitTextIntoParagraphs(workshop.description || '');
   const detailsParagraphs = splitTextIntoParagraphs(workshop.workshopDetails || '');
 

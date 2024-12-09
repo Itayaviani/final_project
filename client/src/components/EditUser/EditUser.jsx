@@ -14,12 +14,12 @@ const EditUser = ({ setUsername }) => {
 
   useEffect(() => {
 
-    // פונקציה אסינכרונית לשליפת פרטי המשתמש מהשרת
+
     const fetchUser = async () => {
       try {
-        // שליפת הטוקן של המשתמש מאחסון מקומי
+
         const token = localStorage.getItem('token');
-        //שליפת המשתמש מהשרת לפי מזהה יחודי
+
         const response = await axios.get(`http://localhost:3000/api/v1/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -27,7 +27,7 @@ const EditUser = ({ setUsername }) => {
         });
 
         setUser(response.data.data.user);
-        // הגדרת מצב הטעינה כלא פעיל 
+
         setLoading(false);
       } catch (err) {
         setError('שגיאה באחזור פרטי משתמש');
@@ -42,9 +42,9 @@ const EditUser = ({ setUsername }) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  // פונקציה שמטפלת בשמירת העריכות
+
   const handleSubmit = async (e) => {
-    // מניעת רענון הדף ברגע שמבצעים שמירה
+
     e.preventDefault();
     try {
 
@@ -55,7 +55,7 @@ const EditUser = ({ setUsername }) => {
         },
       });
 
-      // עדכון שם המשתמש באחסון מקומי
+
       localStorage.setItem('username', user.name);
       setUsername(user.name);
 

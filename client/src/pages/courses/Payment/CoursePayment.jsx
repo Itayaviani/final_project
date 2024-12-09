@@ -4,7 +4,7 @@ import axios from 'axios';
 import './coursePayment.css';
 
 export default function CoursePayment() {
-  const { courseId } = useParams(); // קבלת מזהה הקורס שנרכש מהנתיב
+  const { courseId } = useParams(); 
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState('');
@@ -20,7 +20,7 @@ export default function CoursePayment() {
   const [capacity, setCapacity] = useState(0); 
   const [hasCourseStarted, setHasCourseStarted] = useState(false); 
 
-  // משתנה עבור הודעות שגיאה של שדות הטופס
+
   const [errors, setErrors] = useState({
     fullName: '',
     email: '',
@@ -31,16 +31,16 @@ export default function CoursePayment() {
     cardType: '',
   });
 
-  const [submitted, setSubmitted] = useState(false); // משתנה לבדיקת אם המשתמש ניסה לשלוח את הטופס
-  const [isFormValid, setIsFormValid] = useState(false); // סטטוס תקינות הטופס
+  const [submitted, setSubmitted] = useState(false); 
+  const [isFormValid, setIsFormValid] = useState(false); 
 
-  // פונקציה לבדיקת תקינות הטופס
+  
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     const fullNameRegex = /^[A-Za-z\u0590-\u05FF\s]+$/;
     const idNumberRegex = /^\d{9}$/; 
 
-    // יצירת אובייקט שגיאות חדש
+
     const newErrors = {
       fullName: !fullNameRegex.test(fullName) && fullName.length > 0 ? 'שם מלא יכול להכיל רק אותיות בעברית או באנגלית ורווחים.' : '',
       email: !emailRegex.test(email) && email.length > 0 ? 'כתובת אימייל לא תקינה. יש להזין כתובת מלאה כולל הסיומת.' : '',
@@ -53,20 +53,20 @@ export default function CoursePayment() {
 
     setErrors(newErrors);
 
-    // בדיקה אם אין שגיאות
+
     return !newErrors.fullName && !newErrors.email && !newErrors.creditCard && !newErrors.expirationDate && !newErrors.cvv && !newErrors.idNumber;
   };
 
-  // בדיקת תקינות בכל שינוי בשדות הטופס
+
   useEffect(() => {
-    setIsFormValid(validateForm()); // עדכון מצב תקינות הטופס
+    setIsFormValid(validateForm()); 
   }, [fullName, email, creditCard, expirationDate, cvv, idNumber, selectedCardType]);
 
-  // קבלת פרטי הקורס
+
   useEffect(() => {
     const fetchCourseDetails = async () => {
       try {
-        //שליפת נתוני הקורס הנרכש
+
         const response = await axios.get(`http://localhost:3000/api/v1/courses/${courseId}`);
         const course = response.data;
 
@@ -74,7 +74,7 @@ export default function CoursePayment() {
         setCapacity(course.capacity);
         setIsCourseFull(course.participants >= course.capacity); 
 
-        // בדיקה אם הקורס כבר התחיל
+
         const today = new Date();
         today.setHours(0, 0, 0, 0); 
         const courseStartDate = new Date(course.startDate);
@@ -89,17 +89,17 @@ export default function CoursePayment() {
     fetchCourseDetails();
   }, [courseId]);
 
-  // עדכון מספר כרטיס אשראי בתהליך ההקלדה
+
   const handleCreditCardChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
+    const value = e.target.value.replace(/\D/g, ''); 
     if (value.length <= 16) {
       setCreditCard(value);
     }
   };
 
-  // עדכון תאריך תפוגת כרטיס בתהליך ההקלדה
+
   const handleExpirationDateChange = (e) => {
-    let value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
+    let value = e.target.value.replace(/\D/g, ''); 
     if (value.length <= 4) {
       if (value.length >= 3) {
         value = `${value.slice(0, 2)}/${value.slice(2, 4)}`;
@@ -116,7 +116,7 @@ export default function CoursePayment() {
     }
   };
 
-  // עדכון תעודת זהות בתהליך ההקלדה
+
   const handleIdNumberChange = (e) => {
     const value = e.target.value.replace(/\D/g, ''); 
     if (value.length <= 9) {
@@ -124,12 +124,12 @@ export default function CoursePayment() {
     }
   };
 
-  // בחירת סוג כרטיס
+
   const handleCardTypeSelect = (type) => {
-    setSelectedCardType(type); // עדכון אמצעי התשלום הנבחר
+    setSelectedCardType(type); 
   };
 
-  // פונקציה לאיפוס הטופס
+
   const resetForm = () => {
     setFullName('');
     setEmail('');
@@ -141,10 +141,10 @@ export default function CoursePayment() {
     setInstallments(1); 
   };
 
-  // פונקציה לביצוע הרכישה
+
   const handlePurchase = async (purchaseData) => {
     try {
-      // שולח בקשת POST לשרת עם פרטי הרכישה
+
       const response = await axios.post('http://localhost:3000/api/v1/courses/purchase', purchaseData);
 
       if (response.data.purchased) {
@@ -168,7 +168,7 @@ export default function CoursePayment() {
     }
   };
 
-  // פונקציה לטיפול באירוע התשלום
+
   const handlePayment = (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -180,7 +180,7 @@ export default function CoursePayment() {
       }));
     }
 
-      // בודק אם כל שדות הטופס תקינים ואם נבחר אמצעי תשלום
+
     if (isFormValid && selectedCardType) {
       if (isCourseFull) {
         alert("לא ניתן לבצע רכישה, קורס זה מלא.")

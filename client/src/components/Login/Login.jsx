@@ -15,14 +15,14 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
-  // פונקציה להחלפת מצב הצגת הסיסמה
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword); 
   };
 
-  // פונקציה שמטפלת בשליחת טופס ההתחברות
+
   const onSubmit = async (e) => {
-    // מונע ריענון דף ברירת מחדל
+
     e.preventDefault();
     console.log(inputData);
 
@@ -37,7 +37,7 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
       const isAdmin = response.data.data.user.isAdmin;
       const token = response.data.token;
 
-      //שמירת פרטי המשתמש ב localstorage
+
       localStorage.setItem("username", username);
       localStorage.setItem("isAdmin", isAdmin);
       localStorage.setItem("token", token); 
@@ -51,10 +51,10 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
       
       console.error("תגובת שגיאה:", error.response);
 
-      // בדיקה אם התקבלה תשובה מהשרת
+
       const serverMessage = error.response?.data?.message || "שגיאה בלתי צפויה. אנא נסה שוב.";
 
-      // הצגת הודעות שגיאה מותאמות
+
       if (error.response?.status === 404 && serverMessage.includes("אימייל לא נמצא")) {
         alert("המייל שהוזן לא קיים במאגר. אנא נסה שוב.");
       } else if (error.response?.status === 400 && serverMessage.includes("סיסמה שגויה")) {

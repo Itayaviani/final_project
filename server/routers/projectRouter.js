@@ -4,7 +4,7 @@ const Project = require('../models/ProjectModel');
 const multer = require('multer');
 const path = require('path');
 
-// הגדרת אחסון התמונות
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
@@ -16,18 +16,18 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// חשיפת תיקיית 'uploads' כמשאב סטטי
+
 router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// נתיב להוספת פרוייקט חדש
+
 router.post('/', upload.array('images', 3), async (req, res) => {
   try {
     const { name, projectDescription, projectDetails } = req.body;
 
-    // קבלת נתיבי התמונות שהועלו
+
     const images = req.files ? req.files.map(file => file.path.replace(/\\/g, '/')) : [];
 
-    // יצירת הפרוייקט החדש
+
     const newProject = new Project({
       name,
       projectDescription, 
@@ -35,7 +35,7 @@ router.post('/', upload.array('images', 3), async (req, res) => {
       images 
     });
 
-    // שמירת הפרוייקט במסד הנתונים
+
     await newProject.save();
     res.status(201).json(newProject);
   } catch (err) {
@@ -43,29 +43,29 @@ router.post('/', upload.array('images', 3), async (req, res) => {
   }
 });
 
-// נתיב לעדכון פרויקט
+
 router.put('/:id', upload.array('images', 3), async (req, res) => {
   try {
     const { id } = req.params;
     const { name, projectDescription, projectDetails } = req.body;
 
-    // מצא את הפרויקט לפי מזהה
+
     const project = await Project.findById(id);
     if (!project) {
       return res.status(404).json({ error: 'Project not found' });
     }
 
-    // עדכון פרטי הפרויקט
+
     project.name = name || project.name;
     project.projectDescription = projectDescription || project.projectDescription;
     project.projectDetails = projectDetails || project.projectDetails;
 
-    // עדכון התמונות רק אם הועלו תמונות חדשות
+
     if (req.files && req.files.length > 0) {
-      project.images = req.files.map(file => file.path.replace(/\\/g, '/')); // עדכון נתיבי התמונות החדשות
+      project.images = req.files.map(file => file.path.replace(/\\/g, '/')); 
     }
 
-    // שמירת הפרויקט המעודכן
+
     const updatedProject = await project.save();
 
     res.json(updatedProject);
@@ -76,7 +76,7 @@ router.put('/:id', upload.array('images', 3), async (req, res) => {
 });
 
 
-// נתיב למחיקת פרוייקט
+
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -91,7 +91,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-// נתיב להצגת כל הפרויקטים
+
 router.get('/', async (req, res) => {
     try {
       const projects = await Project.find();

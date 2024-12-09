@@ -9,10 +9,10 @@ export default function HomePage({ isAdmin }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    //פונקציה אסינכרונית לאחזור רשימת הפרויקטים מהשרת
+
     const fetchProjects = async () => {
       try {
-        //בקשת GET לשרת לקבלת רשימת פרויקטים
+
         const response = await axios.get("http://localhost:3000/api/v1/projects");
         setProjects(response.data);
       } catch (error) {
@@ -25,22 +25,22 @@ export default function HomePage({ isAdmin }) {
     fetchProjects();
   }, []);
 
-  // פונקציה לטיפול בניווט לעמוד פרטים נוספים של פרויקט מסוים
+
   const handleDetails = (projectId) => {
     window.location.href = `/project-details/${projectId}`;
   };
 
-  // פונקציה לטיפול בניווט לעמוד עריכת פרויקט מסוים
+
   const handleEdit = (projectId) => {
     window.location.href = `/edit-project/${projectId}`;
   };
 
-  // פונקציה למחיקת פרויקט
+
   const handleDelete = async (projectId) => {
     try {
-      // בקשת DELETE לשרת למחיקת הפרויקט
+
       await axios.delete(`http://localhost:3000/api/v1/projects/${projectId}`);
-      // עדכון ה-state להסרת הפרויקט מרשימת הפרויקטים
+
       setProjects(projects.filter((project) => project._id !== projectId));
     } catch (error) {
       console.error("מחיקת הפרויקט נכשלה:", error);

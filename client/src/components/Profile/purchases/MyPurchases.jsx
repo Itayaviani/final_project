@@ -7,10 +7,10 @@ const MyPurchases = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    //פונקציה אסינכרונית לשליפת הרכישות
+
     const fetchPurchasedCourses = async () => {
       try {
-        //שליפת נתוני הרכישות
+
         const response = await axios.get(
           'http://localhost:3000/api/v1/users/me/purchases',
           {
@@ -22,7 +22,7 @@ const MyPurchases = () => {
 
         console.log('נתוני תגובה:', response.data.purchases);
 
-        // מיזוג של כל הרכישות (קורסים וסדנאות) במערך אחד ומיון לפי purchaseDate
+
         const allPurchases = [
           ...response.data.purchases.courses.map((course) => ({ ...course, type: 'קורס' })),
           ...response.data.purchases.workshops.map((workshop) => ({ ...workshop, type: 'סדנה' }))

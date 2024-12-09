@@ -17,10 +17,10 @@ export default function EditWorkshop() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //פונקציה לטעינת הסדנאות
+
     const fetchWorkshop = async () => {
       try {
-        //בקשה לשרת לקבלת פרטי הסדנה עם המזהה המסויים
+
         const response = await axios.get(`http://localhost:3000/api/v1/workshops/${workshopId}`);
         const { name, workshopDescription, workshopDetails, price, capacity, image, startDate, startTime } = response.data; // קבלת הערכים מהשרת
         setWorkshopName(name);
@@ -40,11 +40,11 @@ export default function EditWorkshop() {
     fetchWorkshop();
   }, [workshopId]);
 
-  // פונקציה לטיפול בשליחת הטופס
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // הכנת הנתונים לשליחה
+
     const formData = new FormData();
     formData.append('name', workshopName);
     formData.append('workshopDescription', workshopDescription);
@@ -54,13 +54,13 @@ export default function EditWorkshop() {
     formData.append('startDate', `${workshopStartDate}T${workshopStartTime}`); 
     formData.append('startTime', workshopStartTime);
 
-    // עדכון התמונה רק אם הועלה תמונה חדשה
+
     if (workshopImage) {
       formData.append('image', workshopImage);
     }
 
     try {
-      // שליחת הנתונים לשרת
+
       await axios.put(`http://localhost:3000/api/v1/workshops/${workshopId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', 
@@ -73,7 +73,7 @@ export default function EditWorkshop() {
     }
   };
 
-  // פונקציה לטיפול בשינוי התמונה
+
   const handleImageChange = (e) => {
     setWorkshopImage(e.target.files[0]);
   };

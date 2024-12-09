@@ -22,7 +22,7 @@ function ContactsUs() {
     setForm({ ...form, [name]: value });
   };
 
-  //פוקנציה לשליחת הטופס
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

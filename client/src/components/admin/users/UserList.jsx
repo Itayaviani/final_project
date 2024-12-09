@@ -13,7 +13,7 @@ const UserList = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("token");
-        //משיכת המשתמשים מהשרת
+
         const response = await axios.get("http://localhost:3000/api/v1/users", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -28,29 +28,29 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
-  // פונקציה למחיקת משתמש לפי מזהה
+
   const handleDeleteUser = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      //שליפת המשתמש עם המזהה שצריך למחוק
+
       await axios.delete(`http://localhost:3000/api/v1/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      // עדכון רשימת המשתמשים לאחר מחיקת משתמש
+
       setUsers(users.filter((user) => user._id !== id));
     } catch (err) {
       setError("שגיאה במחיקת המשתמש");
     }
   };
 
-  // פונקציה לעריכת פרטי משתמש, ניווט לעמוד עריכת המשתמש
+
   const handleEditUser = (id) => {
     navigate(`/edit-user/${id}`);
   };
 
-  // סינון המשתמשים לפי ערך החיפוש, כך שיבדוק אם השם מתחיל בערך החיפוש
+
   const filteredUsers = users.filter((user) =>
     user.name.startsWith(searchTerm)
   );

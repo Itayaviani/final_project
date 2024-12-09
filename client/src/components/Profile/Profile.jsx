@@ -10,11 +10,11 @@ const Profile = () => {
 
 
   useEffect(() => {
-    // פונקציה לאחזור נתוני הפרופיל של המשתמש
+
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem('token');
-        //אחזור נתוני המשתמש המחובר 
+
         const response = await axios.get(
           'http://localhost:3000/api/v1/users/me',
           {
@@ -35,7 +35,7 @@ const Profile = () => {
     fetchProfile(); 
   }, []);
 
-  // פונקציה לניווט לעמוד הרכישות
+
   const handleViewPurchases = () => {
     navigate('/my-purchases'); 
   };

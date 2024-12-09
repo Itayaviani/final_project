@@ -7,31 +7,31 @@ export default function Workshops({ isAdmin }) {
   const [workshops, setWorkshops] = useState([]);
   const [loading, setLoading] = useState(true); 
 
-  // שימוש ב-useEffect לקריאה ל-API ולהבאת רשימת הסדנאות בעת טעינת הרכיב
+
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        // שליחת בקשה לשרת לקבלת רשימת הסדנאות
+
         const response = await axios.get(
           "http://localhost:3000/api/v1/workshops"
         );
 
-        // הצגת כל הסדנאות ללא סינון של הסדנאות המלאות
+
         setWorkshops(response.data);
       } catch (error) {
         console.error("Failed to fetch workshops:", error);
       } finally {
-        setLoading(false); // סיום מצב הטעינה
+        setLoading(false); 
       }
     };
 
     fetchWorkshops();
   }, [isAdmin]);
 
-  // פונקציה למחיקת סדנה על ידי שליחת בקשת DELETE לשרת
+
   const handleDelete = async (workshopId) => {
     try {
-      // שליחת בקשת מחיקה לשרת לפי מזהה הסדנה
+
       await axios.delete(
         `http://localhost:3000/api/v1/workshops/${workshopId}`
       );
@@ -41,12 +41,12 @@ export default function Workshops({ isAdmin }) {
     }
   };
 
-    // פונקציה לניתוב לעמוד עריכת סדנה לפי מזהה הסדנה
+
   const handleEdit = (workshopId) => {
     window.location.href = `/edit-workshop/${workshopId}`;
   };
 
-  // פונקציה לניתוב לעמוד פרטי הסדנה
+
   const handleDetails = (workshopId) => {
     window.location.href = `/workshop-details/${workshopId}`;
   };

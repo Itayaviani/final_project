@@ -20,7 +20,7 @@ const AdminPanel = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem('token');
-        //שליפת המשתמשים מהשרת
+
         const response = await axios.get('http://localhost:3000/api/v1/users', {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ const AdminPanel = () => {
 
     const fetchCourses = async () => {
       try {
-        //שליפת הקורסים מהשרת
+
         const response = await axios.get('http://localhost:3000/api/v1/courses');
         setCourses(response.data);
       } catch (err) {
@@ -42,10 +42,10 @@ const AdminPanel = () => {
       }
     };
 
-    // שליפת הנתונים עבור הכמויות
+
     const fetchStats = async () => {
       try {
-        //שליפת נתוני הסטטיסטיקות מהשרת
+
         const response = await axios.get('http://localhost:3000/api/admin/stats');
         setStats(response.data);
       } catch (error) {
@@ -60,8 +60,8 @@ const AdminPanel = () => {
 
   const handleDeleteUser = async (id) => {
     try {
-      const token = localStorage.getItem('token');//שליפת הטוקן
-      //מחיקת משתמש לפי מזהה יחודי
+      const token = localStorage.getItem('token'); 
+
       await axios.delete(`http://localhost:3000/api/v1/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -73,15 +73,15 @@ const AdminPanel = () => {
     }
   };
 
-  //עריכת המשתמש
+
   const handleEditUser = (id) => {
-    navigate(`/edit-user/${id}`);//ניווט לעריכת דף המשתמש לפי המזהה
+    navigate(`/edit-user/${id}`);
   };
 
-  //
+  
   const handleDeleteCourse = async (id) => {
     try {
-      //מחיקת קורס מהשרת לפי מזהה
+
       await axios.delete(`http://localhost:3000/api/v1/courses/${id}`);
       setCourses(courses.filter(course => course._id !== id));
     } catch (err) {
@@ -89,7 +89,7 @@ const AdminPanel = () => {
     }
   };
 
-  //פונקציה לעריכת הקורס
+
   const handleEditCourse = (id) => {
     navigate(`/edit-course/${id}`);
   };

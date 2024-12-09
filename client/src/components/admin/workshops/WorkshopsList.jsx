@@ -14,7 +14,7 @@ const WorkshopsList = () => {
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        //משיכת הסדנאות מהשרת
+
         const response = await axios.get(
           "http://localhost:3000/api/v1/workshops"
         );
@@ -27,56 +27,56 @@ const WorkshopsList = () => {
     fetchWorkshops();
   }, []);
 
-  // פונקציה למחיקת סדנה
+
   const handleDeleteWorkshop = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/api/v1/workshops/${id}`);
-      setWorkshops(workshops.filter((workshop) => workshop._id !== id)); // עדכון הסטייט לאחר המחיקה
+      setWorkshops(workshops.filter((workshop) => workshop._id !== id)); 
     } catch (err) {
       setError("שגיאה במחיקת הסדנה");
     }
   };
 
-  // פונקציה לעריכת סדנה
+
   const handleEditWorkshop = (id) => {
-    navigate(`/edit-workshop/${id}`); // ניווט לדף עריכת הסדנה
+    navigate(`/edit-workshop/${id}`); 
   };
 
-  // פונקציה לחישוב הכנסות
+
   const calculateRevenue = (workshop) => {
     return workshop.participants * workshop.price;
   };
 
-  // פונקציה לחישוב כמות המקומות הפנויים בסדנה
+
   const calculateAvailableSpots = (workshop) => {
     return workshop.capacity - workshop.participants;
   };
 
-  // סינון הסדנאות לפי מצב תפוסה
+
   const filteredWorkshops = workshops.filter((workshop) => {
     if (filter === "available") {
-      return workshop.participants < workshop.capacity; // סדנאות עם מקומות פנויים
+      return workshop.participants < workshop.capacity;
     } else if (filter === "full") {
-      return workshop.participants >= workshop.capacity; // סדנאות מלאות
+      return workshop.participants >= workshop.capacity; 
     } else {
-      return true; // הצגת כל הסדנאות
+      return true; 
     }
   });
 
-  // סינון לפי חיפוש שם סדנה, כך שהשם יתחיל בערך החיפוש בלבד
+
   const searchedWorkshops = filteredWorkshops.filter((workshop) =>
     workshop.name.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
-  // מיון הסדנאות לפי הכנסות (מהגבוה לנמוך)
+
   const sortedWorkshops = searchedWorkshops.sort(
     (a, b) => calculateRevenue(b) - calculateRevenue(a)
   );
 
-  // פונקציה להצגת הטבלה לאחר לחיצה על כפתור
+
   const handleShowTable = (filterType) => {
-    setFilter(filterType); // עדכון הסינון
-    setShowTable(true); // הצגת הטבלה
+    setFilter(filterType); 
+    setShowTable(true); 
   };
 
   return (
@@ -85,7 +85,7 @@ const WorkshopsList = () => {
         <h1>רשימת סדנאות</h1>
         {error && <p className="error-message">{error}</p>}
 
-        {/* כפתורים לסינון הסדנאות */}
+        {}
         <div className="filter-buttons">
           <button onClick={() => handleShowTable("all")}>
             הצג את כל הסדנאות
@@ -143,7 +143,7 @@ const WorkshopsList = () => {
                     </div>
                   </td>
                   <td>
-                    {/* בדיקה אם הסדנה מלאה והצגת הכיתוב */}
+                    {}
                     {workshop.participants >= workshop.capacity ? (
                       <span className="full-workshop">הסדנה מלאה</span>
                     ) : (
@@ -155,7 +155,7 @@ const WorkshopsList = () => {
                   <td className="price-cell-workshopList">
                     {calculateRevenue(workshop)} ש"ח
                   </td>{" "}
-                  {/* הצגת ההכנסות */}
+                  {}
                   <td>
                     {workshop.participants} / {workshop.capacity}
                   </td>

@@ -20,7 +20,7 @@ export default function AddCourse({ addCourse }) {
     setError(null); 
 
     try {
-      //יצירת אובייקט עבור נתוני הקורס והוספה
+
       const formData = new FormData();
       formData.append('name', courseName);
       formData.append('courseDescription', courseDescription); 
@@ -44,7 +44,7 @@ export default function AddCourse({ addCourse }) {
         console.log('courseImage:', courseImage.name); 
       }
 
-      //שליחת בקשת פוסט לשרת עם נתוני הקורס
+
       const response = await axios.post(
         'http://localhost:3000/api/v1/courses',
         formData,
@@ -63,7 +63,7 @@ export default function AddCourse({ addCourse }) {
     }
   };
 
-  // פונקציה לטיפול בשינוי תמונה
+
   const handleImageChange = (e) => {
     setCourseImage(e.target.files[0]);
   };

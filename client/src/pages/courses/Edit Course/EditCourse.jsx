@@ -39,7 +39,7 @@ export default function EditCourse() {
     fetchCourse();
   }, [courseId]);
 
-  //פונקציה לטיפול בשליחת הטופס
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,13 +52,13 @@ export default function EditCourse() {
     formData.append('startDate', `${courseStartDate}T${courseStartTime}`);
     formData.append('startTime', courseStartTime);
 
-    // עדכון התמונה רק אם הועלה תמונה חדשה
+
     if (courseImage) {
       formData.append('image', courseImage);
     }
 
     try {
-      //שליחת בקשת put לעדכון נתוני הקורס
+
       await axios.put(`http://localhost:3000/api/v1/courses/${courseId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -71,9 +71,9 @@ export default function EditCourse() {
     }
   };
 
-  // פונקציה לעדכון מצב התמונה החדשה
+
   const handleImageChange = (e) => {
-    setCourseImage(e.target.files[0]); // עדכון התמונה החדשה
+    setCourseImage(e.target.files[0]); 
   };
 
   return (

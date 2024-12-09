@@ -22,17 +22,17 @@ export default function Register() {
     setErrorMessage("");
   };
 
-  // פונקציה להחלפת מצב הצגת הסיסמא
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword); 
   };
 
-  // פונקציה לשליחת הטופס
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // שולחת בקשה לשרת ליצירת משתמש חדש
+
       const response = await axios.post(
         "http://localhost:3000/api/v1/users/register",
         inputData
@@ -53,7 +53,7 @@ export default function Register() {
     } catch (error) {
       const serverMessage = error.response?.data?.message || "ההרשמה נכשלה, אנא נסה/י מחדש.";
 
-      // טיפול בשגיאות
+
       if (serverMessage.includes("תעודת הזהות")) {
         setErrorMessage("תעודת הזהות הזו כבר קיימת במערכת");
       } else if (serverMessage.includes("מייל")) {

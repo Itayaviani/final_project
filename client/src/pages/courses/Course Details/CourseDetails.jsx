@@ -9,10 +9,10 @@ export default function CourseDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    //פונקציה אסינכרונית לשליפת פרטי הקורס מהשרת
+
     const fetchCourse = async () => {
       try {
-        //קבלת פרטי הקורס הספציפי מהשרת
+
         const response = await axios.get(`http://localhost:3000/api/v1/courses/${courseId}`);
         setCourse(response.data);
       } catch (error) {
@@ -23,30 +23,30 @@ export default function CourseDetails() {
     fetchCourse();
   }, [courseId]);//הפונקציה תתבצע מחדש רק עם יהיה שינוי במזהה הקורס
 
-  //ניווט המשתמש לדף התשלום של הקרוס הספציפי
+
   const handlePurchase = () => {
     navigate(`/payment/courses/${courseId}`);
   };
 
-  // פונקציה לחלוקה לפסקאות של 200 מילים עם סינון פסקאות ריקות
+
   const splitTextIntoParagraphs = (text) => {
     const words = text.split(' ');
     const paragraphs = [];
     for (let i = 0; i < words.length; i += 200) {
       const paragraph = words.slice(i, i + 200).join(' ').trim();
-      if (paragraph) { // רק אם הפסקה לא ריקה, נוסיף אותה לרשימה
+      if (paragraph) { 
         paragraphs.push(paragraph);
       }
     }
     return paragraphs;
   };
 
-  //אם פרטי הקורס עדיין לא נטענו תוצג הודעה
+
   if (!course) {
     return <p>טוען פרטים...</p>;
   }
 
-  //פיצול פרטי הקורס לפסקאות באמצעות הפונקציה 
+
   const detailsParagraphs = splitTextIntoParagraphs(course.courseDetails || '');
 
   return (

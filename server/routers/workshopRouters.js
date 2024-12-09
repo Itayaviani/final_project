@@ -6,7 +6,7 @@ const multer = require('multer');
 const path = require('path');
 const User = require('../models/UserModel'); 
 
-// הגדרת אחסון התמונות
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
@@ -18,21 +18,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// חשיפת תיקיית 'uploads' כמשאב סטטי
+
 router.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// נתיב להוספת סדנה חדשה
+
 router.post('/', upload.single('image'), async (req, res) => {
   try {
     const { name, workshopDescription, workshopDetails, price, capacity, startDate, startTime } = req.body; 
 
-    // קבלת נתיב התמונה שהועלתה
+
     let workshopImagePath = req.file ? req.file.path : '';
 
-    // החלפת כל התווים ההפוכים בתווים רגילים כדי לוודא שהתמונה ניתנת לשליפה כראוי
+
     workshopImagePath = workshopImagePath.replace(/\\/g, '/');
 
-    // יצירת אובייקט חדש לסדנה כולל תאריך ושעת התחלה
+
     const newWorkshop = new Workshop({
       name,
       workshopDescription,
@@ -44,7 +44,7 @@ router.post('/', upload.single('image'), async (req, res) => {
       image: workshopImagePath,
     });
 
-    // שמירת הסדנה החדשה במסד הנתונים
+
     await newWorkshop.save();
     res.status(201).json(newWorkshop);
   } catch (err) {
@@ -52,7 +52,7 @@ router.post('/', upload.single('image'), async (req, res) => {
   }
 });
 
-// נתיב לקבלת כל הסדנאות
+
 router.get('/', async (req, res) => {
   try {
     const workshops = await Workshop.find();
@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// נתיב לקבלת סדנה לפי ID
+
 router.get('/:id', async (req, res) => {
   try {
     const workshop = await Workshop.findById(req.params.id);
@@ -75,7 +75,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// נתיב למחיקת סדנה לפי ID
+
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -89,13 +89,13 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// נתיב לעדכון סדנה
+
 router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const { id } = req.params;
     const { name, workshopDescription, workshopDetails, price, capacity, startDate, startTime } = req.body;
 
-    // מצא את הסדנה לפי ID
+
     const workshop = await Workshop.findById(id);
     if (!workshop) {
       return res.status(404).json({ error: 'הסדנה לא נמצאה' });
@@ -111,7 +111,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     workshop.startDate = startDate ? new Date(startDate) : workshop.startDate;
     workshop.startTime = startTime || workshop.startTime;
 
-    // עדכון התמונה רק אם הועלתה תמונה חדשה
+
     if (req.file) {
       workshop.image = req.file.path.replace(/\\/g, '/');
     }
@@ -129,7 +129,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 });
 
 
-// נתיב לרכישת סדנה
+
 router.post('/purchase', async (req, res) => {
   console.log('התחל לעבד את הבקשה לרכישת סדנה');
   const { fullName, email, workshopId } = req.body;
@@ -145,13 +145,13 @@ router.post('/purchase', async (req, res) => {
 
     console.log('הסדנה נמצאה:', workshop.name);
 
-    // בדיקה אם הסדנה הגיעה לתפוסה המקסימלית
+
     if (workshop.participants >= workshop.capacity) {
       console.log('הסדנה מלאה');
       return res.status(400).json({ error: 'הסדנה מלאה. לא ניתן להרשם.' });
     }
 
-    // חפש את המשתמש על פי כתובת האימייל
+
     const user = await User.findOne({ email: email.trim() });
     if (!user) {
       console.log('המשתמש לא נמצא');
@@ -160,13 +160,13 @@ router.post('/purchase', async (req, res) => {
 
     console.log('משתמש נמצא:', user.name);
 
-    // בדוק אם המשתמש כבר רכש את הסדנה הזו
+
     if (user.purchasedWorkshops && user.purchasedWorkshops.some(purchase => purchase.workshop.equals(workshopId))) {
       console.log('המשתמש כבר רכש את הסדנה הזו');
       return res.status(200).json({ message: 'הסדנה כבר נרכשה', purchased: true });
     }
 
-    // הוסף את הסדנה לרשימת הרכישות של המשתמש עם תאריך הרכישה
+
     user.purchasedWorkshops = user.purchasedWorkshops || [];
     user.purchasedWorkshops.push({
       workshop: workshopId,
@@ -174,11 +174,11 @@ router.post('/purchase', async (req, res) => {
     });
     await user.save();
 
-    // עדכון מספר המשתתפים בסדנה
+
     workshop.participants += 1;
     await workshop.save();
 
-    // שלח את המייל עם שם הסדנה הנכון, תאריך והשעה
+
     await sendOrderConfirmationEmail(
       email,
       fullName,
