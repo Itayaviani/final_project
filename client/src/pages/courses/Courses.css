@@ -1,23 +1,23 @@
-/* הוספת אנימציה כללית לעלייה */
+
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+    transform: translateY(20px); 
   }
   100% {
     opacity: 1;
-    transform: translateY(0); /* חזרה למקום המקורי */
+    transform: translateY(0);
   }
 }
 
-/* עיצוב עבור הקונטיינר הכללי של הקורסים */
+
 .courses-container {
-  display: flex; /* סידור אופקי של הקורסים */
-  flex-wrap: wrap; /* מעבר לשורה הבאה במקרה של חוסר מקום */
-  gap: 20px; /* רווח בין הקורסים */
-  padding: 20px; /* רווח פנימי של הקונטיינר */
-  justify-content: center; /* מרכוז התוכן */
-  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 20px; 
+  padding: 20px; 
+  justify-content: center; 
+  animation: fadeInUp 1s ease-in-out; 
 }
 
 .purchased-label {
@@ -41,19 +41,19 @@
   width: 300px;
   text-align: center;
   background-color: white;
-  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
 .course-card::before {
-  content: ''; /* תוכן ריק לפייד */
-  position: absolute; /* מיקום מוחלט */
+  content: '';
+  position: absolute; 
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* פייד אפור יותר ברור */
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); 
   border-radius: 10px;
-  z-index: -1; /* פייד מאחורי הקורס */
+  z-index: -1; 
 }
 
 .course-card:hover {
@@ -65,21 +65,21 @@
   font-size: 1.6rem;
   color: #0c0c0c;
   margin-bottom: 10px;
-  text-transform: uppercase; /* אותיות גדולות */
-  letter-spacing: 1px; /* מרווח בין אותיות */
+  text-transform: uppercase;
+  letter-spacing: 1px; 
 }
 
 .course-card p {
   font-size: 1rem;
   color: #0a0a0a;
   margin-bottom: 10px;
-  line-height: 1.5; /* גובה שורה מוגבר */
+  line-height: 1.5; 
 }
 
 .course-card .price {
   font-weight: bold;
   color: #000;
-  font-size: 1.2rem; /* גודל טקסט גדול יותר למחיר */
+  font-size: 1.2rem; 
   margin-top: 5px;
 }
 
@@ -87,17 +87,17 @@
   max-width: 100%;
   border-radius: 5px;
   margin-bottom: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* צל לתמונה */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* עיצוב עבור כפתור "פרטים נוספים" */
+
 .details-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #007bff; /* צבע הכפתור */
+  background-color: #007bff;
   color: #ffffff;
   border: none;
-  border-radius: 50px; /* פינות עגולות יותר */
+  border-radius: 50px; 
   font-size: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
@@ -107,14 +107,14 @@
 .details-button:hover {
   background-color: #0056b3;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.972); /* צל נוסף בכפתור */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.972);
 }
 
 .add-course-button-container {
   display: flex;
-  justify-content: center; /* ממרכז את הכפתור אופקית */
-  margin: 20px 0; /* מרווח עליון ותחתון */
-  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
+  justify-content: center; 
+  margin: 20px 0;
+  animation: fadeInUp 1s ease-in-out; 
 }
 
 .add-course-button {
@@ -129,19 +129,19 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   text-decoration: none;
-  box-shadow: 0 4px 8px rgb(0, 0, 0); /* צל לכפתור */
+  box-shadow: 0 4px 8px rgb(0, 0, 0);
 }
 
 .add-course-button:hover {
   background-color: #0056b3;
   transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.877); /* צל נוסף בכפתור */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.877);
 }
 
 .course-actions {
   display: flex;
   justify-content: center;
-  gap: 10px; /* רווח בין הכפתורים */
+  gap: 10px;
   margin-top: 15px;
 }
 
@@ -150,32 +150,32 @@
   padding: 10px 15px;
   font-size: 14px;
   border: none;
-  border-radius: 50px; /* פינות עגולות יותר */
+  border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.992); /* צל לכפתור */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.992); 
 }
 
 .edit-button {
-  background-color: #6a6b6a; /* צבע עריכה */
+  background-color: #6a6b6a; 
   color: #ffffff;
 }
 
 .edit-button:hover {
   background-color: #757575;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* צל נוסף בכפתור */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
 }
 
 .delete-button {
-  background-color: #dc3545; /* צבע מחיקה */
+  background-color: #dc3545; 
   color: #ffffff;
 }
 
 .delete-button:hover {
   background-color: #c82333;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* צל נוסף בכפתור */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .full-label,

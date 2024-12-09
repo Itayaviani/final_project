@@ -1,4 +1,4 @@
-/* הגדרות כלליות ל-NavBar */
+
 .navbar-container {
   width: 100%;
   background-color: #ffffff;
@@ -48,7 +48,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  font-size: 17px; /* או כל גודל שתרצה */
+  font-size: 17px; 
 
 }
 
@@ -110,7 +110,7 @@
   border-color: #0288d1;
 }
 
-/* Remove the underline on hover for the login/logout button */
+
 .navbar-item-login::before {
   display: none;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaUser, FaPhone, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaIdCard } from "react-icons/fa"; // ייבוא אייקוני העין ותעודת זהות
+import { FaUser, FaPhone, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaIdCard } from "react-icons/fa";
 import "./register.css";
 
 export default function Register() {
@@ -9,31 +9,35 @@ export default function Register() {
     name: "",
     phone: "",
     email: "",
-    idNumber: "", // הוספת שדה תעודת זהות
+    idNumber: "", 
     password: ""
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // סטייט לניהול תצוגת הסיסמה
+  const [showPassword, setShowPassword] = useState(false); 
   const navigate = useNavigate();
 
+  // פונקציה לניהול שינויים בשדות הקלט
   const handleChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
     setErrorMessage("");
   };
 
+  // פונקציה להחלפת מצב הצגת הסיסמא
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // שינוי מצב התצוגה של הסיסמה
+    setShowPassword(!showPassword); 
   };
 
+  // פונקציה לשליחת הטופס
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      // שולחת בקשה לשרת ליצירת משתמש חדש
       const response = await axios.post(
         "http://localhost:3000/api/v1/users/register",
         inputData
       );
-      console.log("Registration successful:", response.data);
+      console.log("ההרשמה בוצעה בהצלחה:", response.data);
 
       alert("ההרשמה בוצעה בהצלחה, ברוך/ה הבא/ה!");
 
@@ -41,7 +45,7 @@ export default function Register() {
         name: "",
         phone: "",
         email: "",
-        idNumber: "", // איפוס שדה תעודת זהות
+        idNumber: "", 
         password: ""
       });
 
@@ -49,7 +53,7 @@ export default function Register() {
     } catch (error) {
       const serverMessage = error.response?.data?.message || "ההרשמה נכשלה, אנא נסה/י מחדש.";
 
-      // טיפול בשגיאות עבור תעודת זהות קיימת
+      // טיפול בשגיאות
       if (serverMessage.includes("תעודת הזהות")) {
         setErrorMessage("תעודת הזהות הזו כבר קיימת במערכת");
       } else if (serverMessage.includes("מייל")) {
@@ -130,7 +134,7 @@ export default function Register() {
           <button type="submit" className="register-page-btn">להרשמה</button>
         </form>
 
-        {/* {errorMessage && <p className="register-page-error">{errorMessage}</p>} */}
+        
 
         <div className="register-page-navToLogin">
           <p className="register-page-link">

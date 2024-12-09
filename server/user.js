@@ -11,7 +11,7 @@ router.post("/register", async (req, res) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(400).json({ message: "user already exist" });
+      return res.status(400).json({ message: "משתמש כבר קיים" });
     }
     const encryptPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
@@ -25,9 +25,9 @@ router.post("/register", async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "user has successfully registered" });
+      .json({ message: "המשתמש נרשם בהצלחה" });
   } catch (err) {
-    return res.status(404).json({ message: "registered failed" });
+    return res.status(404).json({ message: "ההרשמה נכשלה" });
   }
 });
 
@@ -39,20 +39,20 @@ router.post("/login", async (req, res) => {
     console.log(email,user);
     if (!user) {
       
-      return res.status(404).json({ message: "invalid email!" });
+      return res.status(404).json({ message: "אימייל לא חוקי!" });
     } 
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     console.log(isPasswordValid);
     if(!isPasswordValid){
-        return res.status(401).json({ message: "invalid password!" });
+        return res.status(401).json({ message: "סיסמה לא חוקית!" });
     }
     const token = jwt.sign({ id: user._id }, "TAL", { expiresIn: '1h' });
-    res.status(200).send({token,message:"the user login to the website"})
+    res.status(200).send({token,message:"הכניסה של המשתמש לאתר"})
 
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "internal server error" });
+    res.status(500).json({ message: "שגיאת שרת פנימית" });
   }
 });
 
@@ -61,10 +61,9 @@ router.get("/me/purchases", async (req, res) => {
   try {
     const { userId } = req.params;
 
-    // חפש את המשתמש על פי ה-userId
     const user = await User.findById(userId).populate('purchasedCourses');
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "המשתמש לא נמצא" });
     }
 
     // שלוף את כל הקורסים שהמשתמש רכש
@@ -78,8 +77,8 @@ router.get("/me/purchases", async (req, res) => {
       purchasedWorkshops,
     });
   } catch (error) {
-    console.error("Error fetching user purchases:", error);
-    res.status(500).json({ message: "Failed to fetch user purchases" });
+    console.error("שגיאה באחזור רכישות של משתמשים:", error);
+    res.status(500).json({ message: "אחזור רכישות של משתמשים נכשל" });
   }
 });
 

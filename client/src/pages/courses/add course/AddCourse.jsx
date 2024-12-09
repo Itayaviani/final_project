@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './AddCourse.css'; // ייבוא קובץ ה-CSS
+import './AddCourse.css';
 
 export default function AddCourse({ addCourse }) {
   const [courseName, setCourseName] = useState('');
-  const [courseDescription, setCourseDescription] = useState(''); // שדה עבור תיאור הקורס (תיאור קצר)
-  const [courseDetails, setCourseDetails] = useState(''); // שדה עבור פרטי הקורס (תיאור מפורט)
+  const [courseDescription, setCourseDescription] = useState(''); 
+  const [courseDetails, setCourseDetails] = useState(''); 
   const [coursePrice, setCoursePrice] = useState('');
-  const [courseCapacity, setCourseCapacity] = useState(''); // שדה עבור הקיבולת
+  const [courseCapacity, setCourseCapacity] = useState(''); 
   const [courseImage, setCourseImage] = useState(null);
-  const [courseStartDate, setCourseStartDate] = useState(''); // שדה עבור מועד תחילת הקורס
-  const [courseStartTime, setCourseStartTime] = useState(''); // שדה עבור שעת תחילת הקורס
-  const [error, setError] = useState(null); // לניהול שגיאות
+  const [courseStartDate, setCourseStartDate] = useState(''); 
+  const [courseStartTime, setCourseStartTime] = useState(''); 
+  const [error, setError] = useState(null); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // איפוס שגיאות קודמות
+    setError(null); 
 
     try {
-      // יצירת FormData והוספת כל השדות הרלוונטיים
+      //יצירת אובייקט עבור נתוני הקורס והוספה
       const formData = new FormData();
       formData.append('name', courseName);
-      formData.append('courseDescription', courseDescription); // הוספת תיאור הקורס (תיאור קצר)
-      formData.append('courseDetails', courseDetails); // הוספת פרטי הקורס (תיאור מפורט)
+      formData.append('courseDescription', courseDescription); 
+      formData.append('courseDetails', courseDetails); 
       formData.append('price', coursePrice);
-      formData.append('capacity', courseCapacity); // הוספת קיבולת
-      formData.append('startDate', `${courseStartDate}T${courseStartTime}`); // הוספת מועד התחלה עם השעה
-      formData.append('startTime', courseStartTime); // הוספת שעת התחלה
+      formData.append('capacity', courseCapacity); 
+      formData.append('startDate', `${courseStartDate}T${courseStartTime}`); 
+      formData.append('startTime', courseStartTime); 
 
-      // הדפסות בקונסול
+      
       console.log('courseName:', courseName);
       console.log('courseDescription:', courseDescription);
       console.log('courseDetails:', courseDetails);
@@ -40,10 +40,11 @@ export default function AddCourse({ addCourse }) {
       console.log('courseStartTime:', courseStartTime);
 
       if (courseImage) {
-        formData.append('image', courseImage); // הוספת תמונה
-        console.log('courseImage:', courseImage.name); // הצגת שם התמונה בקונסול
+        formData.append('image', courseImage); 
+        console.log('courseImage:', courseImage.name); 
       }
 
+      //שליחת בקשת פוסט לשרת עם נתוני הקורס
       const response = await axios.post(
         'http://localhost:3000/api/v1/courses',
         formData,
@@ -54,16 +55,17 @@ export default function AddCourse({ addCourse }) {
         }
       );
 
-      addCourse(response.data); // עדכון המצב עם הקורס החדש
-      navigate('/courses'); // ניווט לרשימת הקורסים לאחר ההוספה
+      addCourse(response.data);
+      navigate('/courses');
     } catch (error) {
-      console.error('Failed to add course:', error.response ? error.response.data : error.message);
-      setError('Failed to add course. Please check the form and try again.'); // הצגת הודעת שגיאה
+      console.error('הוספת הקורס נכשלה:', error.response ? error.response.data : error.message);
+      setError('הוספת הקורס נכשלה. אנא בדוק את הטופס ונסה שוב.'); 
     }
   };
 
+  // פונקציה לטיפול בשינוי תמונה
   const handleImageChange = (e) => {
-    setCourseImage(e.target.files[0]); // טיפול בשינוי התמונה
+    setCourseImage(e.target.files[0]);
   };
 
   return (
@@ -80,7 +82,7 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>:תיאור הקורס</label> {/* שדה עבור תיאור הקורס (תיאור קצר) */}
+          <label>:תיאור הקורס</label> 
           <textarea
             value={courseDescription}
             onChange={(e) => setCourseDescription(e.target.value)}
@@ -89,7 +91,7 @@ export default function AddCourse({ addCourse }) {
           ></textarea>
         </div>
         <div>
-          <label>:פרטי הקורס</label> {/* שדה עבור פרטי הקורס (תיאור מפורט) */}
+          <label>:פרטי הקורס</label>
           <textarea
             value={courseDetails}
             onChange={(e) => setCourseDetails(e.target.value)}
@@ -116,7 +118,7 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>:מועד תחילת הקורס</label> {/* שדה עבור מועד תחילת הקורס */}
+          <label>:מועד תחילת הקורס</label> 
           <input
             type="date"
             value={courseStartDate}
@@ -125,7 +127,7 @@ export default function AddCourse({ addCourse }) {
           />
         </div>
         <div>
-          <label>:שעת תחילת הקורס</label> {/* שדה עבור שעת תחילת הקורס */}
+          <label>:שעת תחילת הקורס</label> 
           <input
             type="time"
             value={courseStartTime}
@@ -143,7 +145,7 @@ export default function AddCourse({ addCourse }) {
         </div>
         <button type="submit">הוסף קורס</button>
       </form>
-      {error && <p className="error-message">{error}</p>} {/* הצגת שגיאה אם קיימת */}
+      {error && <p className="error-message">{error}</p>} 
     </div>
   );
 }

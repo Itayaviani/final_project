@@ -4,38 +4,40 @@ import axios from 'axios';
 import './Profile.css';
 
 const Profile = () => {
-  const [user, setUser] = useState({}); // State for user data
-  const [error, setError] = useState(''); // State for errors
-  const navigate = useNavigate(); // useNavigate hook for navigation
+  const [user, setUser] = useState({}); 
+  const [error, setError] = useState('');
+  const navigate = useNavigate(); 
 
-  // Fetch the logged-in user's profile
+
   useEffect(() => {
+    // פונקציה לאחזור נתוני הפרופיל של המשתמש
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem('token'); // Get token from local storage
+        const token = localStorage.getItem('token');
+        //אחזור נתוני המשתמש המחובר 
         const response = await axios.get(
           'http://localhost:3000/api/v1/users/me',
           {
             headers: {
-              Authorization: `Bearer ${token}`, // Send token in the headers
+              Authorization: `Bearer ${token}`, 
             },
           }
         );
 
-        // Update state with user data
+        
         setUser(response.data.data.user);
       } catch (err) {
         console.error('Error fetching profile:', err);
-        setError('שגיאה בטעינת פרופיל המשתמש'); // Display an error message
+        setError('שגיאה בטעינת פרופיל המשתמש'); 
       }
     };
 
-    fetchProfile(); // Fetch user profile on component mount
+    fetchProfile(); 
   }, []);
 
-  // Handle navigation to purchases page
+  // פונקציה לניווט לעמוד הרכישות
   const handleViewPurchases = () => {
-    navigate('/my-purchases'); // Navigate to /my-purchases
+    navigate('/my-purchases'); 
   };
 
   if (error) {
@@ -49,7 +51,7 @@ const Profile = () => {
   return (
     <div className="profile-wrapper">
       <div className="profile-container">
-        <h1 className="profile-title">:פרופיל משתמש</h1> {/* הוספת הכיתה 'profile-title' */}
+        <h1 className="profile-title">:פרופיל משתמש</h1> 
         <div className="profile-details">
           <p><span className="value">{user.name}</span> <span className="label">:שם מלא</span></p>
           <p><span className="value">{user.email}</span> <span className="label">:אימייל</span></p>
@@ -57,12 +59,12 @@ const Profile = () => {
         </div>
 
         <div className="button-container">
-          {/* Edit profile button */}
+          
           <Link to={`/edit-user/${user._id}`} className="edit-profile-button">
             ערוך פרופיל
           </Link>
 
-          {/* View purchases button */}
+          
           <button onClick={handleViewPurchases} className="view-purchases-button">
             הרכישות שלי
           </button>

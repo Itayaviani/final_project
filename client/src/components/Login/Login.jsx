@@ -2,23 +2,27 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // ייבוא אייקוני העין
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./login.css";
 
 export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
   const [inputData, setInputData] = useState({});
-  const [showPassword, setShowPassword] = useState(false); // סטייט לניהול תצוגת הסיסמה
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  // פונקציה לעדכון state כאשר השדה משתנה
   const handleChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
+  // פונקציה להחלפת מצב הצגת הסיסמה
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // שינוי מצב התצוגה של הסיסמה
+    setShowPassword(!showPassword); 
   };
 
+  // פונקציה שמטפלת בשליחת טופס ההתחברות
   const onSubmit = async (e) => {
+    // מונע ריענון דף ברירת מחדל
     e.preventDefault();
     console.log(inputData);
 
@@ -27,15 +31,16 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
         "http://localhost:3000/api/v1/users/login",
         inputData
       );
-      console.log("Login successful:", response.data);
+      console.log("ההתחברות בוצעה בהצלחה:", response.data);
 
       const username = response.data.data.user.name;
       const isAdmin = response.data.data.user.isAdmin;
       const token = response.data.token;
 
+      //שמירת פרטי המשתמש ב localstorage
       localStorage.setItem("username", username);
       localStorage.setItem("isAdmin", isAdmin);
-      localStorage.setItem("token", token); // שמירת הטוקן
+      localStorage.setItem("token", token); 
 
       setIsLoggedIn(true);
       setUsername(username);
@@ -43,16 +48,16 @@ export default function Login({ setIsLoggedIn, setUsername, setIsAdmin }) {
 
       navigate("/");
     } catch (error) {
-      // הדפסת לוג של השגיאה כדי להבין מה התקבל מהשרת
-      console.error("Error response:", error.response);
+      
+      console.error("תגובת שגיאה:", error.response);
 
       // בדיקה אם התקבלה תשובה מהשרת
       const serverMessage = error.response?.data?.message || "שגיאה בלתי צפויה. אנא נסה שוב.";
 
       // הצגת הודעות שגיאה מותאמות
-      if (error.response?.status === 404 && serverMessage.includes("Email not found")) {
+      if (error.response?.status === 404 && serverMessage.includes("אימייל לא נמצא")) {
         alert("המייל שהוזן לא קיים במאגר. אנא נסה שוב.");
-      } else if (error.response?.status === 400 && serverMessage.includes("Incorrect password")) {
+      } else if (error.response?.status === 400 && serverMessage.includes("סיסמה שגויה")) {
         alert("הסיסמה שהוזנה שגויה. אנא נסה שוב.");
       } else {
         alert(serverMessage);

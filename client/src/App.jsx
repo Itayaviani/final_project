@@ -78,16 +78,19 @@ function App() {
   const [courses, setCourses] = useState([]);
   const [workshops, setWorkshops] = useState([]);
 
+// פונקציה להוספת קורס חדש לרשימה
   const addCourse = (course) => {
     setCourses([...courses, course]);
   };
 
+  // פונקציה להוספת סדנה חדשה לרשימה
   const addWorkshop = (workshop) => {
     setWorkshops([...workshops, workshop]);
   };
 
   const [projects, setProjects] = useState([]);
 
+  // פונקציה להוספת פרויקט חדש לרשימה
   const addProject = (newProject) => {
     setProjects([...projects, newProject]);
   };
@@ -123,7 +126,7 @@ function App() {
           <Route path="/admin/workshopsList" element={<WorkshopsList />} /> 
           <Route path="/thank-you-workshop" element={<ThankYouWorkshop />} />
 
-          {/* דפים נוספים */}
+        
           <Route path='/personalProcess' element={<PersonalProcess />} />
           <Route path='/contactUs' element={<ContactsUs />} />
 

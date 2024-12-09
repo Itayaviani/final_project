@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // ייבוא Axios
+import axios from 'axios';
 import './ContactsUs.css';
-import photo3 from './pictures/photo3.jpg'; // ייבוא התמונה
+import photo3 from './pictures/photo3.jpg'; 
 import logoTali from './pictures/logoTali-removebg-preview (1).png';
 
 function ContactsUs() {
@@ -13,24 +13,25 @@ function ContactsUs() {
     message: ''
   });
 
-  const [error, setError] = useState(''); // סטייט לניהול שגיאות
-  const [success, setSuccess] = useState(false); // סטייט להצלחה
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false); 
 
+  //פונקציה לעדכון שדה הקלט
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
 
+  //פוקנציה לשליחת הטופס
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // שליחת הפנייה לשרת דרך Axios
-      const response = await axios.post('http://localhost:3000/api/v1/contacts', form); // כתובת API בהתאם לשרת שלך
-      console.log('Form submitted:', response.data);
-      alert('הפנייה נשלחה בהצלחה!'); // הצגת הודעת alert לאחר שליחה מוצלחת
+      
+      const response = await axios.post('http://localhost:3000/api/v1/contacts', form);
+      
+      alert('הפנייה נשלחה בהצלחה!'); 
       setForm({ firstName: '', lastName: '', phone: '', email: '', message: '' }); // ניקוי הטופס לאחר שליחה מוצלחת
     } catch (err) {
-      console.error('Error submitting the form:', err);
       setError('שגיאה בשליחת הפנייה. נסה שנית.');
     }
   };
@@ -53,7 +54,7 @@ function ContactsUs() {
 
           <div className="form-content-with-image">
             <div className="form-fields">
-              {/* שורה ראשונה: שם פרטי ושם משפחה */}
+              
               <div className="form-group-container">
                 <div className="form-group">
                   <input
@@ -80,7 +81,7 @@ function ContactsUs() {
                 </div>
               </div>
 
-              {/* שורה שנייה: מייל ונייד */}
+              
               <div className="form-row">
                 <div className="form-group">
                   <input
@@ -107,7 +108,7 @@ function ContactsUs() {
                 </div>
               </div>
 
-              {/* שורה שלישית: סיבת פנייה */}
+              
               <div className="form-row">
                 <div className="form-group full-width">
                   <textarea
@@ -124,7 +125,7 @@ function ContactsUs() {
               <button type="submit" className="submit-btn">שלח</button>
             </div>
 
-            {/* Image Section */}
+            
             <div className="image-container">
               <img src={logoTali} alt="Contact illustration" className="contact-image" />
             </div>

@@ -1,55 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import './EditWorkshops.css'; // ייבוא קובץ ה-CSS
+import './EditWorkshops.css';
 
 export default function EditWorkshop() {
   const { workshopId } = useParams();
   const [workshopName, setWorkshopName] = useState('');
-  const [workshopDescription, setWorkshopDescription] = useState(''); // תיאור קצר של הסדנה
-  const [workshopDetails, setWorkshopDetails] = useState(''); // פרטים מלאים של הסדנה
+  const [workshopDescription, setWorkshopDescription] = useState(''); 
+  const [workshopDetails, setWorkshopDetails] = useState('');
   const [workshopPrice, setWorkshopPrice] = useState('');
-  const [workshopCapacity, setWorkshopCapacity] = useState(''); // קיבולת משתתפים
-  const [workshopStartDate, setWorkshopStartDate] = useState(''); // תאריך תחילת הסדנה
-  const [workshopStartTime, setWorkshopStartTime] = useState(''); // שעת תחילת הסדנה
-  const [workshopImage, setWorkshopImage] = useState(null); // שדה עבור העלאת קובץ תמונה
-  const [currentImage, setCurrentImage] = useState(''); // שמירה של התמונה הנוכחית
+  const [workshopCapacity, setWorkshopCapacity] = useState('');
+  const [workshopStartDate, setWorkshopStartDate] = useState(''); 
+  const [workshopStartTime, setWorkshopStartTime] = useState(''); 
+  const [workshopImage, setWorkshopImage] = useState(null); 
+  const [currentImage, setCurrentImage] = useState(''); 
   const navigate = useNavigate();
 
   useEffect(() => {
+    //פונקציה לטעינת הסדנאות
     const fetchWorkshop = async () => {
       try {
+        //בקשה לשרת לקבלת פרטי הסדנה עם המזהה המסויים
         const response = await axios.get(`http://localhost:3000/api/v1/workshops/${workshopId}`);
         const { name, workshopDescription, workshopDetails, price, capacity, image, startDate, startTime } = response.data; // קבלת הערכים מהשרת
         setWorkshopName(name);
-        setWorkshopDescription(workshopDescription); // הגדרת התיאור הקצר
-        setWorkshopDetails(workshopDetails); // הגדרת פרטי הסדנה המלאים
+        setWorkshopDescription(workshopDescription); 
+        setWorkshopDetails(workshopDetails); 
         setWorkshopPrice(price);
-        setWorkshopCapacity(capacity); // הגדרת הקיבולת
-        setWorkshopStartDate(startDate ? new Date(startDate).toISOString().split('T')[0] : ''); // הגדרת תאריך התחלה לפורמט הנכון
-        setWorkshopStartTime(startTime); // הגדרת שעת ההתחלה
+        setWorkshopCapacity(capacity);
+        setWorkshopStartDate(startDate ? new Date(startDate).toISOString().split('T')[0] : ''); 
+        setWorkshopStartTime(startTime); 
 
-        setCurrentImage(image); // הגדרת התמונה הנוכחית
+        setCurrentImage(image); 
       } catch (error) {
-        console.error('Failed to fetch workshop:', error);
+        console.error('לא הצליח להביא את הסדנה:', error);
       }
     };
 
     fetchWorkshop();
   }, [workshopId]);
 
+  // פונקציה לטיפול בשליחת הטופס
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // הכנת הנתונים לשליחה
     const formData = new FormData();
     formData.append('name', workshopName);
-    formData.append('workshopDescription', workshopDescription); // תיאור קצר של הסדנה
-    formData.append('workshopDetails', workshopDetails); // פרטי הסדנה המלאים
+    formData.append('workshopDescription', workshopDescription);
+    formData.append('workshopDetails', workshopDetails); 
     formData.append('price', workshopPrice);
     formData.append('capacity', workshopCapacity);
-    formData.append('startDate', `${workshopStartDate}T${workshopStartTime}`); // שליחת תאריך והשעה
-    formData.append('startTime', workshopStartTime); // הוספת שעת התחלה
+    formData.append('startDate', `${workshopStartDate}T${workshopStartTime}`); 
+    formData.append('startTime', workshopStartTime);
 
     // עדכון התמונה רק אם הועלה תמונה חדשה
     if (workshopImage) {
@@ -57,20 +60,22 @@ export default function EditWorkshop() {
     }
 
     try {
+      // שליחת הנתונים לשרת
       await axios.put(`http://localhost:3000/api/v1/workshops/${workshopId}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // בקשה עם תמונות
+          'Content-Type': 'multipart/form-data', 
         },
       });
       
-      navigate('/workshops'); // ניתוב חזרה לדף הסדנאות לאחר השמירה
+      navigate('/workshops'); 
     } catch (error) {
-      console.error('Failed to edit workshop:', error);
+      console.error('עריכת הסדנה נכשלה:', error);
     }
   };
 
+  // פונקציה לטיפול בשינוי התמונה
   const handleImageChange = (e) => {
-    setWorkshopImage(e.target.files[0]); // עדכון התמונה החדשה
+    setWorkshopImage(e.target.files[0]);
   };
 
   return (

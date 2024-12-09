@@ -1,4 +1,4 @@
-/* Global Styles */
+
 body, html {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@ body, html {
   color: #333;
 }
 
-/* Wrapper to center Inquiries List */
+
 .inquiries-list-wrapper {
   display: flex;
   justify-content: center;
@@ -16,7 +16,7 @@ body, html {
   min-height: 100vh;
 }
 
-/* Inquiries List Container */
+
 .inquiries-list {
   max-width: 1200px;
   width: 100%;
@@ -33,18 +33,18 @@ body, html {
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
 }
 
-/* Inquiries Header */
+
 .inquiries-list h1 {
   text-align: center;
   font-size: 2.5em;
   margin-bottom: 40px;
-  color: #000; /* צבע שחור לכותרת */
+  color: #000; 
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
 
-/* Table Styles */
+
 .inquiries-list table {
   width: 100%;
   border-collapse: collapse;
@@ -74,7 +74,7 @@ body, html {
   background-color: #e3e9f0;
 }
 
-/* Button Styles */
+
 .inquiries-list button {
   padding: 12px 25px;
   font-size: 1em;
@@ -84,7 +84,7 @@ body, html {
   transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
-/* Delete Button - Red */
+
 .inquiries-list button.delete {
   background: linear-gradient(to right, #e74c3c, #c0392b); /* צבע אדום לכפתור מחיקה */
   color: white;
@@ -99,7 +99,7 @@ body, html {
   transform: translateY(3px);
 }
 
-/* Error Message */
+
 .error-message {
   color: #e74c3c;
   text-align: center;
@@ -112,7 +112,7 @@ body, html {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive Design for Smaller Screens */
+
 @media (max-width: 768px) {
   .inquiries-list {
     padding: 30px;

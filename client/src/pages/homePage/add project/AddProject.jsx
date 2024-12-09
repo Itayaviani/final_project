@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './AddProject.css'; // ייבוא קובץ ה-CSS
+import './AddProject.css'; 
 
 export default function AddProject({ addProject }) {
   const [projectName, setProjectName] = useState('');
@@ -11,18 +11,19 @@ export default function AddProject({ addProject }) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // הפונקציה לטיפול בהוספת הפרויקט
+    // פונקציה לטיפול בלחיצה על כפתור שליחת הטופס
   const handleSubmit = async (e) => {
     e.preventDefault(); // מניעת רענון הדף
     setError(null);
 
     try {
+      // יצירת אובייקט FormData לשליחת נתוני הטופס לשרת
       const formData = new FormData();
       formData.append('name', projectName);
       formData.append('projectDescription', projectDescription);
       formData.append('projectDetails', projectDetails);
 
-      // הוספת התמונות אם קיימות
+      // הוספת כל התמונות שנבחרו (אם קיימות) ל-FormData
       if (projectImages.length > 0) {
         for (let i = 0; i < projectImages.length; i++) {
           formData.append('images', projectImages[i]);
@@ -30,6 +31,7 @@ export default function AddProject({ addProject }) {
       }
 
       const response = await axios.post(
+        // שליחת בקשת POST לשרת להוספת פרויקט חדש
         'http://localhost:3000/api/v1/projects',
         formData,
         {
@@ -39,18 +41,19 @@ export default function AddProject({ addProject }) {
         }
       );
 
-      // עדכון הפרויקט החדש
+      // קריאה לפונקציה שהועברה כפרופס לשם עדכון רשימת הפרויקטים
       addProject(response.data);
 
-      // ניווט חזרה לדף הבית או הצגת הפרויקטים
+      
       navigate('/');
 
     } catch (error) {
-      console.error('Failed to add project:', error.response ? error.response.data : error.message);
-      setError('Failed to add project. Please check the form and try again.');
+      console.error('שגיאה בהוספת הפרוייקט:', error.response ? error.response.data : error.message);
+      setError('הוספת הפרויקט נכשלה. אנא בדוק את הטופס ונסה שוב.');
     }
   };
 
+  // פונקציה לטיפול בשינוי התמונה בטופס
   const handleImageChange = (e) => {
     setProjectImages(Array.from(e.target.files)); // טיפול בשינוי התמונות
   };
@@ -91,7 +94,7 @@ export default function AddProject({ addProject }) {
           <input
             type="file"
             accept="image/*"
-            onChange={handleImageChange} // תמיכה בהעלאת מספר תמונות
+            onChange={handleImageChange} 
           />
         </div>
         <button type="submit">הוסף פרויקט</button>

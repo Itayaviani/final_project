@@ -9,12 +9,14 @@ export default function ProjectDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // פונקציה אסינכרונית לשליפת פרטי הפרויקט מהשרת.
     const fetchProject = async () => {
       try {
+        // בקשת GET לשרת לקבלת פרטי הפרויקט לפי מזהה.
         const response = await axios.get(`http://localhost:3000/api/v1/projects/${projectId}`);
         setProject(response.data);
       } catch (error) {
-        console.error('Failed to fetch project details:', error);
+        console.error('אחזור פרטי הפרויקט נכשל:', error);
       }
     };
 
@@ -26,6 +28,7 @@ export default function ProjectDetails() {
     const words = text.split(' ');
     const paragraphs = [];
     for (let i = 0; i < words.length; i += 200) {
+      // צירוף המילים לפסקה אחת וגזירת הטקסט לחתיכות.
       const paragraph = words.slice(i, i + 200).join(' ').trim();
       if (paragraph) {
         paragraphs.push(paragraph);
@@ -34,10 +37,12 @@ export default function ProjectDetails() {
     return paragraphs;
   };
 
+  // אם פרטי הפרויקט עדיין לא נטענו, הצגת הודעה על טעינה.
   if (!project) {
     return <p>טוען פרטים...</p>;
   }
 
+  // חלוקת פרטי הפרויקט לפסקאות באמצעות הפונקציה.
   const detailsParagraphs = splitTextIntoParagraphs(project.projectDetails || '');
 
   return (
@@ -56,7 +61,7 @@ export default function ProjectDetails() {
         ))}
       </div>
       
-      {/* כפתור לחזרה לרשימת הפרויקטים */}
+      
       <button onClick={() => navigate('/')} className="back-button">חזרה לפרויקטים</button>
     </div>
   );

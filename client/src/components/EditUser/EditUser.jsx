@@ -4,6 +4,7 @@ import axios from 'axios';
 import './EditUser.css';
 
 const EditUser = ({ setUsername }) => {
+  //שליפת מזהה המשתמש מכתובת ה url
   const { id } = useParams(); 
   const navigate = useNavigate();
   const [user, setUser] = useState({ name: '', phone: '', email: '' });
@@ -12,31 +13,41 @@ const EditUser = ({ setUsername }) => {
   const [success, setSuccess] = useState(''); 
 
   useEffect(() => {
+
+    // פונקציה אסינכרונית לשליפת פרטי המשתמש מהשרת
     const fetchUser = async () => {
       try {
+        // שליפת הטוקן של המשתמש מאחסון מקומי
         const token = localStorage.getItem('token');
+        //שליפת המשתמש מהשרת לפי מזהה יחודי
         const response = await axios.get(`http://localhost:3000/api/v1/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser(response.data.data.user); 
+
+        setUser(response.data.data.user);
+        // הגדרת מצב הטעינה כלא פעיל 
         setLoading(false);
       } catch (err) {
-        setError('Error fetching user details');
+        setError('שגיאה באחזור פרטי משתמש');
         setLoading(false);
       }
     };
     fetchUser();
   }, [id]);
 
+   // פונקציה שמטפלת בשינוי הערכים בטופס העריכה
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
+  // פונקציה שמטפלת בשמירת העריכות
   const handleSubmit = async (e) => {
+    // מניעת רענון הדף ברגע שמבצעים שמירה
     e.preventDefault();
     try {
+
       const token = localStorage.getItem('token');
       await axios.put(`http://localhost:3000/api/v1/users/${id}`, user, {
         headers: {
@@ -44,6 +55,7 @@ const EditUser = ({ setUsername }) => {
         },
       });
 
+      // עדכון שם המשתמש באחסון מקומי
       localStorage.setItem('username', user.name);
       setUsername(user.name);
 
@@ -54,7 +66,7 @@ const EditUser = ({ setUsername }) => {
       }, 2000);
 
     } catch (err) {
-      setError('Error updating user details');
+      setError('שגיאה בעדכון פרטי משתמש');
       setSuccess('');
     }
   };

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// ייבוא המודלים
 const User = require('../models/UserModel');
 const Course = require('../models/CourseModel');
 const Workshop = require('../models/WorkshopModel');
@@ -25,12 +24,6 @@ router.get('/stats', async (req, res) => {
             const userWorkshopsCount = user.purchasedWorkshops ? user.purchasedWorkshops.length : 0;
             const totalUserPurchases = userCoursesCount + userWorkshopsCount;
 
-            console.log(`User: ${user.name}`);
-            console.log(`Purchased Courses: ${userCoursesCount}`);
-            console.log(`Purchased Workshops: ${userWorkshopsCount}`);
-            console.log(`Total Purchases: ${totalUserPurchases}`);
-            console.log('-------------------------');
-
             calculatedPurchaseCount += totalUserPurchases;
         });
 
@@ -41,11 +34,11 @@ router.get('/stats', async (req, res) => {
             courses: courseCount,
             workshops: workshopCount,
             contacts: contactCount,
-            purchases: calculatedPurchaseCount // הוספת כמות הרכישות למענה
+            purchases: calculatedPurchaseCount 
         });
     } catch (error) {
-        console.error('Error retrieving data:', error); // בדיקת שגיאות
-        res.status(500).json({ message: 'Error retrieving data' });
+        console.error('שגיאה באחזור נתונים:', error); 
+        res.status(500).json({ message: 'שגיאה באחזור נתונים' });
     }
 });
 

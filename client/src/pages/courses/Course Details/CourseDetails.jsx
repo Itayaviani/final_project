@@ -9,18 +9,21 @@ export default function CourseDetails() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    //פונקציה אסינכרונית לשליפת פרטי הקורס מהשרת
     const fetchCourse = async () => {
       try {
+        //קבלת פרטי הקורס הספציפי מהשרת
         const response = await axios.get(`http://localhost:3000/api/v1/courses/${courseId}`);
         setCourse(response.data);
       } catch (error) {
-        console.error('Failed to fetch course details:', error);
+        console.error('שליפת פרטי הקורס נכשלה:', error);
       }
     };
 
     fetchCourse();
-  }, [courseId]);
+  }, [courseId]);//הפונקציה תתבצע מחדש רק עם יהיה שינוי במזהה הקורס
 
+  //ניווט המשתמש לדף התשלום של הקרוס הספציפי
   const handlePurchase = () => {
     navigate(`/payment/courses/${courseId}`);
   };
@@ -38,10 +41,12 @@ export default function CourseDetails() {
     return paragraphs;
   };
 
+  //אם פרטי הקורס עדיין לא נטענו תוצג הודעה
   if (!course) {
     return <p>טוען פרטים...</p>;
   }
 
+  //פיצול פרטי הקורס לפסקאות באמצעות הפונקציה 
   const detailsParagraphs = splitTextIntoParagraphs(course.courseDetails || '');
 
   return (

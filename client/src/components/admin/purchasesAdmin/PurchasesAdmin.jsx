@@ -7,12 +7,18 @@ import "./purchasesAdmin.css";
 const PurchasesAdmin = () => {
   const [purchases, setPurchases] = useState([]);
   const [error, setError] = useState("");
+  // הגדרת מצב לסינון לפי סוג פריט (קורס/סדנה).
   const [filteredType, setFilteredType] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+
+    // הגדרת מצב לשמירת תאריכים לתחילת וסיום הסינון.
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  // הגדרת מצב לשמירת סכום ההכנסות הכולל.
   const [totalRevenue, setTotalRevenue] = useState(0);
+
+  // הגדרת מצבים לסטטיסטיקות של קורסים וסדנאות: הכי נרכשים והכי פחות נרכשים.
   const [courseStats, setCourseStats] = useState({
     mostPurchased: [],
     leastPurchased: [],
@@ -25,6 +31,7 @@ const PurchasesAdmin = () => {
   useEffect(() => {
     const fetchPurchasesAndStats = async () => {
       try {
+        //ייבוא הרכישות מהשרת
         const purchasesResponse = await axios.get(
           "http://localhost:3000/api/v1/users/purchases/all",
           {
@@ -34,14 +41,18 @@ const PurchasesAdmin = () => {
           }
         );
 
+        // שליפת רכישות מתוך התשובה שהתקבלה מה-API
         const allPurchases = purchasesResponse.data.data.purchases
+         // ריכוז של מערך רכישות הקורסים והסדנאות לכל משתמש
           .flatMap((userPurchase) => [
+            // מיפוי קורסים לכל רכישת קורס
             ...userPurchase.courses.map((course) => ({
               ...course,
               type: "קורס",
               userName: userPurchase.name,
               uniqueId: `${course._id}-${userPurchase.name}`,
             })),
+            // מיפוי סדנאות לכל רכישת סדנה
             ...userPurchase.workshops.map((workshop) => ({
               ...workshop,
               type: "סדנה",
@@ -49,16 +60,20 @@ const PurchasesAdmin = () => {
               uniqueId: `${workshop._id}-${userPurchase.name}`,
             })),
           ])
+          // הסרת כפילויות על פי מזהה ייחודי
           .reduce((acc, item) => {
+            // אם לא קיים פריט עם אותו uniqueId במאגר, הוסף את הפריט למאגר
             if (!acc.some((existingItem) => existingItem.uniqueId === item.uniqueId)) {
               acc.push(item);
             }
             return acc;
           }, [])
+           // מיון הרכישות לפי תאריך, מהחדש ביותר לישן ביותר
           .sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));
 
         setPurchases(allPurchases);
 
+        // שליחה של בקשה לשרת לקבלת נתוני סטטיסטיקות רכישות
         const statsResponse = await axios.get(
           "http://localhost:3000/api/v1/users/purchases/statistics",
           {
@@ -73,7 +88,7 @@ const PurchasesAdmin = () => {
         setCourseStats(courseStats);
         setWorkshopStats(workshopStats);
       } catch (err) {
-        console.error("Error fetching purchases or statistics:", err);
+        console.error("שגיאה באחזור רכישות או נתונים סטטיסטיים:", err);
         setError("שגיאה בטעינת הרכישות או הסטטיסטיקות");
       }
     };
@@ -81,22 +96,29 @@ const PurchasesAdmin = () => {
     fetchPurchasesAndStats();
   }, []);
 
+  //הצגת כל השירותים
   const showAll = () => {
     setFilteredType(null);
   };
 
+  //הצגת הקורסים
   const showCourses = () => {
     setFilteredType("קורס");
   };
 
+  //הצגת הסדנה
   const showWorkshops = () => {
     setFilteredType("סדנה");
   };
 
+  // פילטור הרכישות לפי קריטריונים שנמסרו (סוג, שם משתמש, תאריך)
   const filteredPurchases = purchases.filter((purchase) => {
     const purchaseDate = new Date(purchase.purchaseDate);
+    // בדיקה אם סוג הרכישה תואם לסוג המבוקש (אם לא נבחר סוג, כל סוג יתאים)
     const isWithinType = !filteredType || purchase.type === filteredType;
+
     const isWithinSearch = purchase.userName.toLowerCase().startsWith(searchTerm.toLowerCase());
+    // בדיקה אם תאריך הרכישה נמצא בטווח התאריכים המבוקש
     const isWithinDateRange =
       (!startDate || purchaseDate >= new Date(startDate.setHours(0, 0, 0, 0))) &&
       (!endDate || purchaseDate <= new Date(endDate.setHours(23, 59, 59, 999)));
@@ -113,20 +135,26 @@ const PurchasesAdmin = () => {
     (purchase) => purchase.type === "סדנה"
   );
 
+  // פונקציה לחישוב הסטטיסטיקות של הרכישות המסוננות
   const calculateFilteredStatistics = () => {
+    // חישוב סך כל ההכנסות מכל הרכישות המסוננות
     const total = filteredPurchases.reduce(
       (acc, purchase) => acc + (purchase.price || 0),
       0
     );
 
+    // אם הסכום הכולל שונה מההכנסות הכוללות הנוכחיות, מעדכנים את הערך
     if (total !== totalRevenue) {
       setTotalRevenue(total);
     }
 
+    // פונקציה לחישוב הסטטיסטיקות עבור סוג רכישה מסוים (קורס או סדנה)
     const getStats = (type) => {
       const items = filteredPurchases.filter(
         (purchase) => purchase.type === type
       );
+
+      // יצירת אובייקט שכולל את הספירה של כל פריט שנרכש
       const itemCount = items.reduce((count, item) => {
         count[item.name] = (count[item.name] || 0) + 1;
         return count;
@@ -138,10 +166,12 @@ const PurchasesAdmin = () => {
         Infinity
       );
 
+      // יצירת רשימה של פריטים עם מספר הרכישות המקסימלי
       const mostPurchasedItems = Object.keys(itemCount)
         .filter((name) => itemCount[name] === maxCount)
         .map((name) => ({ name, count: itemCount[name] }));
 
+      // יצירת רשימה של פריטים עם מספר הרכישות המינימלי
       const leastPurchasedItems = Object.keys(itemCount)
         .filter((name) => itemCount[name] === minCount)
         .map((name) => ({ name, count: itemCount[name] }));
@@ -155,9 +185,11 @@ const PurchasesAdmin = () => {
     const newCourseStats = getStats("קורס");
     const newWorkshopStats = getStats("סדנה");
 
+    // אם הסטטיסטיקות עבור הקורסים השתנו, מעדכנים את הערך
     if (JSON.stringify(newCourseStats) !== JSON.stringify(courseStats)) {
       setCourseStats(newCourseStats);
     }
+    // אם הסטטיסטיקות עבור הסדנאות השתנו, מעדכנים את הערך
     if (JSON.stringify(newWorkshopStats) !== JSON.stringify(workshopStats)) {
       setWorkshopStats(newWorkshopStats);
     }

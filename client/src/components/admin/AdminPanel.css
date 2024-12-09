@@ -1,16 +1,16 @@
-/* הוספת אנימציית Fade-In לכל האלמנטים */
+
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0); /* חזרה למקום המקורי */
+    transform: translateY(0); 
   }
 }
 
-/* Global Styles */
+
 body, html {
   margin: 0;
   padding: 0;
@@ -18,19 +18,19 @@ body, html {
   font-family: Arial, sans-serif;
   background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
   color: #333;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
-/* Wrapper to center Admin Panel */
+
 .admin-panel-wrapper {
   display: flex;
-  justify-content: center; /* מרכז אופקית */
-  align-items: center; /* מרכז אנכית */
-  min-height: 100vh; /* גובה מינימלי של הדף */
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  justify-content: center;
+  align-items: center; 
+  min-height: 100vh; 
+  animation: fadeInUp 1s ease-in-out;
 }
 
-/* Admin Panel Container */
+
 .admin-panel {
   max-width: 1200px;
   width: 100%;
@@ -40,7 +40,7 @@ body, html {
   border-radius: 16px;
   box-shadow: 0 20px 40px rgb(0, 0, 0);
   transition: transform 0.3s, box-shadow 0.3s;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
 .admin-panel:hover {
@@ -48,7 +48,7 @@ body, html {
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
 }
 
-/* Panel Header */
+
 .admin-panel h1 {
   text-align: center;
   font-size: 2.5em;
@@ -57,19 +57,19 @@ body, html {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
-/* Category Container */
+
 .category-container {
   display: flex;
   justify-content: center;
   gap: 40px;
   flex-wrap: wrap;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out;
 }
 
-/* Individual Buttons */
+
 .category-container button {
   padding: 15px 30px;
   font-size: 1.2em;
@@ -79,7 +79,7 @@ body, html {
   border-radius: 30px;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
 .category-container button:hover {
@@ -92,7 +92,7 @@ body, html {
   transform: translateY(3px);
 }
 
-/* Error Message */
+
 .error-message {
   color: #e74c3c;
   text-align: center;
@@ -103,10 +103,10 @@ body, html {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
-/* Responsive Design for Smaller Screens */
+
 @media (max-width: 768px) {
   .category-container {
     flex-direction: column;
@@ -117,7 +117,7 @@ body, html {
     padding: 30px;
   }
 }
-/* Style for Status Buttons */
+
 .stats-buttons {
   display: flex;
   justify-content: center;
@@ -130,7 +130,7 @@ body, html {
   font-size: 1.3em;
   font-weight: bold;
   color: #fff;
-  background: linear-gradient(to right, #097fc4, #36d1dc); /* Reverse gradient */
+  background: linear-gradient(to right, #097fc4, #36d1dc); 
   border: none;
   border-radius: 25px;
   cursor: pointer;
@@ -140,7 +140,7 @@ body, html {
 }
 
 .stats-buttons button:hover {
-  background: linear-gradient(to right, #097fc4, #36d1dc); /* Reverse gradient */
+  background: linear-gradient(to right, #097fc4, #36d1dc); 
   transform: scale(1.08);
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
 }
@@ -150,7 +150,7 @@ body, html {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive design for smaller screens */
+
 @media (max-width: 768px) {
   .stats-buttons {
     flex-direction: column;

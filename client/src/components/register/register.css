@@ -1,4 +1,4 @@
-/* General styling for the Register page */
+
 .register-page-wrapper {
   display: flex;
   justify-content: center;
@@ -11,11 +11,11 @@
 
 .register-page-container {
   background: rgba(255, 255, 255, 0.9);
-  padding: 30px; /* הקטנת המרווח הכללי */
+  padding: 30px;
   border-radius: 10px;
   box-shadow: 0 8px 25px rgb(0, 0, 0);
-  max-width: 350px; /* הקטנת הרוחב */
-  width: 90%; /* מתיחה עד 90% מרוחב המסך הקטן */
+  max-width: 350px; 
+  width: 90%;
   text-align: center;
   animation: fadeIn 1s ease-out;
 }
@@ -29,21 +29,21 @@
   letter-spacing: 1.5px;
 }
 
-/* Form styling */
+
 .register-page-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Input group styling */
+
 .register-page-input-group {
   width: 100%;
   margin-bottom: 15px;
   position: relative;
 }
 
-/* Input styling */
+
 .register-page-input-group input {
   width: 100%;
   padding: 10px 10px 10px 35px;
@@ -60,7 +60,7 @@
   outline: none;
 }
 
-/* Icon styling for password */
+
 .register-page-input-group .icon {
   position: absolute;
   left: 20px;
@@ -70,7 +70,7 @@
   font-size: 18px;
 }
 
-/* Eye icon styling */
+
 .register-page-input-group .eye-icon {
   position: absolute;
   left: 50px;
@@ -81,7 +81,7 @@
   cursor: pointer;
 }
 
-/* Button styling */
+
 .register-page-btn {
   background: linear-gradient(135deg, #007bff, #0056b3);
   color: white;
@@ -102,7 +102,7 @@
   transform: scale(0.96);
 }
 
-/* Error message styling */
+
 .register-page-error {
   color: #d9534f;
   font-weight: bold;
@@ -117,7 +117,7 @@
   animation: shake 0.3s;
 }
 
-/* Navigation to login */
+
 .register-page-navToLogin {
   margin-top: 15px;
 }
@@ -133,7 +133,7 @@
   color: #0056b3;
 }
 
-/* Keyframes for fade-in animation */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -145,7 +145,7 @@
   }
 }
 
-/* Keyframes for shake animation */
+
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);

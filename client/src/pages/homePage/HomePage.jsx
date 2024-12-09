@@ -2,41 +2,48 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaEnvelope, FaInstagram, FaFacebook, FaWhatsapp } from 'react-icons/fa';
-import "./HomePage.css"; // ייבוא קובץ ה-CSS של דף הבית
+import "./HomePage.css"; 
 
 export default function HomePage({ isAdmin }) {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    //פונקציה אסינכרונית לאחזור רשימת הפרויקטים מהשרת
     const fetchProjects = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/projects"); // ודא שכתובת ה-API נכונה
-        setProjects(response.data); // עדכון רשימת הפרויקטים במצב
+        //בקשת GET לשרת לקבלת רשימת פרויקטים
+        const response = await axios.get("http://localhost:3000/api/v1/projects");
+        setProjects(response.data);
       } catch (error) {
-        console.error("Failed to fetch projects:", error);
+        console.error("אחזור הפרויקטים נכשל:", error);
       } finally {
-        setLoading(false); // הפסקת מצב טעינה
+        setLoading(false); 
       }
     };
 
     fetchProjects();
   }, []);
 
+  // פונקציה לטיפול בניווט לעמוד פרטים נוספים של פרויקט מסוים
   const handleDetails = (projectId) => {
     window.location.href = `/project-details/${projectId}`;
   };
 
+  // פונקציה לטיפול בניווט לעמוד עריכת פרויקט מסוים
   const handleEdit = (projectId) => {
     window.location.href = `/edit-project/${projectId}`;
   };
 
+  // פונקציה למחיקת פרויקט
   const handleDelete = async (projectId) => {
     try {
+      // בקשת DELETE לשרת למחיקת הפרויקט
       await axios.delete(`http://localhost:3000/api/v1/projects/${projectId}`);
+      // עדכון ה-state להסרת הפרויקט מרשימת הפרויקטים
       setProjects(projects.filter((project) => project._id !== projectId));
     } catch (error) {
-      console.error("Failed to delete project:", error);
+      console.error("מחיקת הפרויקט נכשלה:", error);
     }
   };
 
@@ -46,13 +53,13 @@ export default function HomePage({ isAdmin }) {
 
   return (
     <div className="homepage-container">
-      {/* כותרת ולוגו בדף הבית */}
+      
       <header className="header">
         <h1 className="logo">ברוכים הבאים לעולם של יצירה ופיתוח</h1>
         <h1 className="subtitle">ליווי אישי לצמיחה והגשמה עצמית</h1>
       </header>
 
-      {/* נעים להכיר Section - Positioned at the top */}
+      
       <div className="introduction-section">
         <h5>נעים להכיר</h5>
         <p>
@@ -101,10 +108,10 @@ export default function HomePage({ isAdmin }) {
                   alt={project.name}
                 />
               )}
-              {/* הצגת תיאור הפרויקט בלבד */}
+              
               <p>{project.projectDescription}</p>
 
-              {/* כפתור פרטים נוספים שיפנה לעמוד פרטי הפרויקט */}
+              
               <button
                 onClick={() => handleDetails(project._id)}
                 className="details-button"
@@ -135,7 +142,7 @@ export default function HomePage({ isAdmin }) {
         )}
       </div>
 
-      {/* צור קשר */}
+      
       <footer id="contact" className="footer">
         <h2>צור קשר</h2>
         <h3>!בואו נדבר - אני כאן בשבילכם</h3>

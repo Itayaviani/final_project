@@ -1,4 +1,4 @@
-/* ודא שהעמוד מתחיל מהחלק העליון */
+
 .homepage-container html, .homepage-container body {
   height: 100%;
   margin: 0;
@@ -7,7 +7,7 @@
   font-family: Arial, sans-serif; 
 }
 
-/* עיצוב כללי עבור דף הבית */
+
 .homepage-container {
   width: 100vw;
   min-height: 100vh;
@@ -21,7 +21,7 @@
   box-sizing: border-box;
 }
 
-/* כותרת ולוגו */
+
 .homepage-container .header {
   background-color: #a9cce3;
   text-align: center;
@@ -51,7 +51,7 @@
 
 }
 
-/* עיצוב התוכן של נעים להכיר */
+
 .homepage-container .introduction-section {
   max-width: 1200px;
   margin: 60px auto;
@@ -61,12 +61,13 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   animation: slideIn 1s ease-in-out;
   border-left: 10px solid #a9cce3;
-  font-size: 22px; /* כאן אפשר להגדיר כל גודל שתרצה */
+  font-size: 22px; 
 
 }
 .homepage-container h5 {
-  font-size: 37px; /* כאן אפשר להגדיר כל גודל שתרצה */}
-/* כותרת הצצה לפרויקטים עם מסגרת ואפקטים נוספים */
+  font-size: 37px; 
+}
+
 .homepage-container h4 {
   color: black;
   display: inline-block;
@@ -74,7 +75,7 @@
   font-size: 2em;
   text-align: center;
   padding: 15px;
-  border: 2px solid #0c4a6e; /* מסגרת אלגנטית */
+  border: 2px solid #0c4a6e; 
   border-radius: 10px;
   margin: 20px auto;
   animation: slowFadeIn 2s ease-in-out, slideInFromLeft 1.5s ease;
@@ -101,7 +102,7 @@
   left: 0;
 }
 
-/* אפקטים לכותרת h4 */
+
 @keyframes slowFadeIn {
   0% {
     opacity: 0;
@@ -133,7 +134,7 @@
   position: relative;
 }
 
-/* עיצוב קונטיינר הפרויקטים */
+
 .homepage-container .projects-container {
   display: flex;
   flex-wrap: wrap;
@@ -143,7 +144,7 @@
   animation: fadeInUp 1s ease-in-out;
 }
 
-/* כרטיס פרויקט */
+
 .homepage-container .project-card {
   position: relative;
   padding: 20px;
@@ -195,7 +196,7 @@
   line-height: 1.5;
 }
 
-/* כפתור פרטים נוספים */
+
 .homepage-container .details-button {
   display: inline-block;
   padding: 10px 20px;
@@ -215,7 +216,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.972);
 }
 
-/* כפתור הוספת פרויקט */
+
 .homepage-container .add-project-button-container {
   display: flex;
   justify-content: center;
@@ -243,7 +244,7 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.877);
 }
 
-/* עיצוב קטע "צור קשר" */
+
 .homepage-container .footer {
   background-color: #a9cce3;
   color: #1c2833;
@@ -268,7 +269,7 @@
   flex-wrap: wrap;
 }
 
-/* עיצוב כרטיסי קשר */
+
 .homepage-container .contact-item {
   background: linear-gradient(135deg, #e8f8f5, #d1f2eb);
   padding: 20px 30px;
@@ -287,14 +288,14 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.984);
 }
 
-/* עיצוב אייקונים */
+
 .homepage-container .contact-icon {
   font-size: 40px;
   transform: rotate(0deg) scale(1);
   transition: transform 0.3s ease;
 }
 
-/* צבעי אייקונים לכל פלטפורמה */
+
 .homepage-container .contact-item.facebook .contact-icon {
   color: #4267B2;
 }
@@ -308,7 +309,7 @@
   color: #D44638;
 }
 
-/* עיצוב הקישורים */
+
 .homepage-container .contact-item a {
   color: #0c0c0c;
   font-size: 22px;
@@ -321,14 +322,14 @@
   text-decoration: underline;
 }
 
-/* עיצוב הטקסט של פלטפורמות */
+
 .homepage-container .contact-item p {
   margin: 0;
   font-size: 18px;
   font-weight: bold;
 }
 
-/* אנימציות */
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -349,7 +350,7 @@
   }
 }
 
-/* רספונסיביות */
+
 @media (max-width: 768px) {
   .homepage-container .content-layout {
     flex-direction: column;

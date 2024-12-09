@@ -1,4 +1,4 @@
-/* Global Styles */
+
 body, html {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@ body, html {
   color: #333;
 }
 
-/* Wrapper to center the WorkshopsList */
+
 .workshops-wrapper {
   display: flex;
   justify-content: center;
@@ -16,7 +16,7 @@ body, html {
   min-height: 100vh;
 }
 
-/* Workshops List Container */
+
 .workshops-list {
   max-width: 1200px;
   width: 100%;
@@ -32,18 +32,18 @@ body, html {
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
 }
 
-/* Workshops Header */
+
 .workshops-list h1 {
   text-align: center;
   font-size: 2.5em;
   margin-bottom: 40px;
-  color: #000; /* כותרת בצבע שחור */
+  color: #000;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
 
-/* Table Styles */
+
 .workshops-list table {
   width: 100%;
   border-collapse: collapse;
@@ -58,8 +58,8 @@ body, html {
 }
 
 .workshops-list th {
-  background-color: #0b0b0b; /* כותרת טבלה שחורה */
-  color: rgb(255, 251, 251); /* טקסט לבן */
+  background-color: #0b0b0b;
+  color: rgb(255, 251, 251);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -73,7 +73,7 @@ body, html {
   background-color: #e3e9f0;
 }
 
-/* Button Styles */
+
 .workshops-list button {
   padding: 12px 25px;
   font-size: 1em;
@@ -86,7 +86,7 @@ body, html {
 
 }
 
-/* Delete Button - Red */
+
 .workshops-list button.delete {
   background: linear-gradient(to right, #e74c3c, #c0392b);
   color: rgb(244, 239, 239);
@@ -101,7 +101,7 @@ body, html {
   transform: translateY(3px);
 }
 
-/* Edit Button - Gray */
+
 .workshops-list button.edit {
   background: #b7b8b9;
   color: rgb(246, 239, 239);
@@ -116,7 +116,7 @@ body, html {
   transform: translateY(3px);
 }
 
-/* Error Message */
+
 .error-message {
   color: #e74c3c;
   text-align: center;
@@ -129,7 +129,7 @@ body, html {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive Design for Smaller Screens */
+
 @media (max-width: 768px) {
   .workshops-list {
     padding: 30px;
@@ -143,12 +143,12 @@ body, html {
 .price-cell-workshopList{
   direction: rtl;
   text-align: center;
-  padding-right: 5px; /* תוכל לשנות את הערך בהתאם לצורך */
+  padding-right: 5px;
 }
 
 .workshops-list td .action-buttons {
   display: flex;
-  gap: 10px; /* רווח בין הכפתורים */
-  justify-content: center; /* ממרכז את הכפתורים בתא */
+  gap: 10px;
+  justify-content: center;
   align-items: center;
 }

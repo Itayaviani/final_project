@@ -1,16 +1,16 @@
-/* עיצוב כללי שלא משפיע על מיקום הדף */
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff; /* רקע לבן לכל הדף */
+  background-color: #fff; 
   font-family: 'Arial', sans-serif;
-      font-size: 22px; /* כאן אפשר להגדיר כל גודל שתרצה */
+      font-size: 22px; 
 
 }
 
-/* Title at the top of the page */
+
 .page-title {
   text-align: center;
   color: #000000;
@@ -19,40 +19,40 @@ html, body {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  animation: fadeIn 1s ease-in-out; /* אנימציית Fade-in */
+  animation: fadeIn 1s ease-in-out; 
   margin-top: 80px;
 }
 
-/* עיצוב לדף ה-ContactsUs בלבד */
+
 .contacts-us-page {
   display: flex;
-  flex-direction: column; /* שינוי כדי לאפשר למידע נוסף להופיע מתחת */
+  flex-direction: column; 
   align-items: center;
   justify-content: center;
-  min-height: 100vh; /* גובה מינימלי של הדף */
-  animation: fadeIn 1s ease-in-out; /* אנימציית Fade-in */
+  min-height: 100vh; 
+  animation: fadeIn 1s ease-in-out;
 }
 
 .contacts-us-container {
   max-width: 1200px;
   width: 100%;
   padding: 20px;
-  background-color: transparent; /* הסרת רקע מהקוביה */
+  background-color: transparent;
   color: #000000;
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  position: relative; /* מאפשר למקם את התמונה בצד ימין */
-  animation: fadeIn 1s ease-in-out; /* אנימציית Fade-in */
+  position: relative;
+  animation: fadeIn 1s ease-in-out;
 }
 
-/* הזזת התמונה עוד ימינה */
+
 .image-container {
   position: absolute;
-  right: 40px; /* הזזה נוספת ימינה */
+  right: 40px; 
   top: 0;
-  width: 250px; /* רוחב התמונה */
-  animation: fadeIn 1s ease-in-out; /* אנימציית Fade-in */
+  width: 250px; 
+  animation: fadeIn 1s ease-in-out; 
 }
 
 .contact-image {
@@ -61,42 +61,42 @@ html, body {
   border-radius: 8px;
 }
 
-/* ארגון השדות בשורות */
+
 .form-row {
   display: flex;
   justify-content: space-between;
-  gap: 20px; /* רווח בין השדות */
+  gap: 20px; 
 }
 
 .form-group {
-  flex: 0 0 48%; /* שני שדות יופיעו אחד ליד השני */
+  flex: 0 0 48%;
   
 }
 
-/* סידור השדה "שם פרטי" בצד ימין ו"השם משפחה" בצד שמאל */
+
 .form-group-container {
   display: flex;
-  flex-direction: row-reverse; /* שם פרטי בצד ימין, שם משפחה בצד שמאל */
-  gap: 20px; /* רווח בין השדות */
+  flex-direction: row-reverse;
+  gap: 20px;
   
 }
 
 .form-group.full-width {
-  flex: 0 0 100%; /* סיבת פנייה תתפוס את כל הרוחב */
+  flex: 0 0 100%; 
 }
 
-/* עיצוב ה-placeholder */
+
 .form-group input::placeholder,
 .form-group textarea::placeholder {
   color: #757474;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 21px; /* כאן אפשר להגדיר כל גודל שתרצה */
+  font-size: 21px;
 
 }
 
-/* עיצוב השדות */
+
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -106,8 +106,8 @@ html, body {
   font-size: 1rem;
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: border 0.3s ease, box-shadow 0.3s ease;
-  direction: rtl; /* מגדיר את הטקסט ב-placeholder להיות מימין לשמאל */
-  text-align: right; /* מיישר את הטקסט של ה-input מימין */
+  direction: rtl; 
+  text-align: right;
 }
 
 .form-group input:focus,
@@ -149,7 +149,7 @@ html, body {
   transform: scale(0.97);
 }
 
-/* Error and success messages */
+
 .error-message {
   color: #d9534f;
   font-weight: bold;
@@ -162,11 +162,11 @@ html, body {
   margin-bottom: 20px;
 }
 
-/* New styles for the additional information section */
+
 .additional-info {
   text-align: center;
   margin-top: 30px;
-  animation: fadeIn 1s ease-in-out; /* אנימציית Fade-in */
+  animation: fadeIn 1s ease-in-out;
 }
 
 .additional-info h2 {
@@ -180,14 +180,14 @@ html, body {
   color: #333;
 }
 
-/* מפת וויז */
+
 .map-container {
   width: 500px;
   height: 300px;
-  margin-left: -90px; /* הזזת המפה שמאלה */
+  margin-left: -90px;
   position: relative;
   left: -10px;
-  animation: fadeIn 1s ease-in-out; /* אנימציית Fade-in */
+  animation: fadeIn 1s ease-in-out; 
 }
 
 .waze-map {
@@ -195,7 +195,7 @@ html, body {
   height: 350px;
 }
 
-/* אנימציית Fade-in */
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -205,7 +205,7 @@ html, body {
   }
 }
 
-/* רספונסיביות */
+
 @media (max-width: 1200px) {
   .page-title {
     font-size: 2.2rem;

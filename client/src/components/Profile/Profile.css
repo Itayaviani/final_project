@@ -1,21 +1,21 @@
-/* הוספת אנימציה כללית לעלייה */
+
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0); /* חזרה למקום המקורי */
+    transform: translateY(0);
   }
 }
 
 body {
   font-family: 'Arial', sans-serif;
-  color: #000000; /* צבע כהה לטקסט */
+  color: #000000;
   margin: 0;
   padding: 0;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה לגוף */
+  animation: fadeInUp 1s ease-in-out;
 }
 
 .profile-wrapper {
@@ -34,70 +34,70 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.927);
   padding: 20px;
-  max-width: 600px; /* רוחב רחב יותר */
+  max-width: 600px;
   width: 100%;
   text-align: center;
-  margin: 0 auto; /* מרכז את הקונטיינר */
-  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
+  margin: 0 auto; 
+  animation: fadeInUp 1s ease-in-out;
   
 }
 
 .profile-title {
   font-size: 2.1rem;
-  color: #000000; /* צבע לכותרת */
+  color: #000000;
   margin-bottom: 30px;
   position: relative;
-  display: inline-block; /* כדי שהקו התחתון יהיה לפי רוחב הכותרת */
-  font-weight: bold; /* מדגיש את הכותרת */
+  display: inline-block;
+  font-weight: bold;
 }
 
 .profile-title::after {
   content: '';
   position: absolute;
   width: 100%;
-  height: 4px; /* קו תחתון עבה יותר */
-  background-color: #000000; /* צבע הקו התחתון */
-  bottom: -20px; /* מרחק בין הכותרת לקו, הוגדל */
+  height: 4px; 
+  background-color: #000000; 
+  bottom: -20px;
   left: 0;
 }
 
 .profile-details {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* מיישר את כל התוויות והערכים לשמאל */
+  align-items: flex-start;
   margin-top: 20px;
   gap: 15px;
   margin-right: 110px;
-  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
+  animation: fadeInUp 1s ease-in-out;
 }
 
 .profile-details p {
   display: flex;
   justify-content: space-between;
-  width: 100%; /* משתמש בכל הרוחב */
+  width: 100%; 
   font-size: 1.2rem;
   color: #000000;
-  font-weight: 600; /* מדגיש את כל השורות */
+  font-weight: 600; 
 }
 
 .label {
-  font-weight: bold; /* הדגשה יותר ברורה לתוויות */
-  width: 30%; /* שולט ברוחב התווית */
-  text-align: center; /* מיישר את התוויות למרכז */
+  font-weight: bold;
+  width: 30%; 
+  text-align: center; 
 }
 
 .value {
-  font-weight: 500; /* הדגשה מעט חלשה יותר לערכים */
-  width: 70%; /* שולט ברוחב הערך */
-  text-align: center; /* מיישר את הערכים למרכז */
+  font-weight: 500; 
+  width: 70%;
+  text-align: center; 
   margin-left: 60px;
 }
 
 .button-container {
   display: flex;
-  justify-content: center; /* מרכז את הכפתורים */
+  justify-content: center;
   margin-top: 50px;
-  animation: fadeInUp 1s ease-in-out; /* הוספת האנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
 .edit-profile-button,
@@ -111,7 +111,7 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
-  margin: 0 20px; /* רווח בין הכפתורים */
+  margin: 0 20px; 
 }
 
 .edit-profile-button:hover,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import './EditCourse.css'; // ייבוא קובץ ה-CSS
+import './EditCourse.css'; 
 
 export default function EditCourse() {
   const { courseId } = useParams();
@@ -20,6 +20,7 @@ export default function EditCourse() {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
+        //קבלת פרטי הקורס המסויים
         const response = await axios.get(`http://localhost:3000/api/v1/courses/${courseId}`);
         const { name, courseDescription, courseDetails, price, capacity, image, startDate, startTime } = response.data;
         setCourseName(name);
@@ -38,6 +39,7 @@ export default function EditCourse() {
     fetchCourse();
   }, [courseId]);
 
+  //פונקציה לטיפול בשליחת הטופס
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -56,18 +58,20 @@ export default function EditCourse() {
     }
 
     try {
+      //שליחת בקשת put לעדכון נתוני הקורס
       await axios.put(`http://localhost:3000/api/v1/courses/${courseId}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // יש לשנות ל multipart/form-data כדי לשלוח תמונה
+          'Content-Type': 'multipart/form-data',
         },
       });
       
-      navigate('/courses'); // ניתוב חזרה לדף הקורסים לאחר השמירה
+      navigate('/courses'); 
     } catch (error) {
       console.error('Failed to edit course:', error);
     }
   };
 
+  // פונקציה לעדכון מצב התמונה החדשה
   const handleImageChange = (e) => {
     setCourseImage(e.target.files[0]); // עדכון התמונה החדשה
   };

@@ -6,12 +6,13 @@ const { catchAsync } = require("../utils/catchAsync");
 // פונקציה ליצירת טוקן
 const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+    expiresIn: process.env.JWT_EXPIRES_IN,// זמן התפוגה של הטוקן
   });
 };
 
 // פונקציה ליצירת טוקן ושליחתו עם תשובה
 const createAndSendToken = (user, statusCode, res) => {
+  // יצירת הטוקן עם מזהה המשתמש
   const token = signToken(user._id);
   res.status(statusCode).json({
     status: "success",
@@ -64,8 +65,6 @@ exports.register = catchAsync(async (req, res, next) => {
 });
 
 
-
-
 // התחברות משתמש
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
@@ -96,17 +95,20 @@ exports.login = catchAsync(async (req, res, next) => {
 
 
 // קבלת פרטי המשתמש המחובר
+// ייבוא הפונקציה catchAsync שנועדה לטפל בשגיאות אסינכרוניות
 exports.getMe = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
+  // בדיקה אם המשתמש לא נמצא במסד הנתונים
   if (!user) {
+    // אם המשתמש לא נמצא, זורקים שגיאה מותאמת אישית עם קוד סטטוס 404
     return next(new AppError("No user found with this ID", 404));
   }
 
   user.password = undefined; // מחיקת הסיסמא מהתגובה
   res.status(200).json({
     status: "success",
-    data: { user },
+    data: { user },// הנתונים שנשלחים ללקוח - אובייקט המשתמש
   });
 });
 
@@ -116,26 +118,28 @@ exports.getUserPurchases = catchAsync(async (req, res, next) => {
 
   const user = await User.findById(userId)
     .populate({
-      path: 'purchasedCourses.course',
-      select: 'name price'
+      path: 'purchasedCourses.course',// מצביע על הקורסים שנרכשו
+      select: 'name price'// שליפת רק השדות name ו-price מהקורס
     })
     .populate({
-      path: 'purchasedWorkshops.workshop',
-      select: 'name price'
+      path: 'purchasedWorkshops.workshop',// מצביע על הסדנאות שנרכשו
+      select: 'name price'// שליפת רק השדות name ו-price מהסדנה
     });
 
   if (!user) {
     return next(new AppError("משתמש לא נמצא", 404));
   }
 
+  // שליפת מערך הקורסים שנרכשו, או מערך ריק אם לא קיימים
   const purchasedCourses = user.purchasedCourses || [];
+  // שליפת מערך הסדנאות שנרכשו, או מערך ריק אם לא קיימות
   const purchasedWorkshops = user.purchasedWorkshops || [];
 
   res.status(200).json({
     status: "success",
     purchases: {
       courses: purchasedCourses
-        .filter(course => course && course.course)  // סינון ערכי null
+        .filter(course => course && course.course)  
         .map((purchase) => ({
           _id: purchase.course._id,
           name: purchase.course.name,
@@ -143,7 +147,7 @@ exports.getUserPurchases = catchAsync(async (req, res, next) => {
           purchaseDate: purchase.purchaseDate,
         })),
       workshops: purchasedWorkshops
-        .filter(workshop => workshop && workshop.workshop)  // סינון ערכי null
+        .filter(workshop => workshop && workshop.workshop)  
         .map((purchase) => ({
           _id: purchase.workshop._id,
           name: purchase.workshop.name,
@@ -156,21 +160,26 @@ exports.getUserPurchases = catchAsync(async (req, res, next) => {
 
 // פונקציה לשליפת כל הרכישות מכל המשתמשים
 exports.getAllUserPurchases = catchAsync(async (req, res, next) => {
+  // שליפת כל המשתמשים מהמסד נתונים והבאת מידע נוסף על הקורסים והסדנאות שנרכשו
   const users = await User.find()
+  
     .populate({
-      path: 'purchasedCourses.course',
-      select: 'name price'
+      // צירוף מידע על הקורסים שנרכשו עבור כל משתמש
+      path: 'purchasedCourses.course',// שדה שמכיל את הקורסים שנרכשו (מצביע על מסמך אחר במאגר)
+      select: 'name price'// שליפת רק השדות 'name' ו-'price' מהקורס
     })
     .populate({
-      path: 'purchasedWorkshops.workshop',
-      select: 'name price'
+      // צירוף מידע על הסדנאות שנרכשו עבור כל משתמש
+      path: 'purchasedWorkshops.workshop',// שדה שמכיל את הסדנאות שנרכשו (מצביע על מסמך אחר במאגר)
+      select: 'name price' // שליפת רק השדות 'name' ו-'price' מהסדנה
     });
 
+  // עיבוד הנתונים שנשלפו והכנתם לפורמט קריא ומותאם לשליחה כתגובה
   const allPurchases = users.map((user) => ({
     userId: user._id,
     name: user.name,
     email: user.email,
-    idNumber: user.idNumber, // הוספת תעודת זהות
+    idNumber: user.idNumber, 
     courses: (user.purchasedCourses || [])
       .filter(purchase => purchase && purchase.course)
       .map((purchase) => ({

@@ -1,4 +1,4 @@
-/* עיצוב למיכל פרטי הסדנא */
+
 .workshop-details-container {
   max-width: 1550px;
   margin: 60px auto;
@@ -11,7 +11,7 @@
   transition: all 0.4s ease;
 }
 
-/* כותרת הסדנא */
+
 .workshop-details-container h1 {
   font-size: 2.5em;
   color: #000000;
@@ -31,7 +31,7 @@
   border-radius: 2px;
 }
 
-/* עיצוב תמונה עם אפקט זום וצל */
+
 .workshop-image {
   width: 100%;
   max-width: 800px;
@@ -48,7 +48,7 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
 }
 
-/* תיבת טקסט עבור כל מקטע של 50 מילים */
+
 .workshop-text-section {
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@
   margin: 0;
 }
 
-/* עיצוב טקסט לפרטי הסדנא */
+
 .workshop-details-container p:last-of-type {
   font-size: 1.5em;
   color: #010101;
@@ -80,7 +80,7 @@
   margin-top: 15px;
 }
 
-/* כפתור רכישה מרשים עם אנימציה */
+
 .purchase-button {
   padding: 16px 40px;
   font-size: 1.2em;
@@ -107,7 +107,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* אפקטי ריחוף ומעבר */
+
 .workshop-details-container:hover {
   transform: scale(1.01);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);

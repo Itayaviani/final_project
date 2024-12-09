@@ -1,39 +1,39 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './AddWorkshop.css'; // ייבוא קובץ ה-CSS
+import './AddWorkshop.css';
 
 export default function AddWorkshop({ addWorkshop }) {
   const [workshopName, setWorkshopName] = useState('');
-  const [workshopDescription, setWorkshopDescription] = useState(''); // תיאור קצר של הסדנה
-  const [workshopDetails, setWorkshopDetails] = useState(''); // פרטים מלאים של הסדנה
+  const [workshopDescription, setWorkshopDescription] = useState('');
+  const [workshopDetails, setWorkshopDetails] = useState(''); 
   const [workshopPrice, setWorkshopPrice] = useState('');
-  const [workshopCapacity, setWorkshopCapacity] = useState(''); // הוספת שדה לקיבולת הסדנה
-  const [workshopStartDate, setWorkshopStartDate] = useState(''); // שדה לתאריך תחילת הסדנה
-  const [workshopStartTime, setWorkshopStartTime] = useState(''); // שדה לשעת תחילת הסדנה
+  const [workshopCapacity, setWorkshopCapacity] = useState(''); 
+  const [workshopStartDate, setWorkshopStartDate] = useState(''); 
+  const [workshopStartTime, setWorkshopStartTime] = useState(''); 
   const [workshopImage, setWorkshopImage] = useState(null);
-  const [error, setError] = useState(null); // לניהול שגיאות
-  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
+  //פונקציה שמטפלת בשליחת הטופס
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null); // איפוס שגיאות קודמות
+    e.preventDefault();// מניעת רענון הדף בברירת מחדל
+    setError(null);
 
     try {
-      // יצירת FormData והוספת כל השדות הרלוונטיים
+      //יצירת אובייקט FormData כדי לשלוח נתונים שכוללים קבצים
       const formData = new FormData();
       formData.append('name', workshopName);
-      formData.append('workshopDescription', workshopDescription); // הוספת תיאור קצר של הסדנה
-      formData.append('workshopDetails', workshopDetails); // הוספת פרטים מלאים של הסדנה
+      formData.append('workshopDescription', workshopDescription); 
+      formData.append('workshopDetails', workshopDetails); 
       formData.append('price', workshopPrice);
-      formData.append('capacity', workshopCapacity); // הוספת קיבולת
-      formData.append('startDate', `${workshopStartDate}T${workshopStartTime}`); // הוספת תאריך ושעת התחלת הסדנה ל-FormData
-      formData.append('startTime', workshopStartTime); // הוספת שעת התחלה כמשתנה נפרד
+      formData.append('capacity', workshopCapacity); 
+      formData.append('startDate', `${workshopStartDate}T${workshopStartTime}`);
+      formData.append('startTime', workshopStartTime);
 
       if (workshopImage) {
-        formData.append('image', workshopImage); // הוספת התמונה אם קיימת
+        formData.append('image', workshopImage);
       }
-
+      // שליחת בקשת POST לשרת להוספת סדנה חדשה
       const response = await axios.post(
         'http://localhost:3000/api/v1/workshops',
         formData,
@@ -44,16 +44,17 @@ export default function AddWorkshop({ addWorkshop }) {
         }
       );
 
-      addWorkshop(response.data); // עדכון המצב עם הסדנה החדשה
-      navigate('/workshops'); // ניווט לרשימת הסדנאות לאחר ההוספה
+      addWorkshop(response.data); 
+      navigate('/workshops'); 
     } catch (error) {
-      console.error('Failed to add workshop:', error.response ? error.response.data : error.message);
-      setError('Failed to add workshop. Please check the form and try again.'); // הצגת הודעת שגיאה
+      console.error('הוספת הסדנה נכשלה:', error.response ? error.response.data : error.message);
+      setError('הוספת הסדנה נכשלה. אנא בדוק את הטופס ונסה שוב.'); 
     }
   };
 
+  // פונקציה לעדכון המצב כאשר קובץ תמונה נבחר
   const handleImageChange = (e) => {
-    setWorkshopImage(e.target.files[0]); // טיפול בשינוי התמונה
+    setWorkshopImage(e.target.files[0]); 
   };
 
   return (
@@ -133,7 +134,7 @@ export default function AddWorkshop({ addWorkshop }) {
         </div>
         <button type="submit">הוסף סדנא</button>
       </form>
-      {error && <p className="error-message">{error}</p>} {/* הצגת שגיאה אם קיימת */}
+      {error && <p className="error-message">{error}</p>} 
     </div>
   );
 }

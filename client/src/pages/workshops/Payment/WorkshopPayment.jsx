@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import './workshopPayment.css'; // ייבוא עיצוב מתאים
+import './workshopPayment.css';
 
 export default function WorkshopPayment() {
-  const { workshopId } = useParams(); // קבלת מזהה הסדנה מהנתיב
+  const { workshopId } = useParams();
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState('');
@@ -12,12 +12,12 @@ export default function WorkshopPayment() {
   const [creditCard, setCreditCard] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
-  const [idNumber, setIdNumber] = useState(''); // תעודת זהות
-  const [selectedCardType, setSelectedCardType] = useState(''); // מצב הכפתור הנבחר (ויזה או מאסטרקארד)
-  const [installments, setInstallments] = useState(1); // כמות תשלומים ברירת מחדל 1
+  const [idNumber, setIdNumber] = useState(''); 
+  const [selectedCardType, setSelectedCardType] = useState(''); 
+  const [installments, setInstallments] = useState(1); 
 
-  const [hasWorkshopStarted, setHasWorkshopStarted] = useState(false); // סטטוס אם הסדנה התחילה
-  const [isWorkshopFull, setIsWorkshopFull] = useState(false); // סטטוס אם הסדנה מלאה
+  const [hasWorkshopStarted, setHasWorkshopStarted] = useState(false);
+  const [isWorkshopFull, setIsWorkshopFull] = useState(false);
 
   const [errors, setErrors] = useState({
     fullName: '',
@@ -25,16 +25,18 @@ export default function WorkshopPayment() {
     creditCard: '',
     expirationDate: '',
     cvv: '',
-    idNumber: '', // שדה שגיאה עבור תעודת זהות
-    cardType: '', // שדה שגיאה עבור סוג הכרטיס
+    idNumber: '', 
+    cardType: '', 
   });
 
-  const [submitted, setSubmitted] = useState(false); // משתנה לבדיקת אם המשתמש ניסה לשלוח את הטופס
-  const [isFormValid, setIsFormValid] = useState(false); // סטטוס תקינות הטופס
+  const [submitted, setSubmitted] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
+  // שליפת פרטי הסדנה מהשרת עם טעינת הקומפוננטה
   useEffect(() => {
     const fetchWorkshopDetails = async () => {
       try {
+        //קבלת פרטי הסדנה עם המזהה המסויים
         const response = await axios.get(`http://localhost:3000/api/v1/workshops/${workshopId}`);
         const workshop = response.data;
 
@@ -59,8 +61,9 @@ export default function WorkshopPayment() {
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     const fullNameRegex = /^[A-Za-z\u0590-\u05FF\s]+$/;
-    const idNumberRegex = /^\d{9}$/; // תעודת זהות בת 9 ספרות בלבד
+    const idNumberRegex = /^\d{9}$/; 
 
+    // בדיקת תקינות של כל שדה והצגת שגיאות בהתאם
     const newErrors = {
       fullName: !fullNameRegex.test(fullName) && fullName.length > 0 ? 'שם מלא יכול להכיל רק אותיות בעברית או באנגלית ורווחים.' : '',
       email: !emailRegex.test(email) && email.length > 0 ? 'כתובת אימייל לא תקינה. יש להזין כתובת מלאה כולל הסיומת.' : '',
@@ -68,12 +71,12 @@ export default function WorkshopPayment() {
       expirationDate: (expirationDate.length !== 5 || !expirationDate.includes('/')) && expirationDate.length > 0 ? 'תוקף הכרטיס חייב להיות בפורמט MM/YY.' : '',
       cvv: cvv.length !== 3 && cvv.length > 0 ? 'CVV חייב להכיל 3 ספרות.' : '',
       idNumber: !idNumberRegex.test(idNumber) && idNumber.length > 0 ? 'תעודת זהות חייבת להכיל 9 ספרות.' : '',
-      cardType: !selectedCardType ? 'יש לבחור אמצעי תשלום (ויזה או מאסטרקארד).' : '', // בדיקת שגיאה עבור סוג הכרטיס
+      cardType: !selectedCardType ? 'יש לבחור אמצעי תשלום (ויזה או מאסטרקארד).' : '', 
     };
 
     setErrors(newErrors);
 
-    // הטופס תקין אם כל השדות תקינים
+    // החזרת מצב תקינות הטופס
     return !Object.values(newErrors).some((error) => error);
   };
 
@@ -82,6 +85,7 @@ export default function WorkshopPayment() {
     setIsFormValid(validateForm());
   }, [fullName, email, creditCard, expirationDate, cvv, idNumber, selectedCardType]);
 
+  // עדכון ערכי שדות הטופס עם ולידציה
   const handleCreditCardChange = (e) => {
     const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
     if (value.length <= 16) {
@@ -89,16 +93,18 @@ export default function WorkshopPayment() {
     }
   };
 
+//טיפול בשינוי תאריך תפוגה
   const handleExpirationDateChange = (e) => {
     let value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
     if (value.length <= 4) {
       if (value.length >= 3) {
-        value = `${value.slice(0, 2)}/${value.slice(2, 4)}`; // הוספת "/" בין הספרות
+        value = `${value.slice(0, 2)}/${value.slice(2, 4)}`;
       }
       setExpirationDate(value);
     }
   };
 
+  //טיפול בשינוי cvv
   const handleCvvChange = (e) => {
     const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
     if (value.length <= 3) {
@@ -106,6 +112,7 @@ export default function WorkshopPayment() {
     }
   };
 
+  //טיפול בשינוי תז
   const handleIdNumberChange = (e) => {
     const value = e.target.value.replace(/\D/g, ''); // מחיקת כל דבר שאינו מספר
     if (value.length <= 9) {
@@ -113,30 +120,34 @@ export default function WorkshopPayment() {
     }
   };
 
+  // בחירת סוג כרטיס אשראי
   const handleCardTypeSelect = (type) => {
     setSelectedCardType(type); // עדכון סוג הכרטיס הנבחר (ויזה/מאסטרקארד)
   };
 
+  // טיפול ברכישת סדנה
   const handlePurchase = async () => {
+    // יצירת אובייקט נתוני הרכישה
     const purchaseData = {
       fullName,
       email,
-      workshopId, // ודא שזה workshopId ולא courseId
-      installments, // כמות התשלומים נשלחת כחלק מהנתונים
-      idNumber, // שליחת תעודת הזהות כחלק מהנתונים
+      workshopId,
+      installments, 
+      idNumber, 
     };
 
     try {
+      // שליחת נתוני הרכישה לשרת
       const response = await axios.post('http://localhost:3000/api/v1/workshops/purchase', purchaseData);
 
       // בדיקת רכישה כפולה
       if (response.data.purchased) {
         alert('כבר רכשת את הסדנה הזו.');
-        resetForm(); // איפוס הטופס לאחר הרכישה
+        resetForm();
       } else {
         console.log('Purchase successful:', response.data);
         alert('הרכישה בוצעה בהצלחה!');
-        navigate('/thank-you-workshop'); // ניתוב לדף תודה לסדנאות לאחר הצלחת התשלום
+        navigate('/thank-you-workshop'); 
 
       }
     } catch (error) {
@@ -144,7 +155,7 @@ export default function WorkshopPayment() {
 
       if (error.response && error.response.status === 400) {
         alert("לא ניתן לבצע רכישה, סדנה זאת מלאה.");
-        navigate('/workshops'); // ניתוב חזרה לעמוד הסדנאות לאחר לחיצה על אישור ב-alert
+        navigate('/workshops');
       } else if (error.response && error.response.status === 404) {
         alert('לא נמצאה הסדנה או המשתמש.');
       } else {
@@ -153,6 +164,7 @@ export default function WorkshopPayment() {
     }
   };
 
+  // פונקציה לטיפול באירוע של לחיצה על כפתור התשלום
   const handlePayment = (e) => {
     e.preventDefault();
     setSubmitted(true); // סימון שנשלח הטופס
@@ -232,7 +244,7 @@ export default function WorkshopPayment() {
           )}
         </div>
 
-        {/* כפתורי ויזה ומאסטרקארד */}
+       
         <div className="card-type-selection">
           <button
             type="button"
@@ -250,7 +262,7 @@ export default function WorkshopPayment() {
           </button>
         </div>
 
-        {/* הצגת שגיאה אם לא נבחר כרטיס רק לאחר ניסיון תשלום */}
+        
         {submitted && !selectedCardType && <span className="card-error">{errors.cardType}</span>}
 
         <div className="form-group">
@@ -314,7 +326,7 @@ export default function WorkshopPayment() {
           )}
         </div>
 
-        {/* בחירת מספר תשלומים, מוצג תמיד */}
+        
         <div className="form-group">
           <label>:כמות תשלומים</label>
           <select value={installments} onChange={(e) => setInstallments(e.target.value)}>

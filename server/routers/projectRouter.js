@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Project = require('../models/ProjectModel'); // ודא שהנתיב נכון בהתאם למבנה התיקיות שלך
+const Project = require('../models/ProjectModel');
 const multer = require('multer');
 const path = require('path');
 
@@ -30,9 +30,9 @@ router.post('/', upload.array('images', 3), async (req, res) => {
     // יצירת הפרוייקט החדש
     const newProject = new Project({
       name,
-      projectDescription, // תיאור הפרוייקט
-      projectDetails, // פרטי הפרוייקט
-      images // שמירת נתיבי התמונות
+      projectDescription, 
+      projectDetails, 
+      images 
     });
 
     // שמירת הפרוייקט במסד הנתונים
@@ -70,8 +70,8 @@ router.put('/:id', upload.array('images', 3), async (req, res) => {
 
     res.json(updatedProject);
   } catch (err) {
-    console.error('Failed to update project:', err);
-    res.status(500).json({ error: 'Failed to update project' });
+    console.error('"עיבוד הרכישה נכשל"', err);
+    res.status(500).json({ error: 'נכשל בעדכון הפרויקט' });
   }
 });
 
@@ -82,11 +82,11 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     const deletedProject = await Project.findByIdAndDelete(id);
     if (!deletedProject) {
-      return res.status(404).json({ error: 'Project not found' });
+      return res.status(404).json({ error: 'הפרויקט לא נמצא' });
     }
-    res.status(200).json({ message: 'Project deleted successfully' });
+    res.status(200).json({ message: 'הפרויקט נמחק בהצלחה' });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to delete project' });
+    res.status(500).json({ error: 'מחיקת הפרויקט נכשלה' });
   }
 });
 
@@ -94,7 +94,7 @@ router.delete('/:id', async (req, res) => {
 // נתיב להצגת כל הפרויקטים
 router.get('/', async (req, res) => {
     try {
-      const projects = await Project.find(); // שלוף את כל השדות
+      const projects = await Project.find();
       res.json(projects);
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -105,11 +105,11 @@ router.get('/', async (req, res) => {
     try {
       const project = await Project.findById(req.params.id);
       if (!project) {
-        return res.status(404).json({ error: 'Project not found' });
+        return res.status(404).json({ error: 'הפרויקט לא נמצא' });
       }
       res.json(project);
     } catch (err) {
-      res.status(500).json({ error: 'Failed to fetch project details' });
+      res.status(500).json({ error: 'אחזור פרטי הפרויקט נכשל' });
     }
   });
   

@@ -44,7 +44,6 @@ const sendOrderConfirmationEmail = (email, fullName, serviceName, serviceType, s
   טלי גל
 `;
 
-
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
@@ -54,9 +53,9 @@ const sendOrderConfirmationEmail = (email, fullName, serviceName, serviceType, s
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log('Error sending email:', error);
+      console.log('שגיאה בשליחת מייל:', error);
     } else {
-      console.log('Email sent:', info.response);
+      console.log('מייל נשלח:', info.response);
     }
   });
 };

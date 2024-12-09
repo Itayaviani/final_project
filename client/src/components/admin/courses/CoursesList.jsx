@@ -6,14 +6,15 @@ import "./coursesList.css";
 const CoursesList = () => {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState("");
-  const [filter, setFilter] = useState(""); // מצב לסינון, ריק כברירת מחדל
-  const [showTable, setShowTable] = useState(false); // מצב להצגת הטבלה, ברירת מחדל false
-  const [searchTerm, setSearchTerm] = useState(""); // מצב לחיפוש לפי שם קורס
-  const navigate = useNavigate(); // הגדרת navigate
+  const [filter, setFilter] = useState(""); // מצב לשמירת סינון הקורסים (קורסים מלאים/ זמינים)
+  const [showTable, setShowTable] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
+        // בקשה לשרת לקבלת רשימת הקורסים
         const response = await axios.get(
           "http://localhost:3000/api/v1/courses"
         );
@@ -85,7 +86,6 @@ const CoursesList = () => {
         <h1>רשימת קורסים</h1>
         {error && <p className="error-message">{error}</p>}
 
-        {/* כפתורים לסינון הקורסים */}
         <div className="filter-buttons">
           <button onClick={() => handleShowTable("all")}>
             הצג את כל הקורסים
@@ -98,7 +98,6 @@ const CoursesList = () => {
           </button>
         </div>
 
-        {/* אינפוט לחיפוש קורס לפי שם */}
         {showTable && (
           <input
             type="text"

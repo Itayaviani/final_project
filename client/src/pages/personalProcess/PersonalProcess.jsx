@@ -2,7 +2,6 @@ import React from 'react';
 import { FaEnvelope, FaInstagram, FaFacebook, FaWhatsapp } from 'react-icons/fa';
 import './personalProcess.css';
 
-// ייבוא התמונות מהתיקייה pictures
 import photo1 from './pictures/photo1.jpg';
 import photo2 from './pictures/photo2.jpg';
 import photo3 from './pictures/photo3.jpg';
@@ -10,13 +9,12 @@ import photo3 from './pictures/photo3.jpg';
 function PersonalProcess() {
     return (
         <div className="personal-process-container">
-            {/* כותרת ולוגו */}
+            
             <header className="header">
                 <h1 className="logo">תהליך אישי</h1>
                 <h1 className="subtitle">ליווי אישי לצמיחה והגשמה עצמית</h1>
             </header>
 
-            {/* עלי */}
             <section id="about" className="content-section">
                 <div className="content-layout">
                     <div className="text-content">
@@ -33,7 +31,6 @@ function PersonalProcess() {
                 </div>
             </section>
 
-            {/* תהליך אישי */}
             <section id="process" className="content-section">
                 <h2>תהליך אישי ליצירת שינוי מתוך משמעות</h2>
                 <div className="content-layout">
@@ -53,7 +50,6 @@ function PersonalProcess() {
                 </div>
             </section>
 
-            {/* כוח פנימי */}
             <section id="insight" className="content-section insight-section">
                 <h2>הידעת? יש לך כוח עצום על החיים שלך</h2>
                 <p>
@@ -65,7 +61,6 @@ function PersonalProcess() {
                 </p>
             </section>
 
-            {/* הנהגת החיים */}
             <section id="leadership" className="content-section">
                 <div className="content-layout">
                     <div className="text-content">
@@ -82,15 +77,12 @@ function PersonalProcess() {
                 </div>
             </section>
 
-            {/* צור קשר */}
             <footer id="contact" className="footer">
             <h2>צור קשר</h2>
     <h3>!בואו נדבר - אני כאן בשבילכם</h3>
    
-    
         <h3>זקוקים למידע נוסף על תהליך אישי שמתאים לכם? מתעניינים בקורס או סדנה ורוצים לקבל פרטים נוספים? יש לכם שאלות בנוגע לרכישה או תהליך הרשמה - אני זמינה כאן לכל צורך</h3>
         
-    
                 <div className="contact-list">
                     <div className="contact-item mail">
                         <FaEnvelope className="contact-icon" />

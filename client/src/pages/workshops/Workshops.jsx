@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./workshops.css"; // ייבוא קובץ ה-CSS
+import "./workshops.css"; 
 
 export default function Workshops({ isAdmin }) {
   const [workshops, setWorkshops] = useState([]);
-  const [loading, setLoading] = useState(true); // מצב טעינה
+  const [loading, setLoading] = useState(true); 
 
+  // שימוש ב-useEffect לקריאה ל-API ולהבאת רשימת הסדנאות בעת טעינת הרכיב
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
+        // שליחת בקשה לשרת לקבלת רשימת הסדנאות
         const response = await axios.get(
           "http://localhost:3000/api/v1/workshops"
         );
@@ -26,27 +28,31 @@ export default function Workshops({ isAdmin }) {
     fetchWorkshops();
   }, [isAdmin]);
 
+  // פונקציה למחיקת סדנה על ידי שליחת בקשת DELETE לשרת
   const handleDelete = async (workshopId) => {
     try {
+      // שליחת בקשת מחיקה לשרת לפי מזהה הסדנה
       await axios.delete(
         `http://localhost:3000/api/v1/workshops/${workshopId}`
       );
       setWorkshops(workshops.filter((workshop) => workshop._id !== workshopId));
     } catch (error) {
-      console.error("Failed to delete workshop:", error);
+      console.error("מחיקת הסדנה נכשלה:", error);
     }
   };
 
+    // פונקציה לניתוב לעמוד עריכת סדנה לפי מזהה הסדנה
   const handleEdit = (workshopId) => {
     window.location.href = `/edit-workshop/${workshopId}`;
   };
 
+  // פונקציה לניתוב לעמוד פרטי הסדנה
   const handleDetails = (workshopId) => {
     window.location.href = `/workshop-details/${workshopId}`;
   };
 
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // התאמה להשוואה לפי תאריך בלבד ללא שעות
+  today.setHours(0, 0, 0, 0); 
 
   if (loading) {
     return <div>טוען סדנאות...</div>;
@@ -55,7 +61,6 @@ export default function Workshops({ isAdmin }) {
   return (
     <div>
 
-      {/* הצגת כפתור הוספת הסדנא רק אם המשתמש הוא אדמין */}
       {isAdmin && (
         <div className="add-workshop-button-container">
           <Link to="/add-workshop" className="add-workshop-button">
@@ -68,9 +73,9 @@ export default function Workshops({ isAdmin }) {
         {workshops.length > 0 ? (
           workshops.map((workshop) => {
             const startDate = new Date(workshop.startDate);
-            startDate.setHours(0, 0, 0, 0); // התאמה להשוואה לפי תאריך בלבד ללא שעות
-            const isFull = workshop.participants >= workshop.capacity; // בדיקה אם הסדנה מלאה
-            const hasWorkshopStarted = startDate <= today; // בדיקה אם הסדנה התחילה
+            startDate.setHours(0, 0, 0, 0); 
+            const isFull = workshop.participants >= workshop.capacity; 
+            const hasWorkshopStarted = startDate <= today;
 
             return (
               <div key={workshop._id} className="workshop-card">
@@ -81,9 +86,9 @@ export default function Workshops({ isAdmin }) {
                     alt={workshop.name}
                   />
                 )}
-                <p>{workshop.workshopDescription}</p> {/* הצגת תיאור הסדנה הקצר */}
+                <p>{workshop.workshopDescription}</p>{" "}
+                
                 <p className="price">מחיר: {workshop.price} ש"ח</p>
-
                 {isFull && hasWorkshopStarted ? (
                   <div>
                     <span className="full-label">סדנה זאת מלאה</span>
@@ -94,17 +99,15 @@ export default function Workshops({ isAdmin }) {
                 ) : hasWorkshopStarted ? (
                   <span className="started-label">סדנה זאת התחילה</span>
                 ) : null}
-
-                  {/* הכפתור נשאר פעיל גם אם הסדנה מלאה או התחילה */}
-                  <button
+                
+                <button
                   onClick={() => handleDetails(workshop._id)}
                   className="details-button"
                 >
                   פרטים נוספים
                 </button>
-
-                         {/* הצגת מספר המשתתפים ותאריך היצירה רק אם המשתמש הוא אדמין */}
-                         {isAdmin && (
+                
+                {isAdmin && (
                   <div>
                     <p className="participants">
                       משתתפים בסדנה: {workshop.participants} מתוך{" "}
@@ -117,29 +120,21 @@ export default function Workshops({ isAdmin }) {
                   </div>
                 )}
                 
-                {/* הצגת מועד ושעת תחילת הסדנה לכל המשתמשים */}
-<p className="start-date">
-  מועד תחילת הסדנה:{" "}
-  {workshop.startDate
-    ? new Date(workshop.startDate).toLocaleDateString()
-    : "לא נקבע תאריך"}
-</p>
-<p className="start-time">
-  שעת תחילת הסדנה:{" "}
-  {workshop.startDate
-    ? new Date(workshop.startDate).toLocaleTimeString('he-IL', {
-        hour: '2-digit',
-        minute: '2-digit'
-      })
-    : "לא נקבעה שעה"}
-</p>
-
-
-              
-
-       
-
-                {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
+                <p className="start-date">
+                  מועד תחילת הסדנה:{" "}
+                  {workshop.startDate
+                    ? new Date(workshop.startDate).toLocaleDateString()
+                    : "לא נקבע תאריך"}
+                </p>
+                <p className="start-time">
+                  שעת תחילת הסדנה:{" "}
+                  {workshop.startDate
+                    ? new Date(workshop.startDate).toLocaleTimeString("he-IL", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                    : "לא נקבעה שעה"}
+                </p>
                 {isAdmin && (
                   <div className="workshop-actions">
                     <button

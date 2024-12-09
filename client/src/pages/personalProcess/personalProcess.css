@@ -1,4 +1,4 @@
-/* ודא ש-body וה-html יכולים לגלול */
+
 html, body {
     height: 100%;
     margin: 0;
@@ -11,7 +11,7 @@ html, body {
 
 }
 
-/* עיצוב כללי */
+
 .personal-process-container {
     width: 100vw;
     min-height: 100vh;
@@ -26,7 +26,7 @@ html, body {
     
 }
 
-/* כותרת ולוגו */
+
 .header {
    background-color: #a9cce3;
   text-align: center;
@@ -55,7 +55,7 @@ html, body {
     
 }
 
-/* עיצוב תוכן כללי */
+
 .content-section {
     max-width: 1200px;
     margin: 60px auto;
@@ -67,7 +67,7 @@ html, body {
     border-left: 10px solid #a9cce3;
 }
 
-/* פריסת תוכן */
+
 .content-layout {
     display: flex;
     align-items: center;
@@ -80,7 +80,7 @@ html, body {
 .text-content {
     flex: 1;
     padding: 20px;
-    font-size: 22px; /* כאן אפשר להגדיר כל גודל שתרצה */
+    font-size: 22px;
 
     
 }
@@ -105,12 +105,12 @@ html, body {
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* עיצוב ספציפי לתמונה השנייה */
+
 .image-content:nth-child(2) .personal-image {
     max-width: 70%;
 }
 
-/* רשימות */
+
 ul {
     padding: 0;
     list-style: none;
@@ -131,7 +131,7 @@ li::before {
     font-size: 24px;
 }
 
-/* כפתור קשר */
+
 .contact-button {
     display: inline-block;
     margin-top: 20px;
@@ -149,7 +149,7 @@ li::before {
     transform: scale(1.1);
 }
 
-/* פוטר וקטע צור קשר */
+
 .footer {
     background-color: #a9cce3;
     color: #1c2833;
@@ -174,7 +174,7 @@ li::before {
     flex-wrap: wrap;
 }
 
-/* עיצוב כרטיסי קשר */
+
 .contact-item {
     background: linear-gradient(135deg, #e8f8f5, #d1f2eb);
     padding: 20px 30px;
@@ -193,14 +193,14 @@ li::before {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.947);
 }
 
-/* עיצוב אייקונים */
+
 .contact-icon {
     font-size: 40px;
     transform: rotate(0deg) scale(1);
     transition: transform 0.3s ease;
 }
 
-/* צבעי אייקונים לכל פלטפורמה */
+
 .contact-item.facebook .contact-icon {
     color: #4267B2;
 }
@@ -217,7 +217,7 @@ li::before {
     color: #D44638;
 }
 
-/* עיצוב הקישורים */
+
 .contact-item a {
     color: #0c0c0c;
     font-size: 22px;
@@ -230,7 +230,7 @@ li::before {
     text-decoration: underline;
 }
 
-/* עיצוב הטקסט של פלטפורמות */
+
 .contact-item p {
     margin: 0;
     font-size: 18px;
@@ -247,7 +247,7 @@ li::before {
     color: #666;
 }
 
-/* אנימציות */
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -268,7 +268,7 @@ li::before {
     }
 }
 
-/* רספונסיביות */
+
 @media (max-width: 768px) {
     .content-layout {
         flex-direction: column;
@@ -283,6 +283,6 @@ li::before {
     }
 }
 .content-section {
-    font-size: 22px; /* כאן אפשר להגדיר כל גודל שתרצה */
+    font-size: 22px;
 
 }

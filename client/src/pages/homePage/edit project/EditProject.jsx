@@ -14,8 +14,10 @@ export default function EditProject() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // פונקציה לאחזור נתוני הפרויקט מהשרת
     const fetchProject = async () => {
       try {
+        //קבלת הפרוייקט לפי מזהה הפרויקט לשם עריכתו
         const response = await axios.get(`http://localhost:3000/api/v1/projects/${projectId}`);
         const { name, projectDescription, projectDetails, images } = response.data;
         setProjectName(name);
@@ -23,13 +25,14 @@ export default function EditProject() {
         setProjectDetails(projectDetails);
         setCurrentImages(images);
       } catch (error) {
-        console.error('Failed to fetch project:', error);
+        console.error('אחזור הפרויקט נכשל:', error);
       }
     };
 
     fetchProject();
   }, [projectId]);
 
+  // פונקציה לטיפול בשליחת הטופס
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -42,6 +45,7 @@ export default function EditProject() {
     }
 
     try {
+      /// שליחת בקשת PUT לשרת לעדכון נתוני הפרויקט
       await axios.put(`http://localhost:3000/api/v1/projects/${projectId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -49,11 +53,12 @@ export default function EditProject() {
       });
       navigate('/');
     } catch (error) {
-      setError('Failed to update project. Please check your input.');
-      console.error('Failed to edit project:', error);
+      setError('עדכון הפרויקט נכשל. אנא בדוק את הקלט שלך.');
+      console.error('עריכת הפרויקט נכשלה:', error);
     }
   };
 
+  // פונקציה לטיפול בשינוי הקלט של התמונה
   const handleImageChange = (e) => {
     setProjectImages(e.target.files[0]);
   };

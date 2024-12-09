@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./Courses.css"; // ייבוא קובץ ה-CSS
+import "./Courses.css";
 
 export default function Courses({ isAdmin, userId }) {
   const [courses, setCourses] = useState([]);
-  const [purchasedCourses, setPurchasedCourses] = useState([]); // ניהול מצב של הקורסים שנרכשו
-  const [loading, setLoading] = useState(true); // הוספת מצב טעינה
+  const [purchasedCourses, setPurchasedCourses] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
+  // שימוש ב-useEffect להבאת רשימת הקורסים מהשרת בעת טעינת הקומפוננטה
   useEffect(() => {
     const fetchCourses = async () => {
       try {
+        // בקשה לשרת לקבלת כל הקורסים
         const response = await axios.get(
           "http://localhost:3000/api/v1/courses"
         );
@@ -25,16 +27,17 @@ export default function Courses({ isAdmin, userId }) {
     fetchCourses();
   }, [isAdmin]);
 
-  // בדיקת הקורסים שנרכשו על ידי המשתמש הנוכחי
+  // שימוש ב-useEffect להבאת רשימת הקורסים שנרכשו על ידי המשתמש
   useEffect(() => {
     const fetchPurchasedCourses = async () => {
       try {
+        // בקשה לשרת לקבלת רשימת הקורסים שנרכשו על ידי המשתמש
         const response = await axios.get(
           `http://localhost:3000/api/v1/users/${userId}/purchases`
         );
         setPurchasedCourses(response.data.purchasedCourses);
       } catch (error) {
-        console.error("Failed to fetch purchased courses:", error);
+        console.error("אחזור הקורסים שנרכשו נכשל:", error);
       }
     };
 
@@ -43,29 +46,34 @@ export default function Courses({ isAdmin, userId }) {
     }
   }, [userId]);
 
+  // פונקציה למחיקת קורס על ידי שליחת בקשה לשרת
   const handleDelete = async (courseId) => {
     try {
+
       await axios.delete(`http://localhost:3000/api/v1/courses/${courseId}`);
       setCourses(courses.filter((course) => course._id !== courseId));
     } catch (error) {
-      console.error("Failed to delete course:", error);
+      console.error("מחיקת הקורס נכשלה:", error);
     }
   };
 
+  // פונקציה לניווט לעמוד עריכת הקורס
   const handleEdit = (courseId) => {
     window.location.href = `/edit-course/${courseId}`;
   };
 
+  // פונקציה לניווט לעמוד פרטי הקורס
   const handleDetails = (courseId) => {
     window.location.href = `/course-details/${courseId}`;
   };
 
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // התאמה להשוואה לפי תאריך בלבד ללא שעות
+  today.setHours(0, 0, 0, 0); 
 
+  // חישוב פרמטרים נוספים עבור כל קורס
   const allCourses = courses.map((course) => {
     const startDate = new Date(course.startDate);
-    startDate.setHours(0, 0, 0, 0); // התאמה להשוואה לפי תאריך בלבד ללא שעות
+    startDate.setHours(0, 0, 0, 0);
     const isPurchased = purchasedCourses
       .map(String)
       .includes(String(course._id)); // בדיקה אם הקורס נרכש
@@ -74,19 +82,19 @@ export default function Courses({ isAdmin, userId }) {
     return {
       ...course,
       isPurchased,
-      hasCourseStarted, // אם הקורס התחיל
+      hasCourseStarted, 
       isFull: course.participants >= course.capacity, // בדיקה אם הקורס מלא
     };
   });
 
   if (loading) {
-    return <div>טוען קורסים...</div>; // חיווי טעינה
+    return <div>טוען קורסים...</div>;
   }
 
   return (
     <div>
       
-      {/* הצגת כפתור הוספת הקורס רק אם המשתמש הוא אדמין */}
+
       {isAdmin && (
         <div className="add-course-button-container">
           <Link to="/add-course" className="add-course-button">
@@ -109,7 +117,7 @@ export default function Courses({ isAdmin, userId }) {
                   alt={course.name}
                 />
               )}
-              <p>{course.courseDescription}</p> {/* הצגת תיאור הקורס */}
+              <p>{course.courseDescription}</p>
               <p className="price">מחיר: {course.price} ש"ח</p>
 
               {course.isFull && course.hasCourseStarted ? (
@@ -130,7 +138,7 @@ export default function Courses({ isAdmin, userId }) {
                 פרטים נוספים
               </button>
 
-              {/* הצגת מספר המשתתפים ותאריך יצירת הקורס רק אם המשתמש הוא אדמין */}
+              
               {isAdmin && (
                 <div>
                   <p className="participants">
@@ -143,7 +151,7 @@ export default function Courses({ isAdmin, userId }) {
                 </div>
               )}
 
-              {/* הצגת מועד ושעת תחילת הקורס לכל המשתמשים */}
+              
               <p className="start-date">
                 מועד תחילת הקורס:{" "}
                 {course.startDate
@@ -160,7 +168,7 @@ export default function Courses({ isAdmin, userId }) {
                   : "לא נקבעה שעה"}
               </p>
 
-              {/* הצגת כפתורי עריכה ומחיקה רק אם המשתמש הוא אדמין */}
+              
               {isAdmin && (
                 <div className="course-actions">
                   <button

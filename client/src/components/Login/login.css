@@ -1,4 +1,4 @@
-/* General body styling */
+
 body {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@ body {
   padding-top: 60px;
 }
 
-/* Wrapper to center the Login component */
+
 .login-wrapper {
   display: flex;
   justify-content: center;
@@ -18,7 +18,7 @@ body {
   position: relative;
 }
 
-/* Container styling for login form */
+
 .container-login {
   background: rgba(255, 255, 255, 0.9);
   padding: 50px;
@@ -30,7 +30,7 @@ body {
   animation: fadeIn 1s ease-out;
 }
 
-/* Title styling */
+
 .title-login {
   margin-bottom: 30px;
   font-size: 28px;
@@ -40,7 +40,7 @@ body {
   letter-spacing: 1.5px;
 }
 
-/* Form styling */
+
 .form-login {
   display: flex;
   flex-direction: column;
@@ -55,7 +55,7 @@ body {
 
 .label-input-login input {
   width: 100%;
-  padding: 12px 12px 12px 35px; /* מרווח לאייקון */
+  padding: 12px 12px 12px 35px; 
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
@@ -69,20 +69,20 @@ body {
   outline: none;
 }
 
-/* מיקום האייקון של הסיסמה */
+
 .label-input-login .icon {
   position: absolute;
-  left: 20px; /* מיקום האייקון של האימייל/סיסמה */
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
   color: #777;
   font-size: 18px;
 }
 
-/* מיקום האייקון של העין */
+
 .label-input-login .eye-icon {
   position: absolute;
-  left: 50px; /* מיקום האייקון של העין בצד ימין */
+  left: 50px;
   top: 50%;
   transform: translateY(-50%);
   color: #777;
@@ -91,7 +91,7 @@ body {
 }
 
 
-/* Button styling */
+
 .btn-login {
   background: linear-gradient(135deg, #007bff, #0056b3);
   color: white;
@@ -112,7 +112,7 @@ body {
   transform: scale(0.96);
 }
 
-/* Error message styling */
+
 .error-message {
   color: #d9534f;
   font-weight: bold;
@@ -127,7 +127,7 @@ body {
   animation: shake 0.3s;
 }
 
-/* Navigation to register */
+
 .navToRegister {
   margin-top: 25px;
 }
@@ -143,7 +143,7 @@ body {
   color: #0056b3;
 }
 
-/* Keyframes for fade-in animation */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -155,7 +155,7 @@ body {
   }
 }
 
-/* Keyframes for shake animation */
+
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);

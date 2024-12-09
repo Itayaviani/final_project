@@ -6,14 +6,15 @@ import "./workshopsList.css";
 const WorkshopsList = () => {
   const [workshops, setWorkshops] = useState([]);
   const [error, setError] = useState("");
-  const [filter, setFilter] = useState(""); // מצב לסינון כללי (כמו תפוסה מלאה או פנויה)
-  const [showTable, setShowTable] = useState(false); // מצב להצגת הטבלה
-  const [searchTerm, setSearchTerm] = useState(""); // מצב לחיפוש לפי שם סדנה
-  const navigate = useNavigate(); // הגדרת navigate
+  const [filter, setFilter] = useState("");
+  const [showTable, setShowTable] = useState(false); 
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
+        //משיכת הסדנאות מהשרת
         const response = await axios.get(
           "http://localhost:3000/api/v1/workshops"
         );
@@ -97,7 +98,6 @@ const WorkshopsList = () => {
           </button>
         </div>
 
-        {/* אינפוט לחיפוש סדנה */}
         {showTable && (
           <input
             type="text"
@@ -108,7 +108,7 @@ const WorkshopsList = () => {
           />
         )}
 
-        {/* הצגת הטבלה רק לאחר לחיצה על כפתור */}
+        
         {showTable && (
           <table>
             <thead>

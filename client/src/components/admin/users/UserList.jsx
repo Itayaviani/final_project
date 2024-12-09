@@ -5,7 +5,7 @@ import "./userList.css";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // מצב עבור החיפוש
+  const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -13,6 +13,7 @@ const UserList = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("token");
+        //משיכת המשתמשים מהשרת
         const response = await axios.get("http://localhost:3000/api/v1/users", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -27,20 +28,24 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
+  // פונקציה למחיקת משתמש לפי מזהה
   const handleDeleteUser = async (id) => {
     try {
       const token = localStorage.getItem("token");
+      //שליפת המשתמש עם המזהה שצריך למחוק
       await axios.delete(`http://localhost:3000/api/v1/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      // עדכון רשימת המשתמשים לאחר מחיקת משתמש
       setUsers(users.filter((user) => user._id !== id));
     } catch (err) {
       setError("שגיאה במחיקת המשתמש");
     }
   };
 
+  // פונקציה לעריכת פרטי משתמש, ניווט לעמוד עריכת המשתמש
   const handleEditUser = (id) => {
     navigate(`/edit-user/${id}`);
   };
@@ -55,8 +60,7 @@ const UserList = () => {
       <div className="user-list">
         <h1>רשימת משתמשים</h1>
         {error && <p className="error-message">{error}</p>}
-
-        {/* תיבת חיפוש */}
+        
         <input
           type="text"
           placeholder="חפש משתמש לפי שם"

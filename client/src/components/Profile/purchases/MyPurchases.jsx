@@ -7,8 +7,10 @@ const MyPurchases = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    //פונקציה אסינכרונית לשליפת הרכישות
     const fetchPurchasedCourses = async () => {
       try {
+        //שליפת נתוני הרכישות
         const response = await axios.get(
           'http://localhost:3000/api/v1/users/me/purchases',
           {
@@ -18,7 +20,7 @@ const MyPurchases = () => {
           }
         );
 
-        console.log('Response data:', response.data.purchases);
+        console.log('נתוני תגובה:', response.data.purchases);
 
         // מיזוג של כל הרכישות (קורסים וסדנאות) במערך אחד ומיון לפי purchaseDate
         const allPurchases = [

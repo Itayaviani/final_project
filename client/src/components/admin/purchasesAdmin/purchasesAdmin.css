@@ -1,6 +1,4 @@
-/* PurchasesAdmin.css */
 
-/* עיצוב כללי רק עבור דף ה-PurchasesAdmin */
 .purchases-admin-page {
   display: flex;
   justify-content: center;
@@ -13,7 +11,7 @@
   font-family: Arial, sans-serif;
 }
 
-/* Wrapper to center the PurchasesList */
+
 .purchases-admin-page .purchases-wrapper {
   display: flex;
   justify-content: center;
@@ -22,7 +20,7 @@
   width: 100%;
 }
 
-/* Purchases List Container */
+
 .purchases-admin-page .purchases-list {
   max-width: 1200px;
   width: 100%;
@@ -38,7 +36,7 @@
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
 }
 
-/* Purchases Header */
+
 .purchases-admin-page .purchases-list h1 {
   text-align: center;
   font-size: 2.5em;
@@ -49,7 +47,7 @@
   letter-spacing: 2px;
 }
 
-/* Purchases Stats Scrollable Area */
+
 .stats-card {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -60,17 +58,16 @@
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
-  max-height: 300px; /* גובה מקסימלי עבור גלילה */
-  overflow-y: auto; /* מאפשר גלילה אנכית */
+  max-height: 300px; 
+  overflow-y: auto; 
 }
 
-/* Purchases Table Scrollable Area */
+
 .purchases-admin-page .purchases-table-container {
-  max-height: 400px; /* גובה מקסימלי עם גלילה */
-  overflow-y: auto; /* מאפשר גלילה אנכית */
+  max-height: 400px;
+  overflow-y: auto;
 }
 
-/* Purchases Table Styling */
 .purchases-admin-page .purchases-table {
   width: 100%;
   border-collapse: collapse;
@@ -100,7 +97,7 @@
   background-color: #e3e9f0;
 }
 
-/* Button Styles */
+
 .purchases-admin-page .filter-buttons {
   text-align: center;
   margin-bottom: 30px;
@@ -131,7 +128,7 @@
   transform: translateY(3px);
 }
 
-/* הודעות שגיאה */
+
 .purchases-admin-page .error-message {
   color: #e74c3c;
   text-align: center;
@@ -153,7 +150,7 @@
   direction: rtl;
 }
 
-/* Style for each date picker label */
+
 .purchases-admin-page .date-picker-wrapper label {
   font-size: 1.3em;
   font-weight: 600;
@@ -174,7 +171,7 @@
   margin-right: 10px;
 }
 
-/* עיצוב רספונסיבי */
+
 @media (max-width: 768px) {
   .purchases-admin-page .purchases-list {
     padding: 30px;
@@ -206,7 +203,7 @@
   left: 10px;
 }
 
-/* עיצוב עבור סה"כ וסה"כ רווח כספי */
+
 .total-count, .total-revenue {
   font-size: 22px;
   font-weight: bold;
@@ -215,7 +212,7 @@
   text-align: center;
 }
 
-/* עיצוב עבור הסטטיסטיקות */
+
 .purchase-stats p {
   font-size: 20px;
   color: #555;
@@ -223,7 +220,7 @@
   text-align: center;
 }
 
-/* ריווח כללי בין האלמנטים בכרטיס */
+
 .stats-card > *:not(:last-child) {
   margin-bottom: 15px;
 }
@@ -248,13 +245,13 @@
   text-align: center;
 }
 
-/* עיצוב עבור כותרות הטבלה */
+
 .purchase-stats th {
   background-color: #f2f2f2;
   font-weight: bold;
 }
 
-/* עיצוב כותרות "הכי פחות נרכשים" ו-"הכי פחות נרכשות" */
+
 .least-purchased-title {
   text-align: center;
   padding: 10px 0;

@@ -1,16 +1,16 @@
-/* הוספת אנימציה כללית לעלייה */
+
 @keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* התחל עם תזוזה כלפי מטה */
+    transform: translateY(20px); 
   }
   100% {
     opacity: 1;
-    transform: translateY(0); /* חזרה למקום המקורי */
+    transform: translateY(0); 
   }
 }
 
-/* כל הסלקטורים הייחודיים תחת הקלאס הראשי edit-user-container */
+
 .edit-user-container {
   display: flex;
   justify-content: center;
@@ -18,7 +18,7 @@
   min-height: 100vh;
   padding: 20px;
   text-align: center;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 
 }
 
@@ -29,7 +29,7 @@
   box-shadow: 0 4px 10px rgba(6, 6, 6, 0.937);
   padding: 40px;
   text-align: center;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
 .edit-user-container .edit-user-form-container h2 {
@@ -38,7 +38,7 @@
   margin-bottom: 30px;
   position: relative;
   display: inline-block;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
 .edit-user-container .edit-user-form-container h2::after {
@@ -56,14 +56,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  direction: rtl; /* Set direction to right-to-left for natural alignment */
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  direction: rtl; 
+  animation: fadeInUp 1s ease-in-out;
 }
 
 .edit-user-container .form-group label {
   font-weight: 700;
   width: 30%;
-  text-align: right; /* Align label text to the right */
+  text-align: right;
   color: #000000;
 }
 
@@ -73,7 +73,7 @@
   border: 1px solid #cccccc;
   border-radius: 5px;
   font-size: 1.1rem;
-  text-align: right; /* Align input text to the left */
+  text-align: right;
 }
 
 .edit-user-container button {
@@ -86,7 +86,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out; 
 }
 
 .edit-user-container button:hover {
@@ -96,11 +96,11 @@
 .edit-user-container .error-message {
   color: red;
   font-size: 1.2rem;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out;
 }
 
 .edit-user-container .success-message {
   color: green;
   font-size: 1.2rem;
-  animation: fadeInUp 1s ease-in-out; /* הוספת אנימציה */
+  animation: fadeInUp 1s ease-in-out;
 }
