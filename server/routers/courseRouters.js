@@ -2,20 +2,25 @@ const express = require("express");
 const router = express.Router();
 const Course = require("../models/CourseModel");
 const { sendOrderConfirmationEmail } = require("../utils/emailService");
+// ספרייה להעלאת קבצים
 const multer = require("multer");
+// ניהול נתיבי קבצים
 const path = require("path");
 const User = require("../models/UserModel"); 
 
 // הגדרת אחסון התמונות
 const storage = multer.diskStorage({
+  // הגדרת תיקיית יעד לקבצים המועלים
   destination: function (req, file, cb) {
     cb(null, "uploads/");
   },
+  // הגדרת שם קובץ ייחודי לפי התאריך הנוכחי ושם הקובץ המקורי
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
+// יצירת מופע של multer עם האחסון שהוגדר
 const upload = multer({ storage: storage });
 
 // חשיפת תיקיית 'uploads' כמשאב סטטי
@@ -60,7 +65,7 @@ router.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-// Route to get all courses
+// נתיב לשליפת כל הקורסים
 router.get("/", async (req, res) => {
   try {
     const courses = await Course.find(); 
@@ -70,7 +75,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Route to get a course by ID
+// נתיב לשליפת קורס לפי מזהה
 router.get("/:id", async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -83,7 +88,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Route to delete a course by ID
+// נתיב למחיקת קורס לפי מזהה
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -151,6 +156,7 @@ router.post("/purchase", async (req, res) => {
   try {
     
     const mongoose = require("mongoose");
+    // בדיקת תקינות מזהה הקורס
     const validCourseId = mongoose.Types.ObjectId.isValid(courseId)
       ? new mongoose.Types.ObjectId(courseId)
       : null;

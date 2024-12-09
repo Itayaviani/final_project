@@ -241,8 +241,8 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 // עדכון משתמש
 exports.updateUser = catchAsync(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
+    new: true,// מבטיח שהמסמך שיוחזר יהיה הגרסה המעודכנת
+    runValidators: true, // מפעיל ולידציות שהוגדרו בסכמה על הנתונים החדשים
   });
 
   if (!user) {
@@ -254,6 +254,8 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     data: { user },
   });
 });
+
+// חישוב כל הרכישות מתוך רשימת המשתמשים
 exports.getPurchaseStatistics = catchAsync(async (req, res, next) => {
   const users = await User.find()
     .populate({
@@ -265,6 +267,7 @@ exports.getPurchaseStatistics = catchAsync(async (req, res, next) => {
       select: 'name price'
     });
 
+    // חישוב כל הרכישות מתוך רשימת המשתמשים
   const allPurchases = users.flatMap(user => [
     ...user.purchasedCourses.map(purchase => ({
       name: purchase.course?.name,
@@ -278,7 +281,7 @@ exports.getPurchaseStatistics = catchAsync(async (req, res, next) => {
     }))
   ]);
 
-  // חישוב הרווח הכולל
+  // חישוב הרווח הכולל מכל הרכישות
   const totalRevenue = allPurchases.reduce((acc, purchase) => acc + (purchase.price || 0), 0);
 
 // פונקציה למציאת כל הפריטים הנרכשים ביותר והפחות נרכשים
